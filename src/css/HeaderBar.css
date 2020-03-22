@@ -1,0 +1,12 @@
+#address-input {
+  width: 300px;
+  transition-duration: 0.8s;
+}
+
+#address-input:focus {
+  width: 400px !important;
+}
+
+#search-button:hover {
+  cursor: pointer;
+}
