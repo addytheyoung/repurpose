@@ -63,7 +63,7 @@ export default class HeaderBar extends React.Component {
               textDecoration: "none",
               color: "black",
               justifyContent: "center",
-              backgroundColor: path === "/sell" ? "#e8e8e8" : "#ffffff",
+              backgroundColor: path.includes("sell") ? "#e8e8e8" : "#ffffff",
               marginRight: 50,
               borderRadius: 5
             }}
