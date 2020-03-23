@@ -18,7 +18,8 @@ export default class HeaderBar extends React.Component {
             justifyContent: "center",
             borderBottomWidth: 1,
             borderBottomColor: "#e8e8e8",
-            borderBottomStyle: "solid"
+            borderBottomStyle: "solid",
+            width: "100vw"
           }}
         >
           <Link
@@ -27,7 +28,9 @@ export default class HeaderBar extends React.Component {
               marginRight: 20,
               display: "flex",
               justifyContent: "center",
-              alignItems: "center"
+              alignItems: "center",
+              flexShrink: 0,
+              overflow: "hidden"
             }}
           >
             <img style={{ width: 120, height: 80 }} src={Logo} />
@@ -50,7 +53,7 @@ export default class HeaderBar extends React.Component {
             Buy
           </Link>
           <Link
-            to="sell"
+            to="/sell"
             style={{
               display: "flex",
               fontSize: 24,
