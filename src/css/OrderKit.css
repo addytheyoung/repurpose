@@ -1,8 +1,14 @@
 #email:hover {
   cursor: pointer;
-  border-color: #9f2421 !important;
+  border-color: #a1a1a1 !important;
 }
 #box:hover {
   cursor: pointer;
-  border-color: #9f2421 !important;
+  border-color: #a1a1a1 !important;
+}
+
+#next:hover {
+  cursor: pointer;
+  font-weight: 600;
+  color: white;
 }

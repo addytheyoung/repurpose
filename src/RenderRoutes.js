@@ -4,6 +4,7 @@ import * as firebase from "firebase";
 import App from "./App";
 import Sell from "./Sell";
 import OrderKit from "./OrderKit";
+import SellRules from "./SellRules";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -13,6 +14,11 @@ export default class RenderRoutes extends React.Component {
           <Route path="/" exact={true} render={() => <App />} />
           <Route path="/sell" exact={true} render={() => <Sell />} />
           <Route path="/sell/kit" exact={true} render={() => <OrderKit />} />
+          <Route
+            path="/sell/rules"
+            exact={false}
+            render={() => <SellRules />}
+          />
         </Router>
       );
     } else {
@@ -21,6 +27,11 @@ export default class RenderRoutes extends React.Component {
           <Route path="/" exact={true} render={() => <App />} />
           <Route path="/sell" exact={true} render={() => <Sell />} />
           <Route path="/sell/kit" exact={true} render={() => <OrderKit />} />
+          <Route
+            path="/sell/rules"
+            exact={false}
+            render={() => <SellRules />}
+          />
         </Router>
       );
     }
