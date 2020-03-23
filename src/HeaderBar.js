@@ -4,6 +4,7 @@ import search from "./images/search.svg";
 import * as firebase from "firebase";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import "./css/HeaderBar.css";
+import Logo from "./images/test.png";
 
 export default class HeaderBar extends React.Component {
   render() {
@@ -12,7 +13,6 @@ export default class HeaderBar extends React.Component {
       <div>
         <div
           style={{
-            padding: 10,
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
@@ -21,7 +21,8 @@ export default class HeaderBar extends React.Component {
             borderBottomStyle: "solid"
           }}
         >
-          <div
+          <Link
+            to="/"
             style={{
               marginRight: 20,
               display: "flex",
@@ -29,8 +30,8 @@ export default class HeaderBar extends React.Component {
               alignItems: "center"
             }}
           >
-            Repurpose
-          </div>
+            <img style={{ width: 120, height: 80 }} src={Logo} />
+          </Link>
           <Link
             to="/"
             style={{
@@ -60,81 +61,108 @@ export default class HeaderBar extends React.Component {
               color: "black",
               justifyContent: "center",
               backgroundColor: path === "/sell" ? "#e8e8e8" : "#ffffff",
-              marginRight: 20,
+              marginRight: 50,
               borderRadius: 5
             }}
           >
             Sell
           </Link>
-          <Input
-            id="address-input"
-            onBlur={() => this.focusSearch(false)}
-            onFocus={() => this.focusSearch(true)}
-            placeholder="Search for anything"
-            style={{ width: 400, marginRight: 30 }}
-          />
-          <Select id="category" defaultValue={"All Categories"}>
-            <MenuItem value={"All Categories"}>All Categories</MenuItem>
-            <MenuItem value={"Antiques"}>Antiques</MenuItem>
-            <MenuItem value={"Art"}>Art</MenuItem>
-            <MenuItem value={"Baby"}>Baby</MenuItem>
-            <MenuItem value={"Books"}>Books</MenuItem>
-            <MenuItem value={"Cameras & Photo"}>{"Cameras & Photo"}</MenuItem>
-            <MenuItem value={"Cell Phones & Accessories"}>
-              {"Cell Phones & Accessories"}
-            </MenuItem>
-            <MenuItem value={"Clothing, Shoes, & Accessories"}>
-              {"Clothing, Shoes, & Accessories"}
-            </MenuItem>
-            <MenuItem value={"Coins & Paper Money"}>
-              {"Coins & Paper Money"}
-            </MenuItem>
-            <MenuItem value={"Collectibles"}>Collectibles</MenuItem>
-            <MenuItem value={"Computers & Tablets"}>
-              {"Computers & Tablets"}
-            </MenuItem>
-            <MenuItem value={"Consumer Electronics"}>
-              Consumer Electronics
-            </MenuItem>
-            <MenuItem value={"Crafts / Arts & Crafts"}>
-              {"Crafts / Arts & Crafts"}
-            </MenuItem>
-            <MenuItem value={"Dolls & Bears"}>{"Dolls & Bears"}</MenuItem>
-            <MenuItem value={"Gift Cards & Coupons"}>
-              {"Gift Cards & Coupons"}
-            </MenuItem>
-            <MenuItem value={"Health & Beauty"}>{"Health & Beauty"}</MenuItem>
-            <MenuItem value={"Home & Garden"}>{"Home & Garden"}</MenuItem>
-            <MenuItem value={"Jewelry & Watches"}>
-              {"Jewelry & Watches"}
-            </MenuItem>
-            <MenuItem value={"Musical Instruments & Gear"}>
-              {"Musical Instruments & Gear"}
-            </MenuItem>
-            <MenuItem value={"Pet Supplies"}>{"Pet Supplies"}</MenuItem>
-            <MenuItem value={"Pottery & Glass"}>{"Pottery & Glass"}</MenuItem>
-            <MenuItem value={"Sporting Goods"}>{"Sporting Goods"}</MenuItem>
-            <MenuItem value={"Toys & Hobbies"}>{"Toys & Hobbies"}</MenuItem>
-            <MenuItem value={"Everything Else"}>{"Everything Else"}</MenuItem>
-          </Select>
           <div
-            id="search-button"
-            onClick={() => this.search()}
             style={{
-              marginLeft: 20,
-              borderRadius: 5,
-              width: 50,
-              height: 50,
-              backgroundColor: "#d1d1d1",
               display: "flex",
               justifyContent: "center",
-              minWidth: 50,
               alignItems: "center"
             }}
           >
-            <img src={search} style={{ width: 30, height: 30 }} />
+            <Input
+              id="address-input"
+              placeholder="Search for anything"
+              style={{ marginRight: 5, height: 40 }}
+            />
           </div>
-          <div style={{ width: "10%" }}></div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <Select
+              style={{ width: 130, height: 40 }}
+              id="category"
+              defaultValue={"All Categories"}
+            >
+              <MenuItem value={"All Categories"}>All Categories</MenuItem>
+              <MenuItem value={"Antiques"}>Antiques</MenuItem>
+              <MenuItem value={"Art"}>Art</MenuItem>
+              <MenuItem value={"Baby"}>Baby</MenuItem>
+              <MenuItem value={"Books"}>Books</MenuItem>
+              <MenuItem value={"Cameras & Photo"}>{"Cameras & Photo"}</MenuItem>
+              <MenuItem value={"Cell Phones & Accessories"}>
+                {"Cell Phones & Accessories"}
+              </MenuItem>
+              <MenuItem value={"Clothing, Shoes, & Accessories"}>
+                {"Clothing, Shoes, & Accessories"}
+              </MenuItem>
+              <MenuItem value={"Coins & Paper Money"}>
+                {"Coins & Paper Money"}
+              </MenuItem>
+              <MenuItem value={"Collectibles"}>Collectibles</MenuItem>
+              <MenuItem value={"Computers & Tablets"}>
+                {"Computers & Tablets"}
+              </MenuItem>
+              <MenuItem value={"Consumer Electronics"}>
+                Consumer Electronics
+              </MenuItem>
+              <MenuItem value={"Crafts / Arts & Crafts"}>
+                {"Crafts / Arts & Crafts"}
+              </MenuItem>
+              <MenuItem value={"Dolls & Bears"}>{"Dolls & Bears"}</MenuItem>
+              <MenuItem value={"Gift Cards & Coupons"}>
+                {"Gift Cards & Coupons"}
+              </MenuItem>
+              <MenuItem value={"Health & Beauty"}>{"Health & Beauty"}</MenuItem>
+              <MenuItem value={"Home & Garden"}>{"Home & Garden"}</MenuItem>
+              <MenuItem value={"Jewelry & Watches"}>
+                {"Jewelry & Watches"}
+              </MenuItem>
+              <MenuItem value={"Musical Instruments & Gear"}>
+                {"Musical Instruments & Gear"}
+              </MenuItem>
+              <MenuItem value={"Pet Supplies"}>{"Pet Supplies"}</MenuItem>
+              <MenuItem value={"Pottery & Glass"}>{"Pottery & Glass"}</MenuItem>
+              <MenuItem value={"Sporting Goods"}>{"Sporting Goods"}</MenuItem>
+              <MenuItem value={"Toys & Hobbies"}>{"Toys & Hobbies"}</MenuItem>
+              <MenuItem value={"Everything Else"}>{"Everything Else"}</MenuItem>
+            </Select>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <div
+              id="search-button"
+              onClick={() => this.search()}
+              style={{
+                marginLeft: 20,
+                borderRadius: 5,
+                width: 40,
+                height: 40,
+                backgroundColor: "#d1d1d1",
+                display: "flex",
+                justifyContent: "center",
+                minWidth: 30,
+                alignItems: "center",
+                marginRight: 50
+              }}
+            >
+              <img src={search} style={{ width: 20, height: 20 }} />
+            </div>
+          </div>
+          {/* <div style={{ width: "10%" }}></div> */}
           <div
             style={{
               display: "flex",
