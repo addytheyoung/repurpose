@@ -1,10 +1,13 @@
 import React from "react";
-import { Input, MenuItem, Select } from "@material-ui/core";
+import { Input, MenuItem, Select, Avatar } from "@material-ui/core";
 import search from "./images/search.svg";
 import * as firebase from "firebase";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import "./css/HeaderBar.css";
 import Logo from "./images/test.png";
+import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
+import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
+import Shop from "./Shop";
 
 export default class HeaderBar extends React.Component {
   render() {
@@ -192,7 +195,9 @@ export default class HeaderBar extends React.Component {
               marginRight: 20
             }}
           >
-            Profile
+            <AccountCircleOutlinedIcon
+              style={{ width: 40, height: 40 }}
+            ></AccountCircleOutlinedIcon>
           </a>
           <a
             href="/cart"
@@ -205,22 +210,37 @@ export default class HeaderBar extends React.Component {
               marginRight: 20
             }}
           >
-            Cart
+            <ShoppingCartOutlinedIcon
+              style={{ width: 40, height: 40 }}
+            ></ShoppingCartOutlinedIcon>
           </a>
-          <a
-            href="/checkout"
+          <div
             style={{
               display: "flex",
-              textDecoration: "none",
-              color: "black",
-              alignItems: "center",
               justifyContent: "center",
-
-              minWidth: 100
+              alignItems: "center"
             }}
           >
-            Check out
-          </a>
+            <a
+              id="header-checkout"
+              href="/checkout"
+              style={{
+                display: "flex",
+                textDecoration: "none",
+                backgroundColor: "#a1a1a1",
+                borderRadius: 5,
+                padding: 10,
+                height: 20,
+                fontWeight: 600,
+                color: "white",
+                alignItems: "center",
+                justifyContent: "center",
+                minWidth: 100
+              }}
+            >
+              CHECK OUT
+            </a>
+          </div>
           {/* {!firebase.auth().currentUser && (
             <div style={{ display: "flex", flexDirection: "row" }}>
               <div

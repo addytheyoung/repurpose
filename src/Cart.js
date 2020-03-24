@@ -387,7 +387,8 @@ export default class Cart extends React.Component {
               <div>{"$" + total}</div>
             </div>
 
-            <div
+            <a
+              href="/checkout"
               id="checkout"
               style={{
                 marginTop: 40,
@@ -406,7 +407,7 @@ export default class Cart extends React.Component {
               }}
             >
               CHECK OUT
-            </div>
+            </a>
           </div>
         </div>
       </div>

@@ -10,3 +10,8 @@
 #search-button:hover {
   cursor: pointer;
 }
+
+#header-checkout:hover {
+  opacity: 0.8;
+  transition-duration: 0.2s;
+}
