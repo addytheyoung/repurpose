@@ -13,7 +13,7 @@ export default class Buy extends React.Component {
       { picture: Books, name: "Books", link: "books" },
       { picture: Books, name: "Electronics", link: "electronics" },
       { picture: Books, name: "Health & Beauty", link: "health" },
-      { picture: Books, name: "Home & Garden", link: "garden" },
+      { picture: Books, name: "Home & Garden", link: "home" },
       { picture: Books, name: "Fashion", link: "fashion" },
       { picture: Books, name: "Sporting Goods", link: "sports" },
       { picture: Books, name: "Toys", link: "toys" }
@@ -80,6 +80,6 @@ export default class Buy extends React.Component {
   }
 
   goToCategory(cat) {
-    window.location.href = cat.link;
+    window.location.href = "/shop/" + cat.link;
   }
 }

@@ -1,0 +1,4 @@
+#bar div:hover {
+  border-color: black !important;
+  cursor: pointer;
+}

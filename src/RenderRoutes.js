@@ -5,6 +5,7 @@ import Buy from "./Buy";
 import Sell from "./Sell";
 import OrderKit from "./OrderKit";
 import SellRules from "./SellRules";
+import Shop from "./Shop";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -14,6 +15,7 @@ export default class RenderRoutes extends React.Component {
           <Route path="/" exact={true} render={() => <Buy />} />
           <Route path="/sell" exact={true} render={() => <Sell />} />
           <Route path="/sell/kit" exact={true} render={() => <OrderKit />} />
+          <Route path="/shop" exact={false} render={() => <Shop />} />
           <Route
             path="/sell/rules"
             exact={false}
@@ -27,6 +29,7 @@ export default class RenderRoutes extends React.Component {
           <Route path="/" exact={true} render={() => <Buy />} />
           <Route path="/sell" exact={true} render={() => <Sell />} />
           <Route path="/sell/kit" exact={true} render={() => <OrderKit />} />
+          <Route path="/shop" exact={false} render={() => <Shop />} />
           <Route
             path="/sell/rules"
             exact={false}
