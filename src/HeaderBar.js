@@ -181,29 +181,38 @@ export default class HeaderBar extends React.Component {
             </div>
           </div>
           {/* <div style={{ width: "10%" }}></div> */}
-          <div
+          <a
+            href="/profile"
             style={{
               display: "flex",
+              textDecoration: "none",
+              color: "black",
               alignItems: "center",
               justifyContent: "center",
               marginRight: 20
             }}
           >
             Profile
-          </div>
-          <div
+          </a>
+          <a
+            href="/cart"
             style={{
               display: "flex",
+              textDecoration: "none",
+              color: "black",
               alignItems: "center",
               justifyContent: "center",
               marginRight: 20
             }}
           >
             Cart
-          </div>
-          <div
+          </a>
+          <a
+            href="/checkout"
             style={{
               display: "flex",
+              textDecoration: "none",
+              color: "black",
               alignItems: "center",
               justifyContent: "center",
 
@@ -211,7 +220,7 @@ export default class HeaderBar extends React.Component {
             }}
           >
             Check out
-          </div>
+          </a>
           {/* {!firebase.auth().currentUser && (
             <div style={{ display: "flex", flexDirection: "row" }}>
               <div

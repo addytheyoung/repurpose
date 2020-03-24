@@ -22,7 +22,8 @@ export default class Shop extends React.Component {
       category: category,
       minPrice: null,
       maxPrice: null,
-      modal: null
+      modal: null,
+      addingToCart: false
     };
 
     firebase
@@ -205,7 +206,8 @@ export default class Shop extends React.Component {
                             fontWeight: 500
                           }}
                         >
-                          ADD TO CART
+                          {!this.state.addingToCart && "ADD TO CART"}
+                          {this.state.addingToCart && "Adding..."}
                         </div>
                       </div>
                     </div>
@@ -349,5 +351,30 @@ export default class Shop extends React.Component {
 
   addToCart(item) {
     console.log(item);
+    this.setState({
+      addingToCart: true
+    });
+
+    firebase
+      .firestore()
+      .collection("Users")
+      .doc("aty268")
+      .get()
+      .then(me => {
+        const myCart = me.data().cart;
+        myCart.push(item);
+        firebase
+          .firestore()
+          .collection("Users")
+          .doc("aty268")
+          .update({
+            cart: myCart
+          })
+          .then(() => {
+            this.setState({
+              modal: null
+            });
+          });
+      });
   }
 }

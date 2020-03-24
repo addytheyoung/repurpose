@@ -1,0 +1,26 @@
+#box:hover {
+  cursor: pointer;
+}
+
+#close:hover {
+  cursor: pointer;
+}
+
+#bin:hover {
+  cursor: pointer;
+}
+
+#shop:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition-duration: 0.2s;
+}
+
+#checkout:hover {
+  cursor: pointer;
+}
+
+#checkout {
+  margin-left: calc(30vw - 140px) !important;
+  margin-top: 60px !important;
+}
