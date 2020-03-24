@@ -80,6 +80,7 @@ export default class Buy extends React.Component {
   }
 
   goToCategory(cat) {
-    window.location.href = "/shop/" + cat.link;
+    // window.location.href = "/shop/" + cat.link;
+    window.open("http://localhost:3000/shop/" + cat.link, "_self");
   }
 }
