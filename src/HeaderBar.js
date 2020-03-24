@@ -30,10 +30,24 @@ export default class HeaderBar extends React.Component {
               justifyContent: "center",
               alignItems: "center",
               flexShrink: 0,
+              textDecoration: "none",
               overflow: "hidden"
             }}
           >
-            <img style={{ width: 120, height: 80 }} src={Logo} />
+            <div
+              style={{
+                width: 140,
+                fontWeight: 700,
+                height: 80,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontSize: 24,
+                color: "#7628dd"
+              }}
+            >
+              Re-Purpose
+            </div>
           </Link>
           <Link
             to="/"

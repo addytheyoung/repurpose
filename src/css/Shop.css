@@ -5,3 +5,9 @@
 #close:hover {
   cursor: pointer;
 }
+
+#add-to-cart:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition-duration: 0.2s;
+}

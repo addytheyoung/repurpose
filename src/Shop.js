@@ -150,9 +150,89 @@ export default class Shop extends React.Component {
                       })}
                     </div>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div>{this.state.modal.title}</div>
-                    <div>{"$" + this.state.modal.original_price}</div>
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "center"
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column"
+                      }}
+                    >
+                      <div
+                        style={{ fontSize: 22, fontWeight: 500, marginTop: 30 }}
+                      >
+                        {this.state.modal.title}
+                      </div>
+
+                      <div
+                        style={{
+                          marginTop: 100,
+                          fontWeight: 700,
+                          fontSize: 24,
+                          textAlign: "center"
+                        }}
+                      >
+                        {"$" + this.state.modal.original_price}
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          // alignItems: "center",
+                          width: "100%",
+                          height: "100%"
+                        }}
+                      >
+                        <div
+                          onClick={() => this.addToCart(this.state.modal)}
+                          id="add-to-cart"
+                          style={{
+                            backgroundColor: "#9a487d",
+                            marginTop: 30,
+                            borderRadius: 5,
+                            padding: 10,
+                            width: 150,
+                            height: 40,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            color: "#ffffff",
+                            fontWeight: 500
+                          }}
+                        >
+                          ADD TO CART
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    marginLeft: 20,
+                    fontSize: 20,
+                    marginTop: 20,
+                    fontWeight: 600
+                  }}
+                >
+                  Item Details
+                </div>
+                <div
+                  style={{
+                    marginTop: 10,
+                    marginLeft: 20,
+                    marginRight: 20,
+                    borderTopColor: "#a1a1a1",
+                    borderTopWidth: 1,
+                    borderTopStyle: "solid"
+                  }}
+                >
+                  <div style={{ marginTop: 5 }}>
+                    {this.state.modal.description}
                   </div>
                 </div>
               </div>
@@ -228,10 +308,10 @@ export default class Shop extends React.Component {
                     }}
                   ></img>
                   <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div style={{ fontSize: 18, fontWeight: 500 }}>
+                    <div style={{ fontSize: 18, fontWeight: 400 }}>
                       {item.title}
                     </div>
-                    <div style={{ marginTop: 5 }}>
+                    <div style={{ marginTop: 5, fontWeight: 600 }}>
                       {"$" + item.original_price}
                     </div>
                   </div>
@@ -265,5 +345,9 @@ export default class Shop extends React.Component {
     this.setState({
       modal: null
     });
+  }
+
+  addToCart(item) {
+    console.log(item);
   }
 }
