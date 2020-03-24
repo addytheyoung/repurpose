@@ -17,7 +17,9 @@ export default class Shop extends React.Component {
     this.state = {
       loaded: false,
       items: [],
-      category: category
+      category: category,
+      minPrice: null,
+      maxPrice: null
     };
 
     firebase
@@ -72,7 +74,7 @@ export default class Shop extends React.Component {
           }}
         >
           <FilterBar
-            updateFilter={e => this.updateFilter(e)}
+            updateFilter={(a, b) => this.updateFilter(a, b)}
             type={this.state.category}
           />
           <div
@@ -97,18 +99,32 @@ export default class Shop extends React.Component {
             }}
           >
             {this.state.items.map((item, index) => {
+              if (
+                (this.state.minPrice &&
+                  item.original_price < this.state.minPrice) ||
+                (this.state.maxPrice &&
+                  item.original_price > this.state.maxPrice)
+              ) {
+                return null;
+              }
               return (
                 <div
                   id="box"
                   style={{
-                    width: 200,
+                    width: 220,
                     marginLeft: 10,
                     marginRight: 10,
-                    height: 250,
-                    borderWidth: 1,
-                    borderStyle: "solid"
+                    height: 300
+                    // borderWidth: 1,
+                    // borderStyle: "solid"
                   }}
-                ></div>
+                >
+                  <img style={{ width: 220, height: 200 }}></img>
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div>{item.title}</div>
+                    <div>{"$" + item.original_price}</div>
+                  </div>
+                </div>
               );
             })}
           </div>
@@ -117,7 +133,12 @@ export default class Shop extends React.Component {
     );
   }
 
-  updateFilter(e) {
-    alert(e);
+  updateFilter(min, max) {
+    min = min.substring(1, min.length);
+    max = max.substring(1, max.length);
+    this.setState({
+      minPrice: min,
+      maxPrice: max
+    });
   }
 }

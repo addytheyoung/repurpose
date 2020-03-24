@@ -15,8 +15,8 @@ export default class FilterBar extends React.Component {
             marginLeft: 100
           }}
         >
-          <DialogPrice changePrice={e => this.changePrice(e)} />
-          <div
+          <DialogPrice changePrice={(min, max) => this.changePrice(min, max)} />
+          {/* <div
             onClick={() => this.changeDelivery()}
             id="delivery"
             style={{
@@ -45,14 +45,14 @@ export default class FilterBar extends React.Component {
             }}
           >
             Time on Site
-          </div>
+          </div> */}
         </div>
       </div>
     );
   }
 
-  changePrice(e) {
-    this.props.updateFilter(e);
+  changePrice(min, max) {
+    this.props.updateFilter(min, max);
   }
 
   changeDelivery() {}

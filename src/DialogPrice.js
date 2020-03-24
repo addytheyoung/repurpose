@@ -26,6 +26,8 @@ const useStyles = makeStyles({
 function SimpleDialog(props) {
   const classes = useStyles();
   const { onClose, selectedValue, open } = props;
+  const [min, setMin] = React.useState("$");
+  const [max, setMax] = React.useState("$");
 
   const handleClose = () => {
     onClose(selectedValue);
@@ -41,11 +43,81 @@ function SimpleDialog(props) {
       aria-labelledby="simple-dialog-title"
       open={open}
     >
-      <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
-      <Input />
-      <div onClick={() => saveContent(props)}>SAVE</div>
+      <div style={{ alignSelf: "center", textAlign: "center", marginTop: 30 }}>
+        Price
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          marginTop: 30,
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        <Input
+          value={min}
+          placeholder="Min price $"
+          type="text"
+          onChange={e => checkKey(e)}
+          style={{ width: 100, marginRight: 10, marginLeft: 100 }}
+        />
+        {"-"}
+        <Input
+          value={max}
+          placeholder="Max price $"
+          type="text"
+          onChange={e => checkKey(e, true)}
+          style={{ width: 100, marginLeft: 10, marginRight: 100 }}
+        />
+      </div>
+
+      <div
+        style={{
+          backgroundColor: "#a1a1a1",
+          padding: 10,
+          width: 100,
+          alignSelf: "center",
+          textAlign: "center",
+          borderRadius: 5,
+          marginTop: 50,
+          marginBottom: 50
+        }}
+        onClick={() => saveContent(props, min, max, handleClose)}
+      >
+        SAVE
+      </div>
     </Dialog>
   );
+
+  function checkKey(event, max) {
+    const val = event.target.value[event.target.value.toString().length - 1];
+    for (var i = 1; i < event.target.value.toString().length; i++) {
+      if (event.target.value.toString().charAt(i) == "$") {
+        return;
+      }
+    }
+    if (
+      event.target.value[0] == "$" &&
+      (val == "$" ||
+        val == 0 ||
+        val == 1 ||
+        val == 2 ||
+        val == 3 ||
+        val == 4 ||
+        val == 5 ||
+        val == 6 ||
+        val == 7 ||
+        val == 8 ||
+        val == 9)
+    ) {
+      if (max) {
+        setMax(event.target.value);
+      } else {
+        setMin(event.target.value);
+      }
+    }
+  }
 }
 
 SimpleDialog.propTypes = {
@@ -54,8 +126,13 @@ SimpleDialog.propTypes = {
   selectedValue: PropTypes.string.isRequired
 };
 
-function saveContent(props) {
-  props.changePrice(124);
+function saveContent(props, min, max, handleClose) {
+  if (max >= min) {
+    props.changePrice(min, max);
+    handleClose();
+  } else {
+    alert("Bad price");
+  }
 }
 
 export default function SimpleDialogDemo(props) {
