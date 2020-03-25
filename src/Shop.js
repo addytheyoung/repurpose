@@ -42,7 +42,7 @@ export default class Shop extends React.Component {
             this.setState({
               items: itemArr,
               loaded: true,
-              modal: itemArr[0]
+              modal: null
             });
           }
         }

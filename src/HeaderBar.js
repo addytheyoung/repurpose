@@ -160,7 +160,44 @@ export default class HeaderBar extends React.Component {
                     </div>
                   </div>
                 )}
-                {!singedin && this.state.retUser && <div>RET USER</div>}
+                {!singedin && this.state.retUser && (
+                  <div>
+                    {" "}
+                    <div>
+                      <div
+                        style={{ fontSize: 20, fontWeight: 600, marginTop: 20 }}
+                      >
+                        Welcome back! What is your password?
+                      </div>
+                      <Input
+                        id="pass"
+                        type="password"
+                        placeholder="Password"
+                        style={{ width: 300, marginTop: 30 }}
+                      />
+                      <div
+                        onClick={() => this.login()}
+                        id="start-shopping"
+                        style={{
+                          backgroundColor: "#a1a1a1",
+                          borderRadius: 5,
+                          padding: 10,
+                          height: 30,
+                          width: 300,
+                          color: "white",
+                          fontWeight: 600,
+                          marginTop: 10,
+                          marginBottom: 10,
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center"
+                        }}
+                      >
+                        START SHOPPING
+                      </div>
+                    </div>
+                  </div>
+                )}
                 {singedin && !this.state.logout && (
                   <div
                     style={{
@@ -522,25 +559,48 @@ export default class HeaderBar extends React.Component {
               alignItems: "center"
             }}
           >
-            <a
-              id="header-checkout"
-              href="/checkout"
-              style={{
-                display: "flex",
-                textDecoration: "none",
-                backgroundColor: "#a1a1a1",
-                borderRadius: 5,
-                padding: 10,
-                height: 20,
-                fontWeight: 600,
-                color: "white",
-                alignItems: "center",
-                justifyContent: "center",
-                minWidth: 100
-              }}
-            >
-              CHECK OUT
-            </a>
+            {!singedin && (
+              <div
+                onClick={() => this.showProfileModal()}
+                id="header-checkout"
+                style={{
+                  display: "flex",
+                  textDecoration: "none",
+                  backgroundColor: "#a1a1a1",
+                  borderRadius: 5,
+                  padding: 10,
+                  height: 20,
+                  fontWeight: 600,
+                  color: "white",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  minWidth: 100
+                }}
+              >
+                CHECK OUT
+              </div>
+            )}
+            {singedin && (
+              <a
+                id="header-checkout"
+                href="/checkout"
+                style={{
+                  display: "flex",
+                  textDecoration: "none",
+                  backgroundColor: "#a1a1a1",
+                  borderRadius: 5,
+                  padding: 10,
+                  height: 20,
+                  fontWeight: 600,
+                  color: "white",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  minWidth: 100
+                }}
+              >
+                CHECK OUT
+              </a>
+            )}
           </div>
         </div>
       </div>
@@ -589,12 +649,16 @@ export default class HeaderBar extends React.Component {
 
   setPassword() {
     const email = this.state.email;
-    console.log(email);
     const pass = document.getElementById("pass").value;
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, pass)
       .then(r => {
+        this.state.logout = false;
+        this.state.email = false;
+        this.state.newUser = false;
+        this.state.retUser = false;
+        this.state.profile = false;
         firebase
           .firestore()
           .collection("Users")
@@ -605,8 +669,32 @@ export default class HeaderBar extends React.Component {
             sales: []
           })
           .then(() => {
+            this.state.logout = false;
+            this.state.email = false;
+            this.state.newUser = false;
+            this.state.retUser = false;
+            this.state.profile = false;
             window.location.reload();
           });
+      })
+      .catch(e => {
+        alert(e.message);
+      });
+  }
+
+  login() {
+    const email = this.state.email;
+    const pass = document.getElementById("pass").value;
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, pass)
+      .then(r => {
+        this.state.logout = false;
+        this.state.email = false;
+        this.state.newUser = false;
+        this.state.retUser = false;
+        this.state.profile = false;
+        window.location.reload();
       })
       .catch(e => {
         alert(e.message);
@@ -627,7 +715,10 @@ export default class HeaderBar extends React.Component {
   closeModal(e) {
     this.setState({
       profile: false,
-      logout: false
+      logout: false,
+      email: false,
+      newUser: false,
+      retUser: false
     });
   }
 
@@ -636,6 +727,11 @@ export default class HeaderBar extends React.Component {
       .auth()
       .signOut()
       .then(() => {
+        this.state.logout = false;
+        this.state.email = false;
+        this.state.newUser = false;
+        this.state.retUser = false;
+        this.state.profile = false;
         window.location.href = "/";
       });
   }
