@@ -8,12 +8,309 @@ import Logo from "./images/test.png";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 import Shop from "./Shop";
+import Close from "./images/close.png";
 
 export default class HeaderBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      profile: false,
+      logout: false,
+      newUser: false,
+      retUser: false,
+      email: ""
+    };
+  }
   render() {
+    const singedin = !!firebase.auth().currentUser;
+    const signedModal = !singedin && !this.state.newUser && !this.state.retUser;
     const path = window.location.pathname;
     return (
       <div>
+        {this.state.profile && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center"
+
+              // alignItems: "center"
+            }}
+          >
+            <div
+              onClick={e => this.closeModal(e)}
+              style={{
+                backgroundColor: "#000000",
+                opacity: 0.5,
+                zIndex: 99,
+                width: "100vw",
+                height: "100vh",
+                position: "fixed"
+              }}
+            ></div>
+            <div
+              style={{
+                width: "30vw",
+                borderRadius: 5,
+                height: "40vh",
+                top: 30,
+                backgroundColor: "#f5f5f5",
+                position: "fixed",
+                zIndex: 100,
+                opacity: 1
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center"
+                }}
+              >
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "flex-end"
+                  }}
+                >
+                  <img
+                    id="close"
+                    onClick={() => this.closeModal()}
+                    src={Close}
+                    style={{
+                      width: 20,
+                      height: 20,
+                      marginTop: 20,
+                      marginRight: 20
+                    }}
+                  />
+                </div>
+                {signedModal && (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center"
+                    }}
+                  >
+                    <div style={{ fontSize: 20, fontWeight: 600 }}>
+                      Make an account
+                    </div>
+                    <Input
+                      id="email"
+                      placeholder="Enter your email"
+                      style={{ width: 300, marginTop: 20 }}
+                    />
+                    <div
+                      onClick={() => this.startShopping()}
+                      id="start-shopping"
+                      style={{
+                        backgroundColor: "#a1a1a1",
+                        borderRadius: 5,
+                        padding: 10,
+                        height: 30,
+                        width: 300,
+                        color: "white",
+                        fontWeight: 600,
+                        marginTop: 10,
+                        marginBottom: 10,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      START SHOPPING
+                    </div>
+                  </div>
+                )}
+                {!singedin && this.state.newUser && (
+                  <div>
+                    <div
+                      style={{ fontSize: 20, fontWeight: 600, marginTop: 20 }}
+                    >
+                      What will your password be?
+                    </div>
+                    <Input
+                      id="pass"
+                      type="password"
+                      placeholder="Password"
+                      style={{ width: 300, marginTop: 30 }}
+                    />
+                    <div
+                      onClick={() => this.setPassword()}
+                      id="start-shopping"
+                      style={{
+                        backgroundColor: "#a1a1a1",
+                        borderRadius: 5,
+                        padding: 10,
+                        height: 30,
+                        width: 300,
+                        color: "white",
+                        fontWeight: 600,
+                        marginTop: 10,
+                        marginBottom: 10,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      START SHOPPING
+                    </div>
+                  </div>
+                )}
+                {!singedin && this.state.retUser && <div>RET USER</div>}
+                {singedin && !this.state.logout && (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column"
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontSize: 22,
+                        fontWeight: 600,
+                        marginBottom: 20
+                      }}
+                    >
+                      Profile
+                    </div>
+                    <div
+                      id="my-orders"
+                      style={{
+                        backgroundColor: "#a1a1a1",
+                        borderRadius: 5,
+                        padding: 10,
+                        height: 30,
+                        width: 100,
+                        color: "white",
+                        fontWeight: 600,
+                        marginTop: 10,
+                        marginBottom: 10,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      MY ORDERS
+                    </div>
+                    <div
+                      id="my-sales"
+                      style={{
+                        backgroundColor: "#a1a1a1",
+                        borderRadius: 5,
+                        padding: 10,
+                        height: 30,
+                        width: 100,
+                        color: "white",
+                        fontWeight: 600,
+                        marginTop: 10,
+                        marginBottom: 10,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      MY SALES
+                    </div>
+                    <div
+                      onClick={() =>
+                        this.setState({
+                          logout: true
+                        })
+                      }
+                      id="logout"
+                      style={{
+                        backgroundColor: "#a1a1a1",
+                        borderRadius: 5,
+                        padding: 10,
+                        height: 30,
+                        width: 100,
+                        color: "white",
+                        fontWeight: 600,
+                        marginTop: 10,
+                        marginBottom: 10,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      LOG OUT
+                    </div>
+                  </div>
+                )}
+                {this.state.logout && (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column"
+                    }}
+                  >
+                    <div style={{ fontSize: 22, fontWeight: 600 }}>
+                      Are you sure you want to logout?
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        marginTop: 20
+                      }}
+                    >
+                      <div
+                        id="logout-yes"
+                        onClick={() => this.logout()}
+                        style={{
+                          backgroundColor: "#a1a1a1",
+                          borderRadius: 5,
+                          padding: 10,
+                          height: 30,
+                          width: 100,
+                          color: "white",
+                          fontWeight: 600,
+                          marginTop: 10,
+                          marginBottom: 10,
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          marginRight: 10
+                        }}
+                      >
+                        YES
+                      </div>
+                      <div
+                        id="logout-no"
+                        onClick={() => this.closeModal()}
+                        style={{
+                          marginLeft: 10,
+                          backgroundColor: "#a1a1a1",
+                          borderRadius: 5,
+                          padding: 10,
+                          height: 30,
+                          width: 100,
+                          color: "white",
+                          fontWeight: 600,
+                          marginTop: 10,
+                          marginBottom: 10,
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center"
+                        }}
+                      >
+                        CANCEL
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
         <div
           style={{
             display: "flex",
@@ -39,7 +336,7 @@ export default class HeaderBar extends React.Component {
           >
             <div
               style={{
-                width: 140,
+                width: 160,
                 fontWeight: 700,
                 height: 80,
                 display: "flex",
@@ -49,39 +346,41 @@ export default class HeaderBar extends React.Component {
                 color: "#7628dd"
               }}
             >
-              Re-Purpose
+              Collection
             </div>
           </Link>
           <Link
+            id="buy-link"
             to="/"
             style={{
               display: "flex",
               fontSize: 24,
-              fontWeight: 500,
+              fontWeight: path === "/" || path.includes("shop") ? 600 : 500,
               alignItems: "center",
               minWidth: 80,
               textDecoration: "none",
               color: "black",
               justifyContent: "center",
               backgroundColor:
-                path === "/" || path.includes("shop") ? "#e8e8e8" : "#ffffff",
+                path === "/" || path.includes("shop") ? "#d8d8d8" : "#ffffff",
               borderRadius: 5
             }}
           >
             Buy
           </Link>
           <Link
+            id="sell-link"
             to="/sell"
             style={{
               display: "flex",
               fontSize: 24,
-              fontWeight: 500,
+              fontWeight: path.includes("sell") ? 600 : 500,
               alignItems: "center",
               minWidth: 80,
               textDecoration: "none",
               color: "black",
               justifyContent: "center",
-              backgroundColor: path.includes("sell") ? "#e8e8e8" : "#ffffff",
+              backgroundColor: path.includes("sell") ? "#d8d8d8" : "#ffffff",
               marginRight: 50,
               borderRadius: 5
             }}
@@ -184,8 +483,10 @@ export default class HeaderBar extends React.Component {
             </div>
           </div>
           {/* <div style={{ width: "10%" }}></div> */}
-          <a
-            href="/profile"
+          <div
+            // href="/profile"
+            id="profile-button"
+            onClick={() => this.showProfileModal()}
             style={{
               display: "flex",
               textDecoration: "none",
@@ -198,7 +499,7 @@ export default class HeaderBar extends React.Component {
             <AccountCircleOutlinedIcon
               style={{ width: 40, height: 40 }}
             ></AccountCircleOutlinedIcon>
-          </a>
+          </div>
           <a
             href="/cart"
             style={{
@@ -241,25 +542,101 @@ export default class HeaderBar extends React.Component {
               CHECK OUT
             </a>
           </div>
-          {/* {!firebase.auth().currentUser && (
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
-                Profile
-              </div>
-            </div>
-          )} */}
         </div>
       </div>
     );
   }
 
+  startShopping() {
+    const email = document.getElementById("email").value;
+    if (!this.checkEmail(email)) {
+      return;
+    }
+    firebase
+      .firestore()
+      .collection("Users")
+      .doc(email)
+      .get()
+      .then(user => {
+        if (!user.exists) {
+          // New account, render that screen.
+
+          this.setState({
+            newUser: true,
+            email: email
+          });
+        } else {
+          // Returning user
+          this.setState({
+            retUser: true,
+            email: email
+          });
+        }
+      });
+  }
+
+  checkEmail(email) {
+    if (!email) {
+      alert("Bad email");
+      return false;
+    }
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return true;
+    }
+    alert("Bad email");
+    return false;
+  }
+
+  setPassword() {
+    const email = this.state.email;
+    console.log(email);
+    const pass = document.getElementById("pass").value;
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, pass)
+      .then(r => {
+        firebase
+          .firestore()
+          .collection("Users")
+          .doc(email)
+          .set({
+            cart: [],
+            orders: [],
+            sales: []
+          })
+          .then(() => {
+            window.location.reload();
+          });
+      })
+      .catch(e => {
+        alert(e.message);
+      });
+  }
+
   search() {
     alert("search");
+  }
+
+  showProfileModal() {
+    this.setState({
+      profile: true,
+      logout: false
+    });
+  }
+
+  closeModal(e) {
+    this.setState({
+      profile: false,
+      logout: false
+    });
+  }
+
+  logout() {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        window.location.href = "/";
+      });
   }
 }

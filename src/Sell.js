@@ -19,7 +19,7 @@ export default class Sell extends React.Component {
             }}
           >
             <div style={{ fontSize: 26, fontWeight: 600, letterSpacing: 0 }}>
-              Send us (almost) anything!
+              We buy almost everything!
             </div>
             <div
               style={{ display: "flex", flexDirection: "row", marginTop: 30 }}

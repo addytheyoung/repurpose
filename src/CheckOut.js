@@ -3,6 +3,12 @@ import HeaderBar from "./HeaderBar";
 import { Input } from "@material-ui/core";
 
 export default class CheckOut extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cardNumber: ""
+    };
+  }
   render() {
     return (
       <div>
@@ -24,9 +30,9 @@ export default class CheckOut extends React.Component {
               color: "#7628dd"
             }}
           >
-            Re-Purpose
+            Collection
           </div>
-          <div style={{ display: "flex", flexDirection: "row" }}>
+          <div style={{ display: "flex", flexDirection: "row", marginTop: 10 }}>
             <div
               style={{
                 display: "flex",
@@ -35,8 +41,14 @@ export default class CheckOut extends React.Component {
               }}
             >
               <div style={{ display: "flex", flexDirection: "row" }}>
-                <Input />
-                <Input />
+                <Input
+                  onChange={e => this.updateCardNumber(e)}
+                  id="card-number"
+                  value={this.state.cardNumber}
+                  placeholder="Credit Card Number"
+                  style={{ width: 300, marginRight: 10, marginLeft: 10 }}
+                />
+                <Input placeholder="Security Code" />
               </div>
             </div>
             <div
@@ -54,5 +66,9 @@ export default class CheckOut extends React.Component {
         </div>
       </div>
     );
+  }
+
+  updateCardNumber(e) {
+    console.log(e);
   }
 }

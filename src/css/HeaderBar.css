@@ -7,6 +7,12 @@
   width: 400px !important;
 }
 
+#buy-link:hover,
+#sell-link:hover {
+  opacity: 0.4;
+  transition-duration: 0.2s;
+}
+
 #search-button:hover {
   cursor: pointer;
 }
@@ -14,4 +20,17 @@
 #header-checkout:hover {
   opacity: 0.8;
   transition-duration: 0.2s;
+}
+
+#profile-button:hover {
+  cursor: pointer;
+}
+
+#start-shopping:hover,
+#my-orders:hover,
+#my-sales:hover,
+#logout:hover,
+#logout-yes:hover,
+#logout-no:hover {
+  cursor: pointer;
 }
