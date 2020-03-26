@@ -6,6 +6,9 @@ import api from "./api";
 export default function CheckoutForm() {
   const [amount, setAmount] = useState(0);
   const [currency, setCurrency] = useState("");
+  const [description, setDescription] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
   const [clientSecret, setClientSecret] = useState(null);
   const [error, setError] = useState(null);
   const [metadata, setMetadata] = useState(null);
@@ -18,8 +21,12 @@ export default function CheckoutForm() {
     // Step 1: Fetch product details such as amount and currency from
     // API to make sure it can't be tampered with in the client.
     api.getProductDetails().then(productDetails => {
+      console.log(productDetails);
       setAmount(productDetails.amount / 100);
       setCurrency(productDetails.currency);
+      setDescription(productDetails.description);
+      setEmail(productDetails.email);
+      setAddress(productDetails.address);
     });
 
     // Step 2: Create PaymentIntent over Stripe API
@@ -58,6 +65,7 @@ export default function CheckoutForm() {
       setError(null);
       setSucceeded(true);
       setProcessing(false);
+      console.log(payload);
       setMetadata(payload.paymentIntent);
       console.log("[PaymentIntent]", payload.paymentIntent);
     }
@@ -125,9 +133,6 @@ export default function CheckoutForm() {
         </div>
 
         {error && <div className="message sr-field-error">{error}</div>}
-
-        {/* {console.log("Client")}
-        {console.log(clientSecret)} */}
 
         <button
           className="btn"

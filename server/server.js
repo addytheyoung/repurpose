@@ -1,10 +1,38 @@
 const env = require("dotenv").config({ path: "./.env" });
 const stripe = require("stripe")("sk_test_hkMGIPsjJ7Ag57pFz1eX0ASX00ijQ9oo1X");
-
+var admin = require("firebase-admin");
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+const Firestore = require("@google-cloud/firestore");
 const { resolve } = require("path");
+var serviceAccount = require("./key.json");
+
+// admin
+//   .firestore()
+//   .collection("Users")
+//   .doc("123@gmail.com")
+//   .get()
+//   .then(a => {
+//     console.log(a.data());
+//   });
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://repurpose-e523f.firebaseio.com"
+});
+
+admin
+  .firestore()
+  .collection("Users")
+  .doc("123@gmail.com")
+  .get()
+  .then(a => {
+    console.log(a.data());
+  })
+  .catch(e => {
+    console.log(e.message);
+  });
 
 app.use(bodyParser.json());
 app.use(
@@ -33,13 +61,28 @@ app.get("/product-details", (req, res) => {
 });
 
 app.post("/create-payment-intent", async (req, res) => {
+  // CUSTOMERS
+  stripe.customers.create(
+    {
+      description: "My First Test Customer (created for API docs)"
+    },
+    function(err, customer) {
+      if (err) {
+      } else {
+      }
+
+      // asynchronously called
+    }
+  );
+
   const body = req.body;
   const productDetails = getProductDetails();
 
   const options = {
     ...body,
     amount: productDetails.amount,
-    currency: productDetails.currency
+    currency: productDetails.currency,
+    description: productDetails.description
   };
 
   try {
@@ -51,7 +94,11 @@ app.post("/create-payment-intent", async (req, res) => {
 });
 
 let getProductDetails = () => {
-  return { currency: "usd", amount: 900, description: "......." };
+  return {
+    currency: "usd",
+    amount: 900,
+    description: "dqdqwdqwdq"
+  };
 };
 
 // Webhook handler for asynchronous events.

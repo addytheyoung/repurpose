@@ -8,8 +8,6 @@ const createPaymentIntent = options => {
       body: JSON.stringify(options)
     })
     .then(res => {
-      console.log(res);
-      console.log(res.url);
       if (res.status === 200) {
         return res.json();
       } else {
@@ -41,6 +39,7 @@ const getProductDetails = options => {
       }
     })
     .then(data => {
+      console.log(data);
       if (!data || data.error) {
         throw Error("API Error");
       } else {
@@ -58,7 +57,6 @@ const getPublicStripeKey = options => {
       }
     })
     .then(res => {
-      console.log("SDFSFSFD");
       if (res.status === 200) {
         return res.json();
       } else {
