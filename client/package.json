@@ -17,6 +17,7 @@
     "react-scripts": "3.4.1",
     "react-spinners": "^0.8.1"
   },
+  "proxy": "http://localhost:4242",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

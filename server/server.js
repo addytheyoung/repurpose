@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/public-key", (req, res) => {
-  res.send({ publicKey: process.env.STRIPE_PUBLISHABLE_KEY });
+  res.send({ publicKey: "pk_test_gLPSHkmFGwodXZBWMQabXaRr00jsYpn5GL" });
 });
 
 app.get("/product-details", (req, res) => {
@@ -51,7 +51,7 @@ app.post("/create-payment-intent", async (req, res) => {
 });
 
 let getProductDetails = () => {
-  return { currency: "EUR", amount: 9900 };
+  return { currency: "usd", amount: 900, description: "......." };
 };
 
 // Webhook handler for asynchronous events.
