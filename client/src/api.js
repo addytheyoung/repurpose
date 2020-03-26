@@ -9,6 +9,7 @@ const createPaymentIntent = options => {
     })
     .then(res => {
       console.log(res);
+      console.log(res.url);
       if (res.status === 200) {
         return res.json();
       } else {
@@ -16,9 +17,7 @@ const createPaymentIntent = options => {
       }
     })
     .then(data => {
-      console.log("DATA " + data);
       if (!data || data.error) {
-        console.log("API error:", { data });
         throw new Error("PaymentIntent API Error");
       } else {
         return data.client_secret;
@@ -43,7 +42,6 @@ const getProductDetails = options => {
     })
     .then(data => {
       if (!data || data.error) {
-        console.log("API error:", { data });
         throw Error("API Error");
       } else {
         return data;
@@ -60,7 +58,7 @@ const getPublicStripeKey = options => {
       }
     })
     .then(res => {
-      console.log("RES " + res);
+      console.log("SDFSFSFD");
       if (res.status === 200) {
         return res.json();
       } else {
@@ -68,7 +66,6 @@ const getPublicStripeKey = options => {
       }
     })
     .then(data => {
-      console.log("DATA " + data);
       if (!data || data.error) {
         console.log("API error:", { data });
         throw Error("API Error");

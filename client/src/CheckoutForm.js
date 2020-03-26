@@ -126,6 +126,9 @@ export default function CheckoutForm() {
 
         {error && <div className="message sr-field-error">{error}</div>}
 
+        {/* {console.log("Client")}
+        {console.log(clientSecret)} */}
+
         <button
           className="btn"
           disabled={processing || !clientSecret || !stripe}
