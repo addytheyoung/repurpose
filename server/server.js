@@ -8,6 +8,11 @@ const Firestore = require("@google-cloud/firestore");
 const { resolve } = require("path");
 var serviceAccount = require("./key.json");
 
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://repurpose-e523f.firebaseio.com"
+});
+
 // admin
 //   .firestore()
 //   .collection("Users")
@@ -15,24 +20,10 @@ var serviceAccount = require("./key.json");
 //   .get()
 //   .then(a => {
 //     console.log(a.data());
+//   })
+//   .catch(e => {
+//     console.log(e.message);
 //   });
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://repurpose-e523f.firebaseio.com"
-});
-
-admin
-  .firestore()
-  .collection("Users")
-  .doc("123@gmail.com")
-  .get()
-  .then(a => {
-    console.log(a.data());
-  })
-  .catch(e => {
-    console.log(e.message);
-  });
 
 app.use(bodyParser.json());
 app.use(
@@ -46,6 +37,20 @@ app.use(
     }
   })
 );
+
+app.get("/customer", (req, res) => {
+  stripe.customers.retrieve("cus_Gz1cqDiR9R8g7V", function(err, customer) {
+    console.log(customer);
+  });
+  // stripe.customers.create(
+  //   {
+  //     description: "My First Test Customer (created for API docs)"
+  //   },
+  //   function(err, customer) {
+  //     res.send(customer);
+  //   }
+  // );
+});
 
 app.get("/", (req, res) => {
   res.send("Hello from API");
@@ -61,20 +66,6 @@ app.get("/product-details", (req, res) => {
 });
 
 app.post("/create-payment-intent", async (req, res) => {
-  // CUSTOMERS
-  stripe.customers.create(
-    {
-      description: "My First Test Customer (created for API docs)"
-    },
-    function(err, customer) {
-      if (err) {
-      } else {
-      }
-
-      // asynchronously called
-    }
-  );
-
   const body = req.body;
   const productDetails = getProductDetails();
 

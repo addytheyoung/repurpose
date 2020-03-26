@@ -1,3 +1,27 @@
+const createCustomer = options => {
+  return window
+    .fetch(`/customer`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(res => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return null;
+      }
+    })
+    .then(data => {
+      if (!data || data.error) {
+        throw Error("API Error");
+      } else {
+        return data;
+      }
+    });
+};
+
 const createPaymentIntent = options => {
   return window
     .fetch(`/create-payment-intent`, {
@@ -39,7 +63,6 @@ const getProductDetails = options => {
       }
     })
     .then(data => {
-      console.log(data);
       if (!data || data.error) {
         throw Error("API Error");
       } else {
@@ -75,6 +98,7 @@ const getPublicStripeKey = options => {
 
 const api = {
   createPaymentIntent,
+  createCustomer: createCustomer,
   getPublicStripeKey: getPublicStripeKey,
   getProductDetails: getProductDetails
 };

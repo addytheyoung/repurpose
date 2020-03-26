@@ -3,7 +3,8 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import "./css/CheckoutForm.css";
 import api from "./api";
 
-export default function CheckoutForm() {
+export default function CheckoutForm(props) {
+  const signedIn = props.signedIn;
   const [amount, setAmount] = useState(0);
   const [currency, setCurrency] = useState("");
   const [description, setDescription] = useState("");
@@ -62,6 +63,10 @@ export default function CheckoutForm() {
       setProcessing(false);
       console.log("[error]", payload.error);
     } else {
+      // Create our customer!
+      api.createCustomer().then(e => {
+        const id = e.id;
+      });
       setError(null);
       setSucceeded(true);
       setProcessing(false);

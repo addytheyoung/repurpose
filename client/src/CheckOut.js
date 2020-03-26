@@ -4,6 +4,7 @@ import { Input } from "@material-ui/core";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CardSection from "./CardSection";
+import * as firebase from "firebase";
 import CheckoutForm from "./CheckoutForm";
 
 export default class CheckOut extends React.Component {
@@ -14,6 +15,7 @@ export default class CheckOut extends React.Component {
     };
   }
   render() {
+    const signedIn = !!firebase.auth().currentUser;
     return (
       <div>
         <div
@@ -29,9 +31,16 @@ export default class CheckOut extends React.Component {
         >
           Collection
         </div>
-        <div style={{ width: 500 }}>
-          <CheckoutForm />
-        </div>
+        {signedIn && (
+          <div style={{ width: 500, marginLeft: 20 }}>
+            <CheckoutForm signedIn={true} />
+          </div>
+        )}
+        {!signedIn && (
+          <div style={{ width: 500, marginLeft: 20 }}>
+            <CheckoutForm signedIn={false} />
+          </div>
+        )}
 
         <div
           style={{
