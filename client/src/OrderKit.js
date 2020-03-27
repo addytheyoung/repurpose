@@ -1,5 +1,6 @@
 import React from "react";
 import HeaderBar from "./HeaderBar";
+import * as firebase from "firebase";
 import "./css/OrderKit.css";
 import { Input, Select, MenuItem } from "@material-ui/core";
 
@@ -7,7 +8,8 @@ export default class OrderKit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      kit: "email"
+      kit: "email",
+      payment: "bank"
     };
   }
   render() {
@@ -24,7 +26,9 @@ export default class OrderKit extends React.Component {
               alignItems: "center"
             }}
           >
-            <div style={{ marginTop: 30 }}>YOUR SELLING KIT</div>
+            <div style={{ marginTop: 30, fontSize: 22, fontWeight: 600 }}>
+              Your selling kit
+            </div>
             <div
               style={{
                 width: "40vw",
@@ -75,6 +79,7 @@ export default class OrderKit extends React.Component {
                     </div>
                   )}
                 </div>
+
                 <div style={{ width: "100%" }}></div>
                 <div
                   id="email"
@@ -95,7 +100,7 @@ export default class OrderKit extends React.Component {
                     borderColor:
                       this.state.kit === "email" ? "#48d6db" : "#eaeaea"
                   }}
-                  onClick={() => this.setKit("email")}
+                  onClick={() => this.setKit("email", 1)}
                 >
                   Email Shipping Label
                 </div>
@@ -117,11 +122,100 @@ export default class OrderKit extends React.Component {
                     borderColor:
                       this.state.kit === "box" ? "#48d6db" : "#eaeaea"
                   }}
-                  onClick={() => this.setKit("box")}
+                  onClick={() => this.setKit("box", 1)}
                 >
                   Mail a Box
                 </div>
               </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "15vh",
+                  borderBottomWidth: 1,
+                  borderBottomStyle: "solid",
+                  borderBottomColor: "#999999"
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                    minWidth: 300
+                  }}
+                >
+                  <div
+                    style={{
+                      fontWeight: 500,
+                      paddingLeft: 10,
+                      marginBottom: 5
+                    }}
+                  >
+                    Payment type (More coming soon)
+                  </div>
+                  {this.state.payment === "cash" && (
+                    <div style={{ color: "#a1a1a1", paddingLeft: 10 }}>
+                      I want to be mailed cash.
+                    </div>
+                  )}
+                  {this.state.payment === "bank" && (
+                    <div style={{ color: "#a1a1a1", paddingLeft: 10 }}>
+                      I want cash directly in my bank account.
+                    </div>
+                  )}
+                </div>
+
+                <div style={{ width: "100%" }}></div>
+                <div
+                  id="cash"
+                  style={{
+                    backgroundColor:
+                      this.state.kit === "cash" ? "#ffffff" : "#f1f1f1",
+
+                    fontWeight: this.state.payment === "cash" ? 500 : 400,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: "50%",
+                    padding: 10,
+                    minWidth: 150,
+                    borderWidth: 2,
+                    borderStyle: "solid",
+                    borderRadius: 5,
+                    borderColor:
+                      this.state.payment === "cash" ? "#48d6db" : "#eaeaea"
+                  }}
+                  onClick={() => this.setKit("cash", 2)}
+                >
+                  Mail me cash
+                </div>
+                <div
+                  id="bank"
+                  style={{
+                    backgroundColor:
+                      this.state.payment === "bank" ? "#ffffff" : "#f1f1f1",
+                    fontWeight: this.state.payment === "bank" ? 500 : 400,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: 10,
+                    height: "50%",
+                    minWidth: 150,
+                    borderWidth: 2,
+                    borderStyle: "solid",
+                    borderRadius: 5,
+                    borderColor:
+                      this.state.payment === "bank" ? "#48d6db" : "#eaeaea"
+                  }}
+                  onClick={() => this.setKit("bank", 2)}
+                >
+                  Bank deposit
+                </div>
+              </div>
+
               <div style={{ margin: 10 }}>
                 <div style={{ marginTop: 10, fontWeight: 500, fontSize: 18 }}>
                   Your shipping address
@@ -143,7 +237,7 @@ export default class OrderKit extends React.Component {
                     }}
                   >
                     <div>Full Name</div>
-                    <Input placeholder={"First Last"} />
+                    <Input id="name" placeholder={"First Last"} />
                   </div>
                   <div
                     style={{
@@ -154,7 +248,10 @@ export default class OrderKit extends React.Component {
                     }}
                   >
                     <div>Address Line 1</div>
-                    <Input placeholder={"Street Address, PO Box"} />
+                    <Input
+                      id="address1"
+                      placeholder={"Street Address, PO Box"}
+                    />
                   </div>
                   <div
                     style={{
@@ -165,7 +262,10 @@ export default class OrderKit extends React.Component {
                     }}
                   >
                     <div>Apt, Suite, Unit, etc.</div>
-                    <Input placeholder={"Apt, Suite, Unit, Building, Floor"} />
+                    <Input
+                      id="address2"
+                      placeholder={"Apt, Suite, Unit, Building, Floor"}
+                    />
                   </div>
                 </div>
                 <div
@@ -185,7 +285,7 @@ export default class OrderKit extends React.Component {
                     }}
                   >
                     <div>City</div>
-                    <Input placeholder={"City"} />
+                    <Input id="city" placeholder={"City"} />
                   </div>
                   <div
                     style={{
@@ -196,7 +296,7 @@ export default class OrderKit extends React.Component {
                     }}
                   >
                     <div>State</div>
-                    <Select>
+                    <Select id="state">
                       <MenuItem value="AK">AK</MenuItem>
                       <MenuItem value="AL">AL</MenuItem>
                       <MenuItem value="AR">AR</MenuItem>
@@ -258,7 +358,7 @@ export default class OrderKit extends React.Component {
                     }}
                   >
                     <div>Zip Code</div>
-                    <Input placeholder={"Zip Code"} />
+                    <Input id="zip" placeholder={"Zip Code"} />
                   </div>
                 </div>
               </div>
@@ -283,19 +383,71 @@ export default class OrderKit extends React.Component {
     );
   }
 
-  setKit(type) {
-    if (type === "email") {
-      this.setState({
-        kit: "email"
-      });
+  setKit(type, id) {
+    if (id === 1) {
+      if (type === "email") {
+        this.setState({
+          kit: "email"
+        });
+      } else {
+        this.setState({
+          kit: "box"
+        });
+      }
     } else {
       this.setState({
-        kit: "box"
+        payment: type
       });
     }
   }
 
   sellingRules() {
-    window.location.href = "/sell/rules/" + this.state.kit;
+    const name = document.getElementById("name").value.trim();
+    const address1 = document.getElementById("address1").value.trim();
+    const address2 = document.getElementById("address2").value.trim();
+    const city = document.getElementById("city").value.trim();
+    const state = document.getElementById("state").textContent.trim();
+    const zip = document.getElementById("zip").value.trim();
+
+    // Check name
+    const numSpaces = name.split(" ").length - 1;
+    if (numSpaces < 1) {
+      alert("Please enter your full name");
+      return;
+    }
+    if (address1 == "" || city == "" || state == "" || zip == "") {
+      alert("Please put in your address");
+      return;
+    }
+    if (zip.length !== 5) {
+      alert("Invalid zip code");
+      return;
+    }
+
+    firebase
+      .firestore()
+      .collection("Users")
+      .where("uid", "==", "uid1")
+      .get()
+      .then(a => {
+        const user = a.docs[0].data();
+        firebase
+          .firestore()
+          .collection("Users")
+          .doc(user.email)
+          .update({
+            name: name,
+            address1: address1,
+            address2: address2,
+            city: city,
+            state: state,
+            zip: zip,
+            kit: this.state.kit,
+            payment: this.state.payment
+          })
+          .then(() => {
+            window.location.href = "/sell/rules/" + this.state.kit;
+          });
+      });
   }
 }
