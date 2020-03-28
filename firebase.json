@@ -8,8 +8,21 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
-        "source": "**",
+        "source": "/public-key",
         "function": "app"
+      },
+      { "source": "product-details", "function": "app" },
+      {
+        "source": "/customer",
+        "function": "app"
+      },
+      {
+        "source": "/create-payment-intent",
+        "function": "app"
+      },
+      {
+        "source": "**",
+        "destination": "index.html"
       }
     ]
   },

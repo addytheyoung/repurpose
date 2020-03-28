@@ -9,6 +9,15 @@ const Firestore = require("@google-cloud/firestore");
 const { resolve } = require("path");
 var serviceAccount = require("./key.json");
 
+app.get("/public-key", (req, res) => {
+  res.send({ publicKey: "pk_test_gLPSHkmFGwodXZBWMQabXaRr00jsYpn5GL" });
+});
+
+app.get("/product-details", (req, res) => {
+  let data = getProductDetails();
+  res.send(data);
+});
+
 app.get("/customer", (req, res) => {
   stripe.customers.retrieve("cus_Gz1cqDiR9R8g7V", function(err, customer) {
     console.log(customer);
@@ -22,5 +31,32 @@ app.get("/customer", (req, res) => {
   //   }
   // );
 });
+
+app.post("/create-payment-intent", async (req, res) => {
+  const body = req.body;
+  const productDetails = getProductDetails();
+
+  const options = {
+    ...body,
+    amount: productDetails.amount,
+    currency: productDetails.currency,
+    description: productDetails.description
+  };
+
+  try {
+    const paymentIntent = await stripe.paymentIntents.create(options);
+    res.json(paymentIntent);
+  } catch (err) {
+    res.json(err);
+  }
+});
+
+let getProductDetails = () => {
+  return {
+    currency: "usd",
+    amount: 900,
+    description: "dqdqwdqwdq"
+  };
+};
 
 exports.app = functions.https.onRequest(app);
