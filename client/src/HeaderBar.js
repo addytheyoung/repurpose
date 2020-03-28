@@ -577,7 +577,7 @@ export default class HeaderBar extends React.Component {
                   minWidth: 100
                 }}
               >
-                CHECK OUTSSSS
+                CHECK OUT
               </div>
             )}
             {singedin && (
@@ -598,7 +598,7 @@ export default class HeaderBar extends React.Component {
                   minWidth: 100
                 }}
               >
-                CHECK OUTSSSSS
+                CHECK OUT
               </a>
             )}
           </div>

@@ -403,26 +403,26 @@ export default class OrderKit extends React.Component {
 
   sellingRules() {
     const name = document.getElementById("name").value.trim();
-    const address1 = document.getElementById("address1").value.trim();
-    const address2 = document.getElementById("address2").value.trim();
-    const city = document.getElementById("city").value.trim();
-    const state = document.getElementById("state").textContent.trim();
-    const zip = document.getElementById("zip").value.trim();
+    // const address1 = document.getElementById("address1").value.trim();
+    // const address2 = document.getElementById("address2").value.trim();
+    // const city = document.getElementById("city").value.trim();
+    // const state = document.getElementById("state").textContent.trim();
+    // const zip = document.getElementById("zip").value.trim();
 
-    // Check name
-    const numSpaces = name.split(" ").length - 1;
-    if (numSpaces < 1) {
-      alert("Please enter your full name");
-      return;
-    }
-    if (address1 == "" || city == "" || state == "" || zip == "") {
-      alert("Please put in your address");
-      return;
-    }
-    if (zip.length !== 5) {
-      alert("Invalid zip code");
-      return;
-    }
+    // // Check name
+    // const numSpaces = name.split(" ").length - 1;
+    // if (numSpaces < 1) {
+    //   alert("Please enter your full name");
+    //   return;
+    // }
+    // if (address1 == "" || city == "" || state == "" || zip == "") {
+    //   alert("Please put in your address");
+    //   return;
+    // }
+    // if (zip.length !== 5) {
+    //   alert("Invalid zip code");
+    //   return;
+    // }
 
     firebase
       .firestore()
@@ -436,17 +436,18 @@ export default class OrderKit extends React.Component {
           .collection("Users")
           .doc(user.email)
           .update({
-            name: name,
-            address1: address1,
-            address2: address2,
-            city: city,
-            state: state,
-            zip: zip,
-            kit: this.state.kit,
-            payment: this.state.payment
+            name: name
+            // address1: address1,
+            // address2: address2,
+            // city: city,
+            // state: state,
+            // zip: zip,
+            // kit: this.state.kit,
+            // payment: this.state.payment
           })
           .then(() => {
-            window.location.href = "/sell/rules/" + this.state.kit;
+            window.location.href =
+              "/sell/rules/" + this.state.kit + "&" + this.state.payment;
           });
       });
   }

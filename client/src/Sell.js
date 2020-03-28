@@ -424,8 +424,8 @@ export default class Sell extends React.Component {
                     color: "#a1a1a1"
                   }}
                 >
-                  You get paid as soon as we get the items, usually around 3
-                  days.
+                  You get paid as soon as we get the items and determine their
+                  price, usually around 3 days.
                 </div>
               </div>
             </div>

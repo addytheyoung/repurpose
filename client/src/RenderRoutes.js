@@ -10,6 +10,7 @@ import Item from "./Item";
 import Profile from "./Profile";
 import Cart from "./Cart";
 import CheckOut from "./CheckOut";
+import GetKit from "./GetKit";
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -35,6 +36,11 @@ export default class RenderRoutes extends React.Component {
               path="/sell/rules"
               exact={false}
               render={() => <SellRules />}
+            />
+            <Route
+              path="/sell/getkit"
+              exact={false}
+              render={() => <GetKit />}
             />
           </Router>
         </Elements>

@@ -8,6 +8,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 
 export default class SellRules extends React.Component {
   constructor(props) {
@@ -16,19 +17,28 @@ export default class SellRules extends React.Component {
   }
   render() {
     const rows = [
-      this.createData("$1.00-$5.00", "Large", "0% - 5%"),
-      this.createData("$1.00-$5.00", "Medium", "5%-10%"),
       this.createData("$1.00-$5.00", "Small", "5%-15%"),
-      this.createData("$5.00-$15.00", "Large", "15%"),
-      this.createData("$5.00-$15.00", "Medium", "15%-20%"),
-      this.createData("$5.00-$15.00", "Small", "20%-25%"),
-      this.createData("$15.00-$30.00", "Large", "25%-30%"),
-      this.createData("$15.00-$30.00", "Medium", "25%-35%"),
+      this.createData("$1.00-$5.00", "Medium", "5%"),
+      this.createData("$1.00-$5.00", "Large", "0%"),
+      this.createData("$5.00-$15.00", "Small", "15%-25%"),
+      this.createData("$5.00-$15.00", "Medium", "5%-10%"),
+      this.createData("$5.00-$15.00", "Large", "0%-5%"),
       this.createData("$15.00-$30.00", "Small", "25%-40%"),
-      this.createData("$30.00+", "Large", "40%-80%"),
-      this.createData("$30.00+", "Medium", "45%-80%"),
-      this.createData("$30.00+", "Small", "50%-80%")
+      this.createData("$15.00-$30.00", "Medium", "10%-20%"),
+      this.createData("$15.00-$30.00", "Large", "5%-10%"),
+      this.createData("$30.00+", "Small", "40%-80%"),
+      this.createData("$30.00+", "Medium", "20%-40%"),
+      this.createData("$30.00+", "Large", "5%-10")
     ];
+    var kit = "box";
+    if (window.location.pathname.includes("email")) {
+      kit = "email";
+    }
+    var payment = "cash";
+    if (window.location.pathname.includes("bank")) {
+      payment = "bank";
+    }
+
     return (
       <div>
         <div>
@@ -69,8 +79,10 @@ export default class SellRules extends React.Component {
                   marginBottom: 30
                 }}
               >
-                <div>Quality Standards</div>
-                <div style={{ marginTop: 10 }}>
+                <div style={{ fontSize: 20, fontWeight: 600 }}>
+                  Quality Standards
+                </div>
+                <div style={{ marginTop: 10, marginBottom: 50 }}>
                   We only accept items that could have value to someone else.
                 </div>
                 <div
@@ -119,8 +131,8 @@ export default class SellRules extends React.Component {
                         color: "#919191"
                       }}
                     >
-                      If you don't think the item is worth at least $1, don't
-                      send it.
+                      If you don't think the item could be sold for at least $1,
+                      don't send it.
                     </div>
                   </div>
                   <div
@@ -132,7 +144,7 @@ export default class SellRules extends React.Component {
                     }}
                   >
                     <div style={{ fontSize: 18, fontWeight: 500 }}>
-                      No cheap big items
+                      No big items
                     </div>
                     <div
                       style={{
@@ -141,7 +153,7 @@ export default class SellRules extends React.Component {
                         color: "#919191"
                       }}
                     >
-                      Anything large AND cheap probably shouldn't be sent.
+                      Anything large or heavy should probably not be sent.
                     </div>
                   </div>
                 </div>
@@ -155,10 +167,9 @@ export default class SellRules extends React.Component {
                   marginBottom: 30
                 }}
               >
-                <div>Shipping</div>
-                <div style={{ marginTop: 10 }}>
-                  Please follow our shipping guidelines, or you may be paid
-                  less.
+                <div style={{ fontSize: 20, fontWeight: 600 }}>Shipping</div>
+                <div style={{ marginTop: 10, marginBottom: 50 }}>
+                  Please follow our shipping guidelines, or you will charged.
                 </div>
                 <div
                   style={{
@@ -187,7 +198,7 @@ export default class SellRules extends React.Component {
                         color: "#919191"
                       }}
                     >
-                      Shipping items that clearly don't pass our guidelines may
+                      Shipping items that clearly don't pass our guidelines will
                       be taken out of your pay.
                     </div>
                   </div>
@@ -243,10 +254,9 @@ export default class SellRules extends React.Component {
                   marginBottom: 30
                 }}
               >
-                <div>Payout</div>
-                <div style={{ marginTop: 10 }}>
-                  You are paid 5% - 80% of the price as soon as we recieve the
-                  items and determine the price.
+                <div style={{ fontSize: 20, fontWeight: 600 }}>Payout</div>
+                <div style={{ marginTop: 10, marginBottom: 50 }}>
+                  You are paid a % of the price as soon as we recieve the items.
                 </div>
                 <div
                   style={{
@@ -319,11 +329,19 @@ export default class SellRules extends React.Component {
                   <TableBody>
                     {rows.map(row => (
                       <TableRow key={row.name}>
-                        <TableCell component="th" scope="row">
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          style={{ fontSize: 16 }}
+                        >
                           {row.name}
                         </TableCell>
-                        <TableCell align="right">{row.calories}</TableCell>
-                        <TableCell align="right">{row.fat}</TableCell>
+                        <TableCell style={{ fontSize: 16 }} align="right">
+                          {row.calories}
+                        </TableCell>
+                        <TableCell style={{ fontSize: 16 }} align="right">
+                          {row.fat}
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -340,29 +358,55 @@ export default class SellRules extends React.Component {
               justifyContent: "center"
             }}
           >
-            <div
+            <Link
+              to="/sell/kit"
               id="edit"
               style={{
                 backgroundColor: "#818181",
                 borderRadius: 5,
                 padding: 10,
-                color: "white"
+                color: "white",
+                textDecoration: "none",
+                fontWeight: 600
               }}
             >
               MAKE EDITS
-            </div>
+            </Link>
             <div style={{ width: 10 }}></div>
-            <div
-              id="kit"
-              style={{
-                backgroundColor: "#9da632",
-                borderRadius: 5,
-                padding: 10,
-                color: "white"
-              }}
-            >
-              GET MY KIT
-            </div>
+
+            {payment === "cash" && (
+              <Link
+                to="/sell/getkit"
+                id="kit"
+                style={{
+                  backgroundColor: "#9da632",
+                  borderRadius: 5,
+                  padding: 10,
+                  color: "white",
+                  textDecoration: "none",
+                  fontWeight: 600
+                }}
+              >
+                GET MY KIT
+              </Link>
+            )}
+
+            {payment === "bank" && (
+              <div
+                onClick={() => this.openStripe()}
+                id="kit"
+                style={{
+                  backgroundColor: "#9da632",
+                  borderRadius: 5,
+                  padding: 10,
+                  color: "white",
+                  textDecoration: "none",
+                  fontWeight: 600
+                }}
+              >
+                GET MY KIT
+              </div>
+            )}
           </div>
           <div style={{ height: 200 }}></div>
         </div>
@@ -384,5 +428,18 @@ export default class SellRules extends React.Component {
         tableExpanded: true
       });
     }
+  }
+
+  openStripe() {
+    const description =
+      "&stripe_user%5Bproduct_description%5D=" +
+      "I am selling a box of my items worth at least $5 to Collection.deals.";
+    const business_type = "&stripe_user%5Bbusiness_type%5D=individual";
+
+    window.open(
+      "https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/sell/getkit&client_id=ca_GziEvM247byG5XcbBDVdmFHV5l3vPz4h&state=abcdefg" +
+        description +
+        business_type
+    );
   }
 }
