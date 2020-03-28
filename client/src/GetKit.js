@@ -2,25 +2,36 @@ import React from "react";
 import HeaderBar from "./HeaderBar";
 import * as firebase from "firebase";
 import ClipLoader from "react-spinners/ClipLoader";
+import api from "./api";
 
 export default class GetKit extends React.Component {
   constructor(props) {
     super(props);
-    firebase
-      .firestore()
-      .collection("Users")
-      .doc("123@gmail.com")
-      .get()
-      .then(me => {
-        const data = me.data();
-        this.setState({
-          loaded: true,
-          myData: data
+
+    var code = "";
+    const url = window.location.href;
+    for (var i = 0; i < url.length; i++) {
+      if (url[i] === "=") {
+        code = url.substring(i + 1, url.length);
+      }
+    }
+
+    api.createSeller({ code: code }).then(a => {
+      console.log(a);
+      firebase
+        .firestore()
+        .collection("Users")
+        .doc("123@gmail.com")
+        .update({
+          seller: true,
+          stripe_user_id: a.stripe_user_id,
+          loaded: true
         });
-      });
+    });
+
     this.state = {
       loaded: false,
-      myData: null
+      code: code
     };
   }
   render() {

@@ -1,3 +1,30 @@
+const createSeller = options => {
+  console.log(JSON.stringify(options));
+  return window
+    .fetch(`/make-seller`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(options)
+    })
+    .then(res => {
+      console.log(res);
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return null;
+      }
+    })
+    .then(data => {
+      if (!data || data.error) {
+        throw Error("API Error");
+      } else {
+        return data;
+      }
+    });
+};
+
 const createCustomer = options => {
   return window
     .fetch(`/customer`, {
@@ -23,6 +50,7 @@ const createCustomer = options => {
 };
 
 const createPaymentIntent = options => {
+  console.log(JSON.stringify(options));
   return window
     .fetch(`/create-payment-intent`, {
       method: "POST",
@@ -97,6 +125,7 @@ const getPublicStripeKey = options => {
 };
 
 const api = {
+  createSeller: createSeller,
   createPaymentIntent,
   createCustomer: createCustomer,
   getPublicStripeKey: getPublicStripeKey,

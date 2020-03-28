@@ -437,7 +437,7 @@ export default class SellRules extends React.Component {
     const business_type = "&stripe_user%5Bbusiness_type%5D=individual";
 
     window.open(
-      "https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/sell/getkit&client_id=ca_GziEvM247byG5XcbBDVdmFHV5l3vPz4h&state=abcdefg" +
+      "https://connect.stripe.com/express/oauth/authorize?redirect_uri=http://localhost:3000/sell/getkit&client_id=ca_GziEvM247byG5XcbBDVdmFHV5l3vPz4h" +
         description +
         business_type
     );

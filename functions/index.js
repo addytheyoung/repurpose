@@ -14,17 +14,23 @@ admin.initializeApp({
   databaseURL: "https://repurpose-e523f.firebaseio.com"
 });
 
-// admin
-//   .firestore()
-//   .collection("Users")
-//   .doc("123@gmail.com")
-//   .get()
-//   .then(a => {
-//     console.log(a.data());
-//   })
-//   .catch(e => {
-//     console.log(e.message);
-//   });
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.post("/make-seller", async (req, res) => {
+  const body = req.body;
+  console.log(body.code);
+
+  try {
+    const response = await stripe.oauth.token({
+      grant_type: "authorization_code",
+      code: body.code
+    });
+    res.json(response);
+  } catch (err) {
+    res.json(err);
+  }
+});
 
 app.get("/public-key", (req, res) => {
   res.send({ publicKey: "pk_test_gLPSHkmFGwodXZBWMQabXaRr00jsYpn5GL" });
@@ -51,6 +57,7 @@ app.get("/customer", (req, res) => {
 
 app.post("/create-payment-intent", async (req, res) => {
   const body = req.body;
+  console.log(body);
   const productDetails = getProductDetails();
 
   const options = {
@@ -68,7 +75,8 @@ app.post("/create-payment-intent", async (req, res) => {
   }
 });
 
-let getProductDetails = () => {
+let getProductDetails = myData => {
+  console.log(myData);
   return {
     currency: "usd",
     amount: 900,

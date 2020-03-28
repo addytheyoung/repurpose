@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import "./css/CheckoutForm.css";
+import * as firebase from "firebase";
 import api from "./api";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function CheckoutForm(props) {
   const signedIn = props.signedIn;
@@ -15,6 +17,8 @@ export default function CheckoutForm(props) {
   const [metadata, setMetadata] = useState(null);
   const [succeeded, setSucceeded] = useState(false);
   const [processing, setProcessing] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [myData, setMydata] = useState(null);
   const stripe = useStripe();
   const elements = useElements();
 
