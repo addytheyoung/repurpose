@@ -9,6 +9,23 @@ const Firestore = require("@google-cloud/firestore");
 const { resolve } = require("path");
 var serviceAccount = require("./key.json");
 
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://repurpose-e523f.firebaseio.com"
+});
+
+// admin
+//   .firestore()
+//   .collection("Users")
+//   .doc("123@gmail.com")
+//   .get()
+//   .then(a => {
+//     console.log(a.data());
+//   })
+//   .catch(e => {
+//     console.log(e.message);
+//   });
+
 app.get("/public-key", (req, res) => {
   res.send({ publicKey: "pk_test_gLPSHkmFGwodXZBWMQabXaRr00jsYpn5GL" });
 });
@@ -58,5 +75,7 @@ let getProductDetails = () => {
     description: "dqdqwdqwdq"
   };
 };
+
+app.listen(4242, () => console.log(`Node server listening on port ${4242}!`));
 
 exports.app = functions.https.onRequest(app);
