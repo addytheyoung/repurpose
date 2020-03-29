@@ -1,98 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { CardElement, ElementsConsumer } from "@stripe/react-stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import "./css/CheckoutForm.css";
 import * as firebase from "firebase";
 import api from "./api";
 import ClipLoader from "react-spinners/ClipLoader";
 
-export default function CheckoutForm(props) {
-  const signedIn = props.signedIn;
-  const [amount, setAmount] = useState(0);
-  const [currency, setCurrency] = useState("");
-  const [description, setDescription] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  const [clientSecret, setClientSecret] = useState(null);
-  const [error, setError] = useState(null);
-  const [metadata, setMetadata] = useState(null);
-  const [succeeded, setSucceeded] = useState(false);
-  const [processing, setProcessing] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-  const [myData, setMydata] = useState(null);
-  const stripe = useStripe();
-  const elements = useElements();
+export default class CheckoutForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      signedIn: this.props.signedIn,
+      amount: 0,
+      currency: "",
+      description: "",
+      email: "",
+      address: "",
+      clientSecret: null,
+      error: null,
+      metadata: null,
+      succeeded: false,
+      processing: false,
+      loaded: false,
+      myData: null
+    };
+  }
 
-  useEffect(() => {
-    // Step 1: Fetch product details such as amount and currency from
-    // API to make sure it can't be tampered with in the client.
-    api.getProductDetails().then(productDetails => {
-      console.log(productDetails);
-      setAmount(productDetails.amount / 100);
-      setCurrency(productDetails.currency);
-      setDescription(productDetails.description);
-      setEmail(productDetails.email);
-      setAddress(productDetails.address);
-    });
-
-    // Step 2: Create PaymentIntent over Stripe API
-    api
-      .createPaymentIntent({
-        payment_method_types: ["card"]
-      })
-      .then(clientSecret => {
-        setClientSecret(clientSecret);
-      })
-      .catch(err => {
-        setError(err.message);
-      });
-  }, []);
-
-  const handleSubmit = async ev => {
-    ev.preventDefault();
-    setProcessing(true);
-
-    // Step 3: Use clientSecret from PaymentIntent and the CardElement
-    // to confirm payment with stripe.confirmCardPayment()
-    const payload = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-        billing_details: {
-          name: ev.target.name.value
-        }
-      }
-    });
-
-    if (payload.error) {
-      setError(`Payment failed: ${payload.error.message}`);
-      setProcessing(false);
-      console.log("[error]", payload.error);
-    } else {
-      // Create our customer!
-      api.createCustomer().then(e => {
-        const id = e.id;
-      });
-      setError(null);
-      setSucceeded(true);
-      setProcessing(false);
-      console.log(payload);
-      setMetadata(payload.paymentIntent);
-      console.log("[PaymentIntent]", payload.paymentIntent);
-    }
-  };
-
-  const renderSuccess = () => {
-    return (
-      <div className="sr-field-success message">
-        <h1>Your test payment succeeded</h1>
-        <p>View PaymentIntent response:</p>
-        <pre className="sr-callout">
-          <code>{JSON.stringify(metadata, null, 2)}</code>
-        </pre>
-      </div>
-    );
-  };
-
-  const renderForm = () => {
+  render() {
     const options = {
       style: {
         base: {
@@ -110,14 +45,34 @@ export default function CheckoutForm(props) {
         }
       }
     };
+    if (this.state.succeeded) {
+      return (
+        <div className="sr-field-success message">
+          <h1>Your test payment succeeded</h1>
+          <p>View PaymentIntent response:</p>
+          <pre className="sr-callout">
+            <code>{JSON.stringify(this.state.metadata, null, 2)}</code>
+          </pre>
+        </div>
+      );
+    }
+    if (this.state.succeeded) {
+      return (
+        <div className="checkout-form">
+          <div className="sr-payment-form">
+            <div className="sr-form-row" />
+          </div>
+        </div>
+      );
+    }
 
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={ev => this.handleSubmit(ev)}>
         <h1>
-          {currency.toLocaleUpperCase()}{" "}
-          {amount.toLocaleString(navigator.language, {
+          {this.state.currency.toLocaleUpperCase()}{" "}
+          {this.state.amount.toLocaleString(navigator.language, {
             minimumFractionDigits: 2
-          })}{" "}
+          })}
         </h1>
         <h4>Pre-order the Pasha package</h4>
 
@@ -141,24 +96,101 @@ export default function CheckoutForm(props) {
           </div>
         </div>
 
-        {error && <div className="message sr-field-error">{error}</div>}
+        {this.state.error && (
+          <div className="message sr-field-error">{this.state.error}</div>
+        )}
 
         <button
+          // onClick={(e) => this.prevent(e)}
           className="btn"
-          disabled={processing || !clientSecret || !stripe}
+          disabled={
+            this.state.processing ||
+            !this.state.clientSecret ||
+            !this.props.stripe
+          }
         >
-          {processing ? "Processing…" : "Pay"}
+          {this.state.processing ? "Processing…" : "Paay"}
         </button>
       </form>
     );
-  };
+  }
 
-  return (
-    <div className="checkout-form">
-      <div className="sr-payment-form">
-        <div className="sr-form-row" />
-        {succeeded ? renderSuccess() : renderForm()}
-      </div>
-    </div>
-  );
+  componentDidMount() {
+    console.log(this.state.succeeded);
+    console.log(this.state.processing);
+    if (this.state.processing || this.state.succeeded) {
+      return null;
+    }
+    console.log("mounting");
+    // Step 1: Fetch product details such as amount and currency from
+    // API to make sure it can't be tampered with in the client.
+    api.getProductDetails().then(productDetails => {
+      this.state.amount = productDetails.amount / 100;
+      this.state.currency = productDetails.currency;
+      // this.setState({
+      //   amount: productDetails.amount / 100,
+      //   currency: productDetails.currency,
+      //   description: productDetails.description,
+      //   email: productDetails.email,
+      //   address: productDetails.address
+      // });
+    });
+
+    // Step 2: Create PaymentIntent over Stripe API
+    api
+      .createPaymentIntent({
+        payment_method_types: ["card"]
+      })
+      .then(clientSecret => {
+        this.setState({
+          clientSecret: clientSecret
+        });
+      })
+      .catch(err => {
+        this.setState({
+          error: err.message
+        });
+      });
+  }
+
+  async handleSubmit(ev) {
+    ev.preventDefault();
+    this.state.processing = true;
+
+    // Step 3: Use clientSecret from PaymentIntent and the CardElement
+    // to confirm payment with stripe.confirmCardPayment()
+    const payload = await this.props.stripe.confirmCardPayment(
+      this.state.clientSecret,
+      {
+        payment_method: {
+          card: this.props.elements.getElement(CardElement),
+          billing_details: {
+            name: ev.target.name.value
+          }
+        }
+      }
+    );
+
+    if (payload.error) {
+      this.setState({
+        error: `Payment failed: ${payload.error.message}`,
+        processing: false
+      });
+
+      console.log("[error]", payload.error);
+    } else {
+      // Create our customer!
+      api.createCustomer().then(e => {
+        const id = e.id;
+      });
+      this.setState({
+        error: null,
+        succeeded: true,
+        processing: false,
+        metadata: payload.paymentIntent
+      });
+
+      console.log("[PaymentIntent]", payload.paymentIntent);
+    }
+  }
 }

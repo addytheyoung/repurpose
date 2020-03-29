@@ -1,5 +1,4 @@
 const createSeller = options => {
-  console.log(JSON.stringify(options));
   return window
     .fetch(`/make-seller`, {
       method: "POST",
@@ -9,7 +8,6 @@ const createSeller = options => {
       body: JSON.stringify(options)
     })
     .then(res => {
-      console.log(res);
       if (res.status === 200) {
         return res.json();
       } else {
@@ -50,7 +48,6 @@ const createCustomer = options => {
 };
 
 const createPaymentIntent = options => {
-  console.log(JSON.stringify(options));
   return window
     .fetch(`/create-payment-intent`, {
       method: "POST",

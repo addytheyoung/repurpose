@@ -19,7 +19,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/make-seller", async (req, res) => {
   const body = req.body;
-  console.log(body.code);
 
   try {
     const response = await stripe.oauth.token({
@@ -42,9 +41,7 @@ app.get("/product-details", (req, res) => {
 });
 
 app.get("/customer", (req, res) => {
-  stripe.customers.retrieve("cus_Gz1cqDiR9R8g7V", function(err, customer) {
-    console.log(customer);
-  });
+  stripe.customers.retrieve("cus_Gz1cqDiR9R8g7V", function(err, customer) {});
   // stripe.customers.create(
   //   {
   //     description: "My First Test Customer (created for API docs)"
@@ -57,7 +54,6 @@ app.get("/customer", (req, res) => {
 
 app.post("/create-payment-intent", async (req, res) => {
   const body = req.body;
-  console.log(body);
   const productDetails = getProductDetails();
 
   const options = {
@@ -76,7 +72,6 @@ app.post("/create-payment-intent", async (req, res) => {
 });
 
 let getProductDetails = myData => {
-  console.log(myData);
   return {
     currency: "usd",
     amount: 900,

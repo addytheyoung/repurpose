@@ -1,6 +1,8 @@
 import React from "react";
 import HeaderBar from "./HeaderBar";
 import { Input } from "@material-ui/core";
+import { CardElement, ElementsConsumer } from "@stripe/react-stripe-js";
+
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CardSection from "./CardSection";
@@ -32,14 +34,26 @@ export default class CheckOut extends React.Component {
           Collection
         </div>
         {signedIn && (
-          <div style={{ width: 500, marginLeft: 20 }}>
-            <CheckoutForm signedIn={true} />
-          </div>
+          <ElementsConsumer>
+            {({ elements, stripe }) => (
+              <CheckoutForm
+                elements={elements}
+                stripe={stripe}
+                signedIn={true}
+              />
+            )}
+          </ElementsConsumer>
         )}
         {!signedIn && (
-          <div style={{ width: 500, marginLeft: 20 }}>
-            <CheckoutForm signedIn={false} />
-          </div>
+          <ElementsConsumer>
+            {({ elements, stripe }) => (
+              <CheckoutForm
+                elements={elements}
+                stripe={stripe}
+                signedIn={false}
+              />
+            )}
+          </ElementsConsumer>
         )}
 
         <div
