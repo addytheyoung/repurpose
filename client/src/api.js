@@ -72,7 +72,24 @@ const createPaymentIntent = options => {
     });
 };
 
-const getProductDetails = options => {
+const getProductDetails = cart => {
+  console.log(cart);
+  const subTotal = getSubtotal(cart);
+  const tax = getTax(subTotal);
+  const shipping = getShipping(subTotal);
+  const total = parseInt((parseInt(subTotal) + tax + shipping) * 100) / 100;
+  return {
+    subTotal: subTotal,
+    description: cart.description,
+    pictures: cart.pictures,
+    tax: tax,
+    shipping: shipping,
+    total: total,
+    currency: "usd",
+    amount: total,
+    description: "dqdqwdqwdq"
+  };
+  console.log(total);
   return window
     .fetch(`/product-details`, {
       method: "GET",
@@ -119,6 +136,23 @@ const getPublicStripeKey = options => {
         return data.publicKey;
       }
     });
+};
+
+const getSubtotal = cart => {
+  var totalPrice = 0;
+  for (var i = 0; i < cart.length; i++) {
+    const price = cart[i].original_price;
+    totalPrice += price;
+  }
+  return ((totalPrice / 100) * 100).toFixed(2);
+};
+
+const getTax = price => {
+  return parseInt(price * 0.08 * 100) / 100;
+};
+
+const getShipping = price => {
+  return 3.12;
 };
 
 const api = {

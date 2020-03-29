@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CardElement, ElementsConsumer } from "@stripe/react-stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { Input, Select, MenuItem } from "@material-ui/core";
 import "./css/CheckoutForm.css";
 import * as firebase from "firebase";
 import api from "./api";
@@ -28,6 +29,7 @@ export default class CheckoutForm extends React.Component {
   }
 
   render() {
+    this.state.myData = this.props.myData;
     const options = {
       style: {
         base: {
@@ -45,6 +47,7 @@ export default class CheckoutForm extends React.Component {
         }
       }
     };
+
     if (this.state.succeeded) {
       return (
         <div className="sr-field-success message">
@@ -67,28 +70,9 @@ export default class CheckoutForm extends React.Component {
     }
 
     return (
-      <form onSubmit={ev => this.handleSubmit(ev)}>
-        <h1>
-          {this.state.currency.toLocaleUpperCase()}{" "}
-          {this.state.amount.toLocaleString(navigator.language, {
-            minimumFractionDigits: 2
-          })}
-        </h1>
-        <h4>Pre-order the Pasha package</h4>
-
+      <form onSubmit={ev => this.handleSubmit(ev)} style={{ paddingLeft: 0 }}>
         <div className="sr-combo-inputs">
-          <div className="sr-combo-inputs-row">
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Name"
-              autoComplete="cardholder"
-              className="sr-input"
-            />
-          </div>
-
-          <div className="sr-combo-inputs-row">
+          <div className="sr-combo-inputs-row" style={{ width: 400 }}>
             <CardElement
               className="sr-input sr-card-element"
               options={options}
@@ -100,41 +84,98 @@ export default class CheckoutForm extends React.Component {
           <div className="message sr-field-error">{this.state.error}</div>
         )}
 
-        <button
-          // onClick={(e) => this.prevent(e)}
-          className="btn"
-          disabled={
-            this.state.processing ||
-            !this.state.clientSecret ||
-            !this.props.stripe
-          }
-        >
-          {this.state.processing ? "Processing…" : "Paay"}
-        </button>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <Input placeholder="First Name"></Input>
+          <Input placeholder="Last Name"></Input>
+          <Input placeholder="Address Line 1"></Input>
+          <Input placeholder="Address Line 2 (optional)"></Input>
+          <Input placeholder="Zip Code"></Input>
+          <Input placeholder="City"></Input>
+          <Select id="state">
+            <MenuItem value="AK">AK</MenuItem>
+            <MenuItem value="AL">AL</MenuItem>
+            <MenuItem value="AR">AR</MenuItem>
+            <MenuItem value="AZ">AZ</MenuItem>
+            <MenuItem value="CA">CA</MenuItem>
+            <MenuItem value="CO">CO</MenuItem>
+            <MenuItem value="CT">CT</MenuItem>
+            <MenuItem value="DC">DC</MenuItem>
+            <MenuItem value="DE">DE</MenuItem>
+            <MenuItem value="FL">FL</MenuItem>
+            <MenuItem value="GA">GA</MenuItem>
+            <MenuItem value="IA">IA</MenuItem>
+            <MenuItem value="ID">ID</MenuItem>
+            <MenuItem value="IL">IL</MenuItem>
+            <MenuItem value="IN">IN</MenuItem>
+            <MenuItem value="KS">KS</MenuItem>
+            <MenuItem value="KY">KY</MenuItem>
+            <MenuItem value="LA">LA</MenuItem>
+            <MenuItem value="MA">MA</MenuItem>
+            <MenuItem value="MD">MD</MenuItem>
+            <MenuItem value="ME">ME</MenuItem>
+            <MenuItem value="MI">MI</MenuItem>
+            <MenuItem value="MN">MN</MenuItem>
+            <MenuItem value="MO">MO</MenuItem>
+            <MenuItem value="MS">MS</MenuItem>
+            <MenuItem value="MT">MT</MenuItem>
+            <MenuItem value="NC">NC</MenuItem>
+            <MenuItem value="ND">ND</MenuItem>
+            <MenuItem value="NE">NE</MenuItem>
+            <MenuItem value="NH">NH</MenuItem>
+            <MenuItem value="NJ">NJ</MenuItem>
+            <MenuItem value="NM">NM</MenuItem>
+            <MenuItem value="NV">NV</MenuItem>
+            <MenuItem value="NY">NY</MenuItem>
+            <MenuItem value="OH">OH</MenuItem>
+            <MenuItem value="OK">OK</MenuItem>
+            <MenuItem value="OR">OR</MenuItem>
+            <MenuItem value="PA">PA</MenuItem>
+            <MenuItem value="RI">RI</MenuItem>
+            <MenuItem value="SC">SC</MenuItem>
+            <MenuItem value="SD">SD</MenuItem>
+            <MenuItem value="TN">TN</MenuItem>
+            <MenuItem value="TX">TX</MenuItem>
+            <MenuItem value="UT">UT</MenuItem>
+            <MenuItem value="VA">VA</MenuItem>
+            <MenuItem value="VT">VT</MenuItem>
+            <MenuItem value="WA">WA</MenuItem>
+            <MenuItem value="WI">WI</MenuItem>
+            <MenuItem value="WV">WV</MenuItem>
+            <MenuItem value="WY">WY</MenuItem>
+          </Select>
+
+          <button
+            // onClick={(e) => this.prevent(e)}
+            className="btn"
+            disabled={
+              this.state.processing ||
+              !this.state.clientSecret ||
+              !this.props.stripe
+            }
+          >
+            {this.state.processing ? "Processing…" : "Pay"}
+          </button>
+        </div>
       </form>
     );
   }
 
   componentDidMount() {
-    console.log(this.state.succeeded);
-    console.log(this.state.processing);
     if (this.state.processing || this.state.succeeded) {
       return null;
     }
     console.log("mounting");
     // Step 1: Fetch product details such as amount and currency from
     // API to make sure it can't be tampered with in the client.
-    api.getProductDetails().then(productDetails => {
-      this.state.amount = productDetails.amount / 100;
-      this.state.currency = productDetails.currency;
-      // this.setState({
-      //   amount: productDetails.amount / 100,
-      //   currency: productDetails.currency,
-      //   description: productDetails.description,
-      //   email: productDetails.email,
-      //   address: productDetails.address
-      // });
-    });
+    const cart = api.getProductDetails(this.state.myData.cart);
+    this.state.subTotal = cart.subTotal;
+    this.state.description = cart.description;
+    this.state.pictures = cart.pictures;
+    this.state.tax = cart.tax;
+    this.state.shipping = cart.shipping;
+    this.state.total = cart.total;
+    this.state.amount = cart.amount;
+    this.state.currency = cart.currency;
 
     // Step 2: Create PaymentIntent over Stripe API
     api
@@ -143,7 +184,8 @@ export default class CheckoutForm extends React.Component {
       })
       .then(clientSecret => {
         this.setState({
-          clientSecret: clientSecret
+          clientSecret: clientSecret,
+          loaded: true
         });
       })
       .catch(err => {
