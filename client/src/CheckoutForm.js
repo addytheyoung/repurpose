@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CardElement, ElementsConsumer } from "@stripe/react-stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import { Input, Select, MenuItem } from "@material-ui/core";
+import { Input, Select, MenuItem, Button } from "@material-ui/core";
 import "./css/CheckoutForm.css";
 import * as firebase from "firebase";
 import api from "./api";
@@ -24,7 +24,8 @@ export default class CheckoutForm extends React.Component {
       succeeded: false,
       processing: false,
       loaded: false,
-      myData: null
+      myData: null,
+      finished: false
     };
   }
 
@@ -49,22 +50,27 @@ export default class CheckoutForm extends React.Component {
     };
 
     if (this.state.succeeded) {
+      // Clear our cart
+      const cart = this.state.myData.cart;
+      const orders = this.state.myData.orders;
+      console.log(cart);
+      console.log(orders);
+      const newOrders = orders.concat(cart);
+      console.log(orders);
+      firebase
+        .firestore()
+        .collection("Users")
+        .doc("aty268")
+        .update({
+          cart: [],
+          orders: newOrders
+        })
+        .then(() => {
+          this.props.finished();
+        });
       return (
-        <div className="sr-field-success message">
-          <h1>Your test payment succeeded</h1>
-          <p>View PaymentIntent response:</p>
-          <pre className="sr-callout">
-            <code>{JSON.stringify(this.state.metadata, null, 2)}</code>
-          </pre>
-        </div>
-      );
-    }
-    if (this.state.succeeded) {
-      return (
-        <div className="checkout-form">
-          <div className="sr-payment-form">
-            <div className="sr-form-row" />
-          </div>
+        <div>
+          <div>Your payment was successful!</div>
         </div>
       );
     }
@@ -85,13 +91,37 @@ export default class CheckoutForm extends React.Component {
         )}
 
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <Input placeholder="First Name"></Input>
-          <Input placeholder="Last Name"></Input>
-          <Input placeholder="Address Line 1"></Input>
-          <Input placeholder="Address Line 2 (optional)"></Input>
-          <Input placeholder="Zip Code"></Input>
-          <Input placeholder="City"></Input>
-          <Select id="state">
+          <Input
+            id="first"
+            style={{ margin: 10 }}
+            placeholder="First Name"
+          ></Input>
+          <Input
+            id="last"
+            style={{ margin: 10 }}
+            placeholder="Last Name"
+          ></Input>
+          <Input
+            id="address1"
+            style={{ margin: 10 }}
+            placeholder="Address Line 1"
+          ></Input>
+          <Input
+            id="address2"
+            style={{ margin: 10 }}
+            placeholder="Address Line 2 (optional)"
+          ></Input>
+          <Input id="zip" style={{ margin: 10 }} placeholder="Zip Code"></Input>
+          <Input id="city" style={{ margin: 10 }} placeholder="City"></Input>
+          <Select
+            defaultValue={"State"}
+            placeholder={"State"}
+            style={{ margin: 10 }}
+            id="state"
+          >
+            <MenuItem value="State">
+              <div style={{ color: "#a1a1a1" }}>State</div>
+            </MenuItem>
             <MenuItem value="AK">AK</MenuItem>
             <MenuItem value="AL">AL</MenuItem>
             <MenuItem value="AR">AR</MenuItem>
@@ -145,6 +175,14 @@ export default class CheckoutForm extends React.Component {
           </Select>
 
           <button
+            id="pay"
+            style={{
+              backgroundColor: "#a1a1a1",
+              height: 40,
+              color: "white",
+              fontWeight: 600,
+              fontSize: 20
+            }}
             // onClick={(e) => this.prevent(e)}
             className="btn"
             disabled={
@@ -164,6 +202,8 @@ export default class CheckoutForm extends React.Component {
     if (this.state.processing || this.state.succeeded) {
       return null;
     }
+
+    const total = this.props.total;
     console.log("mounting");
     // Step 1: Fetch product details such as amount and currency from
     // API to make sure it can't be tampered with in the client.
@@ -179,9 +219,7 @@ export default class CheckoutForm extends React.Component {
 
     // Step 2: Create PaymentIntent over Stripe API
     api
-      .createPaymentIntent({
-        payment_method_types: ["card"]
-      })
+      .createPaymentIntent({ total })
       .then(clientSecret => {
         this.setState({
           clientSecret: clientSecret,
@@ -197,8 +235,35 @@ export default class CheckoutForm extends React.Component {
 
   async handleSubmit(ev) {
     ev.preventDefault();
-    this.state.processing = true;
+    const first = document.getElementById("first").value.trim();
+    const last = document.getElementById("last").value.trim();
+    const address1 = document.getElementById("address1").value.trim();
+    const address2 = document.getElementById("address2").value.trim();
+    const zip = document.getElementById("zip").value.trim();
+    const city = document.getElementById("city").value.trim();
+    const state = document.getElementById("state").textContent;
 
+    // if (first === "") {
+    //   alert("Please enter your first name");
+    //   return;
+    // } else if (last === "") {
+    //   alert("Please enter your last name");
+    //   return;
+    // } else if (address1 === "") {
+    //   alert("Please enter your address");
+    //   return;
+    // } else if (zip.length !== 5) {
+    //   alert("Please enter a valid zip");
+    //   return;
+    // } else if (city === "") {
+    //   alert("Please enter your city");
+    //   return;
+    // } else if (state === "State") {
+    //   alert("Please enter your state");
+    //   return;
+    // }
+
+    this.state.processing = true;
     // Step 3: Use clientSecret from PaymentIntent and the CardElement
     // to confirm payment with stripe.confirmCardPayment()
     const payload = await this.props.stripe.confirmCardPayment(

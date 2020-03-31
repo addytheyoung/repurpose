@@ -21,7 +21,8 @@ export default class CheckOut extends React.Component {
       cardNumber: "",
       myData: null,
       modal: false,
-      loaded: false
+      loaded: false,
+      finished: false
     };
 
     firebase
@@ -33,11 +34,13 @@ export default class CheckOut extends React.Component {
         const myData = me.data();
         this.setState({
           myData: myData,
-          loaded: true
+          loaded: true,
+          finished: false
         });
       });
   }
   render() {
+    console.log(this.state);
     if (!this.state.loaded) {
       return (
         <div
@@ -60,6 +63,35 @@ export default class CheckOut extends React.Component {
     const shipping = this.getShipping(subTotal);
     const total = parseInt((parseInt(subTotal) + tax + shipping) * 100) / 100;
     const signedIn = !!firebase.auth().currentUser;
+    if (this.state.finished) {
+      return (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center"
+          }}
+        >
+          <HeaderBar />
+          <div
+            style={{
+              fontWeight: 700,
+              marginTop: 50,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: 26,
+              color: "#7628dd"
+            }}
+          >
+            Collection
+          </div>
+          <div style={{ marginTop: 50, fontWeight: 500, fontSize: 22 }}>
+            Success! Your order is complete.
+          </div>
+        </div>
+      );
+    }
     return (
       <div>
         {this.state.modal && (
@@ -416,6 +448,8 @@ export default class CheckOut extends React.Component {
               <ElementsConsumer>
                 {({ elements, stripe }) => (
                   <CheckoutForm
+                    finished={() => this.finished()}
+                    total={total}
                     myData={this.state.myData}
                     elements={elements}
                     stripe={stripe}
@@ -424,19 +458,16 @@ export default class CheckOut extends React.Component {
                 )}
               </ElementsConsumer>
             )}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                marginTop: 10
-              }}
-            >
-              sDFSDFSD
-            </div>
           </div>
         </div>
       </div>
     );
+  }
+
+  finished() {
+    this.setState({
+      finished: true
+    });
   }
 
   getSubtotal(cart) {

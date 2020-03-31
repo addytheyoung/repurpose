@@ -54,14 +54,17 @@ app.get("/customer", (req, res) => {
 
 app.post("/create-payment-intent", async (req, res) => {
   const body = req.body;
+  console.log(body);
+
   const productDetails = getProductDetails();
 
   const options = {
-    ...body,
-    amount: productDetails.amount,
+    payment_method_types: ["card"],
+    amount: body.total * 100,
     currency: productDetails.currency,
     description: productDetails.description
   };
+  console.log(options);
 
   try {
     const paymentIntent = await stripe.paymentIntents.create(options);
@@ -74,7 +77,7 @@ app.post("/create-payment-intent", async (req, res) => {
 let getProductDetails = myData => {
   return {
     currency: "usd",
-    amount: 900,
+    amount: 1000,
     description: "dqdqwdqwdq"
   };
 };

@@ -26,6 +26,9 @@ export default class GetKit extends React.Component {
           seller: true,
           stripe_user_id: a.stripe_user_id,
           loaded: true
+        })
+        .then(() => {
+          window.location.href = "/";
         });
     });
 

@@ -47,14 +47,15 @@ const createCustomer = options => {
     });
 };
 
-const createPaymentIntent = options => {
+const createPaymentIntent = total => {
+  console.log(total);
   return window
     .fetch(`/create-payment-intent`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(options)
+      body: JSON.stringify(total)
     })
     .then(res => {
       if (res.status === 200) {
