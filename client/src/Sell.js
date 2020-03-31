@@ -351,7 +351,7 @@ export default class Sell extends React.Component {
             }}
           >
             <div style={{ fontSize: 26, fontWeight: 600, letterSpacing: 0 }}>
-              We buy almost everything!
+              Selling items has never been easier.
             </div>
             <div
               style={{ display: "flex", flexDirection: "row", marginTop: 30 }}
@@ -367,7 +367,7 @@ export default class Sell extends React.Component {
                 }}
               >
                 <div style={{ fontSize: 18, fontWeight: 500 }}>
-                  1. Get a clean out kit
+                  1. Get a Collector
                 </div>
                 <div
                   style={{
@@ -376,8 +376,8 @@ export default class Sell extends React.Component {
                     color: "#a1a1a1"
                   }}
                 >
-                  Fill it up with items you think others could use, and are not
-                  on our bad item list. Or use your own box.
+                  At the (free) touch of a button, a Collector will come and
+                  pick up all your items.
                 </div>
               </div>
               <div
@@ -391,7 +391,7 @@ export default class Sell extends React.Component {
                 }}
               >
                 <div style={{ fontSize: 18, fontWeight: 500 }}>
-                  2. Send it off
+                  2. Do Whatever
                 </div>
                 <div
                   style={{
@@ -400,8 +400,8 @@ export default class Sell extends React.Component {
                     color: "#a1a1a1"
                   }}
                 >
-                  Leave it for your mail carrier or just drop it at FedEx or
-                  USPS. Shipping is free to you.
+                  The Collector will price your items and list them on our
+                  website, so you don't do anything.
                 </div>
               </div>
               <div
@@ -414,8 +414,14 @@ export default class Sell extends React.Component {
                   margin: 20
                 }}
               >
-                <div style={{ fontSize: 18, fontWeight: 500 }}>
-                  3. Get paid right away
+                <div
+                  style={{
+                    fontSize: 18,
+                    fontWeight: 500,
+                    textAlign: "center"
+                  }}
+                >
+                  3. Get Paid
                 </div>
                 <div
                   style={{
@@ -424,30 +430,134 @@ export default class Sell extends React.Component {
                     color: "#a1a1a1"
                   }}
                 >
-                  You get paid as soon as we get the items and determine their
-                  price, usually around 3 days.
+                  When your item sells, you get paid a percentage of the selling
+                  price.
                 </div>
               </div>
             </div>
-            {/* <Input id="email" placeholder="Email" style={{ width: 200 }} /> */}
-            <div
-              id="get-started"
-              onClick={() => this.getStarted()}
-              style={{
-                backgroundColor: "#d1d1d1",
-                fontWeight: 600,
-                padding: 10,
-                borderRadius: 5,
-                marginTop: 30
-              }}
-            >
-              GET STARTED
-            </div>
+
+            {singedin && (
+              <div>
+                <div
+                  onClick={() => this.getStarted()}
+                  id="header-checkout"
+                  style={{
+                    display: "flex",
+                    width: 150,
+                    textAlign: "center",
+                    textDecoration: "none",
+                    backgroundColor: "#a1a1a1",
+                    borderRadius: 5,
+                    padding: 10,
+                    height: 20,
+                    fontWeight: 600,
+                    color: "white",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minWidth: 150
+                  }}
+                >
+                  GET STARTED
+                </div>
+                <div
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 500,
+                    marginTop: 20,
+                    marginBottom: 20,
+                    textAlign: "center"
+                  }}
+                >
+                  OR
+                </div>
+                <div
+                  onClick={() => this.becomeCollector()}
+                  id="header-checkout"
+                  style={{
+                    width: 150,
+                    display: "flex",
+                    textAlign: "center",
+                    textDecoration: "none",
+                    backgroundColor: "#a1a1a1",
+                    borderRadius: 5,
+                    padding: 10,
+                    height: 20,
+                    fontWeight: 600,
+                    color: "white",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minWidth: 150
+                  }}
+                >
+                  BECOME A COLLECTOR
+                </div>
+              </div>
+            )}
+
+            {!singedin && (
+              <div>
+                <div
+                  onClick={() => this.showProfileModal()}
+                  id="header-checkout"
+                  style={{
+                    display: "flex",
+                    width: 150,
+                    textAlign: "center",
+                    textDecoration: "none",
+                    backgroundColor: "#a1a1a1",
+                    borderRadius: 5,
+                    padding: 10,
+                    height: 20,
+                    fontWeight: 600,
+                    color: "white",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minWidth: 150
+                  }}
+                >
+                  GET STARTED
+                </div>
+                <div
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 500,
+                    marginTop: 20,
+                    textAlign: "center",
+                    marginBottom: 20
+                  }}
+                >
+                  OR
+                </div>
+                <div
+                  onClick={() => this.showProfileModal()}
+                  id="header-checkout"
+                  style={{
+                    width: 150,
+                    display: "flex",
+                    textAlign: "center",
+                    textDecoration: "none",
+                    backgroundColor: "#a1a1a1",
+                    borderRadius: 5,
+                    padding: 10,
+                    height: 20,
+                    fontWeight: 600,
+                    color: "white",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minWidth: 150
+                  }}
+                >
+                  BECOME A COLLECTOR
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
     );
   }
+
+  becomeCollector() {}
 
   startShopping() {
     const email = document.getElementById("email").value;

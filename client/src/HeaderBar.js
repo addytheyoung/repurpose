@@ -400,7 +400,7 @@ export default class HeaderBar extends React.Component {
               justifyContent: "center",
               backgroundColor:
                 path === "/" || path.includes("shop") ? "#d8d8d8" : "#ffffff",
-              borderRadius: 5
+              borderRadius: 3
             }}
           >
             Buy
@@ -419,7 +419,7 @@ export default class HeaderBar extends React.Component {
               justifyContent: "center",
               backgroundColor: path.includes("sell") ? "#d8d8d8" : "#ffffff",
               marginRight: 50,
-              borderRadius: 5
+              borderRadius: 3
             }}
           >
             Sell

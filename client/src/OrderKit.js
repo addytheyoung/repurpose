@@ -27,346 +27,169 @@ export default class OrderKit extends React.Component {
             }}
           >
             <div style={{ marginTop: 30, fontSize: 22, fontWeight: 600 }}>
-              Your selling kit
+              What is the address of your items?
             </div>
-            <div
-              style={{
-                width: "40vw",
-                minWidth: 700,
-                marginTop: 30,
-                height: "50vh",
-                display: "flex",
-                flexDirection: "column"
-              }}
-            >
+
+            <div style={{ margin: 10, marginTop: 20 }}>
               <div
                 style={{
                   display: "flex",
                   flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "15vh",
-                  borderBottomWidth: 1,
-                  borderBottomStyle: "solid",
-                  borderBottomColor: "#999999"
+                  marginTop: 30,
+                  justifyContent: "center"
                 }}
               >
                 <div
                   style={{
                     display: "flex",
-                    justifyContent: "center",
                     flexDirection: "column",
-                    minWidth: 300
+                    width: 200,
+                    marginRight: 20
                   }}
                 >
-                  <div
-                    style={{
-                      fontWeight: 500,
-                      paddingLeft: 10,
-                      marginBottom: 5
-                    }}
-                  >
-                    Type of kit
-                  </div>
-                  {this.state.kit === "email" && (
-                    <div style={{ color: "#a1a1a1", paddingLeft: 10 }}>
-                      Print the label and put it on any box.
-                    </div>
-                  )}
-                  {this.state.kit === "box" && (
-                    <div style={{ color: "#a1a1a1", paddingLeft: 10 }}>
-                      We mail you a box to put your items in.
-                    </div>
-                  )}
-                </div>
-
-                <div style={{ width: "100%" }}></div>
-                <div
-                  id="email"
-                  style={{
-                    backgroundColor:
-                      this.state.kit === "email" ? "#ffffff" : "#f1f1f1",
-
-                    fontWeight: this.state.kit === "email" ? 500 : 400,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    height: "50%",
-                    padding: 10,
-                    minWidth: 150,
-                    borderWidth: 2,
-                    borderStyle: "solid",
-                    borderRadius: 5,
-                    borderColor:
-                      this.state.kit === "email" ? "#48d6db" : "#eaeaea"
-                  }}
-                  onClick={() => this.setKit("email", 1)}
-                >
-                  Email Shipping Label
+                  <div>Full Name</div>
+                  <Input id="name" placeholder={"First Last"} />
                 </div>
                 <div
-                  id="box"
                   style={{
-                    backgroundColor:
-                      this.state.kit === "box" ? "#ffffff" : "#f1f1f1",
-                    fontWeight: this.state.kit === "box" ? 500 : 400,
                     display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    padding: 10,
-                    height: "50%",
-                    minWidth: 150,
-                    borderWidth: 2,
-                    borderStyle: "solid",
-                    borderRadius: 5,
-                    borderColor:
-                      this.state.kit === "box" ? "#48d6db" : "#eaeaea"
+                    flexDirection: "column",
+                    width: 200,
+                    marginRight: 20
                   }}
-                  onClick={() => this.setKit("box", 1)}
                 >
-                  Mail a Box
+                  <div>Address Line 1</div>
+                  <Input id="address1" placeholder={"Street Address, PO Box"} />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: 200,
+                    marginRight: 20
+                  }}
+                >
+                  <div>Apt, Suite, Unit, etc.</div>
+                  <Input
+                    id="address2"
+                    placeholder={"Apt, Suite, Unit, Building, Floor"}
+                  />
                 </div>
               </div>
               <div
                 style={{
                   display: "flex",
                   flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "15vh",
-                  borderBottomWidth: 1,
-                  borderBottomStyle: "solid",
-                  borderBottomColor: "#999999"
+                  marginTop: 30,
+                  justifyContent: "center"
                 }}
               >
                 <div
                   style={{
                     display: "flex",
-                    justifyContent: "center",
                     flexDirection: "column",
-                    minWidth: 300
+                    width: 200,
+                    marginRight: 20
                   }}
                 >
-                  <div
-                    style={{
-                      fontWeight: 500,
-                      paddingLeft: 10,
-                      marginBottom: 5
-                    }}
-                  >
-                    Payment type (More coming soon)
-                  </div>
-                  {this.state.payment === "cash" && (
-                    <div style={{ color: "#a1a1a1", paddingLeft: 10 }}>
-                      I want to be mailed cash.
-                    </div>
-                  )}
-                  {this.state.payment === "bank" && (
-                    <div style={{ color: "#a1a1a1", paddingLeft: 10 }}>
-                      I want cash directly in my bank account.
-                    </div>
-                  )}
-                </div>
-
-                <div style={{ width: "100%" }}></div>
-                <div
-                  id="cash"
-                  style={{
-                    backgroundColor:
-                      this.state.kit === "cash" ? "#ffffff" : "#f1f1f1",
-
-                    fontWeight: this.state.payment === "cash" ? 500 : 400,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    height: "50%",
-                    padding: 10,
-                    minWidth: 150,
-                    borderWidth: 2,
-                    borderStyle: "solid",
-                    borderRadius: 5,
-                    borderColor:
-                      this.state.payment === "cash" ? "#48d6db" : "#eaeaea"
-                  }}
-                  onClick={() => this.setKit("cash", 2)}
-                >
-                  Mail me cash
-                </div>
-                <div
-                  id="bank"
-                  style={{
-                    backgroundColor:
-                      this.state.payment === "bank" ? "#ffffff" : "#f1f1f1",
-                    fontWeight: this.state.payment === "bank" ? 500 : 400,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    padding: 10,
-                    height: "50%",
-                    minWidth: 150,
-                    borderWidth: 2,
-                    borderStyle: "solid",
-                    borderRadius: 5,
-                    borderColor:
-                      this.state.payment === "bank" ? "#48d6db" : "#eaeaea"
-                  }}
-                  onClick={() => this.setKit("bank", 2)}
-                >
-                  Bank deposit
-                </div>
-              </div>
-
-              <div style={{ margin: 10 }}>
-                <div style={{ marginTop: 10, fontWeight: 500, fontSize: 18 }}>
-                  Your shipping address
+                  <div>City</div>
+                  <Input id="city" placeholder={"City"} />
                 </div>
                 <div
                   style={{
                     display: "flex",
-                    flexDirection: "row",
-                    marginTop: 20,
-                    justifyContent: "center"
+                    flexDirection: "column",
+                    width: 200,
+                    marginRight: 20
                   }}
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      width: 200,
-                      marginRight: 20
-                    }}
-                  >
-                    <div>Full Name</div>
-                    <Input id="name" placeholder={"First Last"} />
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      width: 200,
-                      marginRight: 20
-                    }}
-                  >
-                    <div>Address Line 1</div>
-                    <Input
-                      id="address1"
-                      placeholder={"Street Address, PO Box"}
-                    />
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      width: 200,
-                      marginRight: 20
-                    }}
-                  >
-                    <div>Apt, Suite, Unit, etc.</div>
-                    <Input
-                      id="address2"
-                      placeholder={"Apt, Suite, Unit, Building, Floor"}
-                    />
-                  </div>
+                  <div>State</div>
+                  <Select id="state">
+                    <MenuItem value="AK">AK</MenuItem>
+                    <MenuItem value="AL">AL</MenuItem>
+                    <MenuItem value="AR">AR</MenuItem>
+                    <MenuItem value="AZ">AZ</MenuItem>
+                    <MenuItem value="CA">CA</MenuItem>
+                    <MenuItem value="CO">CO</MenuItem>
+                    <MenuItem value="CT">CT</MenuItem>
+                    <MenuItem value="DC">DC</MenuItem>
+                    <MenuItem value="DE">DE</MenuItem>
+                    <MenuItem value="FL">FL</MenuItem>
+                    <MenuItem value="GA">GA</MenuItem>
+                    <MenuItem value="IA">IA</MenuItem>
+                    <MenuItem value="ID">ID</MenuItem>
+                    <MenuItem value="IL">IL</MenuItem>
+                    <MenuItem value="IN">IN</MenuItem>
+                    <MenuItem value="KS">KS</MenuItem>
+                    <MenuItem value="KY">KY</MenuItem>
+                    <MenuItem value="LA">LA</MenuItem>
+                    <MenuItem value="MA">MA</MenuItem>
+                    <MenuItem value="MD">MD</MenuItem>
+                    <MenuItem value="ME">ME</MenuItem>
+                    <MenuItem value="MI">MI</MenuItem>
+                    <MenuItem value="MN">MN</MenuItem>
+                    <MenuItem value="MO">MO</MenuItem>
+                    <MenuItem value="MS">MS</MenuItem>
+                    <MenuItem value="MT">MT</MenuItem>
+                    <MenuItem value="NC">NC</MenuItem>
+                    <MenuItem value="ND">ND</MenuItem>
+                    <MenuItem value="NE">NE</MenuItem>
+                    <MenuItem value="NH">NH</MenuItem>
+                    <MenuItem value="NJ">NJ</MenuItem>
+                    <MenuItem value="NM">NM</MenuItem>
+                    <MenuItem value="NV">NV</MenuItem>
+                    <MenuItem value="NY">NY</MenuItem>
+                    <MenuItem value="OH">OH</MenuItem>
+                    <MenuItem value="OK">OK</MenuItem>
+                    <MenuItem value="OR">OR</MenuItem>
+                    <MenuItem value="PA">PA</MenuItem>
+                    <MenuItem value="RI">RI</MenuItem>
+                    <MenuItem value="SC">SC</MenuItem>
+                    <MenuItem value="SD">SD</MenuItem>
+                    <MenuItem value="TN">TN</MenuItem>
+                    <MenuItem value="TX">TX</MenuItem>
+                    <MenuItem value="UT">UT</MenuItem>
+                    <MenuItem value="VA">VA</MenuItem>
+                    <MenuItem value="VT">VT</MenuItem>
+                    <MenuItem value="WA">WA</MenuItem>
+                    <MenuItem value="WI">WI</MenuItem>
+                    <MenuItem value="WV">WV</MenuItem>
+                    <MenuItem value="WY">WY</MenuItem>
+                  </Select>
                 </div>
                 <div
                   style={{
                     display: "flex",
-                    flexDirection: "row",
-                    marginTop: 30,
-                    justifyContent: "center"
+                    flexDirection: "column",
+                    width: 200,
+                    marginRight: 20
                   }}
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      width: 200,
-                      marginRight: 20
-                    }}
-                  >
-                    <div>City</div>
-                    <Input id="city" placeholder={"City"} />
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      width: 200,
-                      marginRight: 20
-                    }}
-                  >
-                    <div>State</div>
-                    <Select id="state">
-                      <MenuItem value="AK">AK</MenuItem>
-                      <MenuItem value="AL">AL</MenuItem>
-                      <MenuItem value="AR">AR</MenuItem>
-                      <MenuItem value="AZ">AZ</MenuItem>
-                      <MenuItem value="CA">CA</MenuItem>
-                      <MenuItem value="CO">CO</MenuItem>
-                      <MenuItem value="CT">CT</MenuItem>
-                      <MenuItem value="DC">DC</MenuItem>
-                      <MenuItem value="DE">DE</MenuItem>
-                      <MenuItem value="FL">FL</MenuItem>
-                      <MenuItem value="GA">GA</MenuItem>
-                      <MenuItem value="IA">IA</MenuItem>
-                      <MenuItem value="ID">ID</MenuItem>
-                      <MenuItem value="IL">IL</MenuItem>
-                      <MenuItem value="IN">IN</MenuItem>
-                      <MenuItem value="KS">KS</MenuItem>
-                      <MenuItem value="KY">KY</MenuItem>
-                      <MenuItem value="LA">LA</MenuItem>
-                      <MenuItem value="MA">MA</MenuItem>
-                      <MenuItem value="MD">MD</MenuItem>
-                      <MenuItem value="ME">ME</MenuItem>
-                      <MenuItem value="MI">MI</MenuItem>
-                      <MenuItem value="MN">MN</MenuItem>
-                      <MenuItem value="MO">MO</MenuItem>
-                      <MenuItem value="MS">MS</MenuItem>
-                      <MenuItem value="MT">MT</MenuItem>
-                      <MenuItem value="NC">NC</MenuItem>
-                      <MenuItem value="ND">ND</MenuItem>
-                      <MenuItem value="NE">NE</MenuItem>
-                      <MenuItem value="NH">NH</MenuItem>
-                      <MenuItem value="NJ">NJ</MenuItem>
-                      <MenuItem value="NM">NM</MenuItem>
-                      <MenuItem value="NV">NV</MenuItem>
-                      <MenuItem value="NY">NY</MenuItem>
-                      <MenuItem value="OH">OH</MenuItem>
-                      <MenuItem value="OK">OK</MenuItem>
-                      <MenuItem value="OR">OR</MenuItem>
-                      <MenuItem value="PA">PA</MenuItem>
-                      <MenuItem value="RI">RI</MenuItem>
-                      <MenuItem value="SC">SC</MenuItem>
-                      <MenuItem value="SD">SD</MenuItem>
-                      <MenuItem value="TN">TN</MenuItem>
-                      <MenuItem value="TX">TX</MenuItem>
-                      <MenuItem value="UT">UT</MenuItem>
-                      <MenuItem value="VA">VA</MenuItem>
-                      <MenuItem value="VT">VT</MenuItem>
-                      <MenuItem value="WA">WA</MenuItem>
-                      <MenuItem value="WI">WI</MenuItem>
-                      <MenuItem value="WV">WV</MenuItem>
-                      <MenuItem value="WY">WY</MenuItem>
-                    </Select>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      width: 200,
-                      marginRight: 20
-                    }}
-                  >
-                    <div>Zip Code</div>
-                    <Input id="zip" placeholder={"Zip Code"} />
-                  </div>
+                  <div>Zip Code</div>
+                  <Input id="zip" placeholder={"Zip Code"} />
                 </div>
               </div>
             </div>
+          </div>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
             <div
               onClick={() => this.sellingRules()}
               id="next"
               style={{
+                marginTop: 20,
+                color: "white",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 150,
+                fontWeight: 600,
+                minWidth: 150,
                 backgroundColor: "#a1a1a1",
                 padding: 10,
                 borderRadius: 5,
