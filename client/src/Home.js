@@ -67,6 +67,111 @@ export default class Home extends React.Component {
     }
     return (
       <div>
+        {this.state.profile && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center"
+
+              // alignItems: "center"
+            }}
+          >
+            <div
+              onClick={e => this.closeModal(e)}
+              style={{
+                backgroundColor: "#000000",
+                opacity: 0.5,
+                zIndex: 99,
+                width: "100vw",
+                height: "100vh",
+                position: "fixed"
+              }}
+            ></div>
+            <div
+              style={{
+                width: "30vw",
+                borderRadius: 5,
+                height: "40vh",
+                top: 30,
+                backgroundColor: "#f5f5f5",
+                position: "fixed",
+                zIndex: 100,
+                opacity: 1
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center"
+                }}
+              >
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "flex-end"
+                  }}
+                >
+                  <img
+                    id="close"
+                    onClick={() => this.closeModal()}
+                    src={Close}
+                    style={{
+                      width: 20,
+                      height: 20,
+                      marginTop: 20,
+                      marginRight: 20
+                    }}
+                  />
+                </div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
+                >
+                  <div style={{ fontSize: 20, fontWeight: 600 }}>Log in</div>
+                  <Input
+                    id="email"
+                    placeholder="Email"
+                    style={{ width: 300, marginTop: 20 }}
+                  />
+                  <Input
+                    id="pass"
+                    type="password"
+                    placeholder="Password"
+                    style={{ width: 300, marginTop: 30 }}
+                  />
+                  <div
+                    onClick={() => this.startShopping()}
+                    id="start-shopping"
+                    style={{
+                      backgroundColor: "#a1a1a1",
+                      borderRadius: 5,
+                      padding: 10,
+                      height: 30,
+                      width: 300,
+                      color: "white",
+                      fontWeight: 600,
+                      marginTop: 10,
+                      marginBottom: 10,
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center"
+                    }}
+                  >
+                    START SHOPPING
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         {this.state.modal && (
           <div
             style={{
@@ -285,6 +390,7 @@ export default class Home extends React.Component {
             Become a Collector
           </div>
           <div
+            onClick={() => this.showProfileModal()}
             id="sign-in"
             style={{
               minWidth: 100,
@@ -469,6 +575,13 @@ export default class Home extends React.Component {
     window.location.href = "/become_collector";
   }
 
+  showProfileModal() {
+    this.setState({
+      profile: true,
+      logout: false
+    });
+  }
+
   search() {
     const city = document.getElementById("combo-box-demo").value.trim();
     if (city === "" || !this.citiesList.includes(city)) {
@@ -487,9 +600,63 @@ export default class Home extends React.Component {
   }
 
   closeModal(e) {
-    // e.stopPropagation();
     this.setState({
-      modal: null
+      profile: false,
+      logout: false,
+      email: false,
+      newUser: false,
+      retUser: false
     });
+  }
+
+  startShopping() {
+    const email = document.getElementById("email").value;
+
+    if (!this.checkEmail(email)) {
+      return;
+    }
+    this.login();
+  }
+
+  checkEmail(email) {
+    if (!email) {
+      alert("Bad email");
+      return false;
+    }
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return true;
+    }
+    alert("Bad email");
+    return false;
+  }
+
+  login() {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("pass").value;
+    console.log(email);
+    console.log(pass);
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, pass)
+      .then(r => {
+        firebase
+          .firestore()
+          .collection("Users")
+          .where("email", "==", email)
+          .get()
+          .then(myData => {
+            const data = myData.docs[0].data();
+            localStorage.setItem("city", data.city);
+            this.state.logout = false;
+            this.state.email = false;
+            this.state.newUser = false;
+            this.state.retUser = false;
+            this.state.profile = false;
+            window.location.reload();
+          });
+      })
+      .catch(e => {
+        alert(e.message);
+      });
   }
 }

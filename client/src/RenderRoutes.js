@@ -60,8 +60,8 @@ export default class RenderRoutes extends React.Component {
               <Route path="/" exact={true} render={() => <Home />} />
             )}
 
-            {window.localStorage.getItem(
-              "city" && <Route path="/" exact={true} render={() => <Buy />} />
+            {window.localStorage.getItem("city") && (
+              <Route path="/" exact={true} render={() => <Buy />} />
             )}
             <Route
               path="/become_collector"
