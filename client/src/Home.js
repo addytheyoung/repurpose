@@ -1,26 +1,23 @@
 import React from "react";
-import * as firebase from "firebase";
 import HeaderBar from "./HeaderBar";
+import { Input } from "@material-ui/core";
+import "./css/Home.css";
+import * as firebase from "firebase";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import Shop from "./Shop";
 import ClipLoader from "react-spinners/ClipLoader";
-import "./css/Shop.css";
-import FilterBar from "./FilterBar";
 import Art from "./images/art.jpeg";
 import Close from "./images/close.png";
 
-export default class Shop extends React.Component {
+export default class Home extends React.Component {
+  citiesList = ["Athens, TX"];
   constructor(props) {
     super(props);
-    var category = window.location.pathname.substring(
-      6,
-      window.location.pathname.length
-    );
-    // category = category[0].toUpperCase() + category.slice(1);
-
-    category = "Art";
     this.state = {
       loaded: false,
       items: [],
-      category: category,
+      category: "Art",
       minPrice: null,
       maxPrice: null,
       modal: null,
@@ -30,7 +27,7 @@ export default class Shop extends React.Component {
     firebase
       .firestore()
       .collection("Categories")
-      .doc(category)
+      .doc("Art")
       .collection("All")
       .get()
       .then(items => {
@@ -49,6 +46,7 @@ export default class Shop extends React.Component {
         }
       });
   }
+
   render() {
     if (!this.state.loaded) {
       return (
@@ -242,98 +240,220 @@ export default class Shop extends React.Component {
             </div>
           </div>
         )}
-        <div>
-          <HeaderBar />
-        </div>
-
         <div
           style={{
             display: "flex",
-            flexDirection: "column"
+            flexDirection: "row",
+            justifyContent: "center",
+            borderBottomWidth: 1,
+            borderBottomColor: "#e8e8e8",
+            borderBottomStyle: "solid",
+            width: "100vw"
           }}
         >
-          <FilterBar
-            updateFilter={(a, b) => this.updateFilter(a, b)}
-            type={this.state.category}
-          />
-
           <div
             style={{
-              fontSize: 20,
-              fontWeight: 600,
-              marginTop: 50,
-              width: "100vw",
-              textAlign: "center"
+              width: 160,
+              fontWeight: 700,
+              height: 80,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: 24,
+              color: "#7628dd",
+              marginLeft: 100
             }}
           >
-            {this.state.category}
+            Collection
           </div>
-
+          <div style={{ width: "100%" }}></div>
           <div
             style={{
+              minWidth: 100,
+              fontWeight: 500,
+              height: 80,
               display: "flex",
-              flexDirection: "row",
-              marginTop: 50,
-              marginLeft: 100,
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: 16,
               marginRight: 100
             }}
           >
-            {this.state.items.map((item, index) => {
-              if (
-                (this.state.minPrice &&
-                  item.original_price < this.state.minPrice) ||
-                (this.state.maxPrice &&
-                  item.original_price > this.state.maxPrice)
-              ) {
-                return null;
-              }
-              return (
-                <div
-                  onClick={() => this.itemPage(item)}
-                  id="box"
+            Sign in
+          </div>
+        </div>
+        <div
+          style={{
+            height: "40vh",
+            width: "100vw",
+            backgroundColor: "#f5f5f5",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <div
+            id="buy-sell-title"
+            style={{
+              fontSize: 26,
+              fontWeight: 600
+            }}
+          >
+            Buy or sell anything in seconds
+          </div>
+          <div style={{ height: 30 }}></div>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <Autocomplete
+              id="combo-box-demo"
+              options={this.citiesList}
+              getOptionLabel={option => option}
+              style={{ width: 300 }}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  placeholder="We add more cities every day!"
+                  label="City"
+                  variant="outlined"
+                  fullWidth
+                />
+              )}
+              freeSolo={true}
+              style={{ width: "300px" }}
+            />
+
+            <div
+              onClick={() => this.search()}
+              id="start"
+              style={{
+                marginLeft: 10,
+                padding: 10,
+                borderRadius: 5,
+                backgroundColor: "black",
+                fontWeight: 600,
+                color: "white",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              Let's go
+            </div>
+          </div>
+          <div style={{ marginTop: 50, display: "flex", flexDirection: "row" }}>
+            <div
+              style={{
+                width: 120,
+                fontSize: 12,
+                marginLeft: 10,
+                marginRight: 10
+              }}
+            >
+              1. We pick up any items people want to sell or get rid of
+            </div>
+            <div
+              style={{
+                width: 120,
+                fontSize: 12,
+                marginLeft: 10,
+                marginRight: 10
+              }}
+            >
+              2. We price the items, pay the seller, and list them here
+            </div>
+            <div
+              style={{
+                width: 120,
+                fontSize: 12,
+                marginLeft: 10,
+                marginRight: 10
+              }}
+            >
+              3. Items sell to local buyers for cheap
+            </div>
+
+            <div
+              style={{
+                width: 120,
+                fontSize: 12,
+                marginLeft: 10,
+                marginRight: 10
+              }}
+            >
+              4. Items are picked up or delivered within a few hours
+            </div>
+          </div>
+        </div>
+        <div
+          style={{
+            fontSize: 24,
+            fontWeight: 500,
+            marginLeft: 50,
+            marginTop: 20
+          }}
+        >
+          Items near Athens, Texas
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            marginTop: 20,
+            marginLeft: 50,
+            marginRight: 50
+          }}
+        >
+          {this.state.items.map((item, index) => {
+            if (
+              (this.state.minPrice &&
+                item.original_price < this.state.minPrice) ||
+              (this.state.maxPrice && item.original_price > this.state.maxPrice)
+            ) {
+              return null;
+            }
+            return (
+              <div
+                onClick={() => this.itemPage(item)}
+                id="box"
+                style={{
+                  width: 220,
+                  marginLeft: 10,
+                  marginRight: 10,
+                  height: 300
+                }}
+              >
+                <img
+                  src={Art}
                   style={{
                     width: 220,
-                    marginLeft: 10,
-                    marginRight: 10,
-                    height: 300
-
-                    // borderWidth: 1,
-                    // borderStyle: "solid"
+                    height: 200,
+                    borderRadius: 5,
+                    overflow: "hidden"
                   }}
-                >
-                  <img
-                    src={Art}
-                    style={{
-                      width: 220,
-                      height: 200,
-                      borderRadius: 5,
-                      overflow: "hidden"
-                    }}
-                  ></img>
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div style={{ fontSize: 18, fontWeight: 400 }}>
-                      {item.title}
-                    </div>
-                    <div style={{ marginTop: 5, fontWeight: 600 }}>
-                      {"$" + item.original_price}
-                    </div>
+                ></img>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <div style={{ fontSize: 18, fontWeight: 400 }}>
+                    {item.title}
+                  </div>
+                  <div style={{ marginTop: 5, fontWeight: 600 }}>
+                    {"$" + item.original_price}
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     );
   }
 
-  updateFilter(min, max) {
-    min = min.substring(1, min.length);
-    max = max.substring(1, max.length);
-    this.setState({
-      minPrice: min,
-      maxPrice: max
-    });
+  search() {
+    const city = document.getElementById("combo-box-demo").value.trim();
+    if (city === "" || !this.citiesList.includes(city)) {
+      alert("Invalid city");
+      return;
+    }
+    window.location.href = "/";
   }
 
   itemPage(item) {
@@ -348,34 +468,5 @@ export default class Shop extends React.Component {
     this.setState({
       modal: null
     });
-  }
-
-  addToCart(item) {
-    console.log(item);
-    this.setState({
-      addingToCart: true
-    });
-
-    firebase
-      .firestore()
-      .collection("Users")
-      .doc("aty268")
-      .get()
-      .then(me => {
-        const myCart = me.data().cart;
-        myCart.push(item);
-        firebase
-          .firestore()
-          .collection("Users")
-          .doc("aty268")
-          .update({
-            cart: myCart
-          })
-          .then(() => {
-            this.setState({
-              modal: null
-            });
-          });
-      });
   }
 }
