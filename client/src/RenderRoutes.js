@@ -11,6 +11,7 @@ import Profile from "./Profile";
 import Cart from "./Cart";
 import CheckOut from "./CheckOut";
 import GetKit from "./GetKit";
+import BecomeCollector from "./BecomeCollector";
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -25,9 +26,12 @@ export default class RenderRoutes extends React.Component {
       return (
         <Elements stripe={stripePromise}>
           <Router>
-            <Route path="/" exact={true} render={() => <Home />} />
-
-            {/* <Route path="/" exact={true} render={() => <Buy />} /> */}
+            <Route path="/" exact={true} render={() => <Buy />} />
+            <Route
+              path="/become_collector"
+              exact={true}
+              render={() => <BecomeCollector />}
+            />
             <Route path="/sell" exact={true} render={() => <Sell />} />
             <Route path="/sell/kit" exact={true} render={() => <OrderKit />} />
             <Route path="/shop" exact={false} render={() => <Shop />} />
@@ -52,8 +56,18 @@ export default class RenderRoutes extends React.Component {
       return (
         <Elements stripe={stripePromise}>
           <Router>
-            <Route path="/" exact={true} render={() => <Home />} />
-            {/* <Route path="/" exact={true} render={() => <Buy />} /> */}
+            {!window.localStorage.getItem("city") && (
+              <Route path="/" exact={true} render={() => <Home />} />
+            )}
+
+            {window.localStorage.getItem(
+              "city" && <Route path="/" exact={true} render={() => <Buy />} />
+            )}
+            <Route
+              path="/become_collector"
+              exact={true}
+              render={() => <BecomeCollector />}
+            />
             <Route path="/sell" exact={true} render={() => <Sell />} />
             <Route path="/shop" exact={false} render={() => <Shop />} />
             <Route path="/item" exact={false} render={() => <Item />} />

@@ -268,6 +268,24 @@ export default class Home extends React.Component {
           </div>
           <div style={{ width: "100%" }}></div>
           <div
+            id="become-collector"
+            onClick={() => this.becomeCollector()}
+            style={{
+              minWidth: 100,
+              fontWeight: 500,
+              height: 80,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: 16,
+              textAlign: "center",
+              marginRight: 0
+            }}
+          >
+            Become a Collector
+          </div>
+          <div
+            id="sign-in"
             style={{
               minWidth: 100,
               fontWeight: 500,
@@ -447,12 +465,17 @@ export default class Home extends React.Component {
     );
   }
 
+  becomeCollector() {
+    window.location.href = "/become_collector";
+  }
+
   search() {
     const city = document.getElementById("combo-box-demo").value.trim();
     if (city === "" || !this.citiesList.includes(city)) {
       alert("Invalid city");
       return;
     }
+    window.localStorage.setItem("city", city);
     window.location.href = "/";
   }
 
