@@ -27,14 +27,14 @@ export default class OrderKit extends React.Component {
             }}
           >
             <div style={{ marginTop: 30, fontSize: 22, fontWeight: 600 }}>
-              What is the address of your items?
+              Where are the items?
             </div>
 
             <div style={{ margin: 10, marginTop: 20 }}>
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "row",
+                  flexDirection: "column",
                   marginTop: 30,
                   justifyContent: "center"
                 }}
@@ -43,130 +43,34 @@ export default class OrderKit extends React.Component {
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    width: 200,
-                    marginRight: 20
+                    width: 300,
+                    marginTop: 20
                   }}
                 >
-                  <div>Full Name</div>
-                  <Input id="name" placeholder={"First Last"} />
+                  <Input id="name" placeholder={"Full name"} />
                 </div>
                 <div
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    width: 200,
-                    marginRight: 20
+                    width: 300,
+                    marginTop: 20
                   }}
                 >
-                  <div>Address Line 1</div>
-                  <Input id="address1" placeholder={"Street Address, PO Box"} />
+                  <Input id="address1" placeholder={"Street Address"} />
                 </div>
                 <div
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    width: 200,
-                    marginRight: 20
+                    width: 300,
+                    marginTop: 20
                   }}
                 >
-                  <div>Apt, Suite, Unit, etc.</div>
                   <Input
                     id="address2"
-                    placeholder={"Apt, Suite, Unit, Building, Floor"}
+                    placeholder={"Apt, Suite, Unit, Floot"}
                   />
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  marginTop: 30,
-                  justifyContent: "center"
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    width: 200,
-                    marginRight: 20
-                  }}
-                >
-                  <div>City</div>
-                  <Input id="city" placeholder={"City"} />
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    width: 200,
-                    marginRight: 20
-                  }}
-                >
-                  <div>State</div>
-                  <Select id="state">
-                    <MenuItem value="AK">AK</MenuItem>
-                    <MenuItem value="AL">AL</MenuItem>
-                    <MenuItem value="AR">AR</MenuItem>
-                    <MenuItem value="AZ">AZ</MenuItem>
-                    <MenuItem value="CA">CA</MenuItem>
-                    <MenuItem value="CO">CO</MenuItem>
-                    <MenuItem value="CT">CT</MenuItem>
-                    <MenuItem value="DC">DC</MenuItem>
-                    <MenuItem value="DE">DE</MenuItem>
-                    <MenuItem value="FL">FL</MenuItem>
-                    <MenuItem value="GA">GA</MenuItem>
-                    <MenuItem value="IA">IA</MenuItem>
-                    <MenuItem value="ID">ID</MenuItem>
-                    <MenuItem value="IL">IL</MenuItem>
-                    <MenuItem value="IN">IN</MenuItem>
-                    <MenuItem value="KS">KS</MenuItem>
-                    <MenuItem value="KY">KY</MenuItem>
-                    <MenuItem value="LA">LA</MenuItem>
-                    <MenuItem value="MA">MA</MenuItem>
-                    <MenuItem value="MD">MD</MenuItem>
-                    <MenuItem value="ME">ME</MenuItem>
-                    <MenuItem value="MI">MI</MenuItem>
-                    <MenuItem value="MN">MN</MenuItem>
-                    <MenuItem value="MO">MO</MenuItem>
-                    <MenuItem value="MS">MS</MenuItem>
-                    <MenuItem value="MT">MT</MenuItem>
-                    <MenuItem value="NC">NC</MenuItem>
-                    <MenuItem value="ND">ND</MenuItem>
-                    <MenuItem value="NE">NE</MenuItem>
-                    <MenuItem value="NH">NH</MenuItem>
-                    <MenuItem value="NJ">NJ</MenuItem>
-                    <MenuItem value="NM">NM</MenuItem>
-                    <MenuItem value="NV">NV</MenuItem>
-                    <MenuItem value="NY">NY</MenuItem>
-                    <MenuItem value="OH">OH</MenuItem>
-                    <MenuItem value="OK">OK</MenuItem>
-                    <MenuItem value="OR">OR</MenuItem>
-                    <MenuItem value="PA">PA</MenuItem>
-                    <MenuItem value="RI">RI</MenuItem>
-                    <MenuItem value="SC">SC</MenuItem>
-                    <MenuItem value="SD">SD</MenuItem>
-                    <MenuItem value="TN">TN</MenuItem>
-                    <MenuItem value="TX">TX</MenuItem>
-                    <MenuItem value="UT">UT</MenuItem>
-                    <MenuItem value="VA">VA</MenuItem>
-                    <MenuItem value="VT">VT</MenuItem>
-                    <MenuItem value="WA">WA</MenuItem>
-                    <MenuItem value="WI">WI</MenuItem>
-                    <MenuItem value="WV">WV</MenuItem>
-                    <MenuItem value="WY">WY</MenuItem>
-                  </Select>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    width: 200,
-                    marginRight: 20
-                  }}
-                >
-                  <div>Zip Code</div>
-                  <Input id="zip" placeholder={"Zip Code"} />
                 </div>
               </div>
             </div>
@@ -228,22 +132,15 @@ export default class OrderKit extends React.Component {
     const name = document.getElementById("name").value.trim();
     // const address1 = document.getElementById("address1").value.trim();
     // const address2 = document.getElementById("address2").value.trim();
-    // const city = document.getElementById("city").value.trim();
-    // const state = document.getElementById("state").textContent.trim();
-    // const zip = document.getElementById("zip").value.trim();
 
-    // // Check name
+    // Check name
     // const numSpaces = name.split(" ").length - 1;
     // if (numSpaces < 1) {
     //   alert("Please enter your full name");
     //   return;
     // }
-    // if (address1 == "" || city == "" || state == "" || zip == "") {
+    // if (address1 == "") {
     //   alert("Please put in your address");
-    //   return;
-    // }
-    // if (zip.length !== 5) {
-    //   alert("Invalid zip code");
     //   return;
     // }
 

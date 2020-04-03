@@ -102,7 +102,7 @@ export default class HeaderBar extends React.Component {
                     }}
                   >
                     <div style={{ fontSize: 20, fontWeight: 600 }}>
-                      Make an account
+                      Sign up / sign in
                     </div>
                     <Input
                       id="email"
@@ -405,6 +405,9 @@ export default class HeaderBar extends React.Component {
               textDecoration: "none",
               color: "black",
               justifyContent: "center",
+              borderWidth: 1,
+              borderStyle: "solid",
+              borderColor: "#d1d1d1",
               backgroundColor:
                 path === "/" || path.includes("shop") ? "#d8d8d8" : "#ffffff",
               borderRadius: 3
@@ -425,8 +428,10 @@ export default class HeaderBar extends React.Component {
               color: "black",
               justifyContent: "center",
               backgroundColor: path.includes("sell") ? "#d8d8d8" : "#ffffff",
-              marginRight: 50,
-              borderRadius: 3
+              borderRadius: 3,
+              borderWidth: 1,
+              borderStyle: "solid",
+              borderColor: "#d1d1d1"
             }}
           >
             Sell
@@ -463,7 +468,7 @@ export default class HeaderBar extends React.Component {
                   marginRight: 5
                 }}
               />
-              <div style={{ marginRight: 20, fontWeight: 600 }}>Search</div>
+              <div style={{ marginRight: 30, fontWeight: 600 }}>Search</div>
             </div>
           </div>
           {this.state.searching && (
@@ -613,7 +618,7 @@ export default class HeaderBar extends React.Component {
                   }}
                 />
 
-                <div style={{ marginRight: 20, fontWeight: 600 }}>Athens</div>
+                <div style={{ marginRight: 30, fontWeight: 600 }}>Athens</div>
               </div>
               <div
                 style={{
@@ -686,7 +691,7 @@ export default class HeaderBar extends React.Component {
               color: "black",
               alignItems: "center",
               justifyContent: "center",
-              marginRight: 20
+              marginRight: 30
             }}
           >
             <AccountCircleOutlinedIcon

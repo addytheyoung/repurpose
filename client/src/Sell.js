@@ -86,7 +86,7 @@ export default class Sell extends React.Component {
                     }}
                   >
                     <div style={{ fontSize: 20, fontWeight: 600 }}>
-                      Make an account
+                      Sign up / sign in
                     </div>
                     <Input
                       id="email"
@@ -471,7 +471,7 @@ export default class Sell extends React.Component {
                   OR
                 </div>
                 <div
-                  onClick={() => this.becomeCollector()}
+                  onClick={() => (window.location.href = "/become_collector")}
                   id="header-checkout"
                   style={{
                     width: 150,
@@ -529,7 +529,7 @@ export default class Sell extends React.Component {
                   OR
                 </div>
                 <div
-                  onClick={() => this.showProfileModal()}
+                  onClick={() => (window.location.href = "/become_collector")}
                   id="header-checkout"
                   style={{
                     width: 150,

@@ -374,7 +374,7 @@ export default class Home extends React.Component {
           <div style={{ width: "100%" }}></div>
           <div
             id="become-collector"
-            onClick={() => this.becomeCollector()}
+            onClick={() => (window.location.href = "/become_collector")}
             style={{
               minWidth: 100,
               fontWeight: 500,
@@ -569,10 +569,6 @@ export default class Home extends React.Component {
         </div>
       </div>
     );
-  }
-
-  becomeCollector() {
-    window.location.href = "/become_collector";
   }
 
   showProfileModal() {
