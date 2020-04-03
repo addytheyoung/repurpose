@@ -1,16 +1,20 @@
 import React from "react";
 import { Input, MenuItem, Select, Avatar } from "@material-ui/core";
-import search from "./images/search.svg";
+import search from "./images/research.png";
 import * as firebase from "firebase";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import "./css/HeaderBar.css";
 import Logo from "./images/test.png";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 import Shop from "./Shop";
 import Close from "./images/close.png";
+import city from "./images/architectonic.png";
 
 export default class HeaderBar extends React.Component {
+  citiesList = ["Athens, TX", "Malakoff, TX"];
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +22,9 @@ export default class HeaderBar extends React.Component {
       logout: false,
       newUser: false,
       retUser: false,
-      email: ""
+      email: "",
+      searching: false,
+      currentCity: localStorage.getItem("city")
     };
   }
   render() {
@@ -380,7 +386,8 @@ export default class HeaderBar extends React.Component {
                 justifyContent: "center",
                 alignItems: "center",
                 fontSize: 24,
-                color: "#7628dd"
+                color: "#7628dd",
+                marginLeft: 50
               }}
             >
               Collection
@@ -424,75 +431,153 @@ export default class HeaderBar extends React.Component {
           >
             Sell
           </Link>
+          <div style={{ width: "100%" }}></div>
           <div
+            onClick={() =>
+              this.setState({
+                searching: !this.state.searching,
+                city: false
+              })
+            }
             style={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center"
             }}
           >
-            <Input
-              id="address-input"
-              placeholder="Search for anything"
-              style={{ marginRight: 5, height: 40 }}
-            />
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
-            <Select
-              style={{ width: 130, height: 40 }}
-              id="category"
-              defaultValue={"All Categories"}
+            <div
+              id="search"
+              style={{
+                height: 30,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
             >
-              <MenuItem value={"All Categories"}>All Categories</MenuItem>
-              <MenuItem value={"Antiques"}>Antiques</MenuItem>
-              <MenuItem value={"Art"}>Art</MenuItem>
-              <MenuItem value={"Baby"}>Baby</MenuItem>
-              <MenuItem value={"Books"}>Books</MenuItem>
-              <MenuItem value={"Cameras & Photo"}>{"Cameras & Photo"}</MenuItem>
-              <MenuItem value={"Cell Phones & Accessories"}>
-                {"Cell Phones & Accessories"}
-              </MenuItem>
-              <MenuItem value={"Clothing, Shoes, & Accessories"}>
-                {"Clothing, Shoes, & Accessories"}
-              </MenuItem>
-              <MenuItem value={"Coins & Paper Money"}>
-                {"Coins & Paper Money"}
-              </MenuItem>
-              <MenuItem value={"Collectibles"}>Collectibles</MenuItem>
-              <MenuItem value={"Computers & Tablets"}>
-                {"Computers & Tablets"}
-              </MenuItem>
-              <MenuItem value={"Consumer Electronics"}>
-                Consumer Electronics
-              </MenuItem>
-              <MenuItem value={"Crafts / Arts & Crafts"}>
-                {"Crafts / Arts & Crafts"}
-              </MenuItem>
-              <MenuItem value={"Dolls & Bears"}>{"Dolls & Bears"}</MenuItem>
-              <MenuItem value={"Gift Cards & Coupons"}>
-                {"Gift Cards & Coupons"}
-              </MenuItem>
-              <MenuItem value={"Health & Beauty"}>{"Health & Beauty"}</MenuItem>
-              <MenuItem value={"Home & Garden"}>{"Home & Garden"}</MenuItem>
-              <MenuItem value={"Jewelry & Watches"}>
-                {"Jewelry & Watches"}
-              </MenuItem>
-              <MenuItem value={"Musical Instruments & Gear"}>
-                {"Musical Instruments & Gear"}
-              </MenuItem>
-              <MenuItem value={"Pet Supplies"}>{"Pet Supplies"}</MenuItem>
-              <MenuItem value={"Pottery & Glass"}>{"Pottery & Glass"}</MenuItem>
-              <MenuItem value={"Sporting Goods"}>{"Sporting Goods"}</MenuItem>
-              <MenuItem value={"Toys & Hobbies"}>{"Toys & Hobbies"}</MenuItem>
-              <MenuItem value={"Everything Else"}>{"Everything Else"}</MenuItem>
-            </Select>
+              <img
+                src={search}
+                style={{
+                  width: 20,
+                  height: 20,
+                  marginRight: 5
+                }}
+              />
+              <div style={{ marginRight: 20, fontWeight: 600 }}>Search</div>
+            </div>
           </div>
+          {this.state.searching && (
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <Input
+                  id="address-input"
+                  placeholder="Search for anything"
+                  style={{ marginRight: 5, height: 40 }}
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <Select
+                  style={{ width: 126, height: 40 }}
+                  id="category"
+                  defaultValue={"All Categories"}
+                >
+                  <MenuItem value={"All Categories"}>All Categories</MenuItem>
+                  <MenuItem value={"Antiques"}>Antiques</MenuItem>
+                  <MenuItem value={"Art"}>Art</MenuItem>
+                  <MenuItem value={"Baby"}>Baby</MenuItem>
+                  <MenuItem value={"Books"}>Books</MenuItem>
+                  <MenuItem value={"Cameras & Photo"}>
+                    {"Cameras & Photo"}
+                  </MenuItem>
+                  <MenuItem value={"Cell Phones & Accessories"}>
+                    {"Cell Phones & Accessories"}
+                  </MenuItem>
+                  <MenuItem value={"Clothing, Shoes, & Accessories"}>
+                    {"Clothing, Shoes, & Accessories"}
+                  </MenuItem>
+                  <MenuItem value={"Coins & Paper Money"}>
+                    {"Coins & Paper Money"}
+                  </MenuItem>
+                  <MenuItem value={"Collectibles"}>Collectibles</MenuItem>
+                  <MenuItem value={"Computers & Tablets"}>
+                    {"Computers & Tablets"}
+                  </MenuItem>
+                  <MenuItem value={"Consumer Electronics"}>
+                    Consumer Electronics
+                  </MenuItem>
+                  <MenuItem value={"Crafts / Arts & Crafts"}>
+                    {"Crafts / Arts & Crafts"}
+                  </MenuItem>
+                  <MenuItem value={"Dolls & Bears"}>{"Dolls & Bears"}</MenuItem>
+                  <MenuItem value={"Gift Cards & Coupons"}>
+                    {"Gift Cards & Coupons"}
+                  </MenuItem>
+                  <MenuItem value={"Health & Beauty"}>
+                    {"Health & Beauty"}
+                  </MenuItem>
+                  <MenuItem value={"Home & Garden"}>{"Home & Garden"}</MenuItem>
+                  <MenuItem value={"Jewelry & Watches"}>
+                    {"Jewelry & Watches"}
+                  </MenuItem>
+                  <MenuItem value={"Musical Instruments & Gear"}>
+                    {"Musical Instruments & Gear"}
+                  </MenuItem>
+                  <MenuItem value={"Pet Supplies"}>{"Pet Supplies"}</MenuItem>
+                  <MenuItem value={"Pottery & Glass"}>
+                    {"Pottery & Glass"}
+                  </MenuItem>
+                  <MenuItem value={"Sporting Goods"}>
+                    {"Sporting Goods"}
+                  </MenuItem>
+                  <MenuItem value={"Toys & Hobbies"}>
+                    {"Toys & Hobbies"}
+                  </MenuItem>
+                  <MenuItem value={"Everything Else"}>
+                    {"Everything Else"}
+                  </MenuItem>
+                </Select>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <div
+                  id="search-button"
+                  onClick={() => this.search()}
+                  style={{
+                    marginLeft: 5,
+                    borderRadius: 5,
+                    width: 40,
+                    height: 40,
+                    backgroundColor: "#d1d1d1",
+                    display: "flex",
+                    justifyContent: "center",
+                    minWidth: 30,
+                    alignItems: "center",
+                    marginRight: 20
+                  }}
+                >
+                  <img src={search} style={{ width: 20, height: 20 }} />
+                </div>
+              </div>
+            </div>
+          )}
+
           <div
             style={{
               display: "flex",
@@ -501,27 +586,98 @@ export default class HeaderBar extends React.Component {
             }}
           >
             <div
-              id="search-button"
-              onClick={() => this.search()}
               style={{
-                marginLeft: 20,
-                borderRadius: 5,
-                width: 40,
-                height: 40,
-                backgroundColor: "#d1d1d1",
                 display: "flex",
+                flexDirection: "row",
                 justifyContent: "center",
-                minWidth: 30,
-                alignItems: "center",
-                marginRight: 50
+                alignItems: "center"
               }}
             >
-              <img src={search} style={{ width: 20, height: 20 }} />
+              <div
+                onClick={() => this.setCity()}
+                id="search"
+                style={{
+                  height: 30,
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <img
+                  src={city}
+                  style={{
+                    width: 20,
+                    height: 20,
+                    marginRight: 5
+                  }}
+                />
+
+                <div style={{ marginRight: 20, fontWeight: 600 }}>Athens</div>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                {this.state.city && (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: 20
+                    }}
+                  >
+                    <Autocomplete
+                      value={this.state.currentCity}
+                      id="combo-box-demo"
+                      options={this.citiesList}
+                      getOptionLabel={option => option}
+                      style={{ width: 300 }}
+                      renderOption={option => (
+                        <div
+                          onClick={() => this.updateCity(option)}
+                          style={{ width: "100%", height: "1005" }}
+                        >
+                          {option}
+                        </div>
+                      )}
+                      renderInput={params => (
+                        <div>
+                          <TextField
+                            {...params}
+                            placeholder="We add more cities every day!"
+                            label="City"
+                            variant="outlined"
+                            fullWidth
+                          />
+                        </div>
+                      )}
+                      freeSolo={true}
+                      style={{ width: "300px" }}
+                    />
+                    {/* <img
+                      id="close"
+                      onClick={() => this.setCity()}
+                      src={Close}
+                      style={{
+                        width: 20,
+                        height: 20,
+                        marginLeft: 10,
+                        marginRight: 10
+                      }}
+                    /> */}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-          {/* <div style={{ width: "10%" }}></div> */}
+
           <div
-            // href="/profile"
             id="profile-button"
             onClick={() => this.showProfileModal()}
             style={{
@@ -534,8 +690,9 @@ export default class HeaderBar extends React.Component {
             }}
           >
             <AccountCircleOutlinedIcon
-              style={{ width: 40, height: 40 }}
+              style={{ width: 25, height: 25, marginRight: 3 }}
             ></AccountCircleOutlinedIcon>
+            <div style={{ fontWeight: 600 }}>Profile</div>
           </div>
           <a
             href="/cart"
@@ -545,11 +702,11 @@ export default class HeaderBar extends React.Component {
               color: "black",
               alignItems: "center",
               justifyContent: "center",
-              marginRight: 20
+              marginRight: 50
             }}
           >
             <ShoppingCartOutlinedIcon
-              style={{ width: 40, height: 40 }}
+              style={{ width: 25, height: 25 }}
             ></ShoppingCartOutlinedIcon>
           </a>
           <div
@@ -558,50 +715,7 @@ export default class HeaderBar extends React.Component {
               justifyContent: "center",
               alignItems: "center"
             }}
-          >
-            {!singedin && (
-              <div
-                onClick={() => this.showProfileModal()}
-                id="header-checkout"
-                style={{
-                  display: "flex",
-                  textDecoration: "none",
-                  backgroundColor: "#a1a1a1",
-                  borderRadius: 5,
-                  padding: 10,
-                  height: 20,
-                  fontWeight: 600,
-                  color: "white",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  minWidth: 100
-                }}
-              >
-                CHECK OUT
-              </div>
-            )}
-            {singedin && (
-              <a
-                id="header-checkout"
-                href="/checkout"
-                style={{
-                  display: "flex",
-                  textDecoration: "none",
-                  backgroundColor: "#a1a1a1",
-                  borderRadius: 5,
-                  padding: 10,
-                  height: 20,
-                  fontWeight: 600,
-                  color: "white",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  minWidth: 100
-                }}
-              >
-                CHECK OUT
-              </a>
-            )}
-          </div>
+          ></div>
         </div>
       </div>
     );
@@ -647,6 +761,21 @@ export default class HeaderBar extends React.Component {
     return false;
   }
 
+  updateCity(city) {
+    firebase
+      .firestore()
+      .collection("Users")
+      .doc("123@gmail.com")
+      .update({
+        city: city
+      })
+      .then(() => {
+        this.setState({
+          currentCity: city
+        });
+      });
+  }
+
   setPassword() {
     const email = this.state.email;
     const pass = document.getElementById("pass").value;
@@ -680,6 +809,23 @@ export default class HeaderBar extends React.Component {
       .catch(e => {
         alert(e.message);
       });
+  }
+
+  setCity() {
+    this.setState({
+      city: !this.state.city,
+      searching: false
+    });
+  }
+
+  search() {
+    const city = document.getElementById("combo-box-demo").value.trim();
+    if (city === "" || !this.citiesList.includes(city)) {
+      alert("Invalid city");
+      return;
+    }
+    window.localStorage.setItem("city", city);
+    window.location.href = "/";
   }
 
   login() {
