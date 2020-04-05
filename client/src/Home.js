@@ -21,7 +21,7 @@ export default class Home extends React.Component {
       minPrice: null,
       maxPrice: null,
       modal: null,
-      addingToCart: false
+      addingToCart: false,
     };
 
     firebase
@@ -30,7 +30,7 @@ export default class Home extends React.Component {
       .doc("Art")
       .collection("All")
       .get()
-      .then(items => {
+      .then((items) => {
         const docs = items.docs;
         const itemArr = [];
         for (var i = 0; i < docs.length; i++) {
@@ -40,7 +40,7 @@ export default class Home extends React.Component {
             this.setState({
               items: itemArr,
               loaded: true,
-              modal: null
+              modal: null,
             });
           }
         }
@@ -54,7 +54,7 @@ export default class Home extends React.Component {
           style={{
             position: "absolute",
             left: "45vw",
-            top: 200
+            top: 200,
           }}
         >
           <ClipLoader
@@ -71,20 +71,20 @@ export default class Home extends React.Component {
           <div
             style={{
               display: "flex",
-              justifyContent: "center"
+              justifyContent: "center",
 
               // alignItems: "center"
             }}
           >
             <div
-              onClick={e => this.closeModal(e)}
+              onClick={(e) => this.closeModal(e)}
               style={{
                 backgroundColor: "#000000",
                 opacity: 0.5,
                 zIndex: 99,
                 width: "100vw",
                 height: "100vh",
-                position: "fixed"
+                position: "fixed",
               }}
             ></div>
             <div
@@ -96,14 +96,14 @@ export default class Home extends React.Component {
                 backgroundColor: "#f5f5f5",
                 position: "fixed",
                 zIndex: 100,
-                opacity: 1
+                opacity: 1,
               }}
             >
               <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <div
@@ -111,7 +111,7 @@ export default class Home extends React.Component {
                     width: "100%",
                     display: "flex",
                     flexDirection: "row",
-                    justifyContent: "flex-end"
+                    justifyContent: "flex-end",
                   }}
                 >
                   <img
@@ -122,7 +122,7 @@ export default class Home extends React.Component {
                       width: 20,
                       height: 20,
                       marginTop: 20,
-                      marginRight: 20
+                      marginRight: 20,
                     }}
                   />
                 </div>
@@ -132,7 +132,7 @@ export default class Home extends React.Component {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
-                    alignItems: "center"
+                    alignItems: "center",
                   }}
                 >
                   <div style={{ fontSize: 20, fontWeight: 600 }}>Log in</div>
@@ -162,7 +162,7 @@ export default class Home extends React.Component {
                       marginBottom: 10,
                       display: "flex",
                       justifyContent: "center",
-                      alignItems: "center"
+                      alignItems: "center",
                     }}
                   >
                     START SHOPPING
@@ -176,19 +176,19 @@ export default class Home extends React.Component {
           <div
             style={{
               display: "flex",
-              justifyContent: "center"
+              justifyContent: "center",
               // alignItems: "center"
             }}
           >
             <div
-              onClick={e => this.closeModal(e)}
+              onClick={(e) => this.closeModal(e)}
               style={{
                 backgroundColor: "#000000",
                 opacity: 0.5,
                 zIndex: 99,
                 width: "100vw",
                 height: "100vh",
-                position: "absolute"
+                position: "absolute",
               }}
             ></div>
             <div
@@ -200,7 +200,7 @@ export default class Home extends React.Component {
                 backgroundColor: "#f5f5f5",
                 position: "absolute",
                 zIndex: 100,
-                opacity: 1
+                opacity: 1,
               }}
             >
               <div style={{ display: "flex", flexDirection: "column" }}>
@@ -209,7 +209,7 @@ export default class Home extends React.Component {
                     width: "100%",
                     display: "flex",
                     flexDirection: "row",
-                    justifyContent: "flex-end"
+                    justifyContent: "flex-end",
                   }}
                 >
                   <img
@@ -220,7 +220,7 @@ export default class Home extends React.Component {
                       width: 20,
                       height: 20,
                       marginTop: 20,
-                      marginRight: 20
+                      marginRight: 20,
                     }}
                   />
                 </div>
@@ -235,7 +235,7 @@ export default class Home extends React.Component {
                         display: "flex",
                         flexDirection: "row",
                         marginLeft: 20,
-                        marginTop: 10
+                        marginTop: 10,
                       }}
                     >
                       {this.state.modal.pictures.map((pic, index) => {
@@ -247,7 +247,7 @@ export default class Home extends React.Component {
                                 width: 80,
                                 height: 80,
                                 marginLeft: 5,
-                                marginRight: 5
+                                marginRight: 5,
                               }}
                             ></img>
                           </div>
@@ -259,13 +259,13 @@ export default class Home extends React.Component {
                     style={{
                       width: "100%",
                       display: "flex",
-                      justifyContent: "center"
+                      justifyContent: "center",
                     }}
                   >
                     <div
                       style={{
                         display: "flex",
-                        flexDirection: "column"
+                        flexDirection: "column",
                       }}
                     >
                       <div
@@ -279,7 +279,7 @@ export default class Home extends React.Component {
                           marginTop: 100,
                           fontWeight: 700,
                           fontSize: 24,
-                          textAlign: "center"
+                          textAlign: "center",
                         }}
                       >
                         {"$" + this.state.modal.original_price}
@@ -290,7 +290,7 @@ export default class Home extends React.Component {
                           justifyContent: "center",
                           // alignItems: "center",
                           width: "100%",
-                          height: "100%"
+                          height: "100%",
                         }}
                       >
                         <div
@@ -307,7 +307,7 @@ export default class Home extends React.Component {
                             alignItems: "center",
                             justifyContent: "center",
                             color: "#ffffff",
-                            fontWeight: 500
+                            fontWeight: 500,
                           }}
                         >
                           {!this.state.addingToCart && "ADD TO CART"}
@@ -322,7 +322,7 @@ export default class Home extends React.Component {
                     marginLeft: 20,
                     fontSize: 20,
                     marginTop: 20,
-                    fontWeight: 600
+                    fontWeight: 600,
                   }}
                 >
                   Item Details
@@ -334,7 +334,7 @@ export default class Home extends React.Component {
                     marginRight: 20,
                     borderTopColor: "#a1a1a1",
                     borderTopWidth: 1,
-                    borderTopStyle: "solid"
+                    borderTopStyle: "solid",
                   }}
                 >
                   <div style={{ marginTop: 5 }}>
@@ -353,7 +353,7 @@ export default class Home extends React.Component {
             borderBottomWidth: 1,
             borderBottomColor: "#e8e8e8",
             borderBottomStyle: "solid",
-            width: "100vw"
+            width: "100vw",
           }}
         >
           <div
@@ -366,7 +366,7 @@ export default class Home extends React.Component {
               alignItems: "center",
               fontSize: 24,
               color: "#7628dd",
-              marginLeft: 100
+              marginLeft: 100,
             }}
           >
             Collection
@@ -384,7 +384,7 @@ export default class Home extends React.Component {
               alignItems: "center",
               fontSize: 16,
               textAlign: "center",
-              marginRight: 0
+              marginRight: 0,
             }}
           >
             Become a Collector
@@ -400,7 +400,7 @@ export default class Home extends React.Component {
               justifyContent: "center",
               alignItems: "center",
               fontSize: 16,
-              marginRight: 100
+              marginRight: 100,
             }}
           >
             Sign in
@@ -414,14 +414,14 @@ export default class Home extends React.Component {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           <div
             id="buy-sell-title"
             style={{
               fontSize: 26,
-              fontWeight: 600
+              fontWeight: 600,
             }}
           >
             Buy or sell anything in seconds
@@ -431,9 +431,9 @@ export default class Home extends React.Component {
             <Autocomplete
               id="combo-box-demo"
               options={this.citiesList}
-              getOptionLabel={option => option}
+              getOptionLabel={(option) => option}
               style={{ width: 300 }}
-              renderInput={params => (
+              renderInput={(params) => (
                 <TextField
                   {...params}
                   placeholder="We add more cities every day!"
@@ -458,7 +458,7 @@ export default class Home extends React.Component {
                 color: "white",
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               Let's go
@@ -470,7 +470,7 @@ export default class Home extends React.Component {
                 width: 120,
                 fontSize: 12,
                 marginLeft: 10,
-                marginRight: 10
+                marginRight: 10,
               }}
             >
               1. We pick up any items people want to sell or get rid of
@@ -480,7 +480,7 @@ export default class Home extends React.Component {
                 width: 120,
                 fontSize: 12,
                 marginLeft: 10,
-                marginRight: 10
+                marginRight: 10,
               }}
             >
               2. We price the items, pay the seller, and list them here
@@ -490,7 +490,7 @@ export default class Home extends React.Component {
                 width: 120,
                 fontSize: 12,
                 marginLeft: 10,
-                marginRight: 10
+                marginRight: 10,
               }}
             >
               3. Items sell to local buyers for cheap
@@ -501,7 +501,7 @@ export default class Home extends React.Component {
                 width: 120,
                 fontSize: 12,
                 marginLeft: 10,
-                marginRight: 10
+                marginRight: 10,
               }}
             >
               4. Items are picked up or delivered within a few hours
@@ -513,7 +513,7 @@ export default class Home extends React.Component {
             fontSize: 24,
             fontWeight: 500,
             marginLeft: 50,
-            marginTop: 20
+            marginTop: 20,
           }}
         >
           Items near Athens, Texas
@@ -524,7 +524,7 @@ export default class Home extends React.Component {
             flexDirection: "row",
             marginTop: 20,
             marginLeft: 50,
-            marginRight: 50
+            marginRight: 50,
           }}
         >
           {this.state.items.map((item, index) => {
@@ -543,7 +543,7 @@ export default class Home extends React.Component {
                   width: 220,
                   marginLeft: 10,
                   marginRight: 10,
-                  height: 300
+                  height: 300,
                 }}
               >
                 <img
@@ -552,7 +552,7 @@ export default class Home extends React.Component {
                     width: 220,
                     height: 200,
                     borderRadius: 5,
-                    overflow: "hidden"
+                    overflow: "hidden",
                   }}
                 ></img>
                 <div style={{ display: "flex", flexDirection: "column" }}>
@@ -574,7 +574,7 @@ export default class Home extends React.Component {
   showProfileModal() {
     this.setState({
       profile: true,
-      logout: false
+      logout: false,
     });
   }
 
@@ -590,7 +590,7 @@ export default class Home extends React.Component {
 
   itemPage(item) {
     this.setState({
-      modal: item
+      modal: item,
     });
     // window.open("http://localhost:3000/item/" + uid, "_self");
   }
@@ -601,7 +601,7 @@ export default class Home extends React.Component {
       logout: false,
       email: false,
       newUser: false,
-      retUser: false
+      retUser: false,
     });
   }
 
@@ -634,13 +634,13 @@ export default class Home extends React.Component {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, pass)
-      .then(r => {
+      .then((r) => {
         firebase
           .firestore()
           .collection("Users")
           .where("email", "==", email)
           .get()
-          .then(myData => {
+          .then((myData) => {
             const data = myData.docs[0].data();
             localStorage.setItem("city", data.city);
             this.state.logout = false;
@@ -651,7 +651,7 @@ export default class Home extends React.Component {
             window.location.reload();
           });
       })
-      .catch(e => {
+      .catch((e) => {
         alert(e.message);
       });
   }

@@ -25,6 +25,7 @@ export default class Shop extends React.Component {
       maxPrice: null,
       modal: null,
       addingToCart: false,
+      numCartItems: localStorage.getItem("cart"),
     };
 
     firebase
@@ -244,7 +245,7 @@ export default class Shop extends React.Component {
           </div>
         )}
         <div>
-          <HeaderBar />
+          <HeaderBar numCartItems={this.state.numCartItems} />
         </div>
 
         <div
@@ -353,6 +354,14 @@ export default class Shop extends React.Component {
   }
 
   addToCart(item) {
+    var numCartItems = localStorage.getItem("cart");
+
+    if (numCartItems && numCartItems != 0) {
+      numCartItems = parseInt(numCartItems) + 1;
+    } else {
+      numCartItems = 1;
+    }
+
     console.log(item);
     this.setState({
       addingToCart: true,
@@ -374,8 +383,11 @@ export default class Shop extends React.Component {
             cart: myCart,
           })
           .then(() => {
+            localStorage.setItem("cart", numCartItems);
             this.setState({
               modal: null,
+              addingToCart: false,
+              numCartItems: numCartItems,
             });
           });
       });

@@ -399,7 +399,10 @@ export default class HeaderBar extends React.Component {
             style={{
               display: "flex",
               fontSize: 24,
-              fontWeight: path === "/" || path.includes("shop") ? 600 : 500,
+              fontWeight:
+                path === "/" || path.includes("shop") || path.includes("cart")
+                  ? 600
+                  : 500,
               alignItems: "center",
               minWidth: 80,
               textDecoration: "none",
@@ -409,7 +412,9 @@ export default class HeaderBar extends React.Component {
               borderStyle: "solid",
               borderColor: "#d1d1d1",
               backgroundColor:
-                path === "/" || path.includes("shop") ? "#d8d8d8" : "#ffffff",
+                path === "/" || path.includes("shop") || path.includes("cart")
+                  ? "#d8d8d8"
+                  : "#ffffff",
               borderRadius: 3,
             }}
           >
@@ -715,6 +720,19 @@ export default class HeaderBar extends React.Component {
             <ShoppingCartOutlinedIcon
               style={{ width: 25, height: 25 }}
             ></ShoppingCartOutlinedIcon>
+
+            <div
+              style={{
+                color: "green",
+                fontWeight: 700,
+                fontSize: 18,
+                padding: 5,
+              }}
+            >
+              {localStorage.getItem("cart") &&
+                localStorage.getItem("cart") != 0 &&
+                "(" + localStorage.getItem("cart") + ")"}
+            </div>
           </a>
           <div
             style={{

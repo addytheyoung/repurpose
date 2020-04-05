@@ -16,7 +16,7 @@ export default class Buy extends React.Component {
       { picture: Books, name: "Home & Garden", link: "home" },
       { picture: Books, name: "Fashion", link: "fashion" },
       { picture: Books, name: "Sporting Goods", link: "sports" },
-      { picture: Books, name: "Toys", link: "toys" }
+      { picture: Books, name: "Toys", link: "toys" },
     ];
     return (
       <div>
@@ -27,7 +27,7 @@ export default class Buy extends React.Component {
           style={{
             marginLeft: "15vw",
             marginRight: "15vw",
-            marginTop: 30
+            marginTop: 30,
           }}
         >
           <div style={{ display: "flex", flexDirection: "column" }}>
@@ -40,7 +40,7 @@ export default class Buy extends React.Component {
                 flexDirection: "row",
                 flexWrap: "wrap",
                 width: "70vw",
-                justifyContent: "center"
+                justifyContent: "center",
               }}
             >
               {categories.map((cat, index) => {
@@ -56,7 +56,7 @@ export default class Buy extends React.Component {
                       flexDirection: "column",
                       alignItems: "center",
                       marginLeft: 10,
-                      marginRight: 10
+                      marginRight: 10,
                     }}
                   >
                     <img
@@ -65,7 +65,7 @@ export default class Buy extends React.Component {
                         width: 220,
                         height: 200,
                         borderRadius: 5,
-                        overflow: "hidden"
+                        overflow: "hidden",
                       }}
                     ></img>
                     <div style={{ marginTop: 10 }}>{cat.name}</div>
