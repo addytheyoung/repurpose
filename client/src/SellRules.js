@@ -21,6 +21,9 @@ export default class SellRules extends React.Component {
       loaded: false,
       currentDate: null,
       dates: [],
+      bookModal: false,
+      opening: null,
+      id: null,
     };
     firebase
       .firestore()
@@ -38,10 +41,10 @@ export default class SellRules extends React.Component {
           const collector = data.docs[i].data();
           if (collector.accepted) {
             const dates = collector.dates;
-            allDates = allDates.concat(dates);
+            const id = data.docs[i].id;
+            allDates = allDates.concat({ dates: dates, collector: id });
           }
           if (i === data.docs.length - 1) {
-            console.log(allDates);
             this.setState({
               dates: allDates,
               loaded: true,
@@ -90,17 +93,124 @@ export default class SellRules extends React.Component {
 
       // Looping through each opening on the day
       // Put these times on the screen
-      for (const opening in sunday) {
-        openingArr.push(sunday[opening]);
+      for (const opening in sunday.dates) {
+        openingArr.push({
+          dates: sunday.dates[opening][0],
+          id: sunday.collector,
+        });
       }
     }
 
     return (
       <div>
+        {this.state.bookModal && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              onClick={(e) => this.closeModal(e)}
+              style={{
+                backgroundColor: "#000000",
+                opacity: 0.5,
+                zIndex: 99,
+                width: "100vw",
+                height: "100vh",
+                position: "fixed",
+              }}
+            ></div>
+
+            <div
+              style={{
+                width: "30vw",
+                borderRadius: 5,
+                height: "40vh",
+                top: 30,
+                backgroundColor: "#f5f5f5",
+                position: "fixed",
+                zIndex: 100,
+                opacity: 1,
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+              }}
+            >
+              <div style={{ fontWeight: 400, fontSize: 20, marginTop: 10 }}>
+                The Collector will pick up your items at
+              </div>
+              <div style={{ fontWeight: 500, fontSize: 20, marginTop: 10 }}>
+                {this.state.opening[0]}
+              </div>
+              <div style={{ fontWeight: 400, fontSize: 20, marginTop: 30 }}>
+                and leave around
+              </div>
+              <div style={{ fontWeight: 500, fontSize: 20, marginTop: 10 }}>
+                {this.state.opening[1]}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  marginTop: 30,
+                }}
+              >
+                <div
+                  onClick={() =>
+                    this.setState({
+                      bookModal: null,
+                      opening: null,
+                    })
+                  }
+                  id="book"
+                  style={{
+                    padding: 10,
+                    backgroundColor: "gray",
+                    borderRadius: 5,
+                    textAlign: "center",
+                    fontWeight: 600,
+                    marginRight: 10,
+                    color: "white",
+                  }}
+                >
+                  CANCEL
+                </div>
+                <div
+                  onClick={() => this.bookModal()}
+                  id="book"
+                  style={{
+                    padding: 10,
+                    backgroundColor: "green",
+                    borderRadius: 5,
+                    textAlign: "center",
+                    fontWeight: 600,
+                    color: "white",
+                    marginLeft: 10,
+                  }}
+                >
+                  ACCEPT
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div>
           <HeaderBar />
         </div>
         <div style={{ marginLeft: 20, marginTop: 20 }}>
+          <div
+            style={{
+              fontWeight: 600,
+              fontSize: 24,
+              marginTop: 10,
+              marginBottom: 20,
+            }}
+          >
+            Pick a time that works best for you.
+          </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
             <div>
               <Calendar onClickDay={(e) => this.seeTimes(e)} />
@@ -108,17 +218,67 @@ export default class SellRules extends React.Component {
             {this.state.currentDate && (
               <div
                 style={{
-                  width: 200,
-                  height: 300,
+                  width: 300,
+                  height: 400,
+                  overflowY: "scroll",
+                  borderRadius: 5,
                   backgroundColor: "#f1f1f1",
                   marginLeft: 50,
                 }}
               >
-                {/* {this.state.currentDate.toString()} */}
                 {openingArr.map((opening) => {
+                  const id = opening.id;
+
+                  const collectorStartHours = opening.dates[0].substring(0, 2);
+                  const collectorStartMinutes = opening.dates[0].substring(
+                    3,
+                    5
+                  );
+                  const collectorStartTime = opening.dates[0].substring(6, 8);
+                  const collectorEndHours = opening.dates[1].substring(0, 2);
+                  const collectorEndMinutes = opening.dates[1].substring(3, 5);
+                  const collectorEndTime = opening.dates[1].substring(6, 8);
+
                   return (
-                    <div>
-                      {opening[0]} - {opening[1]}
+                    <div
+                      style={{
+                        marginTop: 10,
+                        marginBottom: 10,
+                        marginLeft: 5,
+                        marginRight: 5,
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          {opening.dates[0]} - {opening.dates[1]}
+                        </div>
+                        <div
+                          onClick={() => this.showBookModal(opening.dates, id)}
+                          id={"book"}
+                          style={{
+                            padding: 10,
+                            backgroundColor: "green",
+                            borderRadius: 5,
+                            textAlign: "center",
+                            fontWeight: 600,
+                            color: "white",
+                          }}
+                        >
+                          BOOK
+                        </div>
+                      </div>
                     </div>
                   );
                 })}
@@ -128,6 +288,51 @@ export default class SellRules extends React.Component {
         </div>
       </div>
     );
+  }
+
+  bookModal() {
+    firebase
+      .firestore()
+      .collection("Collectors")
+      .doc(this.state.id.toString())
+      .get()
+      .then((data) => {
+        var bookings = data.data().bookings;
+        bookings.push({
+          start: this.state.opening[0],
+          end: this.state.opening[1],
+          day: this.state.currentDate.toString(),
+        });
+        firebase
+          .firestore()
+          .collection("Collectors")
+          .doc(this.state.id.toString())
+          .update({
+            bookings: bookings,
+          })
+          .then(() => {
+            this.setState({
+              opening: null,
+              bookModal: false,
+            });
+            alert("Book successful!");
+            window.location.href = "/";
+          });
+      });
+  }
+
+  closeModal() {
+    this.setState({
+      bookModal: false,
+    });
+  }
+
+  showBookModal(opening, id) {
+    this.setState({
+      bookModal: true,
+      opening: opening,
+      id: id,
+    });
   }
 
   seeTimes(e) {

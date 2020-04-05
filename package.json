@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "firebase-admin": "^8.10.0",
     "react-calendar": "^3.0.1",
+    "react-paypal-button-v2": "^2.6.1",
     "stripe": "^7.1.0"
   },
   "devDependencies": {}

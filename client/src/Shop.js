@@ -24,7 +24,7 @@ export default class Shop extends React.Component {
       minPrice: null,
       maxPrice: null,
       modal: null,
-      addingToCart: false
+      addingToCart: false,
     };
 
     firebase
@@ -32,8 +32,9 @@ export default class Shop extends React.Component {
       .collection("Categories")
       .doc(category)
       .collection("All")
+      .where("location", "==", localStorage.getItem("city").toString())
       .get()
-      .then(items => {
+      .then((items) => {
         const docs = items.docs;
         const itemArr = [];
         for (var i = 0; i < docs.length; i++) {
@@ -43,7 +44,7 @@ export default class Shop extends React.Component {
             this.setState({
               items: itemArr,
               loaded: true,
-              modal: null
+              modal: null,
             });
           }
         }
@@ -56,7 +57,7 @@ export default class Shop extends React.Component {
           style={{
             position: "absolute",
             left: "45vw",
-            top: 200
+            top: 200,
           }}
         >
           <ClipLoader
@@ -73,19 +74,19 @@ export default class Shop extends React.Component {
           <div
             style={{
               display: "flex",
-              justifyContent: "center"
+              justifyContent: "center",
               // alignItems: "center"
             }}
           >
             <div
-              onClick={e => this.closeModal(e)}
+              onClick={(e) => this.closeModal(e)}
               style={{
                 backgroundColor: "#000000",
                 opacity: 0.5,
                 zIndex: 99,
                 width: "100vw",
                 height: "100vh",
-                position: "absolute"
+                position: "absolute",
               }}
             ></div>
             <div
@@ -97,7 +98,7 @@ export default class Shop extends React.Component {
                 backgroundColor: "#f5f5f5",
                 position: "absolute",
                 zIndex: 100,
-                opacity: 1
+                opacity: 1,
               }}
             >
               <div style={{ display: "flex", flexDirection: "column" }}>
@@ -106,7 +107,7 @@ export default class Shop extends React.Component {
                     width: "100%",
                     display: "flex",
                     flexDirection: "row",
-                    justifyContent: "flex-end"
+                    justifyContent: "flex-end",
                   }}
                 >
                   <img
@@ -117,7 +118,7 @@ export default class Shop extends React.Component {
                       width: 20,
                       height: 20,
                       marginTop: 20,
-                      marginRight: 20
+                      marginRight: 20,
                     }}
                   />
                 </div>
@@ -132,7 +133,7 @@ export default class Shop extends React.Component {
                         display: "flex",
                         flexDirection: "row",
                         marginLeft: 20,
-                        marginTop: 10
+                        marginTop: 10,
                       }}
                     >
                       {this.state.modal.pictures.map((pic, index) => {
@@ -144,7 +145,7 @@ export default class Shop extends React.Component {
                                 width: 80,
                                 height: 80,
                                 marginLeft: 5,
-                                marginRight: 5
+                                marginRight: 5,
                               }}
                             ></img>
                           </div>
@@ -156,13 +157,13 @@ export default class Shop extends React.Component {
                     style={{
                       width: "100%",
                       display: "flex",
-                      justifyContent: "center"
+                      justifyContent: "center",
                     }}
                   >
                     <div
                       style={{
                         display: "flex",
-                        flexDirection: "column"
+                        flexDirection: "column",
                       }}
                     >
                       <div
@@ -176,7 +177,7 @@ export default class Shop extends React.Component {
                           marginTop: 100,
                           fontWeight: 700,
                           fontSize: 24,
-                          textAlign: "center"
+                          textAlign: "center",
                         }}
                       >
                         {"$" + this.state.modal.original_price}
@@ -187,7 +188,7 @@ export default class Shop extends React.Component {
                           justifyContent: "center",
                           // alignItems: "center",
                           width: "100%",
-                          height: "100%"
+                          height: "100%",
                         }}
                       >
                         <div
@@ -204,7 +205,7 @@ export default class Shop extends React.Component {
                             alignItems: "center",
                             justifyContent: "center",
                             color: "#ffffff",
-                            fontWeight: 500
+                            fontWeight: 500,
                           }}
                         >
                           {!this.state.addingToCart && "ADD TO CART"}
@@ -219,7 +220,7 @@ export default class Shop extends React.Component {
                     marginLeft: 20,
                     fontSize: 20,
                     marginTop: 20,
-                    fontWeight: 600
+                    fontWeight: 600,
                   }}
                 >
                   Item Details
@@ -231,7 +232,7 @@ export default class Shop extends React.Component {
                     marginRight: 20,
                     borderTopColor: "#a1a1a1",
                     borderTopWidth: 1,
-                    borderTopStyle: "solid"
+                    borderTopStyle: "solid",
                   }}
                 >
                   <div style={{ marginTop: 5 }}>
@@ -249,7 +250,7 @@ export default class Shop extends React.Component {
         <div
           style={{
             display: "flex",
-            flexDirection: "column"
+            flexDirection: "column",
           }}
         >
           <FilterBar
@@ -263,7 +264,7 @@ export default class Shop extends React.Component {
               fontWeight: 600,
               marginTop: 50,
               width: "100vw",
-              textAlign: "center"
+              textAlign: "center",
             }}
           >
             {this.state.category}
@@ -275,7 +276,7 @@ export default class Shop extends React.Component {
               flexDirection: "row",
               marginTop: 50,
               marginLeft: 100,
-              marginRight: 100
+              marginRight: 100,
             }}
           >
             {this.state.items.map((item, index) => {
@@ -295,7 +296,7 @@ export default class Shop extends React.Component {
                     width: 220,
                     marginLeft: 10,
                     marginRight: 10,
-                    height: 300
+                    height: 300,
 
                     // borderWidth: 1,
                     // borderStyle: "solid"
@@ -307,7 +308,7 @@ export default class Shop extends React.Component {
                       width: 220,
                       height: 200,
                       borderRadius: 5,
-                      overflow: "hidden"
+                      overflow: "hidden",
                     }}
                   ></img>
                   <div style={{ display: "flex", flexDirection: "column" }}>
@@ -328,17 +329,18 @@ export default class Shop extends React.Component {
   }
 
   updateFilter(min, max) {
+    console.log(min, max);
     min = min.substring(1, min.length);
     max = max.substring(1, max.length);
     this.setState({
       minPrice: min,
-      maxPrice: max
+      maxPrice: max,
     });
   }
 
   itemPage(item) {
     this.setState({
-      modal: item
+      modal: item,
     });
     // window.open("http://localhost:3000/item/" + uid, "_self");
   }
@@ -346,14 +348,14 @@ export default class Shop extends React.Component {
   closeModal(e) {
     // e.stopPropagation();
     this.setState({
-      modal: null
+      modal: null,
     });
   }
 
   addToCart(item) {
     console.log(item);
     this.setState({
-      addingToCart: true
+      addingToCart: true,
     });
 
     firebase
@@ -361,7 +363,7 @@ export default class Shop extends React.Component {
       .collection("Users")
       .doc("aty268")
       .get()
-      .then(me => {
+      .then((me) => {
         const myCart = me.data().cart;
         myCart.push(item);
         firebase
@@ -369,11 +371,11 @@ export default class Shop extends React.Component {
           .collection("Users")
           .doc("aty268")
           .update({
-            cart: myCart
+            cart: myCart,
           })
           .then(() => {
             this.setState({
-              modal: null
+              modal: null,
             });
           });
       });

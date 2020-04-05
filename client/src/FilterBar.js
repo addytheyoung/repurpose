@@ -12,10 +12,13 @@ export default class FilterBar extends React.Component {
             display: "flex",
             flexDirection: "row",
             marginTop: 10,
-            marginLeft: 100
+            marginLeft: 100,
           }}
         >
-          <DialogPrice changePrice={(min, max) => this.changePrice(min, max)} />
+          <DialogPrice
+            clearContent={() => this.changePrice("$0", "$999999")}
+            changePrice={(min, max) => this.changePrice(min, max)}
+          />
           {/* <div
             onClick={() => this.changeDelivery()}
             id="delivery"

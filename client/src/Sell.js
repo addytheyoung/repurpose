@@ -9,7 +9,7 @@ export default class Sell extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      profile: false
+      profile: false,
     };
   }
   render() {
@@ -21,20 +21,20 @@ export default class Sell extends React.Component {
           <div
             style={{
               display: "flex",
-              justifyContent: "center"
+              justifyContent: "center",
 
               // alignItems: "center"
             }}
           >
             <div
-              onClick={e => this.closeModal(e)}
+              onClick={(e) => this.closeModal(e)}
               style={{
                 backgroundColor: "#000000",
                 opacity: 0.5,
                 zIndex: 99,
                 width: "100vw",
                 height: "100vh",
-                position: "fixed"
+                position: "fixed",
               }}
             ></div>
             <div
@@ -46,14 +46,14 @@ export default class Sell extends React.Component {
                 backgroundColor: "#f5f5f5",
                 position: "fixed",
                 zIndex: 100,
-                opacity: 1
+                opacity: 1,
               }}
             >
               <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <div
@@ -61,7 +61,7 @@ export default class Sell extends React.Component {
                     width: "100%",
                     display: "flex",
                     flexDirection: "row",
-                    justifyContent: "flex-end"
+                    justifyContent: "flex-end",
                   }}
                 >
                   <img
@@ -72,7 +72,7 @@ export default class Sell extends React.Component {
                       width: 20,
                       height: 20,
                       marginTop: 20,
-                      marginRight: 20
+                      marginRight: 20,
                     }}
                   />
                 </div>
@@ -82,7 +82,7 @@ export default class Sell extends React.Component {
                       display: "flex",
                       flexDirection: "column",
                       justifyContent: "center",
-                      alignItems: "center"
+                      alignItems: "center",
                     }}
                   >
                     <div style={{ fontSize: 20, fontWeight: 600 }}>
@@ -108,7 +108,7 @@ export default class Sell extends React.Component {
                         marginBottom: 10,
                         display: "flex",
                         justifyContent: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                     >
                       START SHOPPING
@@ -143,7 +143,7 @@ export default class Sell extends React.Component {
                         marginBottom: 10,
                         display: "flex",
                         justifyContent: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                     >
                       START SHOPPING
@@ -180,7 +180,7 @@ export default class Sell extends React.Component {
                           marginBottom: 10,
                           display: "flex",
                           justifyContent: "center",
-                          alignItems: "center"
+                          alignItems: "center",
                         }}
                       >
                         START SHOPPING
@@ -194,14 +194,14 @@ export default class Sell extends React.Component {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      flexDirection: "column"
+                      flexDirection: "column",
                     }}
                   >
                     <div
                       style={{
                         fontSize: 22,
                         fontWeight: 600,
-                        marginBottom: 20
+                        marginBottom: 20,
                       }}
                     >
                       Profile
@@ -220,7 +220,7 @@ export default class Sell extends React.Component {
                         marginBottom: 10,
                         display: "flex",
                         justifyContent: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                     >
                       MY ORDERS
@@ -239,7 +239,7 @@ export default class Sell extends React.Component {
                         marginBottom: 10,
                         display: "flex",
                         justifyContent: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                     >
                       MY SALES
@@ -247,7 +247,7 @@ export default class Sell extends React.Component {
                     <div
                       onClick={() =>
                         this.setState({
-                          logout: true
+                          logout: true,
                         })
                       }
                       id="logout"
@@ -263,7 +263,7 @@ export default class Sell extends React.Component {
                         marginBottom: 10,
                         display: "flex",
                         justifyContent: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                     >
                       LOG OUT
@@ -276,7 +276,7 @@ export default class Sell extends React.Component {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      flexDirection: "column"
+                      flexDirection: "column",
                     }}
                   >
                     <div style={{ fontSize: 22, fontWeight: 600 }}>
@@ -286,7 +286,7 @@ export default class Sell extends React.Component {
                       style={{
                         display: "flex",
                         flexDirection: "row",
-                        marginTop: 20
+                        marginTop: 20,
                       }}
                     >
                       <div
@@ -305,7 +305,7 @@ export default class Sell extends React.Component {
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
-                          marginRight: 10
+                          marginRight: 10,
                         }}
                       >
                         YES
@@ -326,7 +326,7 @@ export default class Sell extends React.Component {
                           marginBottom: 10,
                           display: "flex",
                           justifyContent: "center",
-                          alignItems: "center"
+                          alignItems: "center",
                         }}
                       >
                         CANCEL
@@ -347,7 +347,7 @@ export default class Sell extends React.Component {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              marginTop: 100
+              marginTop: 100,
             }}
           >
             <div style={{ fontSize: 26, fontWeight: 600, letterSpacing: 0 }}>
@@ -363,7 +363,7 @@ export default class Sell extends React.Component {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  margin: 20
+                  margin: 20,
                 }}
               >
                 <div style={{ fontSize: 18, fontWeight: 500 }}>
@@ -373,7 +373,7 @@ export default class Sell extends React.Component {
                   style={{
                     textAlign: "center",
                     marginTop: 10,
-                    color: "#a1a1a1"
+                    color: "#a1a1a1",
                   }}
                 >
                   At the (free) touch of a button, a Collector will come and
@@ -387,7 +387,7 @@ export default class Sell extends React.Component {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  margin: 20
+                  margin: 20,
                 }}
               >
                 <div style={{ fontSize: 18, fontWeight: 500 }}>
@@ -397,7 +397,7 @@ export default class Sell extends React.Component {
                   style={{
                     textAlign: "center",
                     marginTop: 10,
-                    color: "#a1a1a1"
+                    color: "#a1a1a1",
                   }}
                 >
                   The Collector will price your items and list them on our
@@ -411,27 +411,26 @@ export default class Sell extends React.Component {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  margin: 20
+                  margin: 20,
                 }}
               >
                 <div
                   style={{
                     fontSize: 18,
                     fontWeight: 500,
-                    textAlign: "center"
+                    textAlign: "center",
                   }}
                 >
-                  3. Get Paid
+                  3. Get Paid Instantly
                 </div>
                 <div
                   style={{
                     textAlign: "center",
                     marginTop: 10,
-                    color: "#a1a1a1"
+                    color: "#a1a1a1",
                   }}
                 >
-                  When your item sells, you get paid a percentage of the selling
-                  price.
+                  You get paid as soon as all your items are priced.
                 </div>
               </div>
             </div>
@@ -454,7 +453,7 @@ export default class Sell extends React.Component {
                     color: "white",
                     alignItems: "center",
                     justifyContent: "center",
-                    minWidth: 150
+                    minWidth: 150,
                   }}
                 >
                   GET STARTED
@@ -465,7 +464,7 @@ export default class Sell extends React.Component {
                     fontWeight: 500,
                     marginTop: 20,
                     marginBottom: 20,
-                    textAlign: "center"
+                    textAlign: "center",
                   }}
                 >
                   OR
@@ -486,7 +485,7 @@ export default class Sell extends React.Component {
                     color: "white",
                     alignItems: "center",
                     justifyContent: "center",
-                    minWidth: 150
+                    minWidth: 150,
                   }}
                 >
                   BECOME A COLLECTOR
@@ -512,7 +511,7 @@ export default class Sell extends React.Component {
                     color: "white",
                     alignItems: "center",
                     justifyContent: "center",
-                    minWidth: 150
+                    minWidth: 150,
                   }}
                 >
                   GET STARTED
@@ -523,7 +522,7 @@ export default class Sell extends React.Component {
                     fontWeight: 500,
                     marginTop: 20,
                     textAlign: "center",
-                    marginBottom: 20
+                    marginBottom: 20,
                   }}
                 >
                   OR
@@ -544,7 +543,7 @@ export default class Sell extends React.Component {
                     color: "white",
                     alignItems: "center",
                     justifyContent: "center",
-                    minWidth: 150
+                    minWidth: 150,
                   }}
                 >
                   BECOME A COLLECTOR
@@ -569,19 +568,19 @@ export default class Sell extends React.Component {
       .collection("Users")
       .doc(email)
       .get()
-      .then(user => {
+      .then((user) => {
         if (!user.exists) {
           // New account, render that screen.
 
           this.setState({
             newUser: true,
-            email: email
+            email: email,
           });
         } else {
           // Returning user
           this.setState({
             retUser: true,
-            email: email
+            email: email,
           });
         }
       });
@@ -589,7 +588,7 @@ export default class Sell extends React.Component {
 
   showProfileModal() {
     this.setState({
-      profile: true
+      profile: true,
     });
   }
 
@@ -619,7 +618,7 @@ export default class Sell extends React.Component {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, pass)
-      .then(r => {
+      .then((r) => {
         this.state.logout = false;
         this.state.email = false;
         this.state.newUser = false;
@@ -634,7 +633,7 @@ export default class Sell extends React.Component {
             orders: [],
             sales: [],
             email: email,
-            pass: pass
+            pass: pass,
           })
           .then(() => {
             this.state.logout = false;
@@ -645,7 +644,7 @@ export default class Sell extends React.Component {
             window.location.href = "/sell/kit";
           });
       })
-      .catch(e => {
+      .catch((e) => {
         alert(e.message);
       });
   }
@@ -656,7 +655,7 @@ export default class Sell extends React.Component {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, pass)
-      .then(r => {
+      .then((r) => {
         this.state.logout = false;
         this.state.email = false;
         this.state.newUser = false;
@@ -664,7 +663,7 @@ export default class Sell extends React.Component {
         this.state.profile = false;
         window.location.href = "/sell/kit";
       })
-      .catch(e => {
+      .catch((e) => {
         alert(e.message);
       });
   }
@@ -676,7 +675,7 @@ export default class Sell extends React.Component {
   showProfileModal() {
     this.setState({
       profile: true,
-      logout: false
+      logout: false,
     });
   }
 
@@ -686,7 +685,7 @@ export default class Sell extends React.Component {
       logout: false,
       email: false,
       newUser: false,
-      retUser: false
+      retUser: false,
     });
   }
 

@@ -3,13 +3,14 @@ import HeaderBar from "./HeaderBar";
 import * as firebase from "firebase";
 import "./css/OrderKit.css";
 import { Input, Select, MenuItem } from "@material-ui/core";
+import { PayPalButton } from "react-paypal-button-v2";
 
 export default class OrderKit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       kit: "email",
-      payment: "bank"
+      payment: "bank",
     };
   }
   render() {
@@ -23,20 +24,37 @@ export default class OrderKit extends React.Component {
             style={{
               display: "flex",
               flexDirection: "column",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
             <div style={{ marginTop: 30, fontSize: 22, fontWeight: 600 }}>
-              Where are the items?
+              Tell us about you, and these items
             </div>
+            {/* <PayPalButton
+              amount="0.01"
+              // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
+              onSuccess={(details, data) => {
+                alert(
+                  "Transaction completed by " + details.payer.name.given_name
+                );
 
-            <div style={{ margin: 10, marginTop: 20 }}>
+                // OPTIONAL: Call your server to save the transaction
+                return fetch("/paypal-transaction-complete", {
+                  method: "post",
+                  body: JSON.stringify({
+                    orderID: data.orderID,
+                  }),
+                });
+              }}
+            /> */}
+
+            <div style={{ margin: 10, marginTop: 0 }}>
               <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   marginTop: 30,
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 <div
@@ -44,7 +62,7 @@ export default class OrderKit extends React.Component {
                     display: "flex",
                     flexDirection: "column",
                     width: 300,
-                    marginTop: 20
+                    marginTop: 20,
                   }}
                 >
                   <Input id="name" placeholder={"Full name"} />
@@ -54,23 +72,46 @@ export default class OrderKit extends React.Component {
                     display: "flex",
                     flexDirection: "column",
                     width: 300,
-                    marginTop: 20
+                    marginTop: 20,
                   }}
                 >
-                  <Input id="address1" placeholder={"Street Address"} />
+                  <Input id="name" placeholder={"Phone number (Cell)"} />
                 </div>
                 <div
                   style={{
                     display: "flex",
                     flexDirection: "column",
                     width: 300,
-                    marginTop: 20
+                    marginTop: 50,
+                  }}
+                >
+                  <Input
+                    id="address1"
+                    placeholder={"Street Address of items"}
+                  />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: 300,
+                    marginTop: 20,
                   }}
                 >
                   <Input
                     id="address2"
-                    placeholder={"Apt, Suite, Unit, Floot"}
+                    placeholder={"Apt, Unit, Floor of items"}
                   />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: 300,
+                    marginTop: 20,
+                  }}
+                >
+                  <Input id="zip" placeholder={"Zip code of items"} />
                 </div>
               </div>
             </div>
@@ -80,7 +121,7 @@ export default class OrderKit extends React.Component {
               width: "100%",
               display: "flex",
               alignItems: "center",
-              justifyContent: "center"
+              justifyContent: "center",
             }}
           >
             <div
@@ -99,7 +140,7 @@ export default class OrderKit extends React.Component {
                 borderRadius: 5,
                 minWidth: 100,
                 height: 20,
-                textAlign: "center"
+                textAlign: "center",
               }}
             >
               NEXT
@@ -114,16 +155,16 @@ export default class OrderKit extends React.Component {
     if (id === 1) {
       if (type === "email") {
         this.setState({
-          kit: "email"
+          kit: "email",
         });
       } else {
         this.setState({
-          kit: "box"
+          kit: "box",
         });
       }
     } else {
       this.setState({
-        payment: type
+        payment: type,
       });
     }
   }
@@ -149,14 +190,14 @@ export default class OrderKit extends React.Component {
       .collection("Users")
       .where("uid", "==", "uid1")
       .get()
-      .then(a => {
+      .then((a) => {
         const user = a.docs[0].data();
         firebase
           .firestore()
           .collection("Users")
           .doc(user.email)
           .update({
-            name: name
+            name: name,
             // address1: address1,
             // address2: address2,
             // city: city,

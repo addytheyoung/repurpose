@@ -24,7 +24,7 @@ export default class HeaderBar extends React.Component {
       retUser: false,
       email: "",
       searching: false,
-      currentCity: localStorage.getItem("city")
+      currentCity: localStorage.getItem("city"),
     };
   }
   render() {
@@ -37,20 +37,20 @@ export default class HeaderBar extends React.Component {
           <div
             style={{
               display: "flex",
-              justifyContent: "center"
+              justifyContent: "center",
 
               // alignItems: "center"
             }}
           >
             <div
-              onClick={e => this.closeModal(e)}
+              onClick={(e) => this.closeModal(e)}
               style={{
                 backgroundColor: "#000000",
                 opacity: 0.5,
                 zIndex: 99,
                 width: "100vw",
                 height: "100vh",
-                position: "fixed"
+                position: "fixed",
               }}
             ></div>
             <div
@@ -62,14 +62,14 @@ export default class HeaderBar extends React.Component {
                 backgroundColor: "#f5f5f5",
                 position: "fixed",
                 zIndex: 100,
-                opacity: 1
+                opacity: 1,
               }}
             >
               <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <div
@@ -77,7 +77,7 @@ export default class HeaderBar extends React.Component {
                     width: "100%",
                     display: "flex",
                     flexDirection: "row",
-                    justifyContent: "flex-end"
+                    justifyContent: "flex-end",
                   }}
                 >
                   <img
@@ -88,7 +88,7 @@ export default class HeaderBar extends React.Component {
                       width: 20,
                       height: 20,
                       marginTop: 20,
-                      marginRight: 20
+                      marginRight: 20,
                     }}
                   />
                 </div>
@@ -98,7 +98,7 @@ export default class HeaderBar extends React.Component {
                       display: "flex",
                       flexDirection: "column",
                       justifyContent: "center",
-                      alignItems: "center"
+                      alignItems: "center",
                     }}
                   >
                     <div style={{ fontSize: 20, fontWeight: 600 }}>
@@ -124,7 +124,7 @@ export default class HeaderBar extends React.Component {
                         marginBottom: 10,
                         display: "flex",
                         justifyContent: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                     >
                       START SHOPPING
@@ -159,7 +159,7 @@ export default class HeaderBar extends React.Component {
                         marginBottom: 10,
                         display: "flex",
                         justifyContent: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                     >
                       START SHOPPING
@@ -196,7 +196,7 @@ export default class HeaderBar extends React.Component {
                           marginBottom: 10,
                           display: "flex",
                           justifyContent: "center",
-                          alignItems: "center"
+                          alignItems: "center",
                         }}
                       >
                         START SHOPPING
@@ -210,14 +210,14 @@ export default class HeaderBar extends React.Component {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      flexDirection: "column"
+                      flexDirection: "column",
                     }}
                   >
                     <div
                       style={{
                         fontSize: 22,
                         fontWeight: 600,
-                        marginBottom: 20
+                        marginBottom: 20,
                       }}
                     >
                       Profile
@@ -236,7 +236,7 @@ export default class HeaderBar extends React.Component {
                         marginBottom: 10,
                         display: "flex",
                         justifyContent: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                     >
                       MY ORDERS
@@ -255,7 +255,7 @@ export default class HeaderBar extends React.Component {
                         marginBottom: 10,
                         display: "flex",
                         justifyContent: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                     >
                       MY SALES
@@ -263,7 +263,7 @@ export default class HeaderBar extends React.Component {
                     <div
                       onClick={() =>
                         this.setState({
-                          logout: true
+                          logout: true,
                         })
                       }
                       id="logout"
@@ -279,7 +279,7 @@ export default class HeaderBar extends React.Component {
                         marginBottom: 10,
                         display: "flex",
                         justifyContent: "center",
-                        alignItems: "center"
+                        alignItems: "center",
                       }}
                     >
                       LOG OUT
@@ -292,7 +292,7 @@ export default class HeaderBar extends React.Component {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      flexDirection: "column"
+                      flexDirection: "column",
                     }}
                   >
                     <div style={{ fontSize: 22, fontWeight: 600 }}>
@@ -302,7 +302,7 @@ export default class HeaderBar extends React.Component {
                       style={{
                         display: "flex",
                         flexDirection: "row",
-                        marginTop: 20
+                        marginTop: 20,
                       }}
                     >
                       <div
@@ -321,7 +321,7 @@ export default class HeaderBar extends React.Component {
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
-                          marginRight: 10
+                          marginRight: 10,
                         }}
                       >
                         YES
@@ -342,7 +342,7 @@ export default class HeaderBar extends React.Component {
                           marginBottom: 10,
                           display: "flex",
                           justifyContent: "center",
-                          alignItems: "center"
+                          alignItems: "center",
                         }}
                       >
                         CANCEL
@@ -362,7 +362,7 @@ export default class HeaderBar extends React.Component {
             borderBottomWidth: 1,
             borderBottomColor: "#e8e8e8",
             borderBottomStyle: "solid",
-            width: "100vw"
+            width: "100vw",
           }}
         >
           <Link
@@ -374,7 +374,7 @@ export default class HeaderBar extends React.Component {
               alignItems: "center",
               flexShrink: 0,
               textDecoration: "none",
-              overflow: "hidden"
+              overflow: "hidden",
             }}
           >
             <div
@@ -387,7 +387,7 @@ export default class HeaderBar extends React.Component {
                 alignItems: "center",
                 fontSize: 24,
                 color: "#7628dd",
-                marginLeft: 50
+                marginLeft: 50,
               }}
             >
               Collection
@@ -410,7 +410,7 @@ export default class HeaderBar extends React.Component {
               borderColor: "#d1d1d1",
               backgroundColor:
                 path === "/" || path.includes("shop") ? "#d8d8d8" : "#ffffff",
-              borderRadius: 3
+              borderRadius: 3,
             }}
           >
             Buy
@@ -431,7 +431,7 @@ export default class HeaderBar extends React.Component {
               borderRadius: 3,
               borderWidth: 1,
               borderStyle: "solid",
-              borderColor: "#d1d1d1"
+              borderColor: "#d1d1d1",
             }}
           >
             Sell
@@ -441,13 +441,13 @@ export default class HeaderBar extends React.Component {
             onClick={() =>
               this.setState({
                 searching: !this.state.searching,
-                city: false
+                city: false,
               })
             }
             style={{
               display: "flex",
               justifyContent: "center",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
             <div
@@ -457,7 +457,7 @@ export default class HeaderBar extends React.Component {
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "center",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <img
@@ -465,7 +465,7 @@ export default class HeaderBar extends React.Component {
                 style={{
                   width: 20,
                   height: 20,
-                  marginRight: 5
+                  marginRight: 5,
                 }}
               />
               <div style={{ marginRight: 30, fontWeight: 600 }}>Search</div>
@@ -477,7 +477,7 @@ export default class HeaderBar extends React.Component {
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <Input
@@ -490,7 +490,7 @@ export default class HeaderBar extends React.Component {
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <Select
@@ -558,7 +558,7 @@ export default class HeaderBar extends React.Component {
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <div
@@ -574,7 +574,7 @@ export default class HeaderBar extends React.Component {
                     justifyContent: "center",
                     minWidth: 30,
                     alignItems: "center",
-                    marginRight: 20
+                    marginRight: 20,
                   }}
                 >
                   <img src={search} style={{ width: 20, height: 20 }} />
@@ -587,7 +587,7 @@ export default class HeaderBar extends React.Component {
             style={{
               display: "flex",
               justifyContent: "center",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
             <div
@@ -595,7 +595,7 @@ export default class HeaderBar extends React.Component {
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "center",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <div
@@ -606,7 +606,7 @@ export default class HeaderBar extends React.Component {
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "center",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <img
@@ -614,17 +614,19 @@ export default class HeaderBar extends React.Component {
                   style={{
                     width: 20,
                     height: 20,
-                    marginRight: 5
+                    marginRight: 5,
                   }}
                 />
 
-                <div style={{ marginRight: 30, fontWeight: 600 }}>Athens</div>
+                <div style={{ marginRight: 30, fontWeight: 600 }}>
+                  {this.getCityFromAddress(this.state.currentCity)}
+                </div>
               </div>
               <div
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 {this.state.city && (
@@ -634,16 +636,16 @@ export default class HeaderBar extends React.Component {
                       flexDirection: "row",
                       justifyContent: "center",
                       alignItems: "center",
-                      marginRight: 20
+                      marginRight: 20,
                     }}
                   >
                     <Autocomplete
                       value={this.state.currentCity}
                       id="combo-box-demo"
                       options={this.citiesList}
-                      getOptionLabel={option => option}
+                      getOptionLabel={(option) => option}
                       style={{ width: 300 }}
-                      renderOption={option => (
+                      renderOption={(option) => (
                         <div
                           onClick={() => this.updateCity(option)}
                           style={{ width: "100%", height: "1005" }}
@@ -651,7 +653,7 @@ export default class HeaderBar extends React.Component {
                           {option}
                         </div>
                       )}
-                      renderInput={params => (
+                      renderInput={(params) => (
                         <div>
                           <TextField
                             {...params}
@@ -691,7 +693,7 @@ export default class HeaderBar extends React.Component {
               color: "black",
               alignItems: "center",
               justifyContent: "center",
-              marginRight: 30
+              marginRight: 30,
             }}
           >
             <AccountCircleOutlinedIcon
@@ -707,7 +709,7 @@ export default class HeaderBar extends React.Component {
               color: "black",
               alignItems: "center",
               justifyContent: "center",
-              marginRight: 50
+              marginRight: 50,
             }}
           >
             <ShoppingCartOutlinedIcon
@@ -718,12 +720,21 @@ export default class HeaderBar extends React.Component {
             style={{
               display: "flex",
               justifyContent: "center",
-              alignItems: "center"
+              alignItems: "center",
             }}
           ></div>
         </div>
       </div>
     );
+  }
+
+  getCityFromAddress(address) {
+    console.log(address);
+    for (var i = 0; i < address.length; i++) {
+      if (address[i] === ",") {
+        return address.substring(0, i);
+      }
+    }
   }
 
   startShopping() {
@@ -736,19 +747,19 @@ export default class HeaderBar extends React.Component {
       .collection("Users")
       .doc(email)
       .get()
-      .then(user => {
+      .then((user) => {
         if (!user.exists) {
           // New account, render that screen.
 
           this.setState({
             newUser: true,
-            email: email
+            email: email,
           });
         } else {
           // Returning user
           this.setState({
             retUser: true,
-            email: email
+            email: email,
           });
         }
       });
@@ -772,11 +783,11 @@ export default class HeaderBar extends React.Component {
       .collection("Users")
       .doc("123@gmail.com")
       .update({
-        city: city
+        city: city,
       })
       .then(() => {
         this.setState({
-          currentCity: city
+          currentCity: city,
         });
       });
   }
@@ -787,7 +798,7 @@ export default class HeaderBar extends React.Component {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, pass)
-      .then(r => {
+      .then((r) => {
         this.state.logout = false;
         this.state.email = false;
         this.state.newUser = false;
@@ -800,7 +811,7 @@ export default class HeaderBar extends React.Component {
           .set({
             cart: [],
             orders: [],
-            sales: []
+            sales: [],
           })
           .then(() => {
             this.state.logout = false;
@@ -811,7 +822,7 @@ export default class HeaderBar extends React.Component {
             window.location.reload();
           });
       })
-      .catch(e => {
+      .catch((e) => {
         alert(e.message);
       });
   }
@@ -819,7 +830,7 @@ export default class HeaderBar extends React.Component {
   setCity() {
     this.setState({
       city: !this.state.city,
-      searching: false
+      searching: false,
     });
   }
 
@@ -839,7 +850,7 @@ export default class HeaderBar extends React.Component {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, pass)
-      .then(r => {
+      .then((r) => {
         this.state.logout = false;
         this.state.email = false;
         this.state.newUser = false;
@@ -847,7 +858,7 @@ export default class HeaderBar extends React.Component {
         this.state.profile = false;
         window.location.reload();
       })
-      .catch(e => {
+      .catch((e) => {
         alert(e.message);
       });
   }
@@ -859,7 +870,7 @@ export default class HeaderBar extends React.Component {
   showProfileModal() {
     this.setState({
       profile: true,
-      logout: false
+      logout: false,
     });
   }
 
@@ -869,7 +880,7 @@ export default class HeaderBar extends React.Component {
       logout: false,
       email: false,
       newUser: false,
-      retUser: false
+      retUser: false,
     });
   }
 

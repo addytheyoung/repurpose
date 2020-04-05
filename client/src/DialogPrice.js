@@ -19,8 +19,8 @@ const emails = ["username@gmail.com", "user02@gmail.com"];
 const useStyles = makeStyles({
   avatar: {
     backgroundColor: blue[100],
-    color: blue[600]
-  }
+    color: blue[600],
+  },
 });
 
 function SimpleDialog(props) {
@@ -33,8 +33,13 @@ function SimpleDialog(props) {
     onClose(selectedValue);
   };
 
-  const handleListItemClick = value => {
+  const handleListItemClick = (value) => {
     onClose(value);
+  };
+
+  const clear = () => {
+    setMax("$");
+    setMin("$");
   };
 
   return (
@@ -52,14 +57,14 @@ function SimpleDialog(props) {
           flexDirection: "row",
           marginTop: 30,
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         <Input
           value={min}
           placeholder="Min price $"
           type="text"
-          onChange={e => checkKey(e)}
+          onChange={(e) => checkKey(e)}
           style={{ width: 100, marginRight: 10, marginLeft: 100 }}
         />
         {"-"}
@@ -67,7 +72,7 @@ function SimpleDialog(props) {
           value={max}
           placeholder="Max price $"
           type="text"
-          onChange={e => checkKey(e, true)}
+          onChange={(e) => checkKey(e, true)}
           style={{ width: 100, marginLeft: 10, marginRight: 100 }}
         />
       </div>
@@ -81,7 +86,23 @@ function SimpleDialog(props) {
           textAlign: "center",
           borderRadius: 5,
           marginTop: 50,
-          marginBottom: 50
+          marginBottom: 50,
+        }}
+        onClick={() => clearContent(props, handleClose, clear)}
+      >
+        CLEAR
+      </div>
+
+      <div
+        style={{
+          backgroundColor: "#a1a1a1",
+          padding: 10,
+          width: 100,
+          alignSelf: "center",
+          textAlign: "center",
+          borderRadius: 5,
+          marginTop: 50,
+          marginBottom: 50,
         }}
         onClick={() => saveContent(props, min, max, handleClose)}
       >
@@ -123,8 +144,14 @@ function SimpleDialog(props) {
 SimpleDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  selectedValue: PropTypes.string.isRequired
+  selectedValue: PropTypes.string.isRequired,
 };
+
+function clearContent(props, handleClose, clear) {
+  clear();
+  props.clearContent();
+  handleClose();
+}
 
 function saveContent(props, min, max, handleClose) {
   if (max >= min) {
@@ -143,7 +170,7 @@ export default function SimpleDialogDemo(props) {
     setOpen(true);
   };
 
-  const handleClose = value => {
+  const handleClose = (value) => {
     setOpen(false);
     setSelectedValue(value);
   };
@@ -162,12 +189,13 @@ export default function SimpleDialogDemo(props) {
           paddingRight: 15,
           borderColor: "#a1a1a1",
           marginLeft: 5,
-          marginRight: 5
+          marginRight: 5,
         }}
       >
         Price
       </div>
       <SimpleDialog
+        clearContent={props.clearContent}
         changePrice={props.changePrice}
         selectedValue={selectedValue}
         open={open}
