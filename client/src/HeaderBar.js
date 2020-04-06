@@ -747,6 +747,9 @@ export default class HeaderBar extends React.Component {
   }
 
   getCityFromAddress(address) {
+    if (!address) {
+      return "";
+    }
     console.log(address);
     for (var i = 0; i < address.length; i++) {
       if (address[i] === ",") {

@@ -11,7 +11,7 @@ var serviceAccount = require("./key.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://repurpose-e523f.firebaseio.com"
+  databaseURL: "https://repurpose-e523f.firebaseio.com",
 });
 
 app.use(bodyParser.json());
@@ -23,7 +23,7 @@ app.post("/make-seller", async (req, res) => {
   try {
     const response = await stripe.oauth.token({
       grant_type: "authorization_code",
-      code: body.code
+      code: body.code,
     });
     res.json(response);
   } catch (err) {
@@ -41,7 +41,7 @@ app.get("/product-details", (req, res) => {
 });
 
 app.get("/customer", (req, res) => {
-  stripe.customers.retrieve("cus_Gz1cqDiR9R8g7V", function(err, customer) {});
+  stripe.customers.retrieve("cus_Gz1cqDiR9R8g7V", function (err, customer) {});
   // stripe.customers.create(
   //   {
   //     description: "My First Test Customer (created for API docs)"
@@ -62,7 +62,7 @@ app.post("/create-payment-intent", async (req, res) => {
     payment_method_types: ["card"],
     amount: body.total * 100,
     currency: productDetails.currency,
-    description: productDetails.description
+    description: productDetails.description,
   };
   console.log(options);
 
@@ -74,11 +74,11 @@ app.post("/create-payment-intent", async (req, res) => {
   }
 });
 
-let getProductDetails = myData => {
+let getProductDetails = (myData) => {
   return {
     currency: "usd",
     amount: 1000,
-    description: "dqdqwdqwdq"
+    description: "dqdqwdqwdq",
   };
 };
 
