@@ -25,11 +25,12 @@ export default class CheckoutForm extends React.Component {
       processing: false,
       loaded: false,
       myData: null,
-      finished: false
+      finished: false,
     };
   }
 
   render() {
+    const deliveryType = this.props.deliveryType;
     this.state.myData = this.props.myData;
     const options = {
       style: {
@@ -39,14 +40,14 @@ export default class CheckoutForm extends React.Component {
           fontSmoothing: "antialiased",
           fontSize: "16px",
           "::placeholder": {
-            color: "#aab7c4"
-          }
+            color: "#aab7c4",
+          },
         },
         invalid: {
           color: "#fa755a",
-          iconColor: "#fa755a"
-        }
-      }
+          iconColor: "#fa755a",
+        },
+      },
     };
 
     if (this.state.succeeded) {
@@ -63,7 +64,7 @@ export default class CheckoutForm extends React.Component {
         .doc("aty268")
         .update({
           cart: [],
-          orders: newOrders
+          orders: newOrders,
         })
         .then(() => {
           this.props.finished();
@@ -76,7 +77,7 @@ export default class CheckoutForm extends React.Component {
     }
 
     return (
-      <form onSubmit={ev => this.handleSubmit(ev)} style={{ paddingLeft: 0 }}>
+      <form onSubmit={(ev) => this.handleSubmit(ev)} style={{ paddingLeft: 0 }}>
         <div className="sr-combo-inputs">
           <div className="sr-combo-inputs-row" style={{ width: 400 }}>
             <CardElement
@@ -101,78 +102,90 @@ export default class CheckoutForm extends React.Component {
             style={{ margin: 10 }}
             placeholder="Last Name"
           ></Input>
-          <Input
-            id="address1"
-            style={{ margin: 10 }}
-            placeholder="Address Line 1"
-          ></Input>
-          <Input
-            id="address2"
-            style={{ margin: 10 }}
-            placeholder="Address Line 2 (optional)"
-          ></Input>
-          <Input id="zip" style={{ margin: 10 }} placeholder="Zip Code"></Input>
-          <Input id="city" style={{ margin: 10 }} placeholder="City"></Input>
-          <Select
-            defaultValue={"State"}
-            placeholder={"State"}
-            style={{ margin: 10 }}
-            id="state"
-          >
-            <MenuItem value="State">
-              <div style={{ color: "#a1a1a1" }}>State</div>
-            </MenuItem>
-            <MenuItem value="AK">AK</MenuItem>
-            <MenuItem value="AL">AL</MenuItem>
-            <MenuItem value="AR">AR</MenuItem>
-            <MenuItem value="AZ">AZ</MenuItem>
-            <MenuItem value="CA">CA</MenuItem>
-            <MenuItem value="CO">CO</MenuItem>
-            <MenuItem value="CT">CT</MenuItem>
-            <MenuItem value="DC">DC</MenuItem>
-            <MenuItem value="DE">DE</MenuItem>
-            <MenuItem value="FL">FL</MenuItem>
-            <MenuItem value="GA">GA</MenuItem>
-            <MenuItem value="IA">IA</MenuItem>
-            <MenuItem value="ID">ID</MenuItem>
-            <MenuItem value="IL">IL</MenuItem>
-            <MenuItem value="IN">IN</MenuItem>
-            <MenuItem value="KS">KS</MenuItem>
-            <MenuItem value="KY">KY</MenuItem>
-            <MenuItem value="LA">LA</MenuItem>
-            <MenuItem value="MA">MA</MenuItem>
-            <MenuItem value="MD">MD</MenuItem>
-            <MenuItem value="ME">ME</MenuItem>
-            <MenuItem value="MI">MI</MenuItem>
-            <MenuItem value="MN">MN</MenuItem>
-            <MenuItem value="MO">MO</MenuItem>
-            <MenuItem value="MS">MS</MenuItem>
-            <MenuItem value="MT">MT</MenuItem>
-            <MenuItem value="NC">NC</MenuItem>
-            <MenuItem value="ND">ND</MenuItem>
-            <MenuItem value="NE">NE</MenuItem>
-            <MenuItem value="NH">NH</MenuItem>
-            <MenuItem value="NJ">NJ</MenuItem>
-            <MenuItem value="NM">NM</MenuItem>
-            <MenuItem value="NV">NV</MenuItem>
-            <MenuItem value="NY">NY</MenuItem>
-            <MenuItem value="OH">OH</MenuItem>
-            <MenuItem value="OK">OK</MenuItem>
-            <MenuItem value="OR">OR</MenuItem>
-            <MenuItem value="PA">PA</MenuItem>
-            <MenuItem value="RI">RI</MenuItem>
-            <MenuItem value="SC">SC</MenuItem>
-            <MenuItem value="SD">SD</MenuItem>
-            <MenuItem value="TN">TN</MenuItem>
-            <MenuItem value="TX">TX</MenuItem>
-            <MenuItem value="UT">UT</MenuItem>
-            <MenuItem value="VA">VA</MenuItem>
-            <MenuItem value="VT">VT</MenuItem>
-            <MenuItem value="WA">WA</MenuItem>
-            <MenuItem value="WI">WI</MenuItem>
-            <MenuItem value="WV">WV</MenuItem>
-            <MenuItem value="WY">WY</MenuItem>
-          </Select>
+          {deliveryType === "delivery" && (
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <Input
+                id="address1"
+                style={{ margin: 10 }}
+                placeholder="Address Line 1"
+              ></Input>
+              <Input
+                id="address2"
+                style={{ margin: 10 }}
+                placeholder="Address Line 2 (optional)"
+              ></Input>
+              <Input
+                id="zip"
+                style={{ margin: 10 }}
+                placeholder="Zip Code"
+              ></Input>
+              <Input
+                id="city"
+                style={{ margin: 10 }}
+                placeholder="City"
+              ></Input>
+              <Select
+                defaultValue={"State"}
+                placeholder={"State"}
+                style={{ margin: 10 }}
+                id="state"
+              >
+                <MenuItem value="State">
+                  <div style={{ color: "#a1a1a1" }}>State</div>
+                </MenuItem>
+                <MenuItem value="AK">AK</MenuItem>
+                <MenuItem value="AL">AL</MenuItem>
+                <MenuItem value="AR">AR</MenuItem>
+                <MenuItem value="AZ">AZ</MenuItem>
+                <MenuItem value="CA">CA</MenuItem>
+                <MenuItem value="CO">CO</MenuItem>
+                <MenuItem value="CT">CT</MenuItem>
+                <MenuItem value="DC">DC</MenuItem>
+                <MenuItem value="DE">DE</MenuItem>
+                <MenuItem value="FL">FL</MenuItem>
+                <MenuItem value="GA">GA</MenuItem>
+                <MenuItem value="IA">IA</MenuItem>
+                <MenuItem value="ID">ID</MenuItem>
+                <MenuItem value="IL">IL</MenuItem>
+                <MenuItem value="IN">IN</MenuItem>
+                <MenuItem value="KS">KS</MenuItem>
+                <MenuItem value="KY">KY</MenuItem>
+                <MenuItem value="LA">LA</MenuItem>
+                <MenuItem value="MA">MA</MenuItem>
+                <MenuItem value="MD">MD</MenuItem>
+                <MenuItem value="ME">ME</MenuItem>
+                <MenuItem value="MI">MI</MenuItem>
+                <MenuItem value="MN">MN</MenuItem>
+                <MenuItem value="MO">MO</MenuItem>
+                <MenuItem value="MS">MS</MenuItem>
+                <MenuItem value="MT">MT</MenuItem>
+                <MenuItem value="NC">NC</MenuItem>
+                <MenuItem value="ND">ND</MenuItem>
+                <MenuItem value="NE">NE</MenuItem>
+                <MenuItem value="NH">NH</MenuItem>
+                <MenuItem value="NJ">NJ</MenuItem>
+                <MenuItem value="NM">NM</MenuItem>
+                <MenuItem value="NV">NV</MenuItem>
+                <MenuItem value="NY">NY</MenuItem>
+                <MenuItem value="OH">OH</MenuItem>
+                <MenuItem value="OK">OK</MenuItem>
+                <MenuItem value="OR">OR</MenuItem>
+                <MenuItem value="PA">PA</MenuItem>
+                <MenuItem value="RI">RI</MenuItem>
+                <MenuItem value="SC">SC</MenuItem>
+                <MenuItem value="SD">SD</MenuItem>
+                <MenuItem value="TN">TN</MenuItem>
+                <MenuItem value="TX">TX</MenuItem>
+                <MenuItem value="UT">UT</MenuItem>
+                <MenuItem value="VA">VA</MenuItem>
+                <MenuItem value="VT">VT</MenuItem>
+                <MenuItem value="WA">WA</MenuItem>
+                <MenuItem value="WI">WI</MenuItem>
+                <MenuItem value="WV">WV</MenuItem>
+                <MenuItem value="WY">WY</MenuItem>
+              </Select>
+            </div>
+          )}
 
           <button
             id="pay"
@@ -181,7 +194,7 @@ export default class CheckoutForm extends React.Component {
               height: 40,
               color: "white",
               fontWeight: 600,
-              fontSize: 20
+              fontSize: 20,
             }}
             // onClick={(e) => this.prevent(e)}
             className="btn"
@@ -220,15 +233,15 @@ export default class CheckoutForm extends React.Component {
     // Step 2: Create PaymentIntent over Stripe API
     api
       .createPaymentIntent({ total })
-      .then(clientSecret => {
+      .then((clientSecret) => {
         this.setState({
           clientSecret: clientSecret,
-          loaded: true
+          loaded: true,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({
-          error: err.message
+          error: err.message,
         });
       });
   }
@@ -272,29 +285,29 @@ export default class CheckoutForm extends React.Component {
         payment_method: {
           card: this.props.elements.getElement(CardElement),
           billing_details: {
-            name: ev.target.name.value
-          }
-        }
+            name: ev.target.name.value,
+          },
+        },
       }
     );
 
     if (payload.error) {
       this.setState({
         error: `Payment failed: ${payload.error.message}`,
-        processing: false
+        processing: false,
       });
 
       console.log("[error]", payload.error);
     } else {
       // Create our customer!
-      api.createCustomer().then(e => {
+      api.createCustomer().then((e) => {
         const id = e.id;
       });
       this.setState({
         error: null,
         succeeded: true,
         processing: false,
-        metadata: payload.paymentIntent
+        metadata: payload.paymentIntent,
       });
 
       console.log("[PaymentIntent]", payload.paymentIntent);

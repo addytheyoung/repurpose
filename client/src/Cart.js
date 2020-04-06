@@ -5,6 +5,11 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Art from "./images/art.jpeg";
 import Close from "./images/close.png";
 import Bin from "./images/bin.png";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
 import "./css/Cart.css";
 
 export default class Cart extends React.Component {
@@ -15,18 +20,25 @@ export default class Cart extends React.Component {
       .collection("Users")
       .doc("aty268")
       .get()
-      .then(me => {
+      .then((me) => {
         const myData = me.data();
         this.setState({
           loaded: true,
-          myData: myData
+          myData: myData,
         });
       });
     this.state = {
       loaded: false,
       myData: [],
-      modal: false
+      modal: false,
+      numCartItems: localStorage.getItem("cart"),
+      deliveryType: localStorage.getItem("deliveryType")
+        ? localStorage.getItem("deliveryType")
+        : "pickup",
+      delivery: false,
     };
+
+    localStorage.setItem("deliveryType", "pickup");
   }
 
   render() {
@@ -36,7 +48,7 @@ export default class Cart extends React.Component {
           style={{
             position: "absolute",
             left: "45vw",
-            top: 200
+            top: 200,
           }}
         >
           <ClipLoader
@@ -50,26 +62,32 @@ export default class Cart extends React.Component {
     const subTotal = this.getSubtotal(this.state.myData.cart);
     const tax = this.getTax(subTotal);
     const shipping = this.getShipping(subTotal);
-    const total = parseInt((parseInt(subTotal) + tax + shipping) * 100) / 100;
+    const total =
+      parseInt(
+        parseInt(subTotal * 100) +
+          parseInt(tax * 100) +
+          parseInt(shipping * 100)
+      ) / 100;
+
     return (
       <div>
         {this.state.modal && (
           <div
             style={{
               display: "flex",
-              justifyContent: "center"
+              justifyContent: "center",
               // alignItems: "center"
             }}
           >
             <div
-              onClick={e => this.closeModal(e)}
+              onClick={(e) => this.closeModal(e)}
               style={{
                 backgroundColor: "#000000",
                 opacity: 0.5,
                 zIndex: 99,
                 width: "100vw",
                 height: "100vh",
-                position: "absolute"
+                position: "absolute",
               }}
             ></div>
             <div
@@ -81,7 +99,7 @@ export default class Cart extends React.Component {
                 backgroundColor: "#f5f5f5",
                 position: "absolute",
                 zIndex: 100,
-                opacity: 1
+                opacity: 1,
               }}
             >
               <div style={{ display: "flex", flexDirection: "column" }}>
@@ -90,7 +108,7 @@ export default class Cart extends React.Component {
                     width: "100%",
                     display: "flex",
                     flexDirection: "row",
-                    justifyContent: "flex-end"
+                    justifyContent: "flex-end",
                   }}
                 >
                   <img
@@ -101,7 +119,7 @@ export default class Cart extends React.Component {
                       width: 20,
                       height: 20,
                       marginTop: 20,
-                      marginRight: 20
+                      marginRight: 20,
                     }}
                   />
                 </div>
@@ -116,19 +134,19 @@ export default class Cart extends React.Component {
                         display: "flex",
                         flexDirection: "row",
                         marginLeft: 20,
-                        marginTop: 10
+                        marginTop: 10,
                       }}
                     >
                       {this.state.modal.pictures.map((pic, index) => {
                         return (
-                          <div>
+                          <div key={index}>
                             <img
                               src={Art}
                               style={{
                                 width: 80,
                                 height: 80,
                                 marginLeft: 5,
-                                marginRight: 5
+                                marginRight: 5,
                               }}
                             ></img>
                           </div>
@@ -140,13 +158,13 @@ export default class Cart extends React.Component {
                     style={{
                       width: "100%",
                       display: "flex",
-                      justifyContent: "center"
+                      justifyContent: "center",
                     }}
                   >
                     <div
                       style={{
                         display: "flex",
-                        flexDirection: "column"
+                        flexDirection: "column",
                       }}
                     >
                       <div
@@ -160,7 +178,7 @@ export default class Cart extends React.Component {
                           marginTop: 30,
                           fontWeight: 700,
                           fontSize: 24,
-                          textAlign: "center"
+                          textAlign: "center",
                         }}
                       >
                         {"$" + this.state.modal.original_price}
@@ -171,7 +189,7 @@ export default class Cart extends React.Component {
                           justifyContent: "center",
                           // alignItems: "center",
                           width: "100%",
-                          height: "100%"
+                          height: "100%",
                         }}
                       >
                         {" "}
@@ -184,7 +202,7 @@ export default class Cart extends React.Component {
                     marginLeft: 20,
                     fontSize: 20,
                     marginTop: 20,
-                    fontWeight: 600
+                    fontWeight: 600,
                   }}
                 >
                   Item Details
@@ -196,7 +214,7 @@ export default class Cart extends React.Component {
                     marginRight: 20,
                     borderTopColor: "#a1a1a1",
                     borderTopWidth: 1,
-                    borderTopStyle: "solid"
+                    borderTopStyle: "solid",
                   }}
                 >
                   <div style={{ marginTop: 5 }}>
@@ -208,21 +226,21 @@ export default class Cart extends React.Component {
           </div>
         )}
         <div>
-          <HeaderBar />
+          <HeaderBar numCartItems={this.state.numCartItems} />
         </div>
         <div
           style={{
             display: "flex",
             flexDirection: "row",
             marginLeft: "5vw",
-            marginRight: "5vw"
+            marginRight: "5vw",
           }}
         >
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              width: "40vw"
+              width: "40vw",
               //   borderWidth: 1,
               //   borderStyle: "solid"
             }}
@@ -236,7 +254,7 @@ export default class Cart extends React.Component {
                 marginBottom: 10,
                 fontSize: 20,
                 fontWeight: 600,
-                marginTop: 30
+                marginTop: 30,
               }}
             >
               Shopping Cart
@@ -261,7 +279,7 @@ export default class Cart extends React.Component {
                     alignItems: "center",
                     borderRadius: 5,
                     padding: 10,
-                    fontWeight: 500
+                    fontWeight: 500,
                   }}
                 >
                   SHOP NOW
@@ -271,11 +289,12 @@ export default class Cart extends React.Component {
             {this.state.myData.cart.map((item, index) => {
               return (
                 <div
+                  key={index}
                   style={{
                     width: "100%",
                     height: 200,
                     display: "flex",
-                    flexDirection: "row"
+                    flexDirection: "row",
                   }}
                 >
                   <div onClick={() => this.itemModal(item)}>
@@ -285,7 +304,7 @@ export default class Cart extends React.Component {
                         width: 150,
                         height: 180,
                         borderRadius: 5,
-                        overflow: "hidden"
+                        overflow: "hidden",
                       }}
                       src={Art}
                     ></img>
@@ -311,7 +330,7 @@ export default class Cart extends React.Component {
               display: "flex",
               flexDirection: "column",
               width: "50vw",
-              marginLeft: 20
+              marginLeft: 20,
             }}
           >
             <div
@@ -323,7 +342,7 @@ export default class Cart extends React.Component {
                 marginBottom: 10,
                 fontSize: 20,
                 fontWeight: 600,
-                marginTop: 30
+                marginTop: 30,
               }}
             >
               Order Summary
@@ -336,7 +355,7 @@ export default class Cart extends React.Component {
                 fontWeight: 500,
                 alignItems: "center",
                 width: "30vw",
-                justifyContent: "space-between"
+                justifyContent: "space-between",
               }}
             >
               <div>Subtotal</div>
@@ -350,7 +369,7 @@ export default class Cart extends React.Component {
                 flexDirection: "row",
                 alignItems: "center",
                 width: "30vw",
-                justifyContent: "space-between"
+                justifyContent: "space-between",
               }}
             >
               <div>Tax</div>
@@ -365,7 +384,7 @@ export default class Cart extends React.Component {
                 fontWeight: 500,
                 alignItems: "center",
                 width: "30vw",
-                justifyContent: "space-between"
+                justifyContent: "space-between",
               }}
             >
               <div>Shipping</div>
@@ -380,15 +399,62 @@ export default class Cart extends React.Component {
                 fontWeight: 600,
                 alignItems: "center",
                 width: "30vw",
-                justifyContent: "space-between"
+                justifyContent: "space-between",
               }}
             >
               <div>Total</div>
               <div>{"$" + total}</div>
             </div>
 
+            <div
+              style={{
+                marginTop: 10,
+                width: "30vw",
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <RadioGroup
+                value={this.state.deliveryType}
+                onChange={(e) => this.setPickup(e)}
+                defaultValue="pickup"
+                row
+                aria-label="position"
+                name="position"
+                defaultValue="top"
+              >
+                <FormControlLabel
+                  value="pickup"
+                  control={<Radio color="primary" />}
+                  label="Pickup"
+                  labelPlacement="top"
+                />
+                <FormControlLabel
+                  value="delivery"
+                  control={<Radio color="primary" />}
+                  label="Delivery"
+                  labelPlacement="top"
+                />
+              </RadioGroup>
+            </div>
+
+            {this.state.deliveryType === "delivery" && (
+              <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
+                Items are typically delivered within 3 hours. Flat fee of $2.00
+                for shipping, no matter how many items.
+              </div>
+            )}
+            {this.state.deliveryType === "pickup" && (
+              <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
+                Pickup location is 2414 Longview Street, Athens TX. We'll send
+                you an email to confirm.
+              </div>
+            )}
+
             <a
-              href="/checkout"
+              href={"/checkout"}
               id="checkout"
               style={{
                 marginTop: 40,
@@ -403,7 +469,7 @@ export default class Cart extends React.Component {
                 alignItems: "center",
                 borderRadius: 5,
                 padding: 10,
-                fontWeight: 500
+                fontWeight: 500,
               }}
             >
               CHECK OUT
@@ -414,20 +480,42 @@ export default class Cart extends React.Component {
     );
   }
 
+  setPickup(e) {
+    const value = e.target.value;
+    if (value === "pickup") {
+      localStorage.setItem("deliveryType", "pickup");
+      this.setState({
+        delivery: false,
+        deliveryType: value,
+      });
+    } else {
+      localStorage.setItem("deliveryType", "delivery");
+      this.setState({
+        delivery: true,
+        deliveryType: value,
+      });
+    }
+  }
+
   itemModal(item) {
     this.setState({
-      modal: item
+      modal: item,
     });
   }
 
   closeModal(e) {
     // e.stopPropagation();
     this.setState({
-      modal: null
+      modal: null,
     });
   }
 
   removeFromCart(item, myData) {
+    var numCartItems = localStorage.getItem("cart");
+    if (numCartItems) {
+      numCartItems = parseInt(numCartItems) - 1;
+    }
+
     const newData = myData.cart;
     for (var i = 0; i < myData.cart.length; i++) {
       if (item.uid == myData.cart[i].uid) {
@@ -441,10 +529,15 @@ export default class Cart extends React.Component {
       .collection("Users")
       .doc("aty268")
       .update({
-        cart: newData
+        cart: newData,
       })
       .then(() => {
-        window.location.reload();
+        localStorage.setItem("cart", numCartItems);
+
+        this.setState({
+          numCartItems: numCartItems,
+        });
+        // window.location.reload();
       });
   }
 
@@ -462,6 +555,10 @@ export default class Cart extends React.Component {
   }
 
   getShipping(price) {
-    return 3.12;
+    if (this.state.delivery) {
+      return ((2.0 / 100) * 100).toFixed(2);
+    } else {
+      return ((0.0 / 100) * 100).toFixed(2);
+    }
   }
 }

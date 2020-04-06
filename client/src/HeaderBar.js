@@ -9,6 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
+import cart2 from "./images/cart-green.svg";
 import Shop from "./Shop";
 import Close from "./images/close.png";
 import city from "./images/architectonic.png";
@@ -717,9 +718,17 @@ export default class HeaderBar extends React.Component {
               marginRight: 50,
             }}
           >
-            <ShoppingCartOutlinedIcon
-              style={{ width: 25, height: 25 }}
-            ></ShoppingCartOutlinedIcon>
+            {!localStorage.getItem("cart") ||
+              (localStorage.getItem("cart") == 0 && (
+                <ShoppingCartOutlinedIcon
+                  style={{ width: 25, height: 25 }}
+                ></ShoppingCartOutlinedIcon>
+              ))}
+
+            {localStorage.getItem("cart") &&
+              localStorage.getItem("cart") != 0 && (
+                <img style={{ width: 25, height: 25 }} src={cart2} />
+              )}
 
             <div
               style={{
@@ -750,7 +759,7 @@ export default class HeaderBar extends React.Component {
     if (!address) {
       return "";
     }
-    console.log(address);
+
     for (var i = 0; i < address.length; i++) {
       if (address[i] === ",") {
         return address.substring(0, i);
