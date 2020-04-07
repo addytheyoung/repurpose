@@ -67,11 +67,11 @@ export default class CheckoutForm extends React.Component {
         .collection("Users")
         .doc("aty268")
         .update({
-          // cart: [],
+          cart: [],
           orders: newOrders,
         })
         .then(() => {
-          // localStorage.setItem("cart", "0")
+          localStorage.setItem("cart", "0");
           this.props.finished();
         });
       return (
@@ -81,6 +81,7 @@ export default class CheckoutForm extends React.Component {
       );
     }
 
+    this.componentDidUpdate();
     return (
       <div>
         {this.props.deliveryType === "delivery" && (
@@ -252,7 +253,6 @@ export default class CheckoutForm extends React.Component {
         deliveryType: value,
       });
     }
-    this.componentDidMount();
   }
 
   componentDidUpdate() {

@@ -63,6 +63,9 @@ app.post("/create-payment-intent", async (req, res) => {
     amount: body.total * 100,
     currency: productDetails.currency,
     description: productDetails.description,
+    // transfer_data: {
+    //   destination: "a",
+    // },
   };
   console.log(options);
 

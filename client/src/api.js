@@ -73,6 +73,7 @@ const createCustomer = (options) => {
 };
 
 const createPaymentIntent = (total) => {
+  console.log("PAYMENT");
   return window
     .fetch(`/create-payment-intent`, {
       method: "POST",
