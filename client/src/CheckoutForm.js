@@ -4,10 +4,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { Input, Select, MenuItem, Button } from "@material-ui/core";
 import "./css/CheckoutForm.css";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
+
 import * as firebase from "firebase";
 import api from "./api";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -15,7 +12,6 @@ import ClipLoader from "react-spinners/ClipLoader";
 export default class CheckoutForm extends React.Component {
   lngPerMile = 57;
   latPerMile = 69;
-  total = this.props.total;
 
   constructor(props) {
     super(props);
@@ -39,7 +35,8 @@ export default class CheckoutForm extends React.Component {
   }
 
   render() {
-    const deliveryType = this.props.deliveryType;
+    console.log("CheckoutForm " + this.props.total);
+    console.log("Form tpye " + this.props.deliveryType);
     this.state.myData = this.props.myData;
     const options = {
       style: {
@@ -86,47 +83,13 @@ export default class CheckoutForm extends React.Component {
 
     return (
       <div>
-        <div
-          style={{
-            marginTop: 10,
-            width: "30vw",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <RadioGroup
-            value={this.state.deliveryType}
-            onChange={(e) => this.setPickup(e)}
-            defaultValue="pickup"
-            row
-            aria-label="position"
-            name="position"
-            defaultValue="top"
-          >
-            <FormControlLabel
-              value="pickup"
-              control={<Radio color="primary" />}
-              label="Pickup"
-              labelPlacement="top"
-            />
-            <FormControlLabel
-              value="delivery"
-              control={<Radio color="primary" />}
-              label="Delivery"
-              labelPlacement="top"
-            />
-          </RadioGroup>
-        </div>
-
-        {this.state.deliveryType === "delivery" && (
+        {this.props.deliveryType === "delivery" && (
           <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
             Items are typically delivered within 3 hours. <br />
             Flat fee of $2.00 for shipping, no matter how many items.
           </div>
         )}
-        {this.state.deliveryType === "pickup" && (
+        {this.props.deliveryType === "pickup" && (
           <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
             Pickup location is 2414 Longview Street, <br />
             Athens TX. We'll send you an email to confirm.
@@ -160,7 +123,7 @@ export default class CheckoutForm extends React.Component {
               style={{ margin: 10 }}
               placeholder="Last Name"
             ></Input>
-            {this.state.deliveryType === "delivery" && (
+            {this.props.deliveryType === "delivery" && (
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <Input
                   id="address1"
@@ -292,7 +255,7 @@ export default class CheckoutForm extends React.Component {
     this.componentDidMount();
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     if (this.state.processing || this.state.succeeded) {
       return null;
     }
@@ -303,7 +266,7 @@ export default class CheckoutForm extends React.Component {
       total += 2;
     }
 
-    console.log("Checkout Form " + total);
+    console.log("Mounting" + this.props.total);
 
     // Step 1: Fetch product details such as amount and currency from
     // API to make sure it can't be tampered with in the client.
@@ -318,14 +281,19 @@ export default class CheckoutForm extends React.Component {
     this.state.amount = cart.amount;
     this.state.currency = cart.currency;
 
+    console.log("GOT PRODUCT DETAILS");
+
     // Step 2: Create PaymentIntent over Stripe API
     api
-      .createPaymentIntent({ total })
+      .createPaymentIntent({ total: this.props.total })
       .then((clientSecret) => {
-        this.setState({
-          clientSecret: clientSecret,
-          loaded: true,
-        });
+        console.log(clientSecret);
+        this.state.clientSecret = clientSecret;
+        this.state.loaded = true;
+        // this.setState({
+        //   clientSecret: clientSecret,
+        //   loaded: true,
+        // });
       })
       .catch((err) => {
         this.setState({

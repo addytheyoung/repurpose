@@ -555,7 +555,7 @@ export default class Cart extends React.Component {
   }
 
   getShipping(price) {
-    if (this.state.delivery) {
+    if (this.state.deliveryType === "delivery") {
       return ((2.0 / 100) * 100).toFixed(2);
     } else {
       return ((0.0 / 100) * 100).toFixed(2);

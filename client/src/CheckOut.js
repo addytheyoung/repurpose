@@ -2,7 +2,10 @@ import React from "react";
 import HeaderBar from "./HeaderBar";
 import { Input } from "@material-ui/core";
 import { CardElement, ElementsConsumer } from "@stripe/react-stripe-js";
-
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CardSection from "./CardSection";
@@ -449,6 +452,40 @@ export default class CheckOut extends React.Component {
               <div>{"$" + total}</div>
             </div>
             <div style={{ marginTop: 50 }}></div>
+
+            <div
+              style={{
+                marginTop: 10,
+                width: "30vw",
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <RadioGroup
+                value={this.state.deliveryType}
+                onChange={(e) => this.setPickup(e)}
+                defaultValue="pickup"
+                row
+                aria-label="position"
+                name="position"
+                defaultValue="top"
+              >
+                <FormControlLabel
+                  value="pickup"
+                  control={<Radio color="primary" />}
+                  label="Pickup"
+                  labelPlacement="top"
+                />
+                <FormControlLabel
+                  value="delivery"
+                  control={<Radio color="primary" />}
+                  label="Delivery"
+                  labelPlacement="top"
+                />
+              </RadioGroup>
+            </div>
 
             {
               // If we aren't a stripe customer, render the credti card page. Else, just show the pay button
