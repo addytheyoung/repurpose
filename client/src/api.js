@@ -73,7 +73,6 @@ const createCustomer = (options) => {
 };
 
 const createPaymentIntent = (total) => {
-  console.log(total);
   return window
     .fetch(`/create-payment-intent`, {
       method: "POST",
@@ -99,7 +98,6 @@ const createPaymentIntent = (total) => {
 };
 
 const getProductDetails = (cart) => {
-  console.log(cart);
   const subTotal = getSubtotal(cart);
   const tax = getTax(subTotal);
   const shipping = getShipping(subTotal);

@@ -7,10 +7,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CardSection from "./CardSection";
 import * as firebase from "firebase";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
+
 import FormLabel from "@material-ui/core/FormLabel";
 import CheckoutForm from "./CheckoutForm";
 import Art from "./images/art.jpeg";
@@ -29,6 +26,7 @@ export default class CheckOut extends React.Component {
       loaded: false,
       finished: false,
       deliveryType: localStorage.getItem("deliveryType"),
+      total: null,
     };
 
     firebase
@@ -72,6 +70,7 @@ export default class CheckOut extends React.Component {
           parseInt(tax * 100) +
           parseInt(shipping * 100)
       ) / 100;
+    console.log("Checkout " + total);
     const signedIn = !!firebase.auth().currentUser;
     if (this.state.finished) {
       return (
@@ -451,53 +450,6 @@ export default class CheckOut extends React.Component {
             </div>
             <div style={{ marginTop: 50 }}></div>
 
-            <div
-              style={{
-                marginTop: 10,
-                width: "30vw",
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <RadioGroup
-                value={this.state.deliveryType}
-                onChange={(e) => this.setPickup(e)}
-                defaultValue="pickup"
-                row
-                aria-label="position"
-                name="position"
-                defaultValue="top"
-              >
-                <FormControlLabel
-                  value="pickup"
-                  control={<Radio color="primary" />}
-                  label="Pickup"
-                  labelPlacement="top"
-                />
-                <FormControlLabel
-                  value="delivery"
-                  control={<Radio color="primary" />}
-                  label="Delivery"
-                  labelPlacement="top"
-                />
-              </RadioGroup>
-            </div>
-
-            {this.state.deliveryType === "delivery" && (
-              <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
-                Items are typically delivered within 3 hours. Flat fee of $2.00
-                for shipping, no matter how many items.
-              </div>
-            )}
-            {this.state.deliveryType === "pickup" && (
-              <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
-                Pickup location is 2414 Longview Street, Athens TX. We'll send
-                you an email to confirm.
-              </div>
-            )}
-
             {
               // If we aren't a stripe customer, render the credti card page. Else, just show the pay button
             }
@@ -505,6 +457,9 @@ export default class CheckOut extends React.Component {
               <ElementsConsumer>
                 {({ elements, stripe }) => (
                   <CheckoutForm
+                    // initialDeliveryType={this.initialDeliveryType}
+                    // initialTotal={this.initialTotal}
+                    setShipping={(b, c, d) => this.setPickup(null, b, c, d)}
                     deliveryType={this.state.deliveryType}
                     finished={() => this.finished()}
                     total={total}
@@ -522,7 +477,14 @@ export default class CheckOut extends React.Component {
     );
   }
 
-  setPickup(e) {
+  setPickup(e, b, c, d) {
+    if (b) {
+      this.setState({
+        delivery: c,
+        deliveryType: d,
+      });
+      return;
+    }
     const value = e.target.value;
     if (value === "pickup") {
       localStorage.setItem("deliveryType", "pickup");
@@ -559,7 +521,7 @@ export default class CheckOut extends React.Component {
   }
 
   getShipping(price) {
-    if (this.state.delivery) {
+    if (localStorage.getItem("deliveryType") === "delivery") {
       return ((2.0 / 100) * 100).toFixed(2);
     } else {
       return ((0.0 / 100) * 100).toFixed(2);
