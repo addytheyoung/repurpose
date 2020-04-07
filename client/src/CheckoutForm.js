@@ -9,6 +9,8 @@ import api from "./api";
 import ClipLoader from "react-spinners/ClipLoader";
 
 export default class CheckoutForm extends React.Component {
+  lngPerMile = 57;
+  latPerMile = 69;
   constructor(props) {
     super(props);
     this.state = {
@@ -217,7 +219,7 @@ export default class CheckoutForm extends React.Component {
     }
 
     const total = this.props.total;
-    console.log("mounting");
+
     // Step 1: Fetch product details such as amount and currency from
     // API to make sure it can't be tampered with in the client.
     const cart = api.getProductDetails(this.state.myData.cart);
@@ -247,6 +249,8 @@ export default class CheckoutForm extends React.Component {
   }
 
   async handleSubmit(ev) {
+    const API_KEY = "AIzaSyBbpHHOjcFkGJeUaEIQZ-zNVaYBw0UVfzw";
+
     ev.preventDefault();
     const first = document.getElementById("first").value.trim();
     const last = document.getElementById("last").value.trim();
@@ -255,6 +259,35 @@ export default class CheckoutForm extends React.Component {
     const zip = document.getElementById("zip").value.trim();
     const city = document.getElementById("city").value.trim();
     const state = document.getElementById("state").textContent;
+
+    const url =
+      "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+      address1 +
+      "&key=" +
+      API_KEY;
+
+    api.getLatLng(address1).then((a) => {
+      const latitude = a.results[0].geometry.location.lat;
+      const longitude = a.results[0].geometry.location.lng;
+      // Check that they are within delivery range
+
+      api.getLatLng(localStorage.getItem("city")).then((a) => {
+        const latitude2 = a.results[0].geometry.location.lat;
+        const longitude2 = a.results[0].geometry.location.lng;
+        // Check that they are within delivery range
+        const x =
+          Math.pow((latitude2 - latitude) * this.latPerMile, 2) +
+          Math.pow((longitude2 - longitude) * this.lngPerMile, 2);
+        const milesBetween = Math.sqrt(x);
+        console.log(milesBetween);
+        if (milesBetween >= 15) {
+          alert("Sorry, you are too far for delivery.");
+          return;
+        }
+      });
+    });
+
+    return;
 
     // if (first === "") {
     //   alert("Please enter your first name");

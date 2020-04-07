@@ -46,7 +46,6 @@ export default class CheckOut extends React.Component {
       });
   }
   render() {
-    console.log(this.state);
     if (!this.state.loaded) {
       return (
         <div
@@ -606,7 +605,5 @@ export default class CheckOut extends React.Component {
     });
   }
 
-  updateCardNumber(e) {
-    console.log(e);
-  }
+  updateCardNumber(e) {}
 }

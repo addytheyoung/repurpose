@@ -1,20 +1,45 @@
-const createSeller = options => {
+const getLatLng = (address) => {
+  const front_url =
+    "https://maps.googleapis.com/maps/api/geocode/json?address=";
+  const end_url = "&key=AIzaSyBbpHHOjcFkGJeUaEIQZ-zNVaYBw0UVfzw";
+
+  return window
+    .fetch(front_url + address + end_url, {
+      method: "GET",
+    })
+    .then((res) => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return null;
+      }
+    })
+    .then((data) => {
+      if (!data || data.error) {
+        throw Error("API Error");
+      } else {
+        return data;
+      }
+    });
+};
+
+const createSeller = (options) => {
   return window
     .fetch(`/make-seller`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(options)
+      body: JSON.stringify(options),
     })
-    .then(res => {
+    .then((res) => {
       if (res.status === 200) {
         return res.json();
       } else {
         return null;
       }
     })
-    .then(data => {
+    .then((data) => {
       if (!data || data.error) {
         throw Error("API Error");
       } else {
@@ -23,22 +48,22 @@ const createSeller = options => {
     });
 };
 
-const createCustomer = options => {
+const createCustomer = (options) => {
   return window
     .fetch(`/customer`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
-    .then(res => {
+    .then((res) => {
       if (res.status === 200) {
         return res.json();
       } else {
         return null;
       }
     })
-    .then(data => {
+    .then((data) => {
       if (!data || data.error) {
         throw Error("API Error");
       } else {
@@ -47,24 +72,24 @@ const createCustomer = options => {
     });
 };
 
-const createPaymentIntent = total => {
+const createPaymentIntent = (total) => {
   console.log(total);
   return window
     .fetch(`/create-payment-intent`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(total)
+      body: JSON.stringify(total),
     })
-    .then(res => {
+    .then((res) => {
       if (res.status === 200) {
         return res.json();
       } else {
         return null;
       }
     })
-    .then(data => {
+    .then((data) => {
       if (!data || data.error) {
         throw new Error("PaymentIntent API Error");
       } else {
@@ -73,7 +98,7 @@ const createPaymentIntent = total => {
     });
 };
 
-const getProductDetails = cart => {
+const getProductDetails = (cart) => {
   console.log(cart);
   const subTotal = getSubtotal(cart);
   const tax = getTax(subTotal);
@@ -88,24 +113,24 @@ const getProductDetails = cart => {
     total: total,
     currency: "usd",
     amount: total,
-    description: "dqdqwdqwdq"
+    description: "dqdqwdqwdq",
   };
   console.log(total);
   return window
     .fetch(`/product-details`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
-    .then(res => {
+    .then((res) => {
       if (res.status === 200) {
         return res.json();
       } else {
         return null;
       }
     })
-    .then(data => {
+    .then((data) => {
       if (!data || data.error) {
         throw Error("API Error");
       } else {
@@ -114,22 +139,22 @@ const getProductDetails = cart => {
     });
 };
 
-const getPublicStripeKey = options => {
+const getPublicStripeKey = (options) => {
   return window
     .fetch(`/public-key`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
-    .then(res => {
+    .then((res) => {
       if (res.status === 200) {
         return res.json();
       } else {
         return null;
       }
     })
-    .then(data => {
+    .then((data) => {
       if (!data || data.error) {
         console.log("API error:", { data });
         throw Error("API Error");
@@ -139,7 +164,7 @@ const getPublicStripeKey = options => {
     });
 };
 
-const getSubtotal = cart => {
+const getSubtotal = (cart) => {
   var totalPrice = 0;
   for (var i = 0; i < cart.length; i++) {
     const price = cart[i].original_price;
@@ -148,20 +173,21 @@ const getSubtotal = cart => {
   return ((totalPrice / 100) * 100).toFixed(2);
 };
 
-const getTax = price => {
+const getTax = (price) => {
   return parseInt(price * 0.08 * 100) / 100;
 };
 
-const getShipping = price => {
+const getShipping = (price) => {
   return 3.12;
 };
 
 const api = {
+  getLatLng: getLatLng,
   createSeller: createSeller,
   createPaymentIntent,
   createCustomer: createCustomer,
   getPublicStripeKey: getPublicStripeKey,
-  getProductDetails: getProductDetails
+  getProductDetails: getProductDetails,
 };
 
 export default api;
