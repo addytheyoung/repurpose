@@ -496,6 +496,7 @@ export default class CheckOut extends React.Component {
                   <CheckoutForm
                     // initialDeliveryType={this.initialDeliveryType}
                     // initialTotal={this.initialTotal}
+
                     setShipping={(b, c, d) => this.setPickup(null, b, c, d)}
                     deliveryType={this.state.deliveryType}
                     finished={() => this.finished()}

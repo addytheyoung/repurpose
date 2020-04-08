@@ -302,6 +302,7 @@ export default class SellRules extends React.Component {
           start: this.state.opening[0],
           end: this.state.opening[1],
           day: this.state.currentDate.toString(),
+          seller: localStorage.getItem("stripe_user_id"),
         });
         firebase
           .firestore()

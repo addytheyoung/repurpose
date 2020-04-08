@@ -3,9 +3,14 @@ import HeaderBar from "./HeaderBar";
 import * as firebase from "firebase";
 import "./css/OrderKit.css";
 import { Input, Select, MenuItem } from "@material-ui/core";
+import api from "./api";
+
 import { PayPalButton } from "react-paypal-button-v2";
 
 export default class OrderKit extends React.Component {
+  lngPerMile = 57;
+  latPerMile = 69;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -28,25 +33,8 @@ export default class OrderKit extends React.Component {
             }}
           >
             <div style={{ marginTop: 30, fontSize: 22, fontWeight: 600 }}>
-              Tell us about you, and these items
+              Let's hear it
             </div>
-            {/* <PayPalButton
-              amount="0.01"
-              // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
-              onSuccess={(details, data) => {
-                alert(
-                  "Transaction completed by " + details.payer.name.given_name
-                );
-
-                // OPTIONAL: Call your server to save the transaction
-                return fetch("/paypal-transaction-complete", {
-                  method: "post",
-                  body: JSON.stringify({
-                    orderID: data.orderID,
-                  }),
-                });
-              }}
-            /> */}
 
             <div style={{ margin: 10, marginTop: 0 }}>
               <div
@@ -75,7 +63,7 @@ export default class OrderKit extends React.Component {
                     marginTop: 20,
                   }}
                 >
-                  <Input id="name" placeholder={"Phone number (Cell)"} />
+                  <Input id="phone" placeholder={"Phone number (Cell)"} />
                 </div>
                 <div
                   style={{
@@ -151,28 +139,75 @@ export default class OrderKit extends React.Component {
     );
   }
 
-  setKit(type, id) {
-    if (id === 1) {
-      if (type === "email") {
-        this.setState({
-          kit: "email",
-        });
-      } else {
-        this.setState({
-          kit: "box",
-        });
-      }
-    } else {
-      this.setState({
-        payment: type,
-      });
-    }
-  }
-
   sellingRules() {
+    const API_KEY = "AIzaSyBbpHHOjcFkGJeUaEIQZ-zNVaYBw0UVfzw";
+
     const name = document.getElementById("name").value.trim();
-    // const address1 = document.getElementById("address1").value.trim();
-    // const address2 = document.getElementById("address2").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const address1 = document.getElementById("address1").value.trim();
+    const address2 = document.getElementById("address2").value.trim();
+    const zip = document.getElementById("zip").value.trim();
+
+    if (!zip) {
+      alert("Please enter your zip code");
+      return;
+    }
+
+    const url =
+      "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+      zip +
+      "&key=" +
+      API_KEY;
+
+    api.getLatLng(zip).then((a) => {
+      console.log(a);
+      const latitude = a.results[0].geometry.location.lat;
+      const longitude = a.results[0].geometry.location.lng;
+      // Check that they are within delivery range
+
+      api.getLatLng(localStorage.getItem("city")).then((a) => {
+        console.log(a);
+        const latitude2 = a.results[0].geometry.location.lat;
+        const longitude2 = a.results[0].geometry.location.lng;
+        // Check that they are within delivery range
+        const x =
+          Math.pow((latitude2 - latitude) * this.latPerMile, 2) +
+          Math.pow((longitude2 - longitude) * this.lngPerMile, 2);
+        const milesBetween = Math.sqrt(x);
+        console.log(milesBetween);
+        if (milesBetween >= 15) {
+          alert("Sorry, you are too far for delivery.");
+          return;
+        }
+
+        firebase
+          .firestore()
+          .collection("Users")
+          .where("uid", "==", "uid1")
+          .get()
+          .then((a) => {
+            const user = a.docs[0].data();
+            firebase
+              .firestore()
+              .collection("Users")
+              .doc(user.email)
+              .update({
+                name: name,
+                // address1: address1,
+                // address2: address2,
+                // city: city,
+                // state: state,
+                // zip: zip,
+                // kit: this.state.kit,
+                // payment: this.state.payment
+              })
+              .then(() => {
+                window.location.href =
+                  "/sell/rules/" + this.state.kit + "&" + this.state.payment;
+              });
+          });
+      });
+    });
 
     // Check name
     // const numSpaces = name.split(" ").length - 1;
@@ -184,32 +219,5 @@ export default class OrderKit extends React.Component {
     //   alert("Please put in your address");
     //   return;
     // }
-
-    firebase
-      .firestore()
-      .collection("Users")
-      .where("uid", "==", "uid1")
-      .get()
-      .then((a) => {
-        const user = a.docs[0].data();
-        firebase
-          .firestore()
-          .collection("Users")
-          .doc(user.email)
-          .update({
-            name: name,
-            // address1: address1,
-            // address2: address2,
-            // city: city,
-            // state: state,
-            // zip: zip,
-            // kit: this.state.kit,
-            // payment: this.state.payment
-          })
-          .then(() => {
-            window.location.href =
-              "/sell/rules/" + this.state.kit + "&" + this.state.payment;
-          });
-      });
   }
 }

@@ -16,7 +16,7 @@ export default class GetKit extends React.Component {
       }
     }
 
-    api.createSeller({ code: code }).then(a => {
+    api.createSeller({ code: code }).then((a) => {
       console.log(a);
       firebase
         .firestore()
@@ -25,16 +25,16 @@ export default class GetKit extends React.Component {
         .update({
           seller: true,
           stripe_user_id: a.stripe_user_id,
-          loaded: true
         })
         .then(() => {
-          window.location.href = "/";
+          localStorage.setItem("stripe_user_id", a.stripe_user_id);
+          window.location.href = "/sell/kit";
         });
     });
 
     this.state = {
       loaded: false,
-      code: code
+      code: code,
     };
   }
   render() {
@@ -44,7 +44,7 @@ export default class GetKit extends React.Component {
           style={{
             position: "absolute",
             left: "45vw",
-            top: 200
+            top: 200,
           }}
         >
           <ClipLoader

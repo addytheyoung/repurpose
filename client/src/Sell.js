@@ -596,7 +596,11 @@ export default class Sell extends React.Component {
     if (!firebase.auth().currentUser) {
       this.showProfileModal();
     } else {
-      window.location.href = "/sell/kit";
+      // Take us to the stripe redirect
+      const stripe_url =
+        "https://connect.stripe.com/express/oauth/authorize?client_id=ca_GziEvM247byG5XcbBDVdmFHV5l3vPz4h&stripe_user%5Bproduct_description%5D=I am selling my own items.&stripe_user%5Bbusiness_type%5D=individual&redirect_uri=http://localhost:3000/sell/getkit";
+
+      window.location.href = stripe_url;
     }
   }
 
