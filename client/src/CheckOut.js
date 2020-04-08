@@ -21,6 +21,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 export default class CheckOut extends React.Component {
   constructor(props) {
+    localStorage.setItem("deliveryType", "delivery");
+
     super(props);
     this.state = {
       cardNumber: "",
@@ -28,8 +30,9 @@ export default class CheckOut extends React.Component {
       modal: false,
       loaded: false,
       finished: false,
-      deliveryType: localStorage.getItem("deliveryType"),
+      deliveryType: "delivery",
       total: null,
+      delivery: true,
     };
 
     firebase
@@ -473,9 +476,10 @@ export default class CheckOut extends React.Component {
                 defaultValue="top"
               >
                 <FormControlLabel
+                  disabled
                   value="pickup"
                   control={<Radio color="primary" />}
-                  label="Pickup"
+                  label="Pickup (Coming soon)"
                   labelPlacement="top"
                 />
                 <FormControlLabel
@@ -559,6 +563,7 @@ export default class CheckOut extends React.Component {
   }
 
   getShipping(price) {
+    return ((2.0 / 100) * 100).toFixed(2);
     if (localStorage.getItem("deliveryType") === "delivery") {
       return ((2.0 / 100) * 100).toFixed(2);
     } else {

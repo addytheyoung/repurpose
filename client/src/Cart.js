@@ -15,6 +15,7 @@ import "./css/Cart.css";
 export default class Cart extends React.Component {
   constructor(props) {
     super(props);
+    localStorage.setItem("deliveryType", "delivery");
     firebase
       .firestore()
       .collection("Users")
@@ -32,13 +33,9 @@ export default class Cart extends React.Component {
       myData: [],
       modal: false,
       numCartItems: localStorage.getItem("cart"),
-      deliveryType: localStorage.getItem("deliveryType")
-        ? localStorage.getItem("deliveryType")
-        : "pickup",
-      delivery: false,
+      deliveryType: "delivery",
+      delivery: true,
     };
-
-    localStorage.setItem("deliveryType", "pickup");
   }
 
   render() {
@@ -426,9 +423,10 @@ export default class Cart extends React.Component {
                 defaultValue="top"
               >
                 <FormControlLabel
+                  disabled
                   value="pickup"
                   control={<Radio color="primary" />}
-                  label="Pickup"
+                  label="Pickup (Coming soon)"
                   labelPlacement="top"
                 />
                 <FormControlLabel
@@ -442,8 +440,8 @@ export default class Cart extends React.Component {
 
             {this.state.deliveryType === "delivery" && (
               <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
-                Items are typically delivered within 3 hours. Flat fee of $2.00
-                for shipping, no matter how many items.
+                Items are typically delivered within 3 hours.
+                <br /> Flat fee of $2.00 for shipping, no matter how many items.
               </div>
             )}
             {this.state.deliveryType === "pickup" && (
