@@ -12,6 +12,7 @@ import Paper from "@material-ui/core/Paper";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import Calendar from "react-calendar";
 import * as firebase from "firebase";
+import api from "./api";
 import "react-calendar/dist/Calendar.css";
 
 export default class SellRules extends React.Component {
@@ -25,6 +26,14 @@ export default class SellRules extends React.Component {
       opening: null,
       id: null,
     };
+    if (
+      !localStorage.getItem("name") ||
+      !localStorage.getItem("phone") ||
+      !localStorage.getItem("address1")
+    ) {
+      window.location.href = "/sell/kit";
+    }
+
     firebase
       .firestore()
       .collection("Collectors")
@@ -213,7 +222,10 @@ export default class SellRules extends React.Component {
           </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
             <div>
-              <Calendar onClickDay={(e) => this.seeTimes(e)} />
+              <Calendar
+                minDate={new Date()}
+                onClickDay={(e) => this.seeTimes(e)}
+              />
             </div>
             {this.state.currentDate && (
               <div
@@ -291,6 +303,9 @@ export default class SellRules extends React.Component {
   }
 
   bookModal() {
+    this.setState({
+      loaded: false,
+    });
     firebase
       .firestore()
       .collection("Collectors")
@@ -299,6 +314,11 @@ export default class SellRules extends React.Component {
       .then((data) => {
         var bookings = data.data().bookings;
         bookings.push({
+          name: localStorage.getItem("name"),
+          email: localStorage.getItem("email"),
+          phone: localStorage.getItem("phone"),
+          address1: localStorage.getItem("address1"),
+          address2: localStorage.getItem("address2"),
           start: this.state.opening[0],
           end: this.state.opening[1],
           day: this.state.currentDate.toString(),
@@ -315,9 +335,12 @@ export default class SellRules extends React.Component {
             this.setState({
               opening: null,
               bookModal: false,
+              loaded: true,
             });
-            alert("Book successful!");
-            window.location.href = "/";
+            api.sendEmail("andrewtateyoung@gmail.com").then(() => {
+              alert("Success! Email sent confirming details.");
+              window.location.href = "/";
+            });
           });
       });
   }

@@ -23,6 +23,19 @@ const getLatLng = (address) => {
     });
 };
 
+const sendEmail = (email) => {
+  return window
+    .fetch("/send-email", {
+      method: "GET",
+    })
+    .then((a) => {
+      console.log(a);
+    })
+    .catch((a) => {
+      console.log(a);
+    });
+};
+
 const createSeller = (options) => {
   return window
     .fetch(`/make-seller`, {
@@ -181,6 +194,7 @@ const getShipping = (price) => {
 };
 
 const api = {
+  sendEmail: sendEmail,
   getLatLng: getLatLng,
   createSeller: createSeller,
   createPaymentIntent,

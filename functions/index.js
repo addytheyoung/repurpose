@@ -4,6 +4,7 @@ const stripe = require("stripe")("sk_test_hkMGIPsjJ7Ag57pFz1eX0ASX00ijQ9oo1X");
 var admin = require("firebase-admin");
 const express = require("express");
 const bodyParser = require("body-parser");
+var nodemailer = require("nodemailer");
 const app = express();
 const Firestore = require("@google-cloud/firestore");
 const { resolve } = require("path");
@@ -16,6 +17,31 @@ admin.initializeApp({
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get("/send-email", (req, res) => {
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "andrewtateyoung@gmail.com",
+      pass: "Smash#0831",
+    },
+  });
+
+  var mailOptions = {
+    from: "andrewtateyoung@gmail.com",
+    to: "andrewtateyoung@gmail.com",
+    subject: "Sending Email using Node.js",
+    text: "That was easy!",
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+});
 
 app.post("/make-seller", async (req, res) => {
   const body = req.body;

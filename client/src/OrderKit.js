@@ -180,6 +180,11 @@ export default class OrderKit extends React.Component {
           return;
         }
 
+        localStorage.setItem("name", name);
+        localStorage.setItem("phone", phone);
+        localStorage.setItem("address1", address1);
+        localStorage.setItem("address2", address2);
+
         firebase
           .firestore()
           .collection("Users")
@@ -187,6 +192,7 @@ export default class OrderKit extends React.Component {
           .get()
           .then((a) => {
             const user = a.docs[0].data();
+            localStorage.setItem("email", user.email);
             firebase
               .firestore()
               .collection("Users")
@@ -198,8 +204,6 @@ export default class OrderKit extends React.Component {
                 // city: city,
                 // state: state,
                 // zip: zip,
-                // kit: this.state.kit,
-                // payment: this.state.payment
               })
               .then(() => {
                 window.location.href =

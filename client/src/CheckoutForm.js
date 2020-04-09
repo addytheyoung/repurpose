@@ -209,6 +209,9 @@ export default class CheckoutForm extends React.Component {
               </div>
             )}
 
+            {console.log(this.state.processing)}
+            {console.log(this.state.clientSecret)}
+
             <button
               id="pay"
               style={{
@@ -256,7 +259,11 @@ export default class CheckoutForm extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.state.processing || this.state.succeeded) {
+    if (
+      this.state.processing ||
+      this.state.succeeded ||
+      this.state.clientSecret
+    ) {
       return null;
     }
 
@@ -290,10 +297,10 @@ export default class CheckoutForm extends React.Component {
         console.log(clientSecret);
         this.state.clientSecret = clientSecret;
         this.state.loaded = true;
-        // this.setState({
-        //   clientSecret: clientSecret,
-        //   loaded: true,
-        // });
+        this.setState({
+          clientSecret: clientSecret,
+          loaded: true,
+        });
       })
       .catch((err) => {
         this.setState({

@@ -374,146 +374,148 @@ export default class CheckOut extends React.Component {
               );
             })}
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              width: "50vw",
-              marginLeft: 20,
-            }}
-          >
-            <div
-              style={{
-                borderBottomColor: "#a1a1a1",
-                borderBottomStyle: "solid",
-                borderBottomWidth: 1,
-                paddingBottom: 10,
-                marginBottom: 10,
-                fontSize: 20,
-                fontWeight: 600,
-                marginTop: 30,
-              }}
-            >
-              Order Summary
-            </div>
+          {this.state.myData.cart.length !== 0 && (
             <div
               style={{
                 display: "flex",
-                flexDirection: "row",
-                fontSize: 18,
-                fontWeight: 500,
-                alignItems: "center",
-                width: "30vw",
-                justifyContent: "space-between",
+                flexDirection: "column",
+                width: "50vw",
+                marginLeft: 20,
               }}
             >
-              <div>Subtotal</div>
-              <div>{"$" + subTotal}</div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                fontSize: 18,
-                fontWeight: 500,
-                flexDirection: "row",
-                alignItems: "center",
-                width: "30vw",
-                justifyContent: "space-between",
-              }}
-            >
-              <div>Tax</div>
-              <div>{"$" + tax}</div>
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                fontSize: 18,
-                fontWeight: 500,
-                alignItems: "center",
-                width: "30vw",
-                justifyContent: "space-between",
-              }}
-            >
-              <div>Shipping</div>
-              <div>{"$" + shipping}</div>
-            </div>
-            <div
-              style={{
-                marginTop: 20,
-                display: "flex",
-                flexDirection: "row",
-                fontSize: 18,
-                fontWeight: 600,
-                alignItems: "center",
-                width: "30vw",
-                justifyContent: "space-between",
-              }}
-            >
-              <div>Total</div>
-              <div>{"$" + total}</div>
-            </div>
-            <div style={{ marginTop: 50 }}></div>
-
-            <div
-              style={{
-                marginTop: 10,
-                width: "30vw",
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <RadioGroup
-                value={this.state.deliveryType}
-                onChange={(e) => this.setPickup(e)}
-                defaultValue="pickup"
-                row
-                aria-label="position"
-                name="position"
-                defaultValue="top"
+              <div
+                style={{
+                  borderBottomColor: "#a1a1a1",
+                  borderBottomStyle: "solid",
+                  borderBottomWidth: 1,
+                  paddingBottom: 10,
+                  marginBottom: 10,
+                  fontSize: 20,
+                  fontWeight: 600,
+                  marginTop: 30,
+                }}
               >
-                <FormControlLabel
-                  disabled
-                  value="pickup"
-                  control={<Radio color="primary" />}
-                  label="Pickup (Coming soon)"
-                  labelPlacement="top"
-                />
-                <FormControlLabel
-                  value="delivery"
-                  control={<Radio color="primary" />}
-                  label="Delivery"
-                  labelPlacement="top"
-                />
-              </RadioGroup>
-            </div>
+                Order Summary
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  fontSize: 18,
+                  fontWeight: 500,
+                  alignItems: "center",
+                  width: "30vw",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div>Subtotal</div>
+                <div>{"$" + subTotal}</div>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  fontSize: 18,
+                  fontWeight: 500,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  width: "30vw",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div>Tax</div>
+                <div>{"$" + tax}</div>
+              </div>
 
-            {
-              // If we aren't a stripe customer, render the credti card page. Else, just show the pay button
-            }
-            {signedIn && (
-              <ElementsConsumer>
-                {({ elements, stripe }) => (
-                  <CheckoutForm
-                    // initialDeliveryType={this.initialDeliveryType}
-                    // initialTotal={this.initialTotal}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  fontSize: 18,
+                  fontWeight: 500,
+                  alignItems: "center",
+                  width: "30vw",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div>Shipping</div>
+                <div>{"$" + shipping}</div>
+              </div>
+              <div
+                style={{
+                  marginTop: 20,
+                  display: "flex",
+                  flexDirection: "row",
+                  fontSize: 18,
+                  fontWeight: 600,
+                  alignItems: "center",
+                  width: "30vw",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div>Total</div>
+                <div>{"$" + total}</div>
+              </div>
+              <div style={{ marginTop: 50 }}></div>
 
-                    setShipping={(b, c, d) => this.setPickup(null, b, c, d)}
-                    deliveryType={this.state.deliveryType}
-                    finished={() => this.finished()}
-                    total={total}
-                    myData={this.state.myData}
-                    elements={elements}
-                    stripe={stripe}
-                    signedIn={true}
+              <div
+                style={{
+                  marginTop: 10,
+                  width: "30vw",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <RadioGroup
+                  value={this.state.deliveryType}
+                  onChange={(e) => this.setPickup(e)}
+                  defaultValue="pickup"
+                  row
+                  aria-label="position"
+                  name="position"
+                  defaultValue="top"
+                >
+                  <FormControlLabel
+                    disabled
+                    value="pickup"
+                    control={<Radio color="primary" />}
+                    label="Pickup (Coming soon)"
+                    labelPlacement="top"
                   />
-                )}
-              </ElementsConsumer>
-            )}
-          </div>
+                  <FormControlLabel
+                    value="delivery"
+                    control={<Radio color="primary" />}
+                    label="Delivery"
+                    labelPlacement="top"
+                  />
+                </RadioGroup>
+              </div>
+
+              {
+                // If we aren't a stripe customer, render the credti card page. Else, just show the pay button
+              }
+              {signedIn && (
+                <ElementsConsumer>
+                  {({ elements, stripe }) => (
+                    <CheckoutForm
+                      // initialDeliveryType={this.initialDeliveryType}
+                      // initialTotal={this.initialTotal}
+
+                      setShipping={(b, c, d) => this.setPickup(null, b, c, d)}
+                      deliveryType={this.state.deliveryType}
+                      finished={() => this.finished()}
+                      total={total}
+                      myData={this.state.myData}
+                      elements={elements}
+                      stripe={stripe}
+                      signedIn={true}
+                    />
+                  )}
+                </ElementsConsumer>
+              )}
+            </div>
+          )}
         </div>
       </div>
     );
