@@ -16,6 +16,7 @@ import BecomeCollector from "./BecomeCollector";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Home from "./Home";
+import ItemUpload from "./ItemUpload";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -27,6 +28,11 @@ export default class RenderRoutes extends React.Component {
         <Elements stripe={stripePromise}>
           <Router>
             <Route path="/" exact={true} render={() => <Buy />} />
+            <Route
+              path="/andrewitemupload4467"
+              exact={true}
+              render={() => <ItemUpload />}
+            />
             <Route
               path="/become_collector"
               exact={true}
@@ -63,6 +69,11 @@ export default class RenderRoutes extends React.Component {
             {window.localStorage.getItem("city") && (
               <Route path="/" exact={true} render={() => <Buy />} />
             )}
+            <Route
+              path="/andrewitemupload4467"
+              exact={true}
+              render={() => <ItemUpload />}
+            />
             <Route
               path="/become_collector"
               exact={true}

@@ -322,157 +322,164 @@ export default class Cart extends React.Component {
               );
             })}
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              width: "50vw",
-              marginLeft: 20,
-            }}
-          >
-            <div
-              style={{
-                borderBottomColor: "#a1a1a1",
-                borderBottomStyle: "solid",
-                borderBottomWidth: 1,
-                paddingBottom: 10,
-                marginBottom: 10,
-                fontSize: 20,
-                fontWeight: 600,
-                marginTop: 30,
-              }}
-            >
-              Order Summary
-            </div>
+          {this.state.myData.cart.length !== 0 && (
             <div
               style={{
                 display: "flex",
-                flexDirection: "row",
-                fontSize: 18,
-                fontWeight: 500,
-                alignItems: "center",
-                width: "30vw",
-                justifyContent: "space-between",
+                flexDirection: "column",
+                width: "50vw",
+                marginLeft: 20,
               }}
             >
-              <div>Subtotal</div>
-              <div>{"$" + subTotal}</div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                fontSize: 18,
-                fontWeight: 500,
-                flexDirection: "row",
-                alignItems: "center",
-                width: "30vw",
-                justifyContent: "space-between",
-              }}
-            >
-              <div>Tax</div>
-              <div>{"$" + tax}</div>
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                fontSize: 18,
-                fontWeight: 500,
-                alignItems: "center",
-                width: "30vw",
-                justifyContent: "space-between",
-              }}
-            >
-              <div>Shipping</div>
-              <div>{"$" + shipping}</div>
-            </div>
-            <div
-              style={{
-                marginTop: 20,
-                display: "flex",
-                flexDirection: "row",
-                fontSize: 18,
-                fontWeight: 600,
-                alignItems: "center",
-                width: "30vw",
-                justifyContent: "space-between",
-              }}
-            >
-              <div>Total</div>
-              <div>{"$" + total}</div>
-            </div>
-
-            <div
-              style={{
-                marginTop: 10,
-                width: "30vw",
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <RadioGroup
-                value={this.state.deliveryType}
-                onChange={(e) => this.setPickup(e)}
-                defaultValue="pickup"
-                row
-                aria-label="position"
-                name="position"
-                defaultValue="top"
+              <div
+                style={{
+                  borderBottomColor: "#a1a1a1",
+                  borderBottomStyle: "solid",
+                  borderBottomWidth: 1,
+                  paddingBottom: 10,
+                  marginBottom: 10,
+                  fontSize: 20,
+                  fontWeight: 600,
+                  marginTop: 30,
+                }}
               >
-                <FormControlLabel
-                  disabled
-                  value="pickup"
-                  control={<Radio color="primary" />}
-                  label="Pickup (Coming soon)"
-                  labelPlacement="top"
-                />
-                <FormControlLabel
-                  value="delivery"
-                  control={<Radio color="primary" />}
-                  label="Delivery"
-                  labelPlacement="top"
-                />
-              </RadioGroup>
+                Order Summary
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  fontSize: 18,
+                  fontWeight: 500,
+                  alignItems: "center",
+                  width: "30vw",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div>Subtotal</div>
+                <div>{"$" + subTotal}</div>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  fontSize: 18,
+                  fontWeight: 500,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  width: "30vw",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div>Tax</div>
+                <div>{"$" + tax}</div>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  fontSize: 18,
+                  fontWeight: 500,
+                  alignItems: "center",
+                  width: "30vw",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div>Shipping</div>
+                <div>{"$" + shipping}</div>
+              </div>
+              <div
+                style={{
+                  marginTop: 20,
+                  display: "flex",
+                  flexDirection: "row",
+                  fontSize: 18,
+                  fontWeight: 600,
+                  alignItems: "center",
+                  width: "30vw",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div>Total</div>
+                <div>{"$" + total}</div>
+              </div>
+
+              <div
+                style={{
+                  marginTop: 10,
+                  width: "30vw",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <RadioGroup
+                  value={this.state.deliveryType}
+                  onChange={(e) => this.setPickup(e)}
+                  defaultValue="pickup"
+                  row
+                  aria-label="position"
+                  name="position"
+                  defaultValue="top"
+                >
+                  <FormControlLabel
+                    disabled
+                    value="pickup"
+                    control={<Radio color="primary" />}
+                    label="Pickup (Coming soon)"
+                    labelPlacement="top"
+                  />
+                  <FormControlLabel
+                    value="delivery"
+                    control={<Radio color="primary" />}
+                    label="Delivery"
+                    labelPlacement="top"
+                  />
+                </RadioGroup>
+              </div>
+
+              {this.state.deliveryType === "delivery" && (
+                <div
+                  style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}
+                >
+                  Items are typically delivered within 3 hours.
+                  <br /> Flat fee of $2.00 for shipping, no matter how many
+                  items.
+                </div>
+              )}
+              {this.state.deliveryType === "pickup" && (
+                <div
+                  style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}
+                >
+                  Pickup location is 2414 Longview Street, Athens TX. We'll send
+                  you an email to confirm.
+                </div>
+              )}
+
+              <a
+                href={"/checkout"}
+                id="checkout"
+                style={{
+                  marginTop: 40,
+                  backgroundColor: "#a1a1a1",
+                  textDecoration: "none",
+                  color: "white",
+                  width: 120,
+                  marginTop: 30,
+                  height: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: 5,
+                  padding: 10,
+                  fontWeight: 500,
+                }}
+              >
+                CHECK OUT
+              </a>
             </div>
-
-            {this.state.deliveryType === "delivery" && (
-              <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
-                Items are typically delivered within 3 hours.
-                <br /> Flat fee of $2.00 for shipping, no matter how many items.
-              </div>
-            )}
-            {this.state.deliveryType === "pickup" && (
-              <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
-                Pickup location is 2414 Longview Street, Athens TX. We'll send
-                you an email to confirm.
-              </div>
-            )}
-
-            <a
-              href={"/checkout"}
-              id="checkout"
-              style={{
-                marginTop: 40,
-                backgroundColor: "#a1a1a1",
-                textDecoration: "none",
-                color: "white",
-                width: 120,
-                marginTop: 30,
-                height: 30,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: 5,
-                padding: 10,
-                fontWeight: 500,
-              }}
-            >
-              CHECK OUT
-            </a>
-          </div>
+          )}
         </div>
       </div>
     );
