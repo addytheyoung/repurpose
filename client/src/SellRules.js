@@ -333,14 +333,28 @@ export default class SellRules extends React.Component {
           })
           .then(() => {
             this.setState({
-              opening: null,
               bookModal: false,
               loaded: true,
             });
-            api.sendEmail("andrewtateyoung@gmail.com").then(() => {
-              alert("Success! Email sent confirming details.");
-              window.location.href = "/";
-            });
+            console.log("Done");
+            alert("Success! Email sent confirming details.");
+            window.location.href = "/";
+            api.sendEmail(
+              "andrewtateyoung@gmail.com",
+              "Our " +
+                localStorage.getItem("city") +
+                " Collector will come to " +
+                localStorage.getItem("address1") +
+                " at " +
+                this.state.opening[0] +
+                " on " +
+                this.state.currentDate.getMonth() +
+                "/" +
+                this.state.currentDate.getDate() +
+                "/" +
+                this.state.currentDate.getFullYear() +
+                " to pick up your items.\n\nPlease reply to this email, or call at 903-203-1286 if you have any questions!\n\n\n-Andrew, founder of Collection"
+            );
           });
       });
   }

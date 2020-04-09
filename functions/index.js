@@ -18,7 +18,11 @@ admin.initializeApp({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/send-email", (req, res) => {
+app.post("/send-email", (req, res) => {
+  const email = req.body.email;
+  const meeting = req.body.meeting;
+  console.log(email);
+  console.log(meeting);
   var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -29,9 +33,9 @@ app.get("/send-email", (req, res) => {
 
   var mailOptions = {
     from: "andrewtateyoung@gmail.com",
-    to: "andrewtateyoung@gmail.com",
-    subject: "Sending Email using Node.js",
-    text: "That was easy!",
+    to: email,
+    subject: "Collection: See you soon!",
+    text: meeting,
   };
 
   transporter.sendMail(mailOptions, function (error, info) {

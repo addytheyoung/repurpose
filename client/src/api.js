@@ -23,10 +23,15 @@ const getLatLng = (address) => {
     });
 };
 
-const sendEmail = (email) => {
+const sendEmail = (email, meeting) => {
+  const json = { email: email, meeting: meeting };
   return window
     .fetch("/send-email", {
-      method: "GET",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(json),
     })
     .then((a) => {
       console.log(a);
