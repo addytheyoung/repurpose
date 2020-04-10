@@ -60,6 +60,8 @@ export default class ItemUpload extends React.Component {
             position: "absolute",
             left: "45vw",
             top: 200,
+            overflowX: "scroll",
+            overflowY: "scroll",
           }}
         >
           <ClipLoader
@@ -98,6 +100,7 @@ export default class ItemUpload extends React.Component {
           </div>
           <div>
             <Camera
+              isImageMirror={false}
               idealFacingMode={"environment"}
               onTakePhoto={(dataUri) => this.handleTakePhoto(dataUri)}
             />
@@ -179,9 +182,24 @@ export default class ItemUpload extends React.Component {
   }
 
   setCroppedImg(croppedImgUrl) {
-    this.setState({
-      croppedImgUrl: croppedImgUrl,
-    });
+    const number = this.randomNumber(15);
+    const itemRef = firebase.storage().ref().child("item_images").child(number);
+
+    itemRef
+      .put(croppedImgUrl)
+      .then((a) => {
+        const download = itemRef.getDownloadURL();
+        download.then((a) => {
+          console.log(a);
+          this.setState({
+            croppedImgUrl: a,
+            number: number,
+          });
+        });
+      })
+      .catch((e) => {
+        alert(e.message);
+      });
   }
 
   setCrop(crop) {
@@ -195,13 +213,46 @@ export default class ItemUpload extends React.Component {
   }
 
   uploadItem() {
-    this.setState({
-      title: "",
-      price: "",
-      picture: "",
-      category: "",
-      description: "",
-    });
+    if (!this.state.title.trim()) {
+      alert("Title");
+      return;
+    } else if (!this.state.price.trim()) {
+      alert("Price");
+      return;
+    } else if (!this.state.category) {
+      alert("Category");
+      return;
+    } else if (!this.state.sellerStripeId) {
+      alert("Seller stripe id");
+      return;
+    } else if (!this.state.croppedImgUrl) {
+      alert("Picture");
+      return;
+    }
+    firebase
+      .firestore()
+      .collection("Categories")
+      .doc(this.state.category)
+      .collection("All")
+      .doc()
+      .set({
+        title: this.state.title,
+        original_price: this.state.price,
+        location: localStorage.getItem("city"),
+        // picture: this.state.croppedImgUrl
+        category: this.state.category,
+        description: this.state.description,
+        seller: this.state.sellerStripeId,
+      })
+      .then(() => {
+        this.setState({
+          title: "",
+          price: "",
+          picture: "",
+          category: "",
+          description: "",
+        });
+      });
   }
 
   handleTakePhoto(dataUri) {
@@ -209,5 +260,16 @@ export default class ItemUpload extends React.Component {
     this.setState({
       picture: dataUri,
     });
+  }
+
+  randomNumber(length) {
+    var result = "";
+    var characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   }
 }

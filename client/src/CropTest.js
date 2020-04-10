@@ -10,9 +10,10 @@ export default class CropTest extends PureComponent {
   state = {
     src: null,
     crop: {
+      aspect: 220 / 200,
+      width: 660,
+      height: 600,
       unit: "px",
-      width: 220,
-      height: 200,
     },
   };
 
@@ -42,14 +43,14 @@ export default class CropTest extends PureComponent {
   };
 
   async makeClientCrop(crop) {
-    if (this.imageRef && crop.width && crop.height) {
+    if (this.imageRef && crop.aspect) {
       const croppedImageUrl = await this.getCroppedImg(
         this.imageRef,
         crop,
         "newFile.jpeg"
       );
       this.setState({ croppedImageUrl });
-      this.props.setCroppedImg(croppedImageUrl);
+      // this.props.setCroppedImg(croppedImageUrl);
     }
   }
 
@@ -80,9 +81,13 @@ export default class CropTest extends PureComponent {
           console.error("Canvas is empty");
           return;
         }
+
         blob.name = fileName;
         window.URL.revokeObjectURL(this.fileUrl);
         this.fileUrl = window.URL.createObjectURL(blob);
+        console.log(this.fileUrl);
+        console.log(blob);
+        this.props.setCroppedImg(blob);
         resolve(this.fileUrl);
       }, "image/jpeg");
     });
