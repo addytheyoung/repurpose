@@ -6,6 +6,9 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import ClipLoader from "react-spinners/ClipLoader";
 import Camera from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
+import ReactCrop from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
+import CropTest from "./CropTest";
 
 import "./css/ItemUpload.css";
 
@@ -37,10 +40,19 @@ export default class ItemUpload extends React.Component {
       sellerStripeId: "",
       id: "1234",
       city: "",
+      crop: {
+        unit: "px",
+        width: 220,
+        height: 200,
+      },
+      croppedImgUrl: "",
     };
   }
 
   render() {
+    const crop = {
+      aspect: 16 / 9,
+    };
     if (!this.state.loaded) {
       return (
         <div
@@ -85,9 +97,20 @@ export default class ItemUpload extends React.Component {
             />
           </div>
           <div>
-            <Camera onTakePhoto={(dataUri) => this.handleTakePhoto(dataUri)} />
-          </div>
+            <Camera
+              idealFacingMode={"environment"}
+              onTakePhoto={(dataUri) => this.handleTakePhoto(dataUri)}
+            />
 
+            {this.state.picture && (
+              <CropTest
+                setCroppedImg={(croppedImgUrl) =>
+                  this.setCroppedImg(croppedImgUrl)
+                }
+                picture={this.state.picture}
+              />
+            )}
+          </div>
           <div>
             <Input
               onChange={(e) => this.changeValue(e, "category")}
@@ -155,6 +178,16 @@ export default class ItemUpload extends React.Component {
     );
   }
 
+  setCroppedImg(croppedImgUrl) {
+    this.setState({
+      croppedImgUrl: croppedImgUrl,
+    });
+  }
+
+  setCrop(crop) {
+    this.setState({ crop });
+  }
+
   changeValue(e, type) {
     this.setState({
       [type]: e.target.value,
@@ -172,6 +205,9 @@ export default class ItemUpload extends React.Component {
   }
 
   handleTakePhoto(dataUri) {
-    console.log(dataUri);
+    // Open up the crop tool
+    this.setState({
+      picture: dataUri,
+    });
   }
 }
