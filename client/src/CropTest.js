@@ -85,8 +85,6 @@ export default class CropTest extends PureComponent {
         blob.name = fileName;
         window.URL.revokeObjectURL(this.fileUrl);
         this.fileUrl = window.URL.createObjectURL(blob);
-        console.log(this.fileUrl);
-        console.log(blob);
         this.props.setCroppedImg(blob);
         resolve(this.fileUrl);
       }, "image/jpeg");

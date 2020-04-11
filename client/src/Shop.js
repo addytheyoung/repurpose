@@ -127,7 +127,10 @@ export default class Shop extends React.Component {
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <div style={{ marginLeft: 20 }}>
-                      <img src={Art} style={{ width: 400, height: 400 }}></img>
+                      <img
+                        src={this.state.modal.pictures[0]}
+                        style={{ width: 400, height: 400 }}
+                      ></img>
                     </div>
                     <div
                       style={{
@@ -141,7 +144,7 @@ export default class Shop extends React.Component {
                         return (
                           <div>
                             <img
-                              src={Art}
+                              src={pic}
                               style={{
                                 width: 80,
                                 height: 80,
@@ -281,6 +284,7 @@ export default class Shop extends React.Component {
             }}
           >
             {this.state.items.map((item, index) => {
+              console.log(item);
               if (
                 (this.state.minPrice &&
                   item.original_price < this.state.minPrice) ||
@@ -304,7 +308,7 @@ export default class Shop extends React.Component {
                   }}
                 >
                   <img
-                    src={Art}
+                    src={item.pictures[0]}
                     style={{
                       width: 220,
                       height: 200,

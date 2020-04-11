@@ -26,7 +26,7 @@ export default class ItemUpload extends React.Component {
         const data = myData.data();
         this.setState({
           city: data.city,
-          id: "1234",
+          sellerStripeId: data.seller,
           loaded: true,
         });
       });
@@ -38,7 +38,6 @@ export default class ItemUpload extends React.Component {
       category: "",
       description: "",
       sellerStripeId: "",
-      id: "1234",
       city: "",
       crop: {
         unit: "px",
@@ -46,6 +45,7 @@ export default class ItemUpload extends React.Component {
         height: 200,
       },
       croppedImgUrl: "",
+      croppedImgFile: "",
     };
   }
 
@@ -131,18 +131,18 @@ export default class ItemUpload extends React.Component {
           <div style={{ height: 30 }}></div>
           <div>
             <Input
+              onChange={(e) => this.changeValue(e, "sellerStripeId")}
               value={this.state.sellerStripeId}
               placeholder={"Seller Stripe id"}
             />
           </div>
-          <div>
+          {/* <div>
             <Input
-              onChan
               value={this.state.id}
               defaultValue={this.state.id}
               placeholder={"My email / ID"}
             />
-          </div>
+          </div> */}
 
           <div>
             <Autocomplete
@@ -165,6 +165,7 @@ export default class ItemUpload extends React.Component {
             />
           </div>
           <div
+            id="submit"
             onClick={() => this.uploadItem()}
             style={{
               padding: 10,
@@ -176,30 +177,16 @@ export default class ItemUpload extends React.Component {
           >
             UPLOAD
           </div>
+          <div style={{ height: 100 }}></div>
         </div>
       </div>
     );
   }
 
   setCroppedImg(croppedImgUrl) {
-    const number = this.randomNumber(15);
-    const itemRef = firebase.storage().ref().child("item_images").child(number);
-
-    itemRef
-      .put(croppedImgUrl)
-      .then((a) => {
-        const download = itemRef.getDownloadURL();
-        download.then((a) => {
-          console.log(a);
-          this.setState({
-            croppedImgUrl: a,
-            number: number,
-          });
-        });
-      })
-      .catch((e) => {
-        alert(e.message);
-      });
+    this.setState({
+      croppedImgFile: croppedImgUrl,
+    });
   }
 
   setCrop(crop) {
@@ -213,45 +200,68 @@ export default class ItemUpload extends React.Component {
   }
 
   uploadItem() {
-    if (!this.state.title.trim()) {
-      alert("Title");
-      return;
-    } else if (!this.state.price.trim()) {
-      alert("Price");
-      return;
-    } else if (!this.state.category) {
-      alert("Category");
-      return;
-    } else if (!this.state.sellerStripeId) {
-      alert("Seller stripe id");
-      return;
-    } else if (!this.state.croppedImgUrl) {
+    // if (!this.state.title.trim()) {
+    //   alert("Title");
+    //   return;
+    // } else if (!this.state.price.trim()) {
+    //   alert("Price");
+    //   return;
+    // } else if (!this.state.category) {
+    //   alert("Category");
+    //   return;
+    // } else if (!this.state.sellerStripeId) {
+    //   alert("Seller stripe id");
+    //   return;
+    // } else if (!this.state.croppedImgUrl) {
+    //   alert("Picture");
+    //   return;
+    // }
+
+    if (!this.state.croppedImgFile) {
       alert("Picture");
       return;
     }
-    firebase
-      .firestore()
-      .collection("Categories")
-      .doc(this.state.category)
-      .collection("All")
-      .doc()
-      .set({
-        title: this.state.title,
-        original_price: this.state.price,
-        location: localStorage.getItem("city"),
-        // picture: this.state.croppedImgUrl
-        category: this.state.category,
-        description: this.state.description,
-        seller: this.state.sellerStripeId,
-      })
-      .then(() => {
-        this.setState({
-          title: "",
-          price: "",
-          picture: "",
-          category: "",
-          description: "",
+
+    const number = this.randomNumber(30);
+    const itemRef = firebase.storage().ref().child("item_images").child(number);
+    itemRef
+      .put(this.state.croppedImgFile)
+      .then((a) => {
+        const download = itemRef.getDownloadURL();
+        download.then((a) => {
+          console.log(a);
+
+          firebase
+            .firestore()
+            .collection("Categories")
+            .doc(this.state.category)
+            .collection("All")
+            .doc(number)
+            .set({
+              title: this.state.title,
+              original_price: parseInt(this.state.price),
+              location: localStorage.getItem("city"),
+              pictures: [a],
+              category: this.state.category,
+              description: this.state.description,
+              seller: this.state.sellerStripeId,
+              uid: number,
+              poster_uid: "uid1",
+            })
+            .then(() => {
+              this.setState({
+                title: "",
+                price: "",
+                picture: "",
+                category: "",
+                description: "",
+                number: "",
+              });
+            });
         });
+      })
+      .catch((e) => {
+        alert(e.message);
       });
   }
 

@@ -124,7 +124,10 @@ export default class Cart extends React.Component {
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <div style={{ marginLeft: 20 }}>
-                      <img src={Art} style={{ width: 400, height: 400 }}></img>
+                      <img
+                        src={this.state.modal.pictures[0]}
+                        style={{ width: 400, height: 400 }}
+                      ></img>
                     </div>
                     <div
                       style={{
@@ -138,7 +141,7 @@ export default class Cart extends React.Component {
                         return (
                           <div key={index}>
                             <img
-                              src={Art}
+                              src={pic}
                               style={{
                                 width: 80,
                                 height: 80,
@@ -303,7 +306,7 @@ export default class Cart extends React.Component {
                         borderRadius: 5,
                         overflow: "hidden",
                       }}
-                      src={Art}
+                      src={item.pictures[0]}
                     ></img>
                   </div>
                   <div style={{ display: "flex", flexDirection: "column" }}>

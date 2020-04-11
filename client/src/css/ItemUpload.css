@@ -2,3 +2,7 @@
   /* margin-top: 10px;
   width: 300px; */
 }
+
+#submit:hover {
+  cursor: pointer;
+}
