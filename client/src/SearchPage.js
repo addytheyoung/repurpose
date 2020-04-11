@@ -15,10 +15,9 @@ export default class SearchPage extends React.Component {
     const q = window.location.search;
     const urlParams = new URLSearchParams(q);
     const search = urlParams.get("search");
+
     const category = urlParams.get("category");
     const city = localStorage.getItem("city");
-
-    console.log(category);
 
     if (category === "All Categories") {
       const categoryList = [
@@ -96,6 +95,7 @@ export default class SearchPage extends React.Component {
       loaded: false,
       items: [],
       category: category,
+      searchTerm: search,
       minPrice: null,
       maxPrice: null,
       modal: null,
@@ -121,7 +121,7 @@ export default class SearchPage extends React.Component {
         </div>
       );
     }
-    this.search();
+
     return (
       <div>
         {this.state.modal && (
@@ -302,7 +302,7 @@ export default class SearchPage extends React.Component {
         )}
         <div>
           <HeaderBar
-            searchTerm={"hats"}
+            searchTerm={this.state.searchTerm}
             numCartItems={this.state.numCartItems}
           />
         </div>
@@ -329,6 +329,19 @@ export default class SearchPage extends React.Component {
           >
             {this.state.category}
           </div>
+          {!this.state.items ||
+            (this.state.items.length === 0 && (
+              <div
+                style={{
+                  width: "100vw",
+                  textAlign: "center",
+                  marginTop: 20,
+                  fontSize: 18,
+                }}
+              >
+                Nothing here. More items are added every minute, so check back!
+              </div>
+            ))}
 
           <div
             style={{
@@ -388,103 +401,24 @@ export default class SearchPage extends React.Component {
     );
   }
 
-  search() {
-    return;
-    const path = window.location.pathname;
-    const q = window.location.search;
-    const urlParams = new URLSearchParams(q);
-    const search = urlParams.get("search");
-    const category = urlParams.get("category");
-    const city = localStorage.getItem("city");
-
-    console.log(category);
-
-    if (category === "All Categories") {
-      const categoryList = [
-        "Art",
-        "Books",
-        "Collectibles",
-        "Decoration",
-        "Electronics",
-        "Fashion",
-        "Movies&Games",
-        "Other",
-      ];
-      const firebaseCats = firebase.firestore().collection("Categories");
-      for (var i = 0; i < categoryList.length; i++) {
-        firebaseCats
-          .doc(categoryList[i])
-          .collection("All")
-          .where("location", "==", city)
-          .get()
-          .then((allItems) => {
-            const allItemsDocs = allItems.docs;
-            const itemArr = [];
-            for (var j = 0; j < allItemsDocs.length; j++) {
-              const itemData = allItemsDocs[j].data();
-              // See if the search matches
-              if (this.searchMatchesItem(search, itemData)) {
-                itemArr.push(itemData);
-              }
-              // Find a way to render all the items here
-
-              if (j === allItemsDocs.length - 1) {
-                this.setState({
-                  items: itemArr,
-                  loaded: true,
-                  modal: null,
-                });
-              }
-            }
-          });
-      }
-    } else {
-      firebase
-        .firestore()
-        .collection("Categories")
-        .doc(category)
-        .collection("All")
-        .where("location", "==", city)
-        .get()
-        .then((allItems) => {
-          const docs = allItems.docs;
-          const itemArr = [];
-
-          // Filter here
-          for (var i = 0; i < docs.length; i++) {
-            const itemData = docs[i].data();
-            // See if the search matches
-            if (this.searchMatchesItem(search, itemData)) {
-              itemArr.push(itemData);
-            }
-            // Find a way to render all the items here
-            if (i === docs.length - 1) {
-              this.setState({
-                items: itemArr,
-                loaded: true,
-                modal: null,
-              });
-            }
-          }
-        });
-    }
-    window.localStorage.setItem("city", city);
-    // window.location.href = "/";
-  }
-
   searchMatchesItem(search, itemData) {
+    const searchArr = search.split(" ");
     if (!itemData || !itemData.title) {
       return false;
-    } else if (
-      // Title matches directly
-      itemData.title.toString().toLowerCase().includes(search)
-    ) {
-      return true;
     }
-    for (var i = 0; i < itemData.sub_categories.length; i++) {
-      const subCategory = itemData.sub_categories[i];
-      if (subCategory.includes(search)) {
+    for (var t = 0; t < searchArr.length; t++) {
+      const searchTerm = searchArr[t];
+      if (
+        // Title matches directly
+        itemData.title.toString().toLowerCase().includes(searchTerm)
+      ) {
         return true;
+      }
+      for (var i = 0; i < itemData.sub_categories.length; i++) {
+        const subCategory = itemData.sub_categories[i];
+        if (subCategory.includes(searchTerm)) {
+          return true;
+        }
       }
     }
   }
