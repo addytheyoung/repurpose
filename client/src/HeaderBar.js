@@ -820,61 +820,6 @@ export default class HeaderBar extends React.Component {
       "&city=" +
       city;
     return;
-    search = search.toLowerCase();
-    if (category === "All Categories") {
-      const categoryList = [
-        "Art",
-        "Books",
-        "Collectibles",
-        "Decoration",
-        "Electronics",
-        "Fashion",
-        "Movies&Games",
-        "Other",
-      ];
-      const firebaseCats = firebase.firestore().collection("Categories");
-      for (var i = 0; i < categoryList.length; i++) {
-        firebaseCats
-          .doc(categoryList[i])
-          .collection("All")
-          .where("location", "==", this.state.currentCity)
-          .get()
-          .then((allItems) => {
-            const allItemsDocs = allItems.docs;
-            for (var j = 0; j < allItemsDocs.length; j++) {
-              const itemData = allItemsDocs[j].data();
-              // See if the search matches
-              if (this.searchMatchesItem(search, itemData)) {
-                // Find a way to render all the items here
-                alert(itemData.title);
-              }
-            }
-          });
-      }
-    } else {
-      firebase
-        .firestore()
-        .collection("Categories")
-        .doc(category)
-        .collection("All")
-        .where("location", "==", this.state.currentCity)
-        .get()
-        .then((allItems) => {
-          const docs = allItems.docs;
-
-          // Filter here
-          for (var i = 0; i < docs.length; i++) {
-            const itemData = docs[i].data();
-            // See if the search matches
-            if (this.searchMatchesItem(search, itemData)) {
-              // Find a way to render all the items here
-              alert(itemData.title);
-            }
-          }
-        });
-    }
-    window.localStorage.setItem("city", city);
-    // window.location.href = "/";
   }
 
   searchMatchesItem(search, itemData) {

@@ -1,10 +1,13 @@
 import React from "react";
 import "./css/Buy.css";
 import ClipLoader from "react-spinners/ClipLoader";
-
+import Antiques from "./images/antiques.jpg";
 import HeaderBar from "./HeaderBar";
 import Art from "./images/art.jpeg";
 import Books from "./images/book.jpg";
+import Fashion from "./images/shirt.jpg";
+import Health from "./images/health.webp";
+import Baby from "./images/baby.jpeg";
 // import Fashion from "./images/fashion.jpg";
 
 export default class Buy extends React.Component {
@@ -17,14 +20,23 @@ export default class Buy extends React.Component {
   render() {
     const categories = [
       { picture: Art, name: "Art & Home Decoration", link: "art" },
-      { picture: Books, name: "Collectibles", link: "collectibles" },
+
       { picture: Books, name: "Books", link: "books" },
       { picture: Books, name: "Electronics", link: "electronics" },
-      { picture: Books, name: "Health & Beauty", link: "health" },
+      { picture: Health, name: "Health & Beauty", link: "health" },
       { picture: Books, name: "Home & Garden", link: "home" },
       { picture: Books, name: "Fashion", link: "fashion" },
       { picture: Books, name: "Sporting Goods", link: "sports" },
       { picture: Books, name: "Toys", link: "toys" },
+      { picture: Antiques, name: "Antiques & Collectibles", link: "antiques" },
+      { picture: Baby, name: "Baby", link: "baby" },
+      { picture: Books, name: "Cameras & Photo", link: "cameras" },
+      { picture: Books, name: "Cell phones & Accessories", link: "cellphones" },
+      {
+        picture: Fashion,
+        name: "Clothing, Shoes, & Accessories",
+        link: "fashion",
+      },
     ];
     return (
       <div>
