@@ -4,8 +4,12 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Antiques from "./images/antiques.jpg";
 import HeaderBar from "./HeaderBar";
 import Art from "./images/art.jpeg";
+import Electronics from "./images/electronics.jpeg";
 import Books from "./images/book.jpg";
+import Toys from "./images/toys.jpeg";
+import Sports from "./images/sports.jpg";
 import Fashion from "./images/shirt.jpg";
+import Garden from "./images/garden.jpg";
 import Health from "./images/health.webp";
 import Baby from "./images/baby.jpeg";
 // import Fashion from "./images/fashion.jpg";
@@ -22,16 +26,16 @@ export default class Buy extends React.Component {
       { picture: Art, name: "Art & Home Decoration", link: "art" },
 
       { picture: Books, name: "Books", link: "books" },
-      { picture: Books, name: "Electronics", link: "electronics" },
+      { picture: Electronics, name: "Electronics", link: "electronics" },
       { picture: Health, name: "Health & Beauty", link: "health" },
-      { picture: Books, name: "Home & Garden", link: "home" },
-      { picture: Books, name: "Fashion", link: "fashion" },
-      { picture: Books, name: "Sporting Goods", link: "sports" },
-      { picture: Books, name: "Toys", link: "toys" },
+      { picture: Garden, name: "Home & Garden", link: "home" },
+      { picture: Sports, name: "Sporting Goods", link: "sports" },
+      { picture: Toys, name: "Toys", link: "toys" },
       { picture: Antiques, name: "Antiques & Collectibles", link: "antiques" },
       { picture: Baby, name: "Baby", link: "baby" },
       { picture: Books, name: "Cameras & Photo", link: "cameras" },
       { picture: Books, name: "Cell phones & Accessories", link: "cellphones" },
+      { picture: Books, name: "Movies and Video Games", link: "movies" },
       {
         picture: Fashion,
         name: "Clothing, Shoes, & Accessories",
