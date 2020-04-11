@@ -223,6 +223,7 @@ export default class ItemUpload extends React.Component {
     }
 
     const number = this.randomNumber(30);
+    // Add the item to the shop
     const itemRef = firebase.storage().ref().child("item_images").child(number);
     itemRef
       .put(this.state.croppedImgFile)
@@ -249,14 +250,47 @@ export default class ItemUpload extends React.Component {
               poster_uid: "uid1",
             })
             .then(() => {
-              this.setState({
-                title: "",
-                price: "",
-                picture: "",
-                category: "",
-                description: "",
-                number: "",
-              });
+              // Add it to the users items sold so we can pay them
+              firebase
+                .firestore()
+                .collection("Users")
+                .where("stripe_user_id", "==", this.state.sellerStripeId)
+                .get()
+                .then((me) => {
+                  const data = me.docs[0].data();
+                  const sales = data.sales;
+                  const thisSale = {
+                    title: this.state.title,
+                    original_price: parseInt(this.state.price),
+                    location: localStorage.getItem("city"),
+                    pictures: [a],
+                    category: this.state.category,
+                    description: this.state.description,
+                    seller: this.state.sellerStripeId,
+                    uid: number,
+                    poster_uid: "uid1",
+                    paid: false,
+                  };
+                  const newSales = sales.concat(thisSale);
+
+                  firebase
+                    .firestore()
+                    .collection("Users")
+                    .doc("aty268")
+                    .update({
+                      sales: newSales,
+                    })
+                    .then(() => {
+                      this.setState({
+                        title: "",
+                        price: "",
+                        picture: "",
+                        category: "",
+                        description: "",
+                        number: "",
+                      });
+                    });
+                });
             });
         });
       })

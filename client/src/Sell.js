@@ -227,6 +227,7 @@ export default class Sell extends React.Component {
                       MY ORDERS
                     </div>
                     <div
+                      onClick={() => (window.location.href = "/mysales")}
                       id="my-sales"
                       style={{
                         backgroundColor: "#a1a1a1",
