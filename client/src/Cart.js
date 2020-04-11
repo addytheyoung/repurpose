@@ -293,6 +293,8 @@ export default class Cart extends React.Component {
                   style={{
                     width: "100%",
                     height: 200,
+                    marginTop: 10,
+                    marginBottom: 10,
                     display: "flex",
                     flexDirection: "row",
                   }}
@@ -301,8 +303,8 @@ export default class Cart extends React.Component {
                     <img
                       id="box"
                       style={{
-                        width: 150,
-                        height: 180,
+                        width: 220,
+                        height: 200,
                         borderRadius: 5,
                         overflow: "hidden",
                       }}

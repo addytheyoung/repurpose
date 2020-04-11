@@ -224,6 +224,7 @@ export default class HeaderBar extends React.Component {
                       Profile
                     </div>
                     <div
+                      onClick={() => (window.location.href = "/orders")}
                       id="my-orders"
                       style={{
                         backgroundColor: "#a1a1a1",

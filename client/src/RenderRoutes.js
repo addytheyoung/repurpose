@@ -17,6 +17,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Home from "./Home";
 import ItemUpload from "./ItemUpload";
+import Orders from "./Orders";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -38,6 +39,8 @@ export default class RenderRoutes extends React.Component {
               exact={true}
               render={() => <BecomeCollector />}
             />
+            <Route path="/orders" exact={true} render={() => <Orders />} />
+
             <Route path="/sell" exact={true} render={() => <Sell />} />
             <Route path="/sell/kit" exact={true} render={() => <OrderKit />} />
             <Route path="/shop" exact={false} render={() => <Shop />} />

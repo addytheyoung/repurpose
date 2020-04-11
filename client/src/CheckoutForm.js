@@ -58,7 +58,8 @@ export default class CheckoutForm extends React.Component {
 
     if (this.state.succeeded) {
       // Clear our cart
-      const cart = this.state.myData.cart;
+      var cart = this.state.myData.cart;
+      cart["delivered"] = false;
       const orders = this.state.myData.orders;
 
       const newOrders = orders.concat(cart);
