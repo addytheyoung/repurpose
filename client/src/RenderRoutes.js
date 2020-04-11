@@ -19,6 +19,7 @@ import Home from "./Home";
 import ItemUpload from "./ItemUpload";
 import Orders from "./Orders";
 import Sales from "./Sales";
+import SearchPage from "./SearchPage";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -42,6 +43,7 @@ export default class RenderRoutes extends React.Component {
             />
             <Route path="/orders" exact={true} render={() => <Orders />} />
             <Route path="/mysales" exact={true} render={() => <Sales />} />
+            <Route path="/search" exact={false} render={() => <SearchPage />} />
 
             <Route path="/sell" exact={true} render={() => <Sell />} />
             <Route path="/sell/kit" exact={true} render={() => <OrderKit />} />
@@ -79,6 +81,8 @@ export default class RenderRoutes extends React.Component {
               exact={true}
               render={() => <ItemUpload />}
             />
+            <Route path="/search" exact={false} render={() => <SearchPage />} />
+
             <Route
               path="/become_collector"
               exact={true}

@@ -7,6 +7,9 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Camera from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
 import ReactCrop from "react-image-crop";
+import FormControl from "@material-ui/core/FormControl";
+import Chip from "@material-ui/core/Chip";
+
 import "react-image-crop/dist/ReactCrop.css";
 import CropTest from "./CropTest";
 
@@ -39,6 +42,7 @@ export default class ItemUpload extends React.Component {
       description: "",
       sellerStripeId: "",
       city: "",
+      sub_category: "",
       crop: {
         unit: "px",
         width: 220,
@@ -46,13 +50,21 @@ export default class ItemUpload extends React.Component {
       },
       croppedImgUrl: "",
       croppedImgFile: "",
+      currentKeywords: [],
+      keyword: "",
     };
   }
 
   render() {
-    const crop = {
-      aspect: 16 / 9,
+    const MenuProps = {
+      PaperProps: {
+        style: {
+          maxHeight: 48 * 4.5 + 8,
+          width: 250,
+        },
+      },
     };
+
     if (!this.state.loaded) {
       return (
         <div
@@ -127,6 +139,31 @@ export default class ItemUpload extends React.Component {
               value={this.state.description}
               placeholder={"Description"}
             />
+            <div>
+              <FormControl style={{ maxWidth: 200, minWidth: 200 }}>
+                <Input
+                  placeholder={"Keywords (Pick 5)"}
+                  style={{ backgroundColor: "#f8f8f8", padding: 5 }}
+                  onKeyPress={(e) => {
+                    if (e.key == "Enter") {
+                      this.handleChange(e);
+                    }
+                  }}
+                  MenuProps={MenuProps}
+                  id="select_keywords"
+                  multiple={true}
+                  value={this.state.keyword}
+                  onChange={(e) => this.updateInput(e)}
+                ></Input>
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                  {this.state.currentKeywords.map((value) => {
+                    return (
+                      <Chip key={value} label={value} style={{ margin: 2 }} />
+                    );
+                  })}
+                </div>
+              </FormControl>
+            </div>
           </div>
           <div style={{ height: 30 }}></div>
           <div>
@@ -181,6 +218,26 @@ export default class ItemUpload extends React.Component {
         </div>
       </div>
     );
+  }
+
+  handleChange(e) {
+    if (this.state.currentKeywords.length >= 5) {
+      return;
+    }
+    const word = document.getElementById("select_keywords").value.trim();
+    const temp = this.state.currentKeywords;
+    temp.push(word);
+    this.setState({
+      currentKeywords: temp,
+      keyword: "",
+    });
+  }
+
+  updateInput(e) {
+    const word = e.target.value.toLowerCase().trim();
+    this.setState({
+      keyword: word,
+    });
   }
 
   setCroppedImg(croppedImgUrl) {
@@ -244,6 +301,7 @@ export default class ItemUpload extends React.Component {
               location: localStorage.getItem("city"),
               pictures: [a],
               category: this.state.category,
+              sub_categories: this.state.currentKeywords,
               description: this.state.description,
               seller: this.state.sellerStripeId,
               uid: number,
@@ -265,6 +323,7 @@ export default class ItemUpload extends React.Component {
                     location: localStorage.getItem("city"),
                     pictures: [a],
                     category: this.state.category,
+                    sub_categories: this.state.currentKeywords,
                     description: this.state.description,
                     seller: this.state.sellerStripeId,
                     uid: number,

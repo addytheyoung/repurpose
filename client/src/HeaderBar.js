@@ -489,6 +489,9 @@ export default class HeaderBar extends React.Component {
                 }}
               >
                 <Input
+                  defaultValue={
+                    this.props.searchTerm ? this.props.searchTerm : ""
+                  }
                   id="address-input"
                   placeholder="Search for anything"
                   style={{ marginRight: 5, height: 40 }}
@@ -649,7 +652,7 @@ export default class HeaderBar extends React.Component {
                   >
                     <Autocomplete
                       value={this.state.currentCity}
-                      id="combo-box-demo"
+                      id="city"
                       options={this.citiesList}
                       getOptionLabel={(option) => option}
                       style={{ width: 300 }}
@@ -797,6 +800,100 @@ export default class HeaderBar extends React.Component {
       });
   }
 
+  search() {
+    var search = document.getElementById("address-input").value;
+    const category = document.getElementById("category").textContent;
+    const city = this.state.currentCity;
+    if (city === "" || !this.citiesList.includes(city)) {
+      alert("Invalid city");
+      return;
+    } else if (!search || search.trim() === "") {
+      alert("Bad search");
+      return;
+    }
+    window.location.href =
+      "/search/?" +
+      "search=" +
+      search +
+      "&category=" +
+      category +
+      "&city=" +
+      city;
+    return;
+    search = search.toLowerCase();
+    if (category === "All Categories") {
+      const categoryList = [
+        "Art",
+        "Books",
+        "Collectibles",
+        "Decoration",
+        "Electronics",
+        "Fashion",
+        "Movies&Games",
+        "Other",
+      ];
+      const firebaseCats = firebase.firestore().collection("Categories");
+      for (var i = 0; i < categoryList.length; i++) {
+        firebaseCats
+          .doc(categoryList[i])
+          .collection("All")
+          .where("location", "==", this.state.currentCity)
+          .get()
+          .then((allItems) => {
+            const allItemsDocs = allItems.docs;
+            for (var j = 0; j < allItemsDocs.length; j++) {
+              const itemData = allItemsDocs[j].data();
+              // See if the search matches
+              if (this.searchMatchesItem(search, itemData)) {
+                // Find a way to render all the items here
+                alert(itemData.title);
+              }
+            }
+          });
+      }
+    } else {
+      firebase
+        .firestore()
+        .collection("Categories")
+        .doc(category)
+        .collection("All")
+        .where("location", "==", this.state.currentCity)
+        .get()
+        .then((allItems) => {
+          const docs = allItems.docs;
+
+          // Filter here
+          for (var i = 0; i < docs.length; i++) {
+            const itemData = docs[i].data();
+            // See if the search matches
+            if (this.searchMatchesItem(search, itemData)) {
+              // Find a way to render all the items here
+              alert(itemData.title);
+            }
+          }
+        });
+    }
+    window.localStorage.setItem("city", city);
+    // window.location.href = "/";
+  }
+
+  searchMatchesItem(search, itemData) {
+    if (!itemData || !itemData.title) {
+      return false;
+    } else if (
+      // Title matches directly
+      itemData.title.toString().toLowerCase().includes(search)
+    ) {
+      return true;
+    }
+    for (var i = 0; i < itemData.sub_categories.length; i++) {
+      const subCategory = itemData.sub_categories[i];
+      if (subCategory.includes(search)) {
+        return true;
+      }
+    }
+  }
+
   checkEmail(email) {
     if (!email) {
       alert("Bad email");
@@ -866,16 +963,6 @@ export default class HeaderBar extends React.Component {
     });
   }
 
-  search() {
-    const city = document.getElementById("combo-box-demo").value.trim();
-    if (city === "" || !this.citiesList.includes(city)) {
-      alert("Invalid city");
-      return;
-    }
-    window.localStorage.setItem("city", city);
-    window.location.href = "/";
-  }
-
   login() {
     const email = this.state.email;
     const pass = document.getElementById("pass").value;
@@ -893,10 +980,6 @@ export default class HeaderBar extends React.Component {
       .catch((e) => {
         alert(e.message);
       });
-  }
-
-  search() {
-    alert("search");
   }
 
   showProfileModal() {
