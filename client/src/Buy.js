@@ -9,6 +9,7 @@ import Books from "./images/book.jpg";
 import Toys from "./images/toys.jpeg";
 import Sports from "./images/sports.jpg";
 import Fashion from "./images/shirt.jpg";
+import Movie from "./images/harry.jpg";
 import Garden from "./images/garden.jpg";
 import Health from "./images/health.webp";
 import Baby from "./images/baby.jpeg";
@@ -23,24 +24,22 @@ export default class Buy extends React.Component {
   }
   render() {
     const categories = [
-      { picture: Art, name: "Art & Home Decoration", link: "art" },
-
-      { picture: Books, name: "Books", link: "books" },
-      { picture: Electronics, name: "Electronics", link: "electronics" },
-      { picture: Health, name: "Health & Beauty", link: "health" },
-      { picture: Garden, name: "Home & Garden", link: "home" },
-      { picture: Sports, name: "Sporting Goods", link: "sports" },
-      { picture: Toys, name: "Toys", link: "toys" },
       { picture: Antiques, name: "Antiques & Collectibles", link: "antiques" },
-      { picture: Baby, name: "Baby", link: "baby" },
-      { picture: Books, name: "Cameras & Photo", link: "cameras" },
-      { picture: Books, name: "Cell phones & Accessories", link: "cellphones" },
-      { picture: Books, name: "Movies and Video Games", link: "movies" },
+      { picture: Art, name: "Art & Home Decoration", link: "art" },
+      { picture: Books, name: "Books", link: "books" },
       {
         picture: Fashion,
         name: "Clothing, Shoes, & Accessories",
         link: "fashion",
       },
+      { picture: Electronics, name: "Electronics", link: "electronics" },
+      { picture: Health, name: "Health & Beauty", link: "health" },
+      { picture: Garden, name: "Home & Garden", link: "home" },
+      { picture: Sports, name: "Sporting Goods", link: "sports" },
+      { picture: Toys, name: "Toys & Games", link: "toys" },
+
+      { picture: Baby, name: "Baby", link: "baby" },
+      { picture: Movie, name: "Movies & Video Games", link: "movies" },
     ];
     return (
       <div>
@@ -71,9 +70,37 @@ export default class Buy extends React.Component {
             }}
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ fontSize: 24, fontWeight: 600 }}>
-                Shop by Category
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <div style={{ fontSize: 24, fontWeight: 600, height: 30 }}>
+                  Shop by Category
+                </div>
+                <div
+                  id="all-items"
+                  onClick={() =>
+                    (window.location.href =
+                      "/search/?" +
+                      "search=" +
+                      "" +
+                      "&category=" +
+                      "All Categories" +
+                      "&city=" +
+                      localStorage.getItem("city"))
+                  }
+                  style={{
+                    textAlign: "center",
+                    fontSize: 12,
+                    fontWeight: 400,
+                    height: 30,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginLeft: 20,
+                  }}
+                >
+                  {"See all items in " + localStorage.getItem("city")}
+                </div>
               </div>
+
               <div
                 style={{
                   display: "flex",

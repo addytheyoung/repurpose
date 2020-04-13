@@ -90,8 +90,31 @@ const createCustomer = (options) => {
     });
 };
 
-const createPaymentIntent = (total) => {
+const createTransfers = (seller) => {
+  console.log("TRANSFERS");
+
+  const json = { seller: seller };
+  return window
+    .fetch(`/create-transfers`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(seller),
+    })
+    .then((res) => {
+      if (res.status === 200) {
+        console.log(res);
+        return res.json();
+      } else {
+        return null;
+      }
+    });
+};
+
+const createPaymentIntent = (total, stripe_unique_id) => {
   console.log("PAYMENT");
+  const json = { total: total, stripe_unique_id: stripe_unique_id };
   return window
     .fetch(`/create-payment-intent`, {
       method: "POST",
@@ -199,6 +222,7 @@ const getShipping = (price) => {
 };
 
 const api = {
+  createTransfers: createTransfers,
   sendEmail: sendEmail,
   getLatLng: getLatLng,
   createSeller: createSeller,

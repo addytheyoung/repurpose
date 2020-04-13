@@ -76,7 +76,7 @@ export default class CheckOut extends React.Component {
           parseInt(tax * 100) +
           parseInt(shipping * 100)
       ) / 100;
-    console.log("Checkout " + total);
+
     const signedIn = !!firebase.auth().currentUser;
     if (this.state.finished) {
       return (

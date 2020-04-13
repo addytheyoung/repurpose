@@ -615,9 +615,12 @@ export default class HeaderBar extends React.Component {
                 style={{
                   height: 30,
                   display: "flex",
+                  flexWrap: "nowrap",
                   flexDirection: "row",
                   justifyContent: "center",
                   alignItems: "center",
+                  whiteSpace: "nowrap",
+                  marginRight: 30,
                 }}
               >
                 <img
@@ -629,8 +632,15 @@ export default class HeaderBar extends React.Component {
                   }}
                 />
 
-                <div style={{ marginRight: 30, fontWeight: 600 }}>
-                  {this.getCityFromAddress(this.state.currentCity)}
+                <div
+                  style={{
+                    fontWeight: 600,
+                    flexWrap: "nowrap",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {this.state.currentCity}
+                  {/* {this.getCityFromAddress(this.state.currentCity)} */}
                 </div>
               </div>
               <div

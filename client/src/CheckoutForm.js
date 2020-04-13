@@ -35,8 +35,6 @@ export default class CheckoutForm extends React.Component {
   }
 
   render() {
-    console.log("CheckoutForm " + this.props.total);
-    console.log("Form tpye " + this.props.deliveryType);
     this.state.myData = this.props.myData;
     const options = {
       style: {
@@ -212,7 +210,7 @@ export default class CheckoutForm extends React.Component {
 
             {console.log(this.state.processing)}
             {console.log(this.state.clientSecret)}
-
+            {console.log(!this.props.stripe)}
             <button
               id="pay"
               style={{
@@ -274,8 +272,6 @@ export default class CheckoutForm extends React.Component {
       total += 2;
     }
 
-    console.log("Mounting" + this.props.total);
-
     // Step 1: Fetch product details such as amount and currency from
     // API to make sure it can't be tampered with in the client.
 
@@ -292,12 +288,13 @@ export default class CheckoutForm extends React.Component {
     console.log("GOT PRODUCT DETAILS");
 
     // Step 2: Create PaymentIntent over Stripe API
+
     api
-      .createPaymentIntent({ total: this.props.total })
+      .createPaymentIntent({ total: this.props.total, stripe_unique_id: "xb" })
       .then((clientSecret) => {
         console.log(clientSecret);
-        this.state.clientSecret = clientSecret;
-        this.state.loaded = true;
+        // this.state.clientSecret = clientSecret;
+        // this.state.loaded = true;
         this.setState({
           clientSecret: clientSecret,
           loaded: true,
@@ -311,6 +308,7 @@ export default class CheckoutForm extends React.Component {
   }
 
   async handleSubmit(ev) {
+    alert("SUBMIT");
     const API_KEY = "AIzaSyBbpHHOjcFkGJeUaEIQZ-zNVaYBw0UVfzw";
 
     ev.preventDefault();
@@ -371,6 +369,7 @@ export default class CheckoutForm extends React.Component {
     //   return;
     // }
 
+    console.log("Here");
     this.state.processing = true;
     // Step 3: Use clientSecret from PaymentIntent and the CardElement
     // to confirm payment with stripe.confirmCardPayment()
@@ -387,6 +386,7 @@ export default class CheckoutForm extends React.Component {
     );
 
     if (payload.error) {
+      console.log(payload);
       this.setState({
         error: `Payment failed: ${payload.error.message}`,
         processing: false,
@@ -394,7 +394,22 @@ export default class CheckoutForm extends React.Component {
 
       console.log("[error]", payload.error);
     } else {
+      console.log("Succ");
       // Create our customer!
+      const sellers = ["acct_1GVnUCF1neAO7pEI", "acct_1GVnUCF1neAO7pEI"];
+      for (var i = 0; i < sellers.length; i++) {
+        api
+          .createTransfers({ seller: sellers[i] })
+          .then((res) => {
+            console.log("Res");
+            console.log(res);
+          })
+          .catch((e) => {
+            console.log("E");
+            console.log(e.message);
+            alert(e.message);
+          });
+      }
       api.createCustomer().then((e) => {
         const id = e.id;
       });

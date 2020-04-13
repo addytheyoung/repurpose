@@ -1,3 +1,8 @@
 #cat:hover {
   cursor: pointer;
 }
+
+#all-items:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

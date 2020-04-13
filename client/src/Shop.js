@@ -284,7 +284,6 @@ export default class Shop extends React.Component {
             }}
           >
             {this.state.items.map((item, index) => {
-              console.log(item);
               if (
                 (this.state.minPrice &&
                   item.original_price < this.state.minPrice) ||
@@ -334,7 +333,6 @@ export default class Shop extends React.Component {
   }
 
   updateFilter(min, max) {
-    console.log(min, max);
     min = min.substring(1, min.length);
     max = max.substring(1, max.length);
     this.setState({
@@ -366,7 +364,6 @@ export default class Shop extends React.Component {
       numCartItems = 1;
     }
 
-    console.log(item);
     this.setState({
       addingToCart: true,
     });

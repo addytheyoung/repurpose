@@ -82,22 +82,43 @@ app.get("/customer", (req, res) => {
   // );
 });
 
-app.post("/create-payment-intent", async (req, res) => {
+app.post("/create-transfers", async (req, res) => {
   const body = req.body;
   console.log(body);
+  const seller = body.seller;
+  const options = {
+    amount: 500,
+    currency: "usd",
+    destination: seller,
+    transfer_group: "abcdef",
+  };
+  try {
+    const paymentIntent = await stripe.transfers.create(options);
+    console.log(paymentIntent);
+    res.json(paymentIntent);
+  } catch (err) {
+    console.log(err);
+    res.json(err);
+  }
+});
 
+app.post("/create-payment-intent", async (req, res) => {
+  const body = req.body;
+  const amount = body.total;
   const productDetails = getProductDetails();
 
   const options = {
     payment_method_types: ["card"],
-    amount: body.total * 100,
+    transfer_group: "abcdef",
+    amount: amount * 100,
     currency: productDetails.currency,
     description: productDetails.description,
+
     // transfer_data: {
-    //   destination: "a",
+    //   amount: amount * 100,
+    //   destination: stripe_user_id,
     // },
   };
-  console.log(options);
 
   try {
     const paymentIntent = await stripe.paymentIntents.create(options);
