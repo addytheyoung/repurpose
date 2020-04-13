@@ -9,6 +9,7 @@ import Shop from "./Shop";
 import Item from "./Item";
 import Profile from "./Profile";
 import Cart from "./Cart";
+import Agreement from "./Agreement.js";
 import CheckOut from "./CheckOut";
 import GetKit from "./GetKit";
 import BecomeCollector from "./BecomeCollector";
@@ -52,6 +53,11 @@ export default class RenderRoutes extends React.Component {
             <Route path="/profile" exact={true} render={() => <Profile />} />
             <Route path="/cart" exact={true} render={() => <Cart />} />
             <Route path="/checkout" exact={true} render={() => <CheckOut />} />
+            <Route
+              path="/sell/agreement"
+              exact={true}
+              render={() => <Agreement />}
+            />
             <Route
               path="/sell/rules"
               exact={false}

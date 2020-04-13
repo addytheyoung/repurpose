@@ -353,7 +353,7 @@ export default class Sell extends React.Component {
             }}
           >
             <div style={{ fontSize: 26, fontWeight: 600, letterSpacing: 0 }}>
-              Selling items has never been easier.
+              Making money from clutter has never been easier.
             </div>
             <div
               style={{ display: "flex", flexDirection: "row", marginTop: 30 }}
@@ -379,7 +379,7 @@ export default class Sell extends React.Component {
                   }}
                 >
                   At the (free) touch of a button, a Collector will come and
-                  pick up all your items.
+                  pick up all your valid items.
                 </div>
               </div>
               <div
@@ -423,7 +423,7 @@ export default class Sell extends React.Component {
                     textAlign: "center",
                   }}
                 >
-                  3. Get Paid Instantly
+                  3. Get Paid
                 </div>
                 <div
                   style={{
@@ -432,7 +432,8 @@ export default class Sell extends React.Component {
                     color: "#a1a1a1",
                   }}
                 >
-                  You get paid as soon as all your items are priced.
+                  Whenever an item sells, 40% of the selling price is deposited
+                  into your bank account.
                 </div>
               </div>
             </div>
@@ -598,11 +599,8 @@ export default class Sell extends React.Component {
     if (!firebase.auth().currentUser) {
       this.showProfileModal();
     } else {
-      // Take us to the stripe redirect
-      const stripe_url =
-        "https://connect.stripe.com/express/oauth/authorize?client_id=ca_GziEvM247byG5XcbBDVdmFHV5l3vPz4h&stripe_user%5Bproduct_description%5D=I am selling my own items.&stripe_user%5Bbusiness_type%5D=individual&redirect_uri=http://localhost:3000/sell/getkit";
-
-      window.location.href = stripe_url;
+      window.location.href = "/sell/agreement";
+      return;
     }
   }
 

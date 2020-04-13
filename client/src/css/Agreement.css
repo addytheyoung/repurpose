@@ -1,0 +1,6 @@
+#one:hover,
+#two:hover,
+#three:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
