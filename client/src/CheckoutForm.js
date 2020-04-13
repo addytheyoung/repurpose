@@ -386,7 +386,6 @@ export default class CheckoutForm extends React.Component {
     );
 
     if (payload.error) {
-      console.log(payload);
       this.setState({
         error: `Payment failed: ${payload.error.message}`,
         processing: false,
@@ -394,12 +393,21 @@ export default class CheckoutForm extends React.Component {
 
       console.log("[error]", payload.error);
     } else {
-      console.log("Succ");
-      // Create our customer!
-      const sellers = ["acct_1GVnUCF1neAO7pEI", "acct_1GVnUCF1neAO7pEI"];
+      // Create our customer
+      const sellers = [];
+      for (var i = 0; i < this.state.myData.cart.length; i++) {
+        const item = this.state.myData.cart[i];
+        const arrItem = { id: item.seller, cost: item.original_price };
+        sellers.push(arrItem);
+      }
+      // Pay out all the sellers
       for (var i = 0; i < sellers.length; i++) {
         api
-          .createTransfers({ seller: sellers[i] })
+          .createTransfers({
+            seller: sellers[i].id,
+            cost: sellers[i].cost,
+            worker: false,
+          })
           .then((res) => {
             console.log("Res");
             console.log(res);
@@ -410,6 +418,13 @@ export default class CheckoutForm extends React.Component {
             alert(e.message);
           });
       }
+      // Pay out the gig worker
+      // api.createTransfers({
+      //   seller: "xxx",
+      //   cost: this.props.total,
+      //   worker: true,
+      // });
+
       api.createCustomer().then((e) => {
         const id = e.id;
       });

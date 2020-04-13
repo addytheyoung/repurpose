@@ -84,21 +84,37 @@ app.get("/customer", (req, res) => {
 
 app.post("/create-transfers", async (req, res) => {
   const body = req.body;
-  console.log(body);
-  const seller = body.seller;
-  const options = {
-    amount: 500,
-    currency: "usd",
-    destination: seller,
-    transfer_group: "abcdef",
-  };
-  try {
-    const paymentIntent = await stripe.transfers.create(options);
-    console.log(paymentIntent);
-    res.json(paymentIntent);
-  } catch (err) {
-    console.log(err);
-    res.json(err);
+  const seller = body.seller.seller;
+  const cost = body.seller.cost;
+  const worker = body.seller.worker;
+  if (worker) {
+    const options = {
+      amount: cost * 100 * 0.6,
+      currency: "usd",
+      destination: seller,
+      transfer_group: "abcdef",
+    };
+    try {
+      const paymentIntent = await stripe.transfers.create(options);
+      res.json(paymentIntent);
+    } catch (err) {
+      console.log(err);
+      res.json(err);
+    }
+  } else {
+    const options = {
+      amount: cost * 100 * 0.3,
+      currency: "usd",
+      destination: seller,
+      transfer_group: "abcdef",
+    };
+    try {
+      const paymentIntent = await stripe.transfers.create(options);
+      res.json(paymentIntent);
+    } catch (err) {
+      console.log(err);
+      res.json(err);
+    }
   }
 });
 

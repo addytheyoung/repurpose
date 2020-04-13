@@ -90,21 +90,18 @@ const createCustomer = (options) => {
     });
 };
 
-const createTransfers = (seller) => {
-  console.log("TRANSFERS");
-
-  const json = { seller: seller };
+const createTransfers = (seller, cost, worker) => {
+  const json = { seller: seller, cost: cost, worker: worker };
   return window
     .fetch(`/create-transfers`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(seller),
+      body: JSON.stringify(json),
     })
     .then((res) => {
       if (res.status === 200) {
-        console.log(res);
         return res.json();
       } else {
         return null;
