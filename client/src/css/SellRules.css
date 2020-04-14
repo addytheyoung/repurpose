@@ -1,5 +1,6 @@
 #book:hover,
-#edit:hover {
+#edit:hover,
+#button:hover {
   cursor: pointer;
 }
 
@@ -9,4 +10,11 @@
 
 #expand:hover {
   cursor: pointer;
+}
+
+#one:hover,
+#two:hover,
+#three:hover {
+  border-color: burlywood !important;
+  opacity: 0.8 !important;
 }
