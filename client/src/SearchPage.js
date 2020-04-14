@@ -11,7 +11,6 @@ export default class SearchPage extends React.Component {
   constructor(props) {
     super(props);
 
-    const path = window.location.pathname;
     const q = window.location.search;
     const urlParams = new URLSearchParams(q);
     const search = urlParams.get("search");
@@ -36,6 +35,7 @@ export default class SearchPage extends React.Component {
           .doc(categoryList[i])
           .collection("All")
           .where("location", "==", city)
+          // .limit(30)
           .get()
           .then((allItems) => {
             const allItemsDocs = allItems.docs;
@@ -51,7 +51,7 @@ export default class SearchPage extends React.Component {
               if (j === allItemsDocs.length - 1) {
                 this.setState({
                   items: itemArr,
-                  loaded: true,
+                  // loaded: true,
                   modal: null,
                 });
               }
@@ -81,7 +81,7 @@ export default class SearchPage extends React.Component {
             if (i === docs.length - 1) {
               this.setState({
                 items: itemArr,
-                loaded: true,
+                // loaded: true,
                 modal: null,
               });
             }
@@ -104,26 +104,23 @@ export default class SearchPage extends React.Component {
     };
   }
   render() {
-    if (!this.state.loaded) {
-      return (
-        <div
-          style={{
-            position: "absolute",
-            left: "45vw",
-            top: 200,
-          }}
-        >
-          <ClipLoader
-            size={150}
-            color={"#123abc"}
-            loading={this.state.loading}
-          />
-        </div>
-      );
-    }
-
     return (
       <div>
+        {!this.state.loaded && (
+          <div
+            style={{
+              position: "absolute",
+              left: "45vw",
+              top: 200,
+            }}
+          >
+            <ClipLoader
+              size={150}
+              color={"#123abc"}
+              loading={this.state.loading}
+            />
+          </div>
+        )}
         {this.state.modal && (
           <div
             style={{
@@ -300,105 +297,122 @@ export default class SearchPage extends React.Component {
             </div>
           </div>
         )}
-        <div>
-          <HeaderBar
-            searchTerm={this.state.searchTerm}
-            numCartItems={this.state.numCartItems}
-          />
-        </div>
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <FilterBar
-            updateFilter={(a, b) => this.updateFilter(a, b)}
-            type={this.state.category}
-          />
-
-          <div
-            style={{
-              fontSize: 20,
-              fontWeight: 600,
-              marginTop: 50,
-              width: "100vw",
-              textAlign: "center",
-            }}
-          >
-            {this.state.category}
+        <div style={{ opacity: this.state.loaded ? 1 : 0 }}>
+          <div>
+            <HeaderBar
+              searchTerm={this.state.searchTerm}
+              numCartItems={this.state.numCartItems}
+            />
           </div>
-          {!this.state.items ||
-            (this.state.items.length === 0 && (
-              <div
-                style={{
-                  width: "100vw",
-                  textAlign: "center",
-                  marginTop: 20,
-                  fontSize: 18,
-                }}
-              >
-                Nothing here. More items are added every minute, so check back!
-              </div>
-            ))}
 
           <div
             style={{
               display: "flex",
-              flexDirection: "row",
-              marginTop: 50,
-              marginLeft: 100,
-              marginRight: 100,
+              flexDirection: "column",
             }}
           >
-            {this.state.items.map((item, index) => {
-              if (
-                (this.state.minPrice &&
-                  item.original_price < this.state.minPrice) ||
-                (this.state.maxPrice &&
-                  item.original_price > this.state.maxPrice)
-              ) {
-                return null;
-              }
-              return (
-                <div
-                  onClick={() => this.itemPage(item)}
-                  id="box"
-                  style={{
-                    width: 220,
-                    marginLeft: 10,
-                    marginRight: 10,
-                    height: 300,
+            <FilterBar
+              updateFilter={(a, b) => this.updateFilter(a, b)}
+              type={this.state.category}
+            />
 
-                    // borderWidth: 1,
-                    // borderStyle: "solid"
+            <div
+              style={{
+                fontSize: 20,
+                fontWeight: 600,
+                marginTop: 50,
+                width: "100vw",
+                textAlign: "center",
+              }}
+            >
+              {this.state.category}
+            </div>
+            {!this.state.items ||
+              (this.state.items.length === 0 && (
+                <div
+                  style={{
+                    width: "100vw",
+                    textAlign: "center",
+                    marginTop: 20,
+                    fontSize: 18,
                   }}
                 >
-                  <img
-                    src={item.pictures[0]}
+                  Nothing here. More items are added every minute, so check
+                  back!
+                </div>
+              ))}
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                marginTop: 50,
+                marginLeft: 100,
+                marginRight: 100,
+              }}
+            >
+              {this.state.items.map((item, index) => {
+                if (
+                  (this.state.minPrice &&
+                    item.original_price < this.state.minPrice) ||
+                  (this.state.maxPrice &&
+                    item.original_price > this.state.maxPrice)
+                ) {
+                  return null;
+                }
+                return (
+                  <div
+                    onClick={() => this.itemPage(item)}
+                    id="box"
                     style={{
                       width: 220,
-                      height: 200,
-                      borderRadius: 5,
-                      overflow: "hidden",
+                      marginLeft: 10,
+                      marginRight: 10,
+                      height: 300,
+
+                      // borderWidth: 1,
+                      // borderStyle: "solid"
                     }}
-                  ></img>
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div style={{ fontSize: 18, fontWeight: 400 }}>
-                      {item.title}
-                    </div>
-                    <div style={{ marginTop: 5, fontWeight: 600 }}>
-                      {"$" + item.original_price}
+                  >
+                    <img
+                      onLoadCapture={() =>
+                        this.loadPage(index, this.state.items.length)
+                      }
+                      src={item.pictures[0]}
+                      style={{
+                        width: 220,
+                        height: 200,
+                        borderRadius: 5,
+                        overflow: "hidden",
+                      }}
+                    ></img>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <div style={{ fontSize: 18, fontWeight: 400 }}>
+                        {item.title}
+                      </div>
+                      <div style={{ marginTop: 5, fontWeight: 600 }}>
+                        {"$" + item.original_price}
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
     );
+  }
+
+  loadPage(index, pictureLength) {
+    console.log(index);
+    console.log(pictureLength - 1);
+    if (!this.state.loaded && index == pictureLength - 1) {
+      this.setState({
+        loaded: true,
+      });
+    }
   }
 
   searchMatchesItem(search, itemData) {

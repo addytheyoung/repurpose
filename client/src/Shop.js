@@ -10,13 +10,12 @@ import Close from "./images/close.png";
 export default class Shop extends React.Component {
   constructor(props) {
     super(props);
-    var category = window.location.pathname.substring(
-      6,
-      window.location.pathname.length
-    );
-    // category = category[0].toUpperCase() + category.slice(1);
+    const q = window.location.search;
+    const urlParams = new URLSearchParams(q);
+    var category = urlParams.get("category");
+    category = category.substring(0, 1).toUpperCase() + category.substring(1);
+    console.log(category);
 
-    category = "Art";
     this.state = {
       loaded: false,
       items: [],
@@ -38,6 +37,13 @@ export default class Shop extends React.Component {
       .then((items) => {
         const docs = items.docs;
         const itemArr = [];
+        if (docs.length == 0) {
+          this.setState({
+            items: [],
+            loaded: true,
+            modal: null,
+          });
+        }
         for (var i = 0; i < docs.length; i++) {
           const data = docs[i].data();
           itemArr.push(data);
@@ -273,6 +279,28 @@ export default class Shop extends React.Component {
           >
             {this.state.category}
           </div>
+
+          {!this.state.items ||
+            (this.state.items.length === 0 && (
+              <div style={{ alignSelf: "center" }}>
+                <div
+                  style={{
+                    fontSize: 20,
+                    fontWeight: 500,
+                    textAlign: "center",
+                    marginTop: 50,
+                  }}
+                >
+                  No items for this category!
+                </div>
+                <div
+                  style={{ textAlign: "center", marginTop: 10, fontSize: 18 }}
+                >
+                  We add more every day, and Collection just got started. <br />
+                  Check back very soon!
+                </div>
+              </div>
+            ))}
 
           <div
             style={{

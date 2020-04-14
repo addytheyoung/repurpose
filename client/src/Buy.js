@@ -150,7 +150,7 @@ export default class Buy extends React.Component {
 
   goToCategory(cat) {
     //  window.open("https://collection.deals/shop/" + cat.link, "_self");
-    window.open("http://localhost:3000/shop/" + cat.link, "_self");
+    window.open("http://localhost:3000/shop/?category=" + cat.link, "_self");
   }
 
   loadPage(index) {
