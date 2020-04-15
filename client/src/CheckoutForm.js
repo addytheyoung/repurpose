@@ -69,86 +69,115 @@ export default class CheckoutForm extends React.Component {
       cart["delivered"] = false;
       const orders = this.state.myData.orders;
 
-      // Check that all items are still available
-      for (var i = 0; i < cart.length; i++) {
-        const item = cart[i];
-        firebase
-          .firestore()
-          .collection("Categories")
-          .doc(item.category)
-          .collection("All")
-          .doc(item.uid)
-          .get()
-          .then(() => {
-            if (i == cart.length - 1) {
-              for (var j = 0; j < cart.length; j++) {
-                // Delete from item database
-                firebase
-                  .firestore()
-                  .collection("Categories")
-                  .doc(item.category)
-                  .collection("All")
-                  .doc(item.uid)
-                  .delete()
-                  .then(() => {
-                    console.log("deleted");
-                  })
-                  .catch((e) => {
-                    console.log(e.message);
-                  });
+      // Update my own cart and remove everything
+      const newOrders = orders.concat(cart);
 
-                // Find all the carts
-                firebase
-                  .firestore()
-                  .collection("Users")
-                  .where("cart", "array-contains-any", item)
-                  .get()
-                  .then((user) => {
-                    // Delete the item from all the carts the====
-                    const userDocs = user.docs;
-                    for (var j = 0; j < userDocs.length; j++) {
-                      const userData = userDocs[j];
-                      const id = userData.id;
-                      const data = userData.data();
-                      const cart = data.cart;
-                      // Go through the cart and find the item to remove
-                      for (var k = 0; k < cart.length; k++) {
-                        if (cart[i].uid === item.uid) {
-                          // Remove the item
-                          cart.splice(k, 1);
-                          break;
-                        }
-                      }
+      var otherCartsUpdated = false;
+      var allItemsRemoved = false;
+      var finishedEveryItem = false;
 
-                      firebase.firestore().collection("Users").doc(id).update({
-                        cart: cart,
-                      });
+      firebase
+        .firestore()
+        .collection("Users")
+        .doc("aty268")
+        .update({
+          // cart: [],
+          // orders: newOrders,
+        })
+        .then(() => {
+          console.log("My cart deleted");
+          var i_index = 0;
+          var b_index = 0;
+          var main_index = 0;
+          // Check that all items are still available
+          for (var i = 0; i < cart.length; i++) {
+            const item = cart[i];
+
+            console.log("Entering loop");
+            // Delete from item database
+            firebase
+              .firestore()
+              .collection("Categories")
+              .doc(item.category)
+              .collection("All")
+              .doc(item.uid)
+              .get()
+              .then(() => {
+                i_index++;
+                if (i_index == cart.length) {
+                  console.log("SETTING ALL ITEMS");
+                  allItemsRemoved = true;
+                  if (otherCartsUpdated) {
+                    alert("DONE");
+                  }
+                }
+                console.log("Deleted item from items in database");
+              })
+              .catch((e) => {
+                console.log(e.message);
+              });
+
+            // Find all the carts
+            firebase
+              .firestore()
+              .collection("Users")
+              .where("cart", "array-contains-any", [item])
+              .get()
+              .then((user) => {
+                console.log("Got items in users carts");
+                // Delete the items from all the users carts
+                const userDocs = user.docs;
+                var j_index = 0;
+                for (var j = 0; j < userDocs.length; j++) {
+                  const userData = userDocs[j];
+                  const id = userData.id;
+                  const data = userData.data();
+                  const newCart = data.cart;
+
+                  // Go through the cart and find the item to remove
+                  for (var k = 0; k < cart.length; k++) {
+                    if (newCart[k].uid === item.uid) {
+                      console.log("splicing array");
+                      // Remove the item
+                      newCart.splice(k, 1);
+                      break;
                     }
-                  });
+                  }
+                  firebase
+                    .firestore()
+                    .collection("Users")
+                    .doc(id)
+                    .update({
+                      // cart: newCart,
+                    })
+                    .then(() => {
+                      j_index++;
+                      b_index++;
+                      console.log(i_index);
+                      console.log(cart.length);
+                      console.log("\n\n");
+                      console.log(j_index);
+                      console.log(userDocs.length);
+                      console.log("\n\n");
 
-                const newOrders = orders.concat(cart);
-                firebase
-                  .firestore()
-                  .collection("Users")
-                  .doc("aty268")
-                  .update({
-                    cart: [],
-                    orders: newOrders,
-                  })
-                  .then(() => {
-                    localStorage.setItem("cart", "0");
-                    this.props.finished();
-                  });
-              }
-            }
-          })
-          .catch((e) => {
-            alert(
-              "One of your items was purchased. You have not been charged."
-            );
-            window.location.reload();
-          });
-      }
+                      // First, we check that we are on the last cart item. b_index.
+                      // Second, we make sure we have removed  all the items from the database. i_index.
+                      // Third, we make sure we are on the last user cart. j_index.
+                      if (
+                        b_index == cart.length &&
+                        i_index == cart.length &&
+                        j_index == userDocs.length
+                      ) {
+                        alert("Done");
+                      }
+                      console.log("cart updated");
+                      // localStorage.setItem("cart", "0");
+                      // this.props.finished();
+                    });
+                }
+              });
+          }
+        });
 
       return (
         <div>
@@ -326,10 +355,15 @@ export default class CheckoutForm extends React.Component {
 
   andrewMethod(ev) {
     ev.preventDefault();
+    const x = ev.target;
     this.checkItems().then((a) => {
       if (a) {
-        console.log("Done!");
-        this.handleSubmit(ev);
+        this.handleSubmit(x);
+      } else {
+        alert(
+          "Something in your cart has been purchased. You have not been charged."
+        );
+        window.location.reload();
       }
     });
   }
@@ -431,11 +465,6 @@ export default class CheckoutForm extends React.Component {
   async handleSubmit(ev) {
     const API_KEY = "AIzaSyBbpHHOjcFkGJeUaEIQZ-zNVaYBw0UVfzw";
 
-    ev.preventDefault();
-
-    alert("submit");
-    return;
-
     // const first = document.getElementById("first").value.trim();
     // const last = document.getElementById("last").value.trim();
     // const address1 = document.getElementById("address1").value.trim();
@@ -493,7 +522,6 @@ export default class CheckoutForm extends React.Component {
     //   return;
     // }
 
-    console.log("Here");
     this.state.processing = true;
     // Step 3: Use clientSecret from PaymentIntent and the CardElement
     // to confirm payment with stripe.confirmCardPayment()
@@ -503,12 +531,11 @@ export default class CheckoutForm extends React.Component {
         payment_method: {
           card: this.props.elements.getElement(CardElement),
           billing_details: {
-            name: ev.target.name.value,
+            name: ev.name.value,
           },
         },
       }
     );
-    return;
 
     if (payload.error) {
       this.setState({
@@ -519,30 +546,30 @@ export default class CheckoutForm extends React.Component {
       console.log("[error]", payload.error);
     } else {
       // Create our customer
-      const sellers = [];
-      for (var i = 0; i < this.state.myData.cart.length; i++) {
-        const item = this.state.myData.cart[i];
-        const arrItem = { id: item.seller, cost: item.original_price };
-        sellers.push(arrItem);
-      }
-      // Pay out all the sellers
-      for (var i = 0; i < sellers.length; i++) {
-        api
-          .createTransfers({
-            seller: sellers[i].id,
-            cost: sellers[i].cost,
-            worker: false,
-          })
-          .then((res) => {
-            console.log("Res");
-            console.log(res);
-          })
-          .catch((e) => {
-            console.log("E");
-            console.log(e.message);
-            alert(e.message);
-          });
-      }
+      // const sellers = [];
+      // for (var i = 0; i < this.state.myData.cart.length; i++) {
+      //   const item = this.state.myData.cart[i];
+      //   const arrItem = { id: item.seller, cost: item.original_price };
+      //   sellers.push(arrItem);
+      // }
+      // // Pay out all the sellers
+      // for (var i = 0; i < sellers.length; i++) {
+      //   api
+      //     .createTransfers({
+      //       seller: sellers[i].id,
+      //       cost: sellers[i].cost,
+      //       worker: false,
+      //     })
+      //     .then((res) => {
+      //       console.log("Res");
+      //       console.log(res);
+      //     })
+      //     .catch((e) => {
+      //       console.log("E");
+      //       console.log(e.message);
+      //       alert(e.message);
+      //     });
+      // }
       // Pay out the gig worker
       // api.createTransfers({
       //   seller: "xxx",
