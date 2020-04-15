@@ -24,27 +24,44 @@ export default class Home extends React.Component {
       addingToCart: false,
     };
 
-    firebase
-      .firestore()
-      .collection("Categories")
-      .doc("Art")
-      .collection("All")
-      .get()
-      .then((items) => {
-        const docs = items.docs;
-        const itemArr = [];
-        for (var i = 0; i < docs.length; i++) {
-          const data = docs[i].data();
-          itemArr.push(data);
-          if (i === docs.length - 1) {
-            this.setState({
-              items: itemArr,
-              loaded: true,
-              modal: null,
-            });
+    const categoryList = [
+      "Art",
+      "Books",
+      "Collectibles",
+      "Decoration",
+      "Electronics",
+      "Fashion",
+      "Movies&Games",
+      "Other",
+    ];
+
+    const firebaseCats = firebase.firestore().collection("Categories");
+    for (var i = 0; i < categoryList.length; i++) {
+      firebaseCats
+        .doc(categoryList[i])
+        .collection("All")
+        .where("location", "==", "Athens, TX")
+        // .limit(30)
+        .get()
+        .then((allItems) => {
+          const allItemsDocs = allItems.docs;
+          const itemArr = [];
+          for (var j = 0; j < allItemsDocs.length; j++) {
+            const itemData = allItemsDocs[j].data();
+            // See if the search matches
+            itemArr.push(itemData);
+            // Find a way to render all the items here
+
+            if (j === allItemsDocs.length - 1) {
+              this.setState({
+                items: itemArr,
+                loaded: true,
+                modal: null,
+              });
+            }
           }
-        }
-      });
+        });
+    }
   }
 
   render() {

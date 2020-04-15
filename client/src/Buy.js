@@ -41,6 +41,7 @@ export default class Buy extends React.Component {
       { picture: Baby, name: "Baby", link: "baby" },
       { picture: Movie, name: "Movies & Video Games", link: "movies" },
     ];
+
     return (
       <div>
         {!this.state.loaded && (

@@ -432,7 +432,7 @@ export default class Cart extends React.Component {
                     disabled
                     value="pickup"
                     control={<Radio color="primary" />}
-                    label="Pickup (Coming soon)"
+                    label="Pickup (Coming soon!)"
                     labelPlacement="top"
                   />
                   <FormControlLabel
@@ -448,9 +448,21 @@ export default class Cart extends React.Component {
                 <div
                   style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}
                 >
-                  Items are typically delivered within 3 hours.
-                  <br /> Flat fee of $2.00 for shipping, no matter how many
-                  items.
+                  {subTotal < 5 && (
+                    <div>
+                      Flat fee of $1.00 for shipping, no matter how many items.{" "}
+                      <br /> <br /> <br />
+                      Free shipping for $5.00+ orders. <br /> <br />
+                      Items are typically delivered within 3 hours. <br />{" "}
+                      <br /> <br />
+                    </div>
+                  )}
+                  {subTotal >= 5 && (
+                    <div>
+                      $5.00+ order: free shipping! <br /> <br /> Items are
+                      typically delivered within 3 hours. <br /> <br />{" "}
+                    </div>
+                  )}
                 </div>
               )}
               {this.state.deliveryType === "pickup" && (
@@ -566,7 +578,10 @@ export default class Cart extends React.Component {
 
   getShipping(price) {
     if (this.state.deliveryType === "delivery") {
-      return ((2.0 / 100) * 100).toFixed(2);
+      if (price >= 5) {
+        return 0;
+      }
+      return ((1.0 / 100) * 100).toFixed(2);
     } else {
       return ((0.0 / 100) * 100).toFixed(2);
     }

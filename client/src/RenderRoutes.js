@@ -25,6 +25,7 @@ import AddDatesToFirebase from "./scripts/AddDatesToFirebase";
 
 export default class RenderRoutes extends React.Component {
   render() {
+    const citiesList = ["Athens, TX"];
     const stripePromise = loadStripe(
       "pk_test_gLPSHkmFGwodXZBWMQabXaRr00jsYpn5GL"
     );
@@ -32,7 +33,13 @@ export default class RenderRoutes extends React.Component {
       return (
         <Elements stripe={stripePromise}>
           <Router>
-            <Route path="/" exact={true} render={() => <Buy />} />
+            {!citiesList.includes(window.localStorage.getItem("city")) && (
+              <Route path="/" exact={true} render={() => <Home />} />
+            )}
+
+            {citiesList.includes(window.localStorage.getItem("city")) && (
+              <Route path="/" exact={true} render={() => <Buy />} />
+            )}
             <Route
               path="/andrewitemupload4467"
               exact={true}
@@ -81,11 +88,11 @@ export default class RenderRoutes extends React.Component {
       return (
         <Elements stripe={stripePromise}>
           <Router>
-            {!window.localStorage.getItem("city") && (
+            {!citiesList.includes(window.localStorage.getItem("city")) && (
               <Route path="/" exact={true} render={() => <Home />} />
             )}
 
-            {window.localStorage.getItem("city") && (
+            {citiesList.includes(window.localStorage.getItem("city")) && (
               <Route path="/" exact={true} render={() => <Buy />} />
             )}
             <Route

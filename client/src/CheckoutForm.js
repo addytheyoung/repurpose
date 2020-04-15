@@ -55,24 +55,101 @@ export default class CheckoutForm extends React.Component {
     };
 
     if (this.state.succeeded) {
-      // Clear our cart
+      const categoryList = [
+        "Art",
+        "Books",
+        "Collectibles",
+        "Decoration",
+        "Electronics",
+        "Fashion",
+        "Movies&Games",
+        "Other",
+      ];
       var cart = this.state.myData.cart;
       cart["delivered"] = false;
       const orders = this.state.myData.orders;
 
-      const newOrders = orders.concat(cart);
-      firebase
-        .firestore()
-        .collection("Users")
-        .doc("aty268")
-        .update({
-          cart: [],
-          orders: newOrders,
-        })
-        .then(() => {
-          localStorage.setItem("cart", "0");
-          this.props.finished();
-        });
+      // Check that all items are still available
+      for (var i = 0; i < cart.length; i++) {
+        const item = cart[i];
+        firebase
+          .firestore()
+          .collection("Categories")
+          .doc(item.category)
+          .collection("All")
+          .doc(item.uid)
+          .get()
+          .then(() => {
+            if (i == cart.length - 1) {
+              for (var j = 0; j < cart.length; j++) {
+                // Delete from item database
+                firebase
+                  .firestore()
+                  .collection("Categories")
+                  .doc(item.category)
+                  .collection("All")
+                  .doc(item.uid)
+                  .delete()
+                  .then(() => {
+                    console.log("deleted");
+                  })
+                  .catch((e) => {
+                    console.log(e.message);
+                  });
+
+                // Find all the carts
+                firebase
+                  .firestore()
+                  .collection("Users")
+                  .where("cart", "array-contains-any", item)
+                  .get()
+                  .then((user) => {
+                    // Delete the item from all the carts the====
+                    const userDocs = user.docs;
+                    for (var j = 0; j < userDocs.length; j++) {
+                      const userData = userDocs[j];
+                      const id = userData.id;
+                      const data = userData.data();
+                      const cart = data.cart;
+                      // Go through the cart and find the item to remove
+                      for (var k = 0; k < cart.length; k++) {
+                        if (cart[i].uid === item.uid) {
+                          // Remove the item
+                          cart.splice(k, 1);
+                          break;
+                        }
+                      }
+
+                      firebase.firestore().collection("Users").doc(id).update({
+                        cart: cart,
+                      });
+                    }
+                  });
+
+                const newOrders = orders.concat(cart);
+                firebase
+                  .firestore()
+                  .collection("Users")
+                  .doc("aty268")
+                  .update({
+                    cart: [],
+                    orders: newOrders,
+                  })
+                  .then(() => {
+                    localStorage.setItem("cart", "0");
+                    this.props.finished();
+                  });
+              }
+            }
+          })
+          .catch((e) => {
+            alert(
+              "One of your items was purchased. You have not been charged."
+            );
+            window.location.reload();
+          });
+      }
+
       return (
         <div>
           <div>Your payment was successful!</div>
@@ -85,8 +162,21 @@ export default class CheckoutForm extends React.Component {
       <div>
         {this.props.deliveryType === "delivery" && (
           <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
-            Items are typically delivered within 3 hours. <br />
-            Flat fee of $2.00 for shipping, no matter how many items.
+            {this.state.total < 5 && (
+              <div>
+                Flat fee of $1.00 for shipping, no matter how many items. <br />{" "}
+                <br /> <br />
+                Free shipping for $5.00+ orders. <br /> <br />
+                Items are typically delivered within 3 hours. <br /> <br />{" "}
+                <br />
+              </div>
+            )}
+            {this.state.total >= 5 && (
+              <div>
+                $5.00+ order: free shipping! <br /> <br /> Items are typically
+                delivered within 3 hours. <br /> <br />{" "}
+              </div>
+            )}
           </div>
         )}
         {this.props.deliveryType === "pickup" && (
@@ -96,7 +186,7 @@ export default class CheckoutForm extends React.Component {
           </div>
         )}
         <form
-          onSubmit={(ev) => this.handleSubmit(ev)}
+          onSubmit={(ev) => this.andrewMethod(ev)}
           style={{ paddingLeft: 0, minWidth: 400, maxWidth: 600 }}
         >
           <div className="sr-combo-inputs">
@@ -208,9 +298,6 @@ export default class CheckoutForm extends React.Component {
               </div>
             )}
 
-            {console.log(this.state.processing)}
-            {console.log(this.state.clientSecret)}
-            {console.log(!this.props.stripe)}
             <button
               id="pay"
               style={{
@@ -235,6 +322,16 @@ export default class CheckoutForm extends React.Component {
         </form>
       </div>
     );
+  }
+
+  andrewMethod(ev) {
+    ev.preventDefault();
+    this.checkItems().then((a) => {
+      if (a) {
+        console.log("Done!");
+        this.handleSubmit(ev);
+      }
+    });
   }
 
   setPickup(e) {
@@ -307,11 +404,38 @@ export default class CheckoutForm extends React.Component {
       });
   }
 
+  async checkItems() {
+    var cart = this.state.myData.cart;
+    cart["delivered"] = false;
+    const orders = this.state.myData.orders;
+
+    // Check that all items are still available
+    for (var i = 0; i < cart.length; i++) {
+      const item = cart[i];
+      return firebase
+        .firestore()
+        .collection("Categories")
+        .doc(item.category)
+        .collection("All")
+        .doc(item.uid)
+        .get()
+        .then(() => {
+          return true;
+        })
+        .catch((e) => {
+          return false;
+        });
+    }
+  }
+
   async handleSubmit(ev) {
-    alert("SUBMIT");
     const API_KEY = "AIzaSyBbpHHOjcFkGJeUaEIQZ-zNVaYBw0UVfzw";
 
     ev.preventDefault();
+
+    alert("submit");
+    return;
+
     // const first = document.getElementById("first").value.trim();
     // const last = document.getElementById("last").value.trim();
     // const address1 = document.getElementById("address1").value.trim();
@@ -384,6 +508,7 @@ export default class CheckoutForm extends React.Component {
         },
       }
     );
+    return;
 
     if (payload.error) {
       this.setState({

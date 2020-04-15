@@ -353,8 +353,8 @@ export default class CheckOut extends React.Component {
                     <img
                       id="box"
                       style={{
-                        width: 150,
-                        height: 180,
+                        width: 220,
+                        height: 200,
                         borderRadius: 5,
                         overflow: "hidden",
                       }}
@@ -483,7 +483,7 @@ export default class CheckOut extends React.Component {
                     disabled
                     value="pickup"
                     control={<Radio color="primary" />}
-                    label="Pickup (Coming soon)"
+                    label="Pickup (Coming soon!)"
                     labelPlacement="top"
                   />
                   <FormControlLabel
@@ -568,7 +568,10 @@ export default class CheckOut extends React.Component {
   }
 
   getShipping(price) {
-    return ((2.0 / 100) * 100).toFixed(2);
+    if (price >= 5) {
+      return 0;
+    }
+    return ((1.0 / 100) * 100).toFixed(2);
     if (localStorage.getItem("deliveryType") === "delivery") {
       return ((2.0 / 100) * 100).toFixed(2);
     } else {
