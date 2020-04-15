@@ -416,7 +416,8 @@ export default class CheckoutForm extends React.Component {
     if (
       this.state.processing ||
       this.state.succeeded ||
-      this.state.clientSecret
+      this.state.clientSecret ||
+      this.state.failure
     ) {
       return null;
     }
@@ -456,8 +457,10 @@ export default class CheckoutForm extends React.Component {
         });
       })
       .catch((err) => {
+        console.log(err.message);
         this.setState({
           error: err.message,
+          failure: true,
         });
       });
   }

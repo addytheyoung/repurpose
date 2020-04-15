@@ -138,8 +138,10 @@ app.post("/create-payment-intent", async (req, res) => {
 
   try {
     const paymentIntent = await stripe.paymentIntents.create(options);
+    console.log("Res payment int");
     res.json(paymentIntent);
   } catch (err) {
+    console.log(err);
     res.json(err);
   }
 });

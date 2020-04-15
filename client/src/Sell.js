@@ -631,13 +631,14 @@ export default class Sell extends React.Component {
         firebase
           .firestore()
           .collection("Users")
-          .doc(email)
+          .doc(r.user.uid)
           .set({
             cart: [],
             orders: [],
             sales: [],
             email: email,
             pass: pass,
+            uid: r.user.uid,
           })
           .then(() => {
             this.state.logout = false;

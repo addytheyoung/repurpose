@@ -23,11 +23,14 @@ export default class Cart extends React.Component {
       .get()
       .then((me) => {
         const myData = me.data();
+        localStorage.setItem("cart", myData.cart.length);
         this.setState({
           loaded: true,
           myData: myData,
+          numCartItems: myData.cart.length,
         });
       });
+
     this.state = {
       loaded: false,
       myData: [],

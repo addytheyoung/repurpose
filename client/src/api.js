@@ -121,9 +121,11 @@ const createPaymentIntent = (total, stripe_unique_id) => {
       body: JSON.stringify(total),
     })
     .then((res) => {
+      console.log("RESULT GOOD");
       if (res.status === 200) {
         return res.json();
       } else {
+        console.log("RESULT BAD");
         return null;
       }
     })
