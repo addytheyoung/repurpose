@@ -451,7 +451,6 @@ export default class SearchPage extends React.Component {
     this.setState({
       modal: item,
     });
-    // window.open("http://localhost:3000/item/" + uid, "_self");
   }
 
   closeModal(e) {

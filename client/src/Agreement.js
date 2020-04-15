@@ -162,8 +162,14 @@ export default class Agreement extends React.Component {
 
   stripeSignup() {
     // Take us to the stripe redirect
-    const stripe_url =
-      "https://connect.stripe.com/express/oauth/authorize?client_id=ca_GziEvM247byG5XcbBDVdmFHV5l3vPz4h&stripe_user%5Bproduct_description%5D=I am selling my own items to Collection.&stripe_user%5Bbusiness_type%5D=individual&redirect_uri=http://localhost:3000/sell/getkit";
+    var stripe_url = "";
+    if (window.location.href.includes("localhost")) {
+      stripe_url =
+        "https://connect.stripe.com/express/oauth/authorize?client_id=ca_GziEvM247byG5XcbBDVdmFHV5l3vPz4h&stripe_user%5Bproduct_description%5D=I am selling my own items to Collection.&stripe_user%5Bbusiness_type%5D=individual&redirect_uri=http://localhost:3000/sell/getkit";
+    } else {
+      stripe_url =
+        "https://connect.stripe.com/express/oauth/authorize?client_id=ca_GziEvM247byG5XcbBDVdmFHV5l3vPz4h&stripe_user%5Bproduct_description%5D=I am selling my own items to Collection.&stripe_user%5Bbusiness_type%5D=individual&redirect_uri=https://collection.deals/sell/getkit";
+    }
 
     window.location.href = stripe_url;
   }

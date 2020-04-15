@@ -88,19 +88,21 @@ export default class CheckOut extends React.Component {
           }}
         >
           <HeaderBar />
-          <div
-            style={{
-              fontWeight: 700,
-              marginTop: 50,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: 26,
-              color: "#7628dd",
-            }}
-          >
-            Collection
-          </div>
+          <a href="/" style={{ textDecoration: "none" }}>
+            <div
+              style={{
+                fontWeight: 700,
+                marginTop: 50,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontSize: 26,
+                color: "#7628dd",
+              }}
+            >
+              Collection
+            </div>
+          </a>
           <div style={{ marginTop: 50, fontWeight: 500, fontSize: 22 }}>
             Success! Your order is complete.
           </div>
@@ -267,19 +269,21 @@ export default class CheckOut extends React.Component {
           </div>
         )}
 
-        <div
-          style={{
-            fontWeight: 700,
-            marginTop: 50,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: 26,
-            color: "#7628dd",
-          }}
-        >
-          Collection
-        </div>
+        <a style={{ textDecoration: "none" }} href="/">
+          <div
+            style={{
+              fontWeight: 700,
+              marginTop: 50,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: 26,
+              color: "#7628dd",
+            }}
+          >
+            Collection
+          </div>
+        </a>
         <div
           style={{
             display: "flex",

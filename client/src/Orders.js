@@ -15,7 +15,7 @@ export default class Orders extends React.Component {
       .then((me) => {
         const myData = me.data();
         this.setState({
-          orders: myData.orders,
+          orders: myData.orders.reverse(),
           loaded: true,
         });
       });

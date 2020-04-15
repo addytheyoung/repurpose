@@ -373,7 +373,6 @@ export default class Shop extends React.Component {
     this.setState({
       modal: item,
     });
-    // window.open("http://localhost:3000/item/" + uid, "_self");
   }
 
   closeModal(e) {
@@ -403,6 +402,23 @@ export default class Shop extends React.Component {
       .get()
       .then((me) => {
         const myCart = me.data().cart;
+        for (var i = 0; i < myCart.length; i++) {
+          if (myCart[i].uid == item.uid) {
+            alert("Item already in your cart!");
+            this.setState({
+              modal: null,
+              addingToCart: false,
+              numCartItems: numCartItems,
+            });
+            return;
+          }
+        }
+
+        // See if we already have the item in our cart
+        if (myCart.includes(item)) {
+          alert("NOPE");
+          return;
+        }
         myCart.push(item);
         firebase
           .firestore()

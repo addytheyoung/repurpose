@@ -82,13 +82,18 @@ export default class CheckoutForm extends React.Component {
         .doc("aty268")
         .update({
           // cart: [],
-          // orders: newOrders,
+          orders: newOrders,
         })
         .then(() => {
           console.log("My cart deleted");
           var i_index = 0;
           var b_index = 0;
           var main_index = 0;
+          // Get all the item uid's
+          const itemUids = [];
+          for (var i = 0; i < cart.length; i++) {
+            itemUids.push(cart[i].uid);
+          }
           // Check that all items are still available
           for (var i = 0; i < cart.length; i++) {
             const item = cart[i];
@@ -128,31 +133,50 @@ export default class CheckoutForm extends React.Component {
                 // Delete the items from all the users carts
                 const userDocs = user.docs;
                 var j_index = 0;
+                if (userDocs.length === 0) {
+                  b_index++;
+                  console.log(i_index);
+                  console.log(b_index);
+                  if (i_index === cart.length && b_index == cart.length) {
+                    localStorage.setItem("cart", "0");
+                    console.log("FINISHED");
+                    this.props.finished();
+                  }
+                }
+
                 for (var j = 0; j < userDocs.length; j++) {
                   const userData = userDocs[j];
+
                   const id = userData.id;
                   const data = userData.data();
                   const newCart = data.cart;
+                  console.log(newCart);
 
-                  // Go through the cart and find the item to remove
-                  for (var k = 0; k < cart.length; k++) {
-                    if (newCart[k].uid === item.uid) {
-                      console.log("splicing array");
-                      // Remove the item
-                      newCart.splice(k, 1);
-                      break;
+                  // Go through the cart and remove ALL the items
+                  for (var k = 0; k < newCart.length; k++) {
+                    for (var l = 0; l < itemUids.length; l++) {
+                      if (newCart[k].uid === itemUids[l]) {
+                        console.log("splicing array");
+                        // Remove the item
+                        newCart.splice(k, 1);
+                      }
                     }
                   }
+
+                  console.log(newCart);
                   firebase
                     .firestore()
                     .collection("Users")
                     .doc(id)
                     .update({
-                      // cart: newCart,
+                      cart: newCart,
                     })
                     .then(() => {
                       j_index++;
                       b_index++;
+                      console.log(b_index);
+                      console.log(cart.length);
+                      console.log("\n\n");
                       console.log(i_index);
                       console.log(cart.length);
                       console.log("\n\n");
@@ -168,11 +192,11 @@ export default class CheckoutForm extends React.Component {
                         i_index == cart.length &&
                         j_index == userDocs.length
                       ) {
-                        alert("Done");
+                        console.log("FINISHED");
+                        localStorage.setItem("cart", "0");
+                        this.props.finished();
                       }
                       console.log("cart updated");
-                      // localStorage.setItem("cart", "0");
-                      // this.props.finished();
                     });
                 }
               });
