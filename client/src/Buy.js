@@ -114,6 +114,7 @@ export default class Buy extends React.Component {
                 {categories.map((cat, index) => {
                   return (
                     <div
+                      key={index}
                       id={"cat"}
                       onClick={() => this.goToCategory(cat)}
                       style={{

@@ -5,6 +5,7 @@ import * as firebase from "firebase";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import "./css/HeaderBar.css";
 import Logo from "./images/test.png";
+import Info from "./images/info.png";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
@@ -468,15 +469,19 @@ export default class HeaderBar extends React.Component {
                 alignItems: "center",
               }}
             >
-              <img
-                src={search}
-                style={{
-                  width: 20,
-                  height: 20,
-                  marginRight: 5,
-                }}
-              />
-              <div style={{ marginRight: 30, fontWeight: 600 }}>Search</div>
+              {this.state.searching === false && (
+                <img
+                  src={search}
+                  style={{
+                    width: 20,
+                    height: 20,
+                    marginRight: 5,
+                  }}
+                />
+              )}
+              {this.state.searching === false && (
+                <div style={{ marginRight: 30, fontWeight: 600 }}>Search</div>
+              )}
             </div>
           </div>
           {this.state.searching && (
@@ -505,7 +510,7 @@ export default class HeaderBar extends React.Component {
                 }}
               >
                 <Select
-                  style={{ width: 126, height: 40 }}
+                  style={{ width: 120, height: 40, fontSize: 14 }}
                   id="category"
                   defaultValue={"All Categories"}
                 >
@@ -580,7 +585,7 @@ export default class HeaderBar extends React.Component {
                     borderRadius: 5,
                     width: 40,
                     height: 40,
-                    backgroundColor: "#d1d1d1",
+                    backgroundColor: "#e1e1e1",
                     display: "flex",
                     justifyContent: "center",
                     minWidth: 30,
@@ -623,26 +628,30 @@ export default class HeaderBar extends React.Component {
                   marginRight: 30,
                 }}
               >
-                <img
-                  src={city}
-                  style={{
-                    width: 20,
-                    height: 20,
-                    marginRight: 5,
-                  }}
-                />
+                {!this.state.city && (
+                  <img
+                    src={city}
+                    style={{
+                      width: 20,
+                      height: 20,
+                      marginRight: 5,
+                    }}
+                  />
+                )}
 
-                <div
-                  style={{
-                    fontWeight: 600,
-                    flexWrap: "nowrap",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {this.state.currentCity}
-                  {/* {this.getCityFromAddress(this.state.currentCity)} */}
-                </div>
+                {!this.state.city && (
+                  <div
+                    style={{
+                      fontWeight: 600,
+                      flexWrap: "nowrap",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {this.state.currentCity}
+                  </div>
+                )}
               </div>
+
               <div
                 style={{
                   display: "flex",
@@ -703,6 +712,27 @@ export default class HeaderBar extends React.Component {
                 )}
               </div>
             </div>
+          </div>
+          <div
+            onClick={() => (window.location.href = "/help")}
+            id="help"
+            style={{
+              marginRight: 30,
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <img
+              src={Info}
+              style={{
+                width: 22,
+                height: 22,
+                marginRight: 5,
+              }}
+            />
+            <div style={{ fontWeight: 600 }}>Help</div>
           </div>
 
           <div
@@ -992,6 +1022,8 @@ export default class HeaderBar extends React.Component {
   showProfileModal() {
     this.setState({
       profile: true,
+      searching: false,
+      city: false,
       logout: false,
     });
   }

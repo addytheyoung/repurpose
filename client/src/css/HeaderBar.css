@@ -9,7 +9,11 @@
 }
 
 #address-input:focus {
-  width: 400px !important;
+  width: 300px !important;
+}
+
+#address-input {
+  width: 200px !important;
 }
 
 #buy-link:hover,
@@ -32,6 +36,7 @@
 }
 
 #header-checkout:hover,
+#help:hover,
 #start-shopping:hover,
 #my-orders:hover,
 #my-sales:hover,
