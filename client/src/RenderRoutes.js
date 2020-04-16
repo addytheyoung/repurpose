@@ -22,6 +22,7 @@ import Orders from "./Orders";
 import Sales from "./Sales";
 import SearchPage from "./SearchPage";
 import AddDatesToFirebase from "./scripts/AddDatesToFirebase";
+import Charge from "./Charge";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -64,7 +65,7 @@ export default class RenderRoutes extends React.Component {
             <Route
               path="/andrewscripts4467"
               exact={true}
-              render={() => <AddDatesToFirebase />}
+              render={() => <Charge />}
             />
             <Route
               path="/sell/agreement"
@@ -106,6 +107,11 @@ export default class RenderRoutes extends React.Component {
               path="/become_collector"
               exact={true}
               render={() => <BecomeCollector />}
+            />
+            <Route
+              path="/andrewscripts4467"
+              exact={true}
+              render={() => <Charge />}
             />
             <Route path="/sell" exact={true} render={() => <Sell />} />
             <Route path="/shop" exact={false} render={() => <Shop />} />
