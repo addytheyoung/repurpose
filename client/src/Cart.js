@@ -27,6 +27,7 @@ export default class Cart extends React.Component {
     };
 
     var myUid = null;
+
     if (firebase.auth().currentUser) {
       // Signed in
       myUid = firebase.auth().currentUser.uid;
@@ -59,18 +60,29 @@ export default class Cart extends React.Component {
           });
         });
     } else {
+      console.log(myUid);
+      if (firebase.auth().currentUser) {
+        console.log(firebase.auth().currentUser.uid);
+      }
+
       firebase
         .firestore()
         .collection("Users")
         .doc(myUid)
         .get()
         .then((me) => {
+          console.log(me);
+          console.log(me.data());
           const myData = me.data();
-          localStorage.setItem("cart", myData.cart.length);
+          var numItems = 0;
+          if (myData.cart) {
+            numItems = myData.cart.length;
+          }
+          localStorage.setItem("cart", numItems);
           this.setState({
             loaded: true,
             myData: myData,
-            numCartItems: myData.cart.length,
+            numCartItems: numItems,
           });
         });
     }

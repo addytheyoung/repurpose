@@ -787,23 +787,31 @@ export default class HeaderBar extends React.Component {
     if (!this.checkEmail(email)) {
       return;
     }
+    var myUid = null;
+    if (localStorage.getItem("tempUid")) {
+      // We have a profile. Transfer the data
+      myUid = localStorage.getItem("tempUid");
+    } else {
+      // We don't have a profile. Make a new one
+    }
+
     firebase
       .firestore()
       .collection("Users")
-      .doc(email)
+      .where("email", "==", email)
       .get()
       .then((user) => {
-        if (!user.exists) {
-          // New account, render that screen.
-
-          this.setState({
-            newUser: true,
-            email: email,
-          });
-        } else {
+        const user2 = user.docs;
+        if (user2.length !== 0) {
           // Returning user
           this.setState({
             retUser: true,
+            email: email,
+          });
+        } else {
+          // New account, render that screen.
+          this.setState({
+            newUser: true,
             email: email,
           });
         }
@@ -879,6 +887,7 @@ export default class HeaderBar extends React.Component {
   setPassword() {
     const email = this.state.email;
     const pass = document.getElementById("pass").value;
+
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, pass)
@@ -888,26 +897,68 @@ export default class HeaderBar extends React.Component {
         this.state.newUser = false;
         this.state.retUser = false;
         this.state.profile = false;
-        firebase
-          .firestore()
-          .collection("Users")
-          .doc(r.user.uid)
-          .set({
-            cart: [],
-            orders: [],
-            sales: [],
-            email: email,
-            pass: pass,
-            uid: r.user.uid,
-          })
-          .then(() => {
-            this.state.logout = false;
-            this.state.email = false;
-            this.state.newUser = false;
-            this.state.retUser = false;
-            this.state.profile = false;
-            window.location.reload();
-          });
+        var myUid = localStorage.getItem("tempUid");
+        console.log(myUid);
+        if (myUid) {
+          alert("transfer data");
+          // Transfer the data
+          firebase
+            .firestore()
+            .collection("Users")
+            .doc(myUid)
+            .get()
+            .then((me) => {
+              alert(r.user.uid);
+              console.log(me.data());
+              const cart = me.data().cart;
+              const orders = me.data().orders;
+              const sales = me.data().sales;
+              localStorage.setItem("cart", cart.length);
+              firebase
+                .firestore()
+                .collection("Users")
+                .doc(r.user.uid)
+                .set({
+                  cart: cart,
+                  orders: orders,
+                  sales: sales,
+                  email: email,
+                  pass: pass,
+                  uid: r.user.uid,
+                })
+                .then(() => {
+                  this.state.logout = false;
+                  this.state.email = false;
+                  this.state.newUser = false;
+                  this.state.retUser = false;
+                  this.state.profile = false;
+                  window.location.reload();
+                });
+            });
+        } else {
+          alert("new profile");
+          // Make a new profile
+          firebase
+            .firestore()
+            .collection("Users")
+            .doc(r.user.uid)
+            .set({
+              cart: [],
+              orders: [],
+              sales: [],
+              email: email,
+              pass: pass,
+              uid: r.user.uid,
+            })
+            .then(() => {
+              this.state.logout = false;
+              this.state.email = false;
+              this.state.newUser = false;
+              this.state.retUser = false;
+              this.state.profile = false;
+              window.location.reload();
+            });
+        }
       })
       .catch((e) => {
         alert(e.message);
@@ -962,6 +1013,8 @@ export default class HeaderBar extends React.Component {
       .auth()
       .signOut()
       .then(() => {
+        localStorage.setItem("cart", "0");
+        localStorage.setItem("tempUid", "");
         this.state.logout = false;
         this.state.email = false;
         this.state.newUser = false;
