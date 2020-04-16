@@ -79,7 +79,7 @@ export default class CheckoutForm extends React.Component {
       firebase
         .firestore()
         .collection("Users")
-        .doc("aty268")
+        .doc(firebase.auth().currentUser.uid)
         .update({
           // cart: [],
           orders: newOrders,

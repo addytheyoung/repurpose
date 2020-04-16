@@ -335,7 +335,7 @@ export default class ItemUpload extends React.Component {
                   firebase
                     .firestore()
                     .collection("Users")
-                    .doc("aty268")
+                    .doc(firebase.auth().currentUser.uid)
                     .update({
                       sales: newSales,
                     })

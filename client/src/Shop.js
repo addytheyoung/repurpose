@@ -395,46 +395,88 @@ export default class Shop extends React.Component {
       addingToCart: true,
     });
 
-    firebase
-      .firestore()
-      .collection("Users")
-      .doc("aty268")
-      .get()
-      .then((me) => {
-        const myCart = me.data().cart;
-        for (var i = 0; i < myCart.length; i++) {
-          if (myCart[i].uid == item.uid) {
-            alert("Item already in your cart!");
-            this.setState({
-              modal: null,
-              addingToCart: false,
-              numCartItems: numCartItems,
-            });
-            return;
-          }
-        }
+    var myUid = null;
 
-        // See if we already have the item in our cart
-        if (myCart.includes(item)) {
-          alert("NOPE");
-          return;
-        }
-        myCart.push(item);
-        firebase
-          .firestore()
-          .collection("Users")
-          .doc("aty268")
-          .update({
-            cart: myCart,
-          })
-          .then(() => {
-            localStorage.setItem("cart", numCartItems);
-            this.setState({
-              modal: null,
-              addingToCart: false,
-              numCartItems: numCartItems,
-            });
+    if (firebase.auth().currentUser) {
+      // Signed in
+      myUid = firebase.auth().currentUser.uid;
+    } else if (localStorage.getItem("tempUid")) {
+      // temporarily signed in
+      myUid = localStorage.getItem("tempUid");
+    } else {
+      // Not signed in
+      myUid = null;
+    }
+
+    if (!myUid) {
+      // Create a new temporary user
+      const uid = this.randomNumber(20);
+      localStorage.setItem("tempUid", uid);
+      firebase
+        .firestore()
+        .collection("Users")
+        .doc(uid)
+        .set({
+          cart: [item],
+          orders: [],
+          sales: [],
+        })
+        .then(() => {
+          localStorage.setItem("cart", 1);
+          this.setState({
+            modal: null,
+            addingToCart: false,
+            numCartItems: 1,
           });
-      });
+        });
+    } else {
+      firebase
+        .firestore()
+        .collection("Users")
+        .doc(myUid)
+        .get()
+        .then((me) => {
+          const myCart = me.data().cart;
+          for (var i = 0; i < myCart.length; i++) {
+            if (myCart[i].uid == item.uid) {
+              alert("Item already in your cart!");
+              this.setState({
+                modal: null,
+                addingToCart: false,
+                numCartItems: numCartItems,
+              });
+              return;
+            }
+          }
+
+          myCart.push(item);
+          firebase
+            .firestore()
+            .collection("Users")
+            .doc(myUid)
+            .update({
+              cart: myCart,
+            })
+            .then(() => {
+              localStorage.setItem("cart", numCartItems);
+              this.setState({
+                modal: null,
+                addingToCart: false,
+                numCartItems: numCartItems,
+              });
+            });
+        });
+    }
+  }
+
+  randomNumber(length) {
+    var result = "";
+    var characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   }
 }

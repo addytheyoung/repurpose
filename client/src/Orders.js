@@ -10,7 +10,7 @@ export default class Orders extends React.Component {
     firebase
       .firestore()
       .collection("Users")
-      .doc("aty268")
+      .doc(firebase.auth().currentUser.uid)
       .get()
       .then((me) => {
         const myData = me.data();

@@ -9,7 +9,7 @@ export default class Sales extends React.Component {
     firebase
       .firestore()
       .collection("Users")
-      .doc("aty268")
+      .doc(firebase.auth().currentUser.uid)
       .get()
       .then((me) => {
         const sales = me.data().sales;

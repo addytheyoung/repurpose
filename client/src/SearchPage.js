@@ -477,7 +477,7 @@ export default class SearchPage extends React.Component {
     firebase
       .firestore()
       .collection("Users")
-      .doc("aty268")
+      .doc(firebase.auth().currentUser.uid)
       .get()
       .then((me) => {
         const myCart = me.data().cart;
@@ -485,7 +485,7 @@ export default class SearchPage extends React.Component {
         firebase
           .firestore()
           .collection("Users")
-          .doc("aty268")
+          .doc(firebase.auth().currentUser.uid)
           .update({
             cart: myCart,
           })

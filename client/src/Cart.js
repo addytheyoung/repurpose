@@ -16,20 +16,6 @@ export default class Cart extends React.Component {
   constructor(props) {
     super(props);
     localStorage.setItem("deliveryType", "delivery");
-    firebase
-      .firestore()
-      .collection("Users")
-      .doc("aty268")
-      .get()
-      .then((me) => {
-        const myData = me.data();
-        localStorage.setItem("cart", myData.cart.length);
-        this.setState({
-          loaded: true,
-          myData: myData,
-          numCartItems: myData.cart.length,
-        });
-      });
 
     this.state = {
       loaded: false,
@@ -39,6 +25,55 @@ export default class Cart extends React.Component {
       deliveryType: "delivery",
       delivery: true,
     };
+
+    var myUid = null;
+    if (firebase.auth().currentUser) {
+      // Signed in
+      myUid = firebase.auth().currentUser.uid;
+    } else if (localStorage.getItem("tempUid")) {
+      // temporarily signed in
+      myUid = localStorage.getItem("tempUid");
+    } else {
+      // Not signed in
+      myUid = null;
+    }
+
+    if (!myUid) {
+      const uid = this.randomNumber(20);
+      localStorage.setItem("tempUid", uid);
+      firebase
+        .firestore()
+        .collection("Users")
+        .doc(uid)
+        .set({
+          cart: [],
+          orders: [],
+          sales: [],
+        })
+        .then(() => {
+          localStorage.setItem("cart", 0);
+          this.setState({
+            loaded: true,
+            myData: { cart: [], orders: [], sales: [] },
+            numCartItems: 0,
+          });
+        });
+    } else {
+      firebase
+        .firestore()
+        .collection("Users")
+        .doc(myUid)
+        .get()
+        .then((me) => {
+          const myData = me.data();
+          localStorage.setItem("cart", myData.cart.length);
+          this.setState({
+            loaded: true,
+            myData: myData,
+            numCartItems: myData.cart.length,
+          });
+        });
+    }
   }
 
   render() {
@@ -549,10 +584,23 @@ export default class Cart extends React.Component {
         break;
       }
     }
+
+    var myUid = null;
+    if (firebase.auth().currentUser) {
+      // Signed in
+      myUid = firebase.auth().currentUser.uid;
+    } else if (localStorage.getItem("tempUid")) {
+      // temporarily signed in
+      myUid = localStorage.getItem("tempUid");
+    } else {
+      // Not signed in
+      myUid = null;
+    }
+
     firebase
       .firestore()
       .collection("Users")
-      .doc("aty268")
+      .doc(myUid)
       .update({
         cart: newData,
       })
@@ -588,5 +636,16 @@ export default class Cart extends React.Component {
     } else {
       return ((0.0 / 100) * 100).toFixed(2);
     }
+  }
+
+  randomNumber(length) {
+    var result = "";
+    var characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   }
 }
