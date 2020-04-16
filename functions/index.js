@@ -120,8 +120,11 @@ app.post("/create-transfers", async (req, res) => {
 
 app.post("/create-payment-intent", async (req, res) => {
   const body = req.body;
-  const amount = body.total;
+  var amount = body.total;
   const productDetails = getProductDetails();
+  console.log(amount);
+  console.log(amount * 100);
+  amount = parseInt(amount * 100);
 
   const options = {
     payment_method_types: ["card"],

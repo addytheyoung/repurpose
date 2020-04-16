@@ -35,10 +35,22 @@ export default class CheckOut extends React.Component {
       delivery: true,
     };
 
+    var myUid = null;
+    if (firebase.auth().currentUser) {
+      // Signed in
+      myUid = firebase.auth().currentUser.uid;
+    } else if (localStorage.getItem("tempUid")) {
+      // temporarily signed in
+      myUid = localStorage.getItem("tempUid");
+    } else {
+      // Not signed in
+      myUid = null;
+    }
+
     firebase
       .firestore()
       .collection("Users")
-      .doc(firebase.auth().currentUser.uid)
+      .doc(myUid)
       .get()
       .then((me) => {
         const myData = me.data();
@@ -77,7 +89,8 @@ export default class CheckOut extends React.Component {
           parseInt(shipping * 100)
       ) / 100;
 
-    const signedIn = !!firebase.auth().currentUser;
+    const signedIn =
+      !!firebase.auth().currentUser || localStorage.getItem("tempUid");
     if (this.state.finished) {
       return (
         <div
@@ -590,6 +603,18 @@ export default class CheckOut extends React.Component {
   }
 
   removeFromCart(item, myData) {
+    var myUid = null;
+
+    if (firebase.auth().currentUser) {
+      // Signed in
+      myUid = firebase.auth().currentUser.uid;
+    } else if (localStorage.getItem("tempUid")) {
+      // temporarily signed in
+      myUid = localStorage.getItem("tempUid");
+    } else {
+      // Not signed in
+      myUid = null;
+    }
     var numCartItems = localStorage.getItem("cart");
     if (numCartItems) {
       numCartItems = parseInt(numCartItems) - 1;
@@ -606,7 +631,7 @@ export default class CheckOut extends React.Component {
     firebase
       .firestore()
       .collection("Users")
-      .doc(firebase.auth().currentUser.uid)
+      .doc(myUid)
       .update({
         cart: newData,
       })

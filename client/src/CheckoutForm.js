@@ -65,7 +65,9 @@ export default class CheckoutForm extends React.Component {
         "Movies&Games",
         "Other",
       ];
+
       var cart = this.state.myData.cart;
+      console.log(cart);
       cart["delivered"] = false;
       const orders = this.state.myData.orders;
 
@@ -76,16 +78,28 @@ export default class CheckoutForm extends React.Component {
       var allItemsRemoved = false;
       var finishedEveryItem = false;
 
+      var myUid = null;
+
+      if (firebase.auth().currentUser) {
+        // Signed in
+        myUid = firebase.auth().currentUser.uid;
+      } else if (localStorage.getItem("tempUid")) {
+        // temporarily signed in
+        myUid = localStorage.getItem("tempUid");
+      } else {
+        // Not signed in
+        myUid = null;
+      }
+
       firebase
         .firestore()
         .collection("Users")
-        .doc(firebase.auth().currentUser.uid)
+        .doc(myUid)
         .update({
           // cart: [],
           orders: newOrders,
         })
         .then(() => {
-          console.log("My cart deleted");
           var i_index = 0;
           var b_index = 0;
           var main_index = 0;
@@ -174,13 +188,13 @@ export default class CheckoutForm extends React.Component {
                     .then(() => {
                       j_index++;
                       b_index++;
-                      console.log(b_index);
+                      console.log("b " + b_index);
                       console.log(cart.length);
                       console.log("\n\n");
-                      console.log(i_index);
+                      console.log("i " + i_index);
                       console.log(cart.length);
                       console.log("\n\n");
-                      console.log(j_index);
+                      console.log("j " + j_index);
                       console.log(userDocs.length);
                       console.log("\n\n");
 
@@ -194,6 +208,8 @@ export default class CheckoutForm extends React.Component {
                       ) {
                         console.log("FINISHED");
                         localStorage.setItem("cart", "0");
+                        alert("FINISHED");
+                        return;
                         this.props.finished();
                       }
                       console.log("cart updated");
@@ -445,6 +461,8 @@ export default class CheckoutForm extends React.Component {
 
     // Step 2: Create PaymentIntent over Stripe API
 
+    // Total is fucked up?
+    console.log(this.props.total);
     api
       .createPaymentIntent({ total: this.props.total, stripe_unique_id: "xb" })
       .then((clientSecret) => {
@@ -454,6 +472,7 @@ export default class CheckoutForm extends React.Component {
         this.setState({
           clientSecret: clientSecret,
           loaded: true,
+          failure: false,
         });
       })
       .catch((err) => {
