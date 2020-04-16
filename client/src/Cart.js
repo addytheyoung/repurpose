@@ -60,30 +60,44 @@ export default class Cart extends React.Component {
           });
         });
     } else {
-      console.log(myUid);
-      if (firebase.auth().currentUser) {
-        console.log(firebase.auth().currentUser.uid);
-      }
-
       firebase
         .firestore()
         .collection("Users")
         .doc(myUid)
         .get()
         .then((me) => {
-          console.log(me);
-          console.log(me.data());
-          const myData = me.data();
-          var numItems = 0;
-          if (myData.cart) {
-            numItems = myData.cart.length;
+          if (!me.exists) {
+            firebase
+              .firestore()
+              .collection("Users")
+              .doc(myUid)
+              .set({
+                cart: [],
+                orders: [],
+                sales: [],
+              })
+              .then(() => {
+                this.setState({
+                  loaded: true,
+                  myData: { cart: [], orders: [], sales: [] },
+                  numCartItems: 0,
+                });
+              });
+          } else {
+            console.log(me);
+            console.log(me.data());
+            const myData = me.data();
+            var numItems = 0;
+            if (myData.cart) {
+              numItems = myData.cart.length;
+            }
+            localStorage.setItem("cart", numItems);
+            this.setState({
+              loaded: true,
+              myData: myData,
+              numCartItems: numItems,
+            });
           }
-          localStorage.setItem("cart", numItems);
-          this.setState({
-            loaded: true,
-            myData: myData,
-            numCartItems: numItems,
-          });
         });
     }
   }

@@ -900,7 +900,6 @@ export default class HeaderBar extends React.Component {
         var myUid = localStorage.getItem("tempUid");
         console.log(myUid);
         if (myUid) {
-          alert("transfer data");
           // Transfer the data
           firebase
             .firestore()
@@ -908,7 +907,6 @@ export default class HeaderBar extends React.Component {
             .doc(myUid)
             .get()
             .then((me) => {
-              alert(r.user.uid);
               console.log(me.data());
               const cart = me.data().cart;
               const orders = me.data().orders;
