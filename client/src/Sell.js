@@ -16,7 +16,7 @@ export default class Sell extends React.Component {
     const singedin = !!firebase.auth().currentUser;
     const signedModal = !singedin && !this.state.newUser && !this.state.retUser;
     return (
-      <div>
+      <div style={{}}>
         {this.state.profile && (
           <div
             style={{
@@ -350,6 +350,7 @@ export default class Sell extends React.Component {
               flexDirection: "column",
               alignItems: "center",
               marginTop: 100,
+              minWidth: "100vw",
             }}
           >
             <div style={{ fontSize: 26, fontWeight: 600, letterSpacing: 0 }}>
@@ -665,6 +666,7 @@ export default class Sell extends React.Component {
                   email: email,
                   pass: pass,
                   uid: r.user.uid,
+                  temporary: false,
                 })
                 .then(() => {
                   this.state.logout = false;
@@ -689,6 +691,7 @@ export default class Sell extends React.Component {
               email: email,
               pass: pass,
               uid: r.user.uid,
+              temporary: false,
             })
             .then(() => {
               this.state.logout = false;

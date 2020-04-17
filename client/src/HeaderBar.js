@@ -953,6 +953,7 @@ export default class HeaderBar extends React.Component {
                   email: email,
                   pass: pass,
                   uid: r.user.uid,
+                  temporary: false,
                 })
                 .then(() => {
                   this.state.logout = false;
@@ -977,6 +978,7 @@ export default class HeaderBar extends React.Component {
               email: email,
               pass: pass,
               uid: r.user.uid,
+              temporary: false,
             })
             .then(() => {
               this.state.logout = false;

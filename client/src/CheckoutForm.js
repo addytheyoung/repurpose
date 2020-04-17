@@ -427,11 +427,19 @@ export default class CheckoutForm extends React.Component {
         console.log(clientSecret);
         // this.state.clientSecret = clientSecret;
         // this.state.loaded = true;
-        this.setState({
-          clientSecret: clientSecret,
-          loaded: true,
-          failure: false,
-        });
+        if (!this.state.failure) {
+          this.setState({
+            clientSecret: clientSecret,
+            loaded: true,
+            failure: false,
+          });
+        } else {
+          this.setState({
+            clientSecret: clientSecret,
+            loaded: true,
+            failure: true,
+          });
+        }
       })
       .catch((err) => {
         console.log(err.message);

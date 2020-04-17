@@ -1,5 +1,6 @@
 const functions = require("firebase-functions");
 const env = require("dotenv").config({ path: "./.env" });
+// const stripe = require("stripe")("sk_live_dCqsS9VNcLZwNGP6WmHsLNJp00IJ8KKy14");
 const stripe = require("stripe")("sk_test_hkMGIPsjJ7Ag57pFz1eX0ASX00ijQ9oo1X");
 var admin = require("firebase-admin");
 const express = require("express");

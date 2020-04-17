@@ -39,6 +39,11 @@ export default class Cart extends React.Component {
       myUid = null;
     }
 
+    var temporary = false;
+    if (firebase.auth().currentUser) {
+      temporary = true;
+    }
+
     if (!myUid) {
       const uid = this.randomNumber(20);
       localStorage.setItem("tempUid", uid);
@@ -50,6 +55,7 @@ export default class Cart extends React.Component {
           cart: [],
           orders: [],
           sales: [],
+          temporary: temporary,
         })
         .then(() => {
           localStorage.setItem("cart", 0);
@@ -75,6 +81,7 @@ export default class Cart extends React.Component {
                 cart: [],
                 orders: [],
                 sales: [],
+                temporary: temporary,
               })
               .then(() => {
                 this.setState({

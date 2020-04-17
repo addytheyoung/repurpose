@@ -148,7 +148,7 @@ export default class Shop extends React.Component {
                     >
                       {this.state.modal.pictures.map((pic, index) => {
                         return (
-                          <div>
+                          <div id={index}>
                             <img
                               src={pic}
                               style={{
@@ -420,6 +420,7 @@ export default class Shop extends React.Component {
           cart: [item],
           orders: [],
           sales: [],
+          temporary: true,
         })
         .then(() => {
           localStorage.setItem("cart", 1);
@@ -443,6 +444,7 @@ export default class Shop extends React.Component {
               .doc(myUid)
               .set({
                 cart: [],
+                temporary: true,
                 orders: [],
                 sales: [],
               })
