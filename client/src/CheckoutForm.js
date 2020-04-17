@@ -31,6 +31,7 @@ export default class CheckoutForm extends React.Component {
       myData: null,
       finished: false,
       deliveryType: localStorage.getItem("deliveryType"),
+      timesCalledStripe: 0,
     };
   }
 
@@ -352,16 +353,34 @@ export default class CheckoutForm extends React.Component {
   }
 
   andrewMethod(ev) {
+    var myUid = null;
+
+    if (firebase.auth().currentUser) {
+      // Signed in
+      myUid = firebase.auth().currentUser.uid;
+    } else if (localStorage.getItem("tempUid")) {
+      // temporarily signed in
+      myUid = localStorage.getItem("tempUid");
+    }
     ev.preventDefault();
     const x = ev.target;
     this.checkItems().then((a) => {
-      if (a) {
+      if (a.length === this.state.myData.cart.length) {
         this.handleSubmit(x);
       } else {
         alert(
           "Something in your cart has been purchased. You have not been charged."
         );
-        window.location.reload();
+        firebase
+          .firestore()
+          .collection("Users")
+          .doc(myUid)
+          .update({
+            cart: a,
+          })
+          .then(() => {
+            window.location.href = "/checkout";
+          });
       }
     });
   }
@@ -391,7 +410,7 @@ export default class CheckoutForm extends React.Component {
       this.state.processing ||
       this.state.succeeded ||
       this.state.clientSecret ||
-      this.state.failure
+      this.state.timesCalledStripe > 3
     ) {
       return null;
     }
@@ -427,25 +446,18 @@ export default class CheckoutForm extends React.Component {
         console.log(clientSecret);
         // this.state.clientSecret = clientSecret;
         // this.state.loaded = true;
-        if (!this.state.failure) {
-          this.setState({
-            clientSecret: clientSecret,
-            loaded: true,
-            failure: false,
-          });
-        } else {
-          this.setState({
-            clientSecret: clientSecret,
-            loaded: true,
-            failure: true,
-          });
-        }
+
+        this.setState({
+          clientSecret: clientSecret,
+          loaded: true,
+          timesCalledStripe: this.state.timesCalledStripe + 1,
+        });
       })
       .catch((err) => {
         console.log(err.message);
         this.setState({
           error: err.message,
-          failure: true,
+          timesCalledStripe: this.state.timesCalledStripe + 1,
         });
       });
   }
@@ -456,8 +468,10 @@ export default class CheckoutForm extends React.Component {
     const orders = this.state.myData.orders;
 
     // Check that all items are still available
+    var index = 0;
     for (var i = 0; i < cart.length; i++) {
       const item = cart[i];
+      const itemsInDb = [];
       return firebase
         .firestore()
         .collection("Categories")
@@ -465,8 +479,15 @@ export default class CheckoutForm extends React.Component {
         .collection("All")
         .doc(item.uid)
         .get()
-        .then(() => {
-          return true;
+        .then((e) => {
+          index++;
+          if (e.exists) {
+            itemsInDb.push(e.data());
+          }
+
+          if (index === cart.length) {
+            return itemsInDb;
+          }
         })
         .catch((e) => {
           return false;
