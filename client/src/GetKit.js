@@ -15,22 +15,29 @@ export default class GetKit extends React.Component {
         code = url.substring(i + 1, url.length);
       }
     }
+    console.log(code);
+    console.log(firebase.auth().currentUser);
 
-    api.createSeller({ code: code }).then((a) => {
-      console.log(a);
-      firebase
-        .firestore()
-        .collection("Users")
-        .doc("123@gmail.com")
-        .update({
-          seller: true,
-          stripe_user_id: a.stripe_user_id,
-        })
-        .then(() => {
-          localStorage.setItem("stripe_user_id", a.stripe_user_id);
-          window.location.href = "/sell/kit";
-        });
-    });
+    api
+      .createSeller({ code: code })
+      .then((a) => {
+        console.log(a);
+        firebase
+          .firestore()
+          .collection("Users")
+          .doc(firebase.auth().currentUser.uid)
+          .update({
+            seller: true,
+            stripe_user_id: a.stripe_user_id,
+          })
+          .then(() => {
+            localStorage.setItem("stripe_user_id", a.stripe_user_id);
+            window.location.href = "/sell/kit";
+          });
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
 
     this.state = {
       loaded: false,

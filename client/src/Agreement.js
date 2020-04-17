@@ -162,15 +162,29 @@ export default class Agreement extends React.Component {
 
   stripeSignup() {
     // Take us to the stripe redirect
-    var stripe_url = "";
-    if (window.location.href.includes("localhost")) {
-      stripe_url =
-        "https://connect.stripe.com/express/oauth/authorize?client_id=ca_GziEvM247byG5XcbBDVdmFHV5l3vPz4h&stripe_user%5Bproduct_description%5D=I am selling my own items to Collection.&stripe_user%5Bbusiness_type%5D=individual&redirect_uri=http://localhost:3000/sell/getkit";
-    } else {
-      stripe_url =
-        "https://connect.stripe.com/express/oauth/authorize?client_id=ca_GziEvM247byG5XcbBDVdmFHV5l3vPz4h&stripe_user%5Bproduct_description%5D=I am selling my own items to Collection.&stripe_user%5Bbusiness_type%5D=individual&redirect_uri=https://collection.deals/sell/getkit";
-    }
+    var test_api_key = "ca_GziEvM247byG5XcbBDVdmFHV5l3vPz4h";
+    var api_key = "ca_GziEZt1B1Xc8KxBLn5xsbZH0JkVmMMbb";
 
-    window.location.href = stripe_url;
+    var test = false;
+
+    if (test) {
+      var stripe_url = "";
+      if (window.location.href.includes("localhost")) {
+        stripe_url =
+          "https://connect.stripe.com/express/oauth/authorize?client_id=ca_GziEvM247byG5XcbBDVdmFHV5l3vPz4h&stripe_user%5Bproduct_description%5D=I am selling my own items to Collection.&stripe_user%5Bbusiness_type%5D=individual&redirect_uri=http://localhost:3000/sell/getkit";
+      } else {
+        stripe_url =
+          "https://connect.stripe.com/express/oauth/authorize?client_id=ca_GziEvM247byG5XcbBDVdmFHV5l3vPz4h&stripe_user%5Bproduct_description%5D=I am selling my own items to Collection.&stripe_user%5Bbusiness_type%5D=individual&redirect_uri=https://collection.deals/sell/getkit";
+      }
+
+      window.location.href = stripe_url;
+    } else {
+      var stripe_url = "";
+
+      stripe_url =
+        "https://connect.stripe.com/express/oauth/authorize?client_id=ca_GziEZt1B1Xc8KxBLn5xsbZH0JkVmMMbb&stripe_user%5Bproduct_description%5D=I am selling my own items to Collection.&stripe_user%5Bbusiness_type%5D=individual&redirect_uri=https://collection.deals/sell/getkit";
+
+      window.location.href = stripe_url;
+    }
   }
 }

@@ -21,6 +21,10 @@
         "function": "app"
       },
       {
+        "source": "/make-seller",
+        "function": "app"
+      },
+      {
         "source": "/send-email",
         "function": "app"
       },

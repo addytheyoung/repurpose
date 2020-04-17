@@ -188,27 +188,18 @@ export default class OrderKit extends React.Component {
         firebase
           .firestore()
           .collection("Users")
-          .where("uid", "==", "uid1")
-          .get()
-          .then((a) => {
-            const user = a.docs[0].data();
-            localStorage.setItem("email", user.email);
-            firebase
-              .firestore()
-              .collection("Users")
-              .doc(user.email)
-              .update({
-                name: name,
-                // address1: address1,
-                // address2: address2,
-                // city: city,
-                // state: state,
-                // zip: zip,
-              })
-              .then(() => {
-                window.location.href =
-                  "/sell/rules/" + this.state.kit + "&" + this.state.payment;
-              });
+          .doc(firebase.auth().currentUser.uid)
+          .update({
+            name: name,
+            // address1: address1,
+            // address2: address2,
+            // city: city,
+            // state: state,
+            // zip: zip,
+          })
+          .then(() => {
+            window.location.href =
+              "/sell/rules/" + this.state.kit + "&" + this.state.payment;
           });
       });
     });

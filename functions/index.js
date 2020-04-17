@@ -49,14 +49,17 @@ app.post("/send-email", (req, res) => {
 
 app.post("/make-seller", async (req, res) => {
   const body = req.body;
-
+  console.log("MAKE SELLER");
+  console.log(body);
   try {
     const response = await stripe.oauth.token({
       grant_type: "authorization_code",
       code: body.code,
     });
+    console.log(response);
     res.json(response);
   } catch (err) {
+    console.log(err);
     res.json(err);
   }
 });

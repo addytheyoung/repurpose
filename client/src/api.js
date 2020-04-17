@@ -42,6 +42,7 @@ const sendEmail = (email, meeting) => {
 };
 
 const createSeller = (options) => {
+  console.log(options);
   return window
     .fetch(`/make-seller`, {
       method: "POST",
@@ -51,6 +52,8 @@ const createSeller = (options) => {
       body: JSON.stringify(options),
     })
     .then((res) => {
+      console.log("RES");
+
       if (res.status === 200) {
         return res.json();
       } else {
@@ -58,11 +61,16 @@ const createSeller = (options) => {
       }
     })
     .then((data) => {
+      console.log("DATA");
+      console.log(data);
       if (!data || data.error) {
         throw Error("API Error");
       } else {
         return data;
       }
+    })
+    .catch((e) => {
+      console.log(e.message);
     });
 };
 
