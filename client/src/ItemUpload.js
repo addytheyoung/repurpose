@@ -151,15 +151,15 @@ export default class ItemUpload extends React.Component {
             >
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
-                value={"All Categories"}
+                value={"Antiques & Collectibles"}
               >
-                All Categories
+                Antiques & Collectibles
               </MenuItem>
-              <MenuItem style={{ marginTop: 5, height: 50 }} value={"Antiques"}>
-                Antiques
-              </MenuItem>
-              <MenuItem style={{ marginTop: 5, height: 50 }} value={"Art"}>
-                Art
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Art & Home Decoration"}
+              >
+                Art & Home Decoration
               </MenuItem>
               <MenuItem style={{ marginTop: 5, height: 50 }} value={"Baby"}>
                 Baby
@@ -191,12 +191,7 @@ export default class ItemUpload extends React.Component {
               >
                 {"Coins & Paper Money"}
               </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Collectibles"}
-              >
-                Collectibles
-              </MenuItem>
+
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
                 value={"Computers & Tablets"}
@@ -205,15 +200,15 @@ export default class ItemUpload extends React.Component {
               </MenuItem>
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
-                value={"Consumer Electronics"}
+                value={"Electronics"}
               >
-                Consumer Electronics
+                Electronics
               </MenuItem>
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
-                value={"Crafts / Arts & Crafts"}
+                value={"Crafts / Hobbies"}
               >
-                {"Crafts / Arts & Crafts"}
+                {"Crafts / Hobbies"}
               </MenuItem>
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
@@ -274,6 +269,12 @@ export default class ItemUpload extends React.Component {
                 value={"Toys & Hobbies"}
               >
                 {"Toys & Hobbies"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Movies & Video Games"}
+              >
+                {"Movies & Video Games"}
               </MenuItem>
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
@@ -417,24 +418,20 @@ export default class ItemUpload extends React.Component {
   }
 
   uploadItem() {
-    // if (!this.state.title.trim()) {
-    //   alert("Title");
-    //   return;
-    // } else if (!this.state.price.trim()) {
-    //   alert("Price");
-    //   return;
-    // } else if (!this.state.category) {
-    //   alert("Category");
-    //   return;
-    // } else if (!this.state.sellerStripeId) {
-    //   alert("Seller stripe id");
-    //   return;
-    // } else if (!this.state.croppedImgUrl) {
-    //   alert("Picture");
-    //   return;
-    // }
-
-    if (!this.state.croppedImgFile) {
+    const category = document.getElementById("category").innerText;
+    if (!this.state.title.trim()) {
+      alert("Title");
+      return;
+    } else if (!this.state.price.trim()) {
+      alert("Price");
+      return;
+    } else if (!category) {
+      alert("Category");
+      return;
+    } else if (!this.state.sellerStripeId) {
+      alert("Seller stripe id");
+      return;
+    } else if (!this.state.croppedImgFile) {
       alert("Picture");
       return;
     }
@@ -452,64 +449,148 @@ export default class ItemUpload extends React.Component {
           firebase
             .firestore()
             .collection("Categories")
-            .doc(this.state.category)
-            .collection("All")
-            .doc(number)
-            .set({
-              title: this.state.title,
-              original_price: parseInt(this.state.price),
-              location: localStorage.getItem("city"),
-              pictures: [a],
-              category: this.state.category,
-              sub_categories: this.state.currentKeywords,
-              description: this.state.description,
-              seller: this.state.sellerStripeId,
-              uid: number,
-              poster_uid: "uid1",
-            })
-            .then(() => {
-              // Add it to the users items sold so we can pay them
-              firebase
-                .firestore()
-                .collection("Users")
-                .where("stripe_user_id", "==", this.state.sellerStripeId)
-                .get()
-                .then((me) => {
-                  const data = me.docs[0].data();
-                  const sales = data.sales;
-                  const thisSale = {
+            .doc(category)
+            .get()
+            .then((cat) => {
+              if (cat.exists) {
+                firebase
+                  .firestore()
+                  .collection("Categories")
+                  .doc(category)
+                  .collection("All")
+                  .doc(number)
+                  .set({
                     title: this.state.title,
                     original_price: parseInt(this.state.price),
                     location: localStorage.getItem("city"),
                     pictures: [a],
-                    category: this.state.category,
+                    category: category,
                     sub_categories: this.state.currentKeywords,
                     description: this.state.description,
                     seller: this.state.sellerStripeId,
                     uid: number,
-                    poster_uid: "uid1",
-                    paid: false,
-                  };
-                  const newSales = sales.concat(thisSale);
+                    poster_uid: firebase.auth().currentUser.uid,
+                  })
+                  .then(() => {
+                    // Add it to the users items sold so we can pay them
+                    firebase
+                      .firestore()
+                      .collection("Users")
+                      .where("stripe_user_id", "==", this.state.sellerStripeId)
+                      .get()
+                      .then((me) => {
+                        const data = me.docs[0].data();
+                        const sales = data.sales;
+                        const thisSale = {
+                          title: this.state.title,
+                          original_price: parseInt(this.state.price),
+                          location: localStorage.getItem("city"),
+                          pictures: [a],
+                          category: this.state.category,
+                          sub_categories: this.state.currentKeywords,
+                          description: this.state.description,
+                          seller: this.state.sellerStripeId,
+                          uid: number,
+                          poster_uid: firebase.auth().currentUser.uid,
+                          sold: false,
+                        };
+                        const newSales = sales.concat(thisSale);
 
-                  firebase
-                    .firestore()
-                    .collection("Users")
-                    .doc(firebase.auth().currentUser.uid)
-                    .update({
-                      sales: newSales,
-                    })
-                    .then(() => {
-                      this.setState({
-                        title: "",
-                        price: "",
-                        picture: "",
-                        category: "",
-                        description: "",
-                        number: "",
+                        firebase
+                          .firestore()
+                          .collection("Users")
+                          .doc(firebase.auth().currentUser.uid)
+                          .update({
+                            sales: newSales,
+                          })
+                          .then(() => {
+                            this.setState({
+                              title: "",
+                              price: "",
+                              picture: "",
+                              category: "",
+                              description: "",
+                              number: "",
+                            });
+                          });
                       });
-                    });
-                });
+                  });
+              } else {
+                // Doesn't exist, make the category
+                firebase
+                  .firestore()
+                  .collection("Categories")
+                  .doc(category)
+                  .set({})
+                  .then(() => {
+                    firebase
+                      .firestore()
+                      .collection("Categories")
+                      .doc(category)
+                      .collection("All")
+                      .doc(number)
+                      .set({
+                        title: this.state.title,
+                        original_price: parseInt(this.state.price),
+                        location: localStorage.getItem("city"),
+                        pictures: [a],
+                        category: category,
+                        sub_categories: this.state.currentKeywords,
+                        description: this.state.description,
+                        seller: this.state.sellerStripeId,
+                        uid: number,
+                        poster_uid: firebase.auth().currentUser.uid,
+                      })
+                      .then(() => {
+                        // Add it to the users items sold so we can pay them
+                        firebase
+                          .firestore()
+                          .collection("Users")
+                          .where(
+                            "stripe_user_id",
+                            "==",
+                            this.state.sellerStripeId
+                          )
+                          .get()
+                          .then((me) => {
+                            const data = me.docs[0].data();
+                            const sales = data.sales;
+                            const thisSale = {
+                              title: this.state.title,
+                              original_price: parseInt(this.state.price),
+                              location: localStorage.getItem("city"),
+                              pictures: [a],
+                              category: this.state.category,
+                              sub_categories: this.state.currentKeywords,
+                              description: this.state.description,
+                              seller: this.state.sellerStripeId,
+                              uid: number,
+                              poster_uid: firebase.auth().currentUser.uid,
+                              sold: false,
+                            };
+                            const newSales = sales.concat(thisSale);
+
+                            firebase
+                              .firestore()
+                              .collection("Users")
+                              .doc(firebase.auth().currentUser.uid)
+                              .update({
+                                sales: newSales,
+                              })
+                              .then(() => {
+                                this.setState({
+                                  title: "",
+                                  price: "",
+                                  picture: "",
+                                  category: "",
+                                  description: "",
+                                  number: "",
+                                });
+                              });
+                          });
+                      });
+                  });
+              }
             });
         });
       })

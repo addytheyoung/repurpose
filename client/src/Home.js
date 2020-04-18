@@ -46,6 +46,13 @@ export default class Home extends React.Component {
         .then((allItems) => {
           const allItemsDocs = allItems.docs;
           const itemArr = [];
+          if (allItems.empty) {
+            this.setState({
+              items: itemArr,
+              loaded: true,
+              modal: null,
+            });
+          }
           for (var j = 0; j < allItemsDocs.length; j++) {
             const itemData = allItemsDocs[j].data();
             // See if the search matches
@@ -457,7 +464,7 @@ export default class Home extends React.Component {
                 <TextField
                   {...params}
                   placeholder="We add more cities every day!"
-                  label="City"
+                  label="What city are you in?"
                   variant="outlined"
                   fullWidth
                 />
@@ -471,9 +478,10 @@ export default class Home extends React.Component {
               id="start"
               style={{
                 marginLeft: 10,
+                width: 80,
                 padding: 10,
                 borderRadius: 5,
-                backgroundColor: "black",
+                backgroundColor: "#E61E4D",
                 fontWeight: 600,
                 color: "white",
                 display: "flex",
@@ -481,7 +489,7 @@ export default class Home extends React.Component {
                 alignItems: "center",
               }}
             >
-              Let's go
+              SHOP
             </div>
           </div>
           <div style={{ marginTop: 50, display: "flex", flexDirection: "row" }}>

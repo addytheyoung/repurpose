@@ -23,6 +23,12 @@ export default class Buy extends React.Component {
     };
   }
   render() {
+    const q = window.location.search;
+    const urlParams = new URLSearchParams(q);
+    const category = urlParams.get("city");
+    if (category) {
+      localStorage.setItem("city", category);
+    }
     const categories = [
       { picture: Antiques, name: "Antiques & Collectibles", link: "antiques" },
       { picture: Art, name: "Art & Home Decoration", link: "art" },

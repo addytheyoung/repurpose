@@ -13,7 +13,13 @@ export default class Shop extends React.Component {
     const q = window.location.search;
     const urlParams = new URLSearchParams(q);
     var category = urlParams.get("category");
+
     category = category.substring(0, 1).toUpperCase() + category.substring(1);
+    if (category === "Movies") {
+      category = "Movies & Video Games";
+    } else if (category === "Coins") {
+      category = "Coins & Paper Money";
+    }
     console.log(category);
 
     this.state = {
@@ -291,12 +297,15 @@ export default class Shop extends React.Component {
                     marginTop: 50,
                   }}
                 >
-                  No items for this category!
+                  All sold out for this category!
                 </div>
                 <div
                   style={{ textAlign: "center", marginTop: 10, fontSize: 18 }}
                 >
-                  We add more every day, and Collection just got started. <br />
+                  <br />
+                  We add more every hour, and Collection is less than a week
+                  old.
+                  <br />
                   Check back very soon!
                 </div>
               </div>

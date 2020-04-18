@@ -31,6 +31,12 @@ export default class RenderRoutes extends React.Component {
     const stripePromise = loadStripe(
       "pk_test_gLPSHkmFGwodXZBWMQabXaRr00jsYpn5GL"
     );
+    const q = window.location.search;
+    const urlParams = new URLSearchParams(q);
+    const category = urlParams.get("city");
+    if (category) {
+      localStorage.setItem("city", category);
+    }
     if (firebase.auth().currentUser) {
       return (
         <Elements stripe={stripePromise}>
@@ -98,11 +104,7 @@ export default class RenderRoutes extends React.Component {
             {citiesList.includes(window.localStorage.getItem("city")) && (
               <Route path="/" exact={true} render={() => <Buy />} />
             )}
-            <Route
-              path="/andrewitemupload4467"
-              exact={true}
-              render={() => <ItemUpload />}
-            />
+
             <Route path="/search" exact={false} render={() => <SearchPage />} />
 
             <Route

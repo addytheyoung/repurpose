@@ -87,12 +87,12 @@ export default class Sales extends React.Component {
                       {"Your pay: $"}
                       {parseInt(sale.original_price) * 0.5}
                     </div>
-                    {sale.paid && (
+                    {sale.sold && (
                       <div style={{ fontWeight: 600 }}>
                         {"Have you been paid? Not yet"}
                       </div>
                     )}
-                    {!sale.paid && (
+                    {!sale.sold && (
                       <div style={{ fontWeight: 600 }}>
                         {"Have you been paid? Not yet"}
                       </div>
@@ -117,7 +117,7 @@ export default class Sales extends React.Component {
   getTotalPay(sales) {
     var total = 0;
     for (var i = 0; i < sales.length; i++) {
-      if (sales[i].paid) {
+      if (sales[i].sold) {
         total += sales[i].original_price * 0.5;
       }
     }
@@ -127,7 +127,7 @@ export default class Sales extends React.Component {
   getTotalPendingPay(sales) {
     var total = 0;
     for (var i = 0; i < sales.length; i++) {
-      if (!sales[i].paid) {
+      if (!sales[i].sold) {
         total += sales[i].original_price * 0.5;
       }
     }

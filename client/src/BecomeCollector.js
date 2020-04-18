@@ -16,7 +16,7 @@ export default class BecomeCollector extends React.Component {
           height: "100vh",
           display: "flex",
           flexDirection: "column",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         <div
@@ -24,7 +24,7 @@ export default class BecomeCollector extends React.Component {
             fontSize: 20,
             fontWeight: 600,
             marginTop: 100,
-            marginBottom: 30
+            marginBottom: 30,
           }}
         >
           What is your phone number?
@@ -42,7 +42,7 @@ export default class BecomeCollector extends React.Component {
             fontSize: 20,
             fontWeight: 600,
             marginTop: 50,
-            marginBottom: 30
+            marginBottom: 30,
           }}
         >
           What city do you live in?
@@ -51,9 +51,9 @@ export default class BecomeCollector extends React.Component {
           <Autocomplete
             id="combo-box-demo"
             options={this.citiesList}
-            getOptionLabel={option => option}
+            getOptionLabel={(option) => option}
             style={{ width: 300 }}
-            renderInput={params => (
+            renderInput={(params) => (
               <TextField
                 {...params}
                 placeholder="We add more cities every day!"
@@ -79,7 +79,7 @@ export default class BecomeCollector extends React.Component {
             color: "white",
             display: "flex",
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           Submit
@@ -102,10 +102,10 @@ export default class BecomeCollector extends React.Component {
     firebase
       .firestore()
       .collection("Collectors")
-      .doc("123")
+      .doc()
       .set({
         phone: phone,
-        city: city
+        city: city,
       })
       .then(() => {
         alert("Success! We'll reach out soon.");
