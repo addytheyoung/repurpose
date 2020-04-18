@@ -6,3 +6,12 @@
 #submit:hover {
   cursor: pointer;
 }
+
+ul {
+  display: flex;
+  flex-direction: column;
+}
+
+li {
+  margin-top: 10px;
+}

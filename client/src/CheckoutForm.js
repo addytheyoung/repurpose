@@ -121,7 +121,6 @@ export default class CheckoutForm extends React.Component {
                   .collection("All")
                   .doc(item.uid)
                   .delete()
-
                   .then(() => {
                     a_index++;
                     if (a_index === cart.length) {
@@ -589,31 +588,31 @@ export default class CheckoutForm extends React.Component {
       console.log("[error]", payload.error);
     } else {
       // Create our customer
-      // const sellers = [];
-      // for (var i = 0; i < this.state.myData.cart.length; i++) {
-      //   const item = this.state.myData.cart[i];
-      //   const arrItem = { id: item.seller, cost: item.original_price };
-      //   sellers.push(arrItem);
-      // }
-      // // Pay out all the sellers
-      // for (var i = 0; i < sellers.length; i++) {
-      //   api
-      //     .createTransfers({
-      //       seller: sellers[i].id,
-      //       cost: sellers[i].cost,
-      //       worker: false,
-      //     })
-      //     .then((res) => {
-      //       console.log("Res");
-      //       console.log(res);
-      //     })
-      //     .catch((e) => {
-      //       console.log("E");
-      //       console.log(e.message);
-      //       alert(e.message);
-      //     });
-      // }
-      // Pay out the gig worker
+      const sellers = [];
+      for (var i = 0; i < this.state.myData.cart.length; i++) {
+        const item = this.state.myData.cart[i];
+        const arrItem = { id: item.seller, cost: item.original_price };
+        sellers.push(arrItem);
+      }
+      // Pay out all the sellers
+      for (var i = 0; i < sellers.length; i++) {
+        api
+          .createTransfers({
+            seller: sellers[i].id,
+            cost: sellers[i].cost,
+            worker: false,
+          })
+          .then((res) => {
+            console.log("Res");
+            console.log(res);
+          })
+          .catch((e) => {
+            console.log("E");
+            console.log(e.message);
+            alert(e.message);
+          });
+      }
+      //Pay out the gig worker
       // api.createTransfers({
       //   seller: "xxx",
       //   cost: this.props.total,

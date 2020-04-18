@@ -76,14 +76,14 @@ app.get("/product-details", (req, res) => {
 
 app.get("/customer", (req, res) => {
   stripe.customers.retrieve("cus_Gz1cqDiR9R8g7V", function (err, customer) {});
-  // stripe.customers.create(
-  //   {
-  //     description: "My First Test Customer (created for API docs)"
-  //   },
-  //   function(err, customer) {
-  //     res.send(customer);
-  //   }
-  // );
+  stripe.customers.create(
+    {
+      description: "A customer of collection",
+    },
+    function (err, customer) {
+      res.send(customer);
+    }
+  );
 });
 
 app.post("/create-transfers", async (req, res) => {
@@ -126,8 +126,6 @@ app.post("/create-payment-intent", async (req, res) => {
   const body = req.body;
   var amount = body.total;
   const productDetails = getProductDetails();
-  console.log(amount);
-  console.log(amount * 100);
   amount = parseInt(amount * 100);
 
   const options = {
@@ -136,11 +134,6 @@ app.post("/create-payment-intent", async (req, res) => {
     amount: amount * 100,
     currency: productDetails.currency,
     description: productDetails.description,
-
-    // transfer_data: {
-    //   amount: amount * 100,
-    //   destination: stripe_user_id,
-    // },
   };
 
   try {
@@ -157,7 +150,7 @@ let getProductDetails = (myData) => {
   return {
     currency: "usd",
     amount: 1000,
-    description: "dqdqwdqwdq",
+    description: "An item bought from collection.",
   };
 };
 

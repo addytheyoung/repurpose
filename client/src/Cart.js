@@ -545,7 +545,8 @@ export default class Cart extends React.Component {
                 </div>
               )}
 
-              <a
+              <div
+                onClick={() => this.goToCheckout()}
                 href={"/checkout"}
                 id="checkout"
                 style={{
@@ -565,13 +566,15 @@ export default class Cart extends React.Component {
                 }}
               >
                 CHECK OUT
-              </a>
+              </div>
             </div>
           )}
         </div>
       </div>
     );
   }
+
+  goToCheckout() {}
 
   setPickup(e) {
     const value = e.target.value;

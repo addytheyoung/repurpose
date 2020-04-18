@@ -1,6 +1,6 @@
 import React from "react";
 import * as firebase from "firebase";
-import { Input } from "@material-ui/core";
+import { Input, MenuItem, Select, Avatar } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -98,6 +98,7 @@ export default class ItemUpload extends React.Component {
           <div style={{ marginTop: 20 }}>Upload an item</div>
           <div>
             <Input
+              style={{ width: "80vw", height: 50, marginTop: 10 }}
               onChange={(e) => this.changeValue(e, "title")}
               value={this.state.title}
               placeholder={"Title"}
@@ -105,6 +106,7 @@ export default class ItemUpload extends React.Component {
           </div>
           <div>
             <Input
+              style={{ width: "80vw", height: 50, marginTop: 10 }}
               onChange={(e) => this.changeValue(e, "price")}
               value={this.state.price}
               placeholder={"Price"}
@@ -126,15 +128,164 @@ export default class ItemUpload extends React.Component {
               />
             )}
           </div>
-          <div>
-            <Input
-              onChange={(e) => this.changeValue(e, "category")}
-              value={this.state.category}
-              placeholder={"Category"}
-            />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Select
+              style={{
+                width: "80vw",
+                height: 50,
+                marginTop: 10,
+                height: 40,
+                fontSize: 14,
+                display: "flex",
+                flexDirection: "column",
+              }}
+              id="category"
+              defaultValue={"Category"}
+            >
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"All Categories"}
+              >
+                All Categories
+              </MenuItem>
+              <MenuItem style={{ marginTop: 5, height: 50 }} value={"Antiques"}>
+                Antiques
+              </MenuItem>
+              <MenuItem style={{ marginTop: 5, height: 50 }} value={"Art"}>
+                Art
+              </MenuItem>
+              <MenuItem style={{ marginTop: 5, height: 50 }} value={"Baby"}>
+                Baby
+              </MenuItem>
+              <MenuItem style={{ marginTop: 5, height: 50 }} value={"Books"}>
+                Books
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Cameras & Photo"}
+              >
+                {"Cameras & Photo"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Cell Phones & Accessories"}
+              >
+                {"Cell Phones & Accessories"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Clothing, Shoes, & Accessories"}
+              >
+                {"Clothing, Shoes, & Accessories"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Coins & Paper Money"}
+              >
+                {"Coins & Paper Money"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Collectibles"}
+              >
+                Collectibles
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Computers & Tablets"}
+              >
+                {"Computers & Tablets"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Consumer Electronics"}
+              >
+                Consumer Electronics
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Crafts / Arts & Crafts"}
+              >
+                {"Crafts / Arts & Crafts"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Dolls & Bears"}
+              >
+                {"Dolls & Bears"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Gift Cards & Coupons"}
+              >
+                {"Gift Cards & Coupons"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Health & Beauty"}
+              >
+                {"Health & Beauty"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Home & Garden"}
+              >
+                {"Home & Garden"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Jewelry & Watches"}
+              >
+                {"Jewelry & Watches"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Musical Instruments & Gear"}
+              >
+                {"Musical Instruments & Gear"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Pet Supplies"}
+              >
+                {"Pet Supplies"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Pottery & Glass"}
+              >
+                {"Pottery & Glass"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Sporting Goods"}
+              >
+                {"Sporting Goods"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Toys & Hobbies"}
+              >
+                {"Toys & Hobbies"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Everything Else"}
+              >
+                {"Everything Else"}
+              </MenuItem>
+            </Select>
           </div>
           <div>
             <Input
+              style={{ width: "80vw", height: 50, marginTop: 10 }}
               onChange={(e) => this.changeValue(e, "description")}
               value={this.state.description}
               placeholder={"Description"}
@@ -143,7 +294,13 @@ export default class ItemUpload extends React.Component {
               <FormControl style={{ maxWidth: 200, minWidth: 200 }}>
                 <Input
                   placeholder={"Keywords (Pick 5)"}
-                  style={{ backgroundColor: "#f8f8f8", padding: 5 }}
+                  style={{
+                    backgroundColor: "#f8f8f8",
+                    padding: 5,
+                    width: "80vw",
+                    height: 50,
+                    marginTop: 10,
+                  }}
                   onKeyPress={(e) => {
                     if (e.key == "Enter") {
                       this.handleChange(e);
@@ -168,6 +325,7 @@ export default class ItemUpload extends React.Component {
           <div style={{ height: 30 }}></div>
           <div>
             <Input
+              style={{ width: "80vw", height: 50, marginTop: 10 }}
               onChange={(e) => this.changeValue(e, "sellerStripeId")}
               value={this.state.sellerStripeId}
               placeholder={"Seller Stripe id"}
@@ -187,7 +345,7 @@ export default class ItemUpload extends React.Component {
               id="combo-box-demo"
               options={this.citiesList}
               getOptionLabel={(option) => option}
-              style={{ width: 300 }}
+              style={{ width: "80vw", height: 50, marginTop: 10 }}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -198,7 +356,6 @@ export default class ItemUpload extends React.Component {
                 />
               )}
               freeSolo={true}
-              style={{ width: "300px" }}
             />
           </div>
           <div
@@ -210,6 +367,9 @@ export default class ItemUpload extends React.Component {
               backgroundColor: "black",
               color: "white",
               textAlign: "center",
+              width: "50vw",
+              height: 50,
+              marginTop: 30,
             }}
           >
             UPLOAD
