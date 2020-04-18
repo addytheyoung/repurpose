@@ -664,7 +664,6 @@ export default class Sell extends React.Component {
                   orders: orders,
                   sales: sales,
                   email: email,
-                  pass: pass,
                   uid: r.user.uid,
                   temporary: false,
                 })
@@ -689,7 +688,6 @@ export default class Sell extends React.Component {
               orders: [],
               sales: [],
               email: email,
-              pass: pass,
               uid: r.user.uid,
               temporary: false,
             })

@@ -448,35 +448,42 @@ export default class Shop extends React.Component {
                 orders: [],
                 sales: [],
               })
-              .then((me) => {
-                const myCart = me.data().cart;
-                for (var i = 0; i < myCart.length; i++) {
-                  if (myCart[i].uid == item.uid) {
-                    alert("Item already in your cart!");
-                    this.setState({
-                      modal: null,
-                      addingToCart: false,
-                      numCartItems: numCartItems,
-                    });
-                    return;
-                  }
-                }
-
-                myCart.push(item);
+              .then(() => {
                 firebase
                   .firestore()
                   .collection("Users")
                   .doc(myUid)
-                  .update({
-                    cart: myCart,
-                  })
-                  .then(() => {
-                    localStorage.setItem("cart", numCartItems);
-                    this.setState({
-                      modal: null,
-                      addingToCart: false,
-                      numCartItems: numCartItems,
-                    });
+                  .get()
+                  .then((me) => {
+                    const myCart = me.data().cart;
+                    for (var i = 0; i < myCart.length; i++) {
+                      if (myCart[i].uid == item.uid) {
+                        alert("Item already in your cart!");
+                        this.setState({
+                          modal: null,
+                          addingToCart: false,
+                          numCartItems: numCartItems,
+                        });
+                        return;
+                      }
+                    }
+
+                    myCart.push(item);
+                    firebase
+                      .firestore()
+                      .collection("Users")
+                      .doc(myUid)
+                      .update({
+                        cart: myCart,
+                      })
+                      .then(() => {
+                        localStorage.setItem("cart", numCartItems);
+                        this.setState({
+                          modal: null,
+                          addingToCart: false,
+                          numCartItems: numCartItems,
+                        });
+                      });
                   });
               });
           } else {

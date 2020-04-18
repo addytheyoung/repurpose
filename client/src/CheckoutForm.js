@@ -112,68 +112,78 @@ export default class CheckoutForm extends React.Component {
               .doc(item.category)
               .collection("All")
               .doc(item.uid)
-              .get()
+              .update({ deleting_now: true })
               .then(() => {
-                a_index++;
-                if (a_index === cart.length) {
-                  firebase
-                    .firestore()
-                    .collection("Users")
-                    .where("cart", "array-contains-any", cart)
-                    .get()
-                    .then((user) => {
-                      const userDocs = user.docs;
-                      console.log(userDocs.length);
-                      if (userDocs.length === 0) {
-                        // Shouldn't be, i'm removing from my own cart
-                      }
-                      var b_index = 0;
-                      var k = 0;
-                      var looping = true;
+                firebase
+                  .firestore()
+                  .collection("Categories")
+                  .doc(item.category)
+                  .collection("All")
+                  .doc(item.uid)
+                  .delete()
 
-                      // All the users with an item in their cart
-
-                      for (var k = 0; k < userDocs.length; k++) {
-                        const userData = userDocs[k];
-
-                        const newCart = userData.data().cart;
-                        console.log(newCart);
-                        // All the items in a users cart
-                        for (var p = 0; p < newCart.length; p++) {
-                          // All the items we are looking for
-                          var l = 0;
-                          while (l < itemUids.length) {
-                            if (!newCart[p]) {
-                              break;
-                            }
-                            if (newCart[p].uid === itemUids[l]) {
-                              console.log("splicing array");
-                              l = 0;
-                              // Remove the item
-                              newCart.splice(p, 1);
-                            }
-                            l++;
+                  .then(() => {
+                    a_index++;
+                    if (a_index === cart.length) {
+                      firebase
+                        .firestore()
+                        .collection("Users")
+                        .where("cart", "array-contains-any", cart)
+                        .get()
+                        .then((user) => {
+                          const userDocs = user.docs;
+                          console.log(userDocs.length);
+                          if (userDocs.length === 0) {
+                            // Shouldn't be, i'm removing from my own cart
                           }
-                        }
-                        console.log(newCart);
-                        firebase
-                          .firestore()
-                          .collection("Users")
-                          .doc(userData.id)
-                          .update({
-                            cart: newCart,
-                          })
-                          .then(() => {
-                            b_index++;
-                            if (b_index === userDocs.length) {
-                              localStorage.setItem("cart", "0");
-                              console.log("DONE");
-                              this.props.finished();
+                          var b_index = 0;
+                          var k = 0;
+                          var looping = true;
+
+                          // All the users with an item in their cart
+
+                          for (var k = 0; k < userDocs.length; k++) {
+                            const userData = userDocs[k];
+
+                            const newCart = userData.data().cart;
+                            console.log(newCart);
+                            // All the items in a users cart
+                            for (var p = 0; p < newCart.length; p++) {
+                              // All the items we are looking for
+                              var l = 0;
+                              while (l < itemUids.length) {
+                                if (!newCart[p]) {
+                                  break;
+                                }
+                                if (newCart[p].uid === itemUids[l]) {
+                                  console.log("splicing array");
+                                  l = 0;
+                                  // Remove the item
+                                  newCart.splice(p, 1);
+                                }
+                                l++;
+                              }
                             }
-                          });
-                      }
-                    });
-                }
+                            console.log(newCart);
+                            firebase
+                              .firestore()
+                              .collection("Users")
+                              .doc(userData.id)
+                              .update({
+                                cart: newCart,
+                              })
+                              .then(() => {
+                                b_index++;
+                                if (b_index === userDocs.length) {
+                                  localStorage.setItem("cart", "0");
+                                  console.log("DONE");
+                                  this.props.finished();
+                                }
+                              });
+                          }
+                        });
+                    }
+                  });
               });
           }
         });
