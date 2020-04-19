@@ -20,16 +20,19 @@ export default class SearchPage extends React.Component {
 
     if (category === "All Categories") {
       const categoryList = [
-        "Art",
+        "Antiques & Collectibles",
+        "Art & Home Decoration",
+        "Baby",
         "Books",
-        "Collectibles",
-        "Decoration",
+        "Clothing, Shoes, & Accessories",
         "Electronics",
-        "Fashion",
-        "Movies&Games",
-        "Other",
+        "Home & Garden",
+        "Movies & Video Games",
+        "Everything Else",
       ];
       const firebaseCats = firebase.firestore().collection("Categories");
+      var i_index = 0;
+      const itemArr = [];
       for (var i = 0; i < categoryList.length; i++) {
         firebaseCats
           .doc(categoryList[i])
@@ -38,8 +41,11 @@ export default class SearchPage extends React.Component {
           // .limit(30)
           .get()
           .then((allItems) => {
+            i_index++;
+            console.log(allItems);
             const allItemsDocs = allItems.docs;
-            const itemArr = [];
+
+            var j_index = 0;
             for (var j = 0; j < allItemsDocs.length; j++) {
               const itemData = allItemsDocs[j].data();
               // See if the search matches
@@ -47,11 +53,15 @@ export default class SearchPage extends React.Component {
                 itemArr.push(itemData);
               }
               // Find a way to render all the items here
-
-              if (j === allItemsDocs.length - 1) {
+              console.log("i_index: " + i_index);
+              console.log("catList: " + categoryList.length);
+              if (
+                j === allItemsDocs.length - 1 &&
+                i_index === categoryList.length - 1
+              ) {
                 this.setState({
                   items: itemArr,
-                  // loaded: true,
+                  loaded: true,
                   modal: null,
                 });
               }
@@ -81,7 +91,7 @@ export default class SearchPage extends React.Component {
             if (i === docs.length - 1) {
               this.setState({
                 items: itemArr,
-                // loaded: true,
+                loaded: true,
                 modal: null,
               });
             }
@@ -346,58 +356,70 @@ export default class SearchPage extends React.Component {
             <div
               style={{
                 display: "flex",
-                flexDirection: "row",
-                marginTop: 50,
-                marginLeft: 100,
-                marginRight: 100,
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              {this.state.items.map((item, index) => {
-                if (
-                  (this.state.minPrice &&
-                    item.original_price < this.state.minPrice) ||
-                  (this.state.maxPrice &&
-                    item.original_price > this.state.maxPrice)
-                ) {
-                  return null;
-                }
-                return (
-                  <div
-                    onClick={() => this.itemPage(item)}
-                    id="box"
-                    style={{
-                      width: 220,
-                      marginLeft: 10,
-                      marginRight: 10,
-                      height: 300,
-
-                      // borderWidth: 1,
-                      // borderStyle: "solid"
-                    }}
-                  >
-                    <img
-                      onLoadCapture={() =>
-                        this.loadPage(index, this.state.items.length)
-                      }
-                      src={item.pictures[0]}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: 50,
+                  width: "70vw",
+                  flexWrap: "wrap",
+                  marginLeft: 100,
+                  marginRight: 100,
+                }}
+              >
+                {this.state.items.map((item, index) => {
+                  if (
+                    (this.state.minPrice &&
+                      item.original_price < this.state.minPrice) ||
+                    (this.state.maxPrice &&
+                      item.original_price > this.state.maxPrice)
+                  ) {
+                    return null;
+                  }
+                  return (
+                    <div
+                      onClick={() => this.itemPage(item)}
+                      id="box"
                       style={{
                         width: 220,
-                        height: 200,
-                        borderRadius: 5,
-                        overflow: "hidden",
+                        marginLeft: 10,
+                        marginRight: 10,
+                        height: 300,
+
+                        // borderWidth: 1,
+                        // borderStyle: "solid"
                       }}
-                    ></img>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <div style={{ fontSize: 18, fontWeight: 400 }}>
-                        {item.title}
-                      </div>
-                      <div style={{ marginTop: 5, fontWeight: 600 }}>
-                        {"$" + item.original_price}
+                    >
+                      <img
+                        onLoadCapture={() =>
+                          this.loadPage(index, this.state.items.length)
+                        }
+                        src={item.pictures[0]}
+                        style={{
+                          width: 220,
+                          height: 200,
+                          borderRadius: 5,
+                          overflow: "hidden",
+                        }}
+                      ></img>
+                      <div style={{ display: "flex", flexDirection: "column" }}>
+                        <div style={{ fontSize: 18, fontWeight: 400 }}>
+                          {item.title}
+                        </div>
+                        <div style={{ marginTop: 5, fontWeight: 600 }}>
+                          {"$" + item.original_price}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -406,8 +428,6 @@ export default class SearchPage extends React.Component {
   }
 
   loadPage(index, pictureLength) {
-    console.log(index);
-    console.log(pictureLength - 1);
     if (!this.state.loaded && index == pictureLength - 1) {
       this.setState({
         loaded: true,

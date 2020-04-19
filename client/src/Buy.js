@@ -32,6 +32,7 @@ export default class Buy extends React.Component {
     const categories = [
       { picture: Antiques, name: "Antiques & Collectibles", link: "antiques" },
       { picture: Art, name: "Art & Home Decoration", link: "art" },
+      { picture: Baby, name: "Baby", link: "baby" },
       { picture: Books, name: "Books", link: "books" },
       {
         picture: Fashion,
@@ -39,12 +40,11 @@ export default class Buy extends React.Component {
         link: "fashion",
       },
       { picture: Electronics, name: "Electronics", link: "electronics" },
-      { picture: Health, name: "Health & Beauty", link: "health" },
+      // { picture: Health, name: "Health & Beauty", link: "health" },
       { picture: Garden, name: "Home & Garden", link: "home" },
       { picture: Sports, name: "Sporting Goods", link: "sports" },
       { picture: Toys, name: "Toys & Games", link: "toys" },
 
-      { picture: Baby, name: "Baby", link: "baby" },
       { picture: Movie, name: "Movies & Video Games", link: "movies" },
     ];
 

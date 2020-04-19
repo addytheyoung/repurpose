@@ -31,6 +31,8 @@ export default class Shop extends React.Component {
       category = "Antiques & Collectibles";
     } else if (category === "Home") {
       category = "Home & Garden";
+    } else if (category === "Health") {
+      category = "Health & Beauty";
     }
     console.log(category);
 

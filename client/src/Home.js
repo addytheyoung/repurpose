@@ -23,29 +23,32 @@ export default class Home extends React.Component {
       modal: null,
       addingToCart: false,
     };
-
     const categoryList = [
-      "Art",
+      "Antiques & Collectibles",
+      "Art & Home Decoration",
+      "Baby",
       "Books",
-      "Collectibles",
-      "Decoration",
+      "Clothing, Shoes, & Accessories",
       "Electronics",
-      "Fashion",
-      "Movies&Games",
-      "Other",
+      "Home & Garden",
+      "Movies & Video Games",
+      "Everything Else",
     ];
 
     const firebaseCats = firebase.firestore().collection("Categories");
+    var i_index = 0;
+    const itemArr = [];
     for (var i = 0; i < categoryList.length; i++) {
       firebaseCats
         .doc(categoryList[i])
         .collection("All")
         .where("location", "==", "Athens, TX")
-        // .limit(30)
+        .limit(20)
         .get()
         .then((allItems) => {
+          i_index++;
           const allItemsDocs = allItems.docs;
-          const itemArr = [];
+
           if (allItems.empty) {
             this.setState({
               items: itemArr,
@@ -59,7 +62,10 @@ export default class Home extends React.Component {
             itemArr.push(itemData);
             // Find a way to render all the items here
 
-            if (j === allItemsDocs.length - 1) {
+            if (
+              j === allItemsDocs.length - 1 &&
+              i_index === categoryList.length - 1
+            ) {
               this.setState({
                 items: itemArr,
                 loaded: true,
@@ -549,51 +555,64 @@ export default class Home extends React.Component {
         <div
           style={{
             display: "flex",
-            flexDirection: "row",
-            marginTop: 20,
-            marginLeft: 50,
-            marginRight: 50,
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          {this.state.items.map((item, index) => {
-            if (
-              (this.state.minPrice &&
-                item.original_price < this.state.minPrice) ||
-              (this.state.maxPrice && item.original_price > this.state.maxPrice)
-            ) {
-              return null;
-            }
-            return (
-              <div
-                onClick={() => this.itemPage(item)}
-                id="box"
-                style={{
-                  width: 220,
-                  marginLeft: 10,
-                  marginRight: 10,
-                  height: 300,
-                }}
-              >
-                <img
-                  src={item.pictures[0]}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              width: "70vw",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 20,
+              marginLeft: 50,
+              marginRight: 50,
+            }}
+          >
+            {this.state.items.map((item, index) => {
+              if (
+                (this.state.minPrice &&
+                  item.original_price < this.state.minPrice) ||
+                (this.state.maxPrice &&
+                  item.original_price > this.state.maxPrice)
+              ) {
+                return null;
+              }
+              return (
+                <div
+                  onClick={() => this.itemPage(item)}
+                  id="box"
                   style={{
                     width: 220,
-                    height: 200,
-                    borderRadius: 5,
-                    overflow: "hidden",
+                    marginLeft: 10,
+                    marginRight: 10,
+                    height: 300,
                   }}
-                ></img>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <div style={{ fontSize: 18, fontWeight: 400 }}>
-                    {item.title}
-                  </div>
-                  <div style={{ marginTop: 5, fontWeight: 600 }}>
-                    {"$" + item.original_price}
+                >
+                  <img
+                    src={item.pictures[0]}
+                    style={{
+                      width: 220,
+                      height: 200,
+                      borderRadius: 5,
+                      overflow: "hidden",
+                    }}
+                  ></img>
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div style={{ fontSize: 18, fontWeight: 400 }}>
+                      {item.title}
+                    </div>
+                    <div style={{ marginTop: 5, fontWeight: 600 }}>
+                      {"$" + item.original_price}
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
     );
