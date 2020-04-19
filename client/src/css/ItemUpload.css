@@ -15,3 +15,12 @@ ul {
 li {
   margin-top: 10px;
 }
+
+#category {
+  width: 30%;
+  height: 200px;
+}
+
+.MuiMenu-paper {
+  max-height: 400px !important;
+}

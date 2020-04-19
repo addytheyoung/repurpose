@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import * as firebase from "firebase";
 import Buy from "./Buy";
 import Sell from "./Sell";
+import GetTotal from "./scripts/GetTotal";
 import OrderKit from "./OrderKit";
 import SellRules from "./SellRules";
 import Shop from "./Shop";
@@ -74,6 +75,11 @@ export default class RenderRoutes extends React.Component {
               path="/andrewscripts4467"
               exact={true}
               render={() => <Charge />}
+            />
+            <Route
+              path="/andrewscripts4468"
+              exact={true}
+              render={() => <GetTotal />}
             />
             <Route
               path="/sell/agreement"

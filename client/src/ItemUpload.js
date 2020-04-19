@@ -95,6 +95,22 @@ export default class ItemUpload extends React.Component {
             marginTop: 50,
           }}
         >
+          <div>
+            <Camera
+              isImageMirror={false}
+              idealFacingMode={"environment"}
+              onTakePhoto={(dataUri) => this.handleTakePhoto(dataUri)}
+            />
+
+            {this.state.picture && (
+              <CropTest
+                setCroppedImg={(croppedImgUrl) =>
+                  this.setCroppedImg(croppedImgUrl)
+                }
+                picture={this.state.picture}
+              />
+            )}
+          </div>
           <div style={{ marginTop: 20 }}>Upload an item</div>
           <div>
             <Input
@@ -112,22 +128,7 @@ export default class ItemUpload extends React.Component {
               placeholder={"Price"}
             />
           </div>
-          <div>
-            <Camera
-              isImageMirror={false}
-              idealFacingMode={"environment"}
-              onTakePhoto={(dataUri) => this.handleTakePhoto(dataUri)}
-            />
 
-            {this.state.picture && (
-              <CropTest
-                setCroppedImg={(croppedImgUrl) =>
-                  this.setCroppedImg(croppedImgUrl)
-                }
-                picture={this.state.picture}
-              />
-            )}
-          </div>
           <div
             style={{
               display: "flex",
@@ -138,7 +139,7 @@ export default class ItemUpload extends React.Component {
           >
             <Select
               style={{
-                width: "80vw",
+                width: "50vw",
                 height: 50,
                 marginTop: 10,
                 height: 40,
@@ -511,6 +512,8 @@ export default class ItemUpload extends React.Component {
                               category: "",
                               description: "",
                               number: "",
+                              keyword: "",
+                              currentKeywords: [],
                             });
                           });
                       });
@@ -585,6 +588,8 @@ export default class ItemUpload extends React.Component {
                                   category: "",
                                   description: "",
                                   number: "",
+                                  keyword: "",
+                                  currentKeywords: [],
                                 });
                               });
                           });

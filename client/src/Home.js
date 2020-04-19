@@ -324,7 +324,7 @@ export default class Home extends React.Component {
                           onClick={() => this.addToCart(this.state.modal)}
                           id="add-to-cart"
                           style={{
-                            backgroundColor: "#9a487d",
+                            backgroundColor: "#E61E4D",
                             marginTop: 30,
                             borderRadius: 5,
                             padding: 10,
