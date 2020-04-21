@@ -98,6 +98,7 @@ export default class CheckoutForm extends React.Component {
         .collection("Users")
         .doc(myUid)
         .update({
+          customer_id: this.state.customer_id,
           orders: newOrders,
         })
         .then(() => {
@@ -587,6 +588,7 @@ export default class CheckoutForm extends React.Component {
         sellers.push(arrItem);
       }
       // Pay out all the sellers
+      var i_index = 0;
       for (var i = 0; i < sellers.length; i++) {
         api
           .createTransfers({
@@ -595,13 +597,24 @@ export default class CheckoutForm extends React.Component {
             worker: false,
           })
           .then((res) => {
-            console.log("Res");
+            i_index++;
+            if (i_index == sellers.length) {
+              api.createCustomer().then((e) => {
+                console.log(e);
+                const id = e.id;
+                this.setState({
+                  error: null,
+                  succeeded: true,
+                  processing: false,
+                  metadata: payload.paymentIntent,
+                  customer_id: id,
+                });
+              });
+            }
             console.log(res);
           })
           .catch((e) => {
-            console.log("E");
             console.log(e.message);
-            alert(e.message);
           });
       }
       //Pay out the gig worker
@@ -610,16 +623,6 @@ export default class CheckoutForm extends React.Component {
       //   cost: this.props.total,
       //   worker: true,
       // });
-
-      api.createCustomer().then((e) => {
-        console.log(e);
-      });
-      this.setState({
-        error: null,
-        succeeded: true,
-        processing: false,
-        metadata: payload.paymentIntent,
-      });
 
       console.log("[PaymentIntent]", payload.paymentIntent);
     }
