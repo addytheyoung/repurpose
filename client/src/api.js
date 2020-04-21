@@ -1,26 +1,50 @@
-const getLatLng = (address) => {
+const getLatLng = (address, zip, city, state) => {
   const front_url =
     "https://maps.googleapis.com/maps/api/geocode/json?address=";
   const end_url = "&key=AIzaSyBbpHHOjcFkGJeUaEIQZ-zNVaYBw0UVfzw";
 
-  return window
-    .fetch(front_url + address + end_url, {
-      method: "GET",
-    })
-    .then((res) => {
-      if (res.status === 200) {
-        return res.json();
-      } else {
-        return null;
-      }
-    })
-    .then((data) => {
-      if (!data || data.error) {
-        throw Error("API Error");
-      } else {
-        return data;
-      }
-    });
+  if (zip && city && state) {
+    return window
+      .fetch(
+        front_url + address + ", " + city + ", " + state + ", " + end_url,
+        {
+          method: "GET",
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          return null;
+        }
+      })
+      .then((data) => {
+        if (!data || data.error) {
+          throw Error("API Error");
+        } else {
+          return data;
+        }
+      });
+  } else {
+    return window
+      .fetch(front_url + address + end_url, {
+        method: "GET",
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          return null;
+        }
+      })
+      .then((data) => {
+        if (!data || data.error) {
+          throw Error("API Error");
+        } else {
+          return data;
+        }
+      });
+  }
 };
 
 const sendEmail = (email, meeting) => {
@@ -75,6 +99,7 @@ const createSeller = (options) => {
 };
 
 const createCustomer = (options) => {
+  console.log("Creating customer API");
   return window
     .fetch(`/customer`, {
       method: "GET",
@@ -84,15 +109,19 @@ const createCustomer = (options) => {
     })
     .then((res) => {
       if (res.status === 200) {
+        console.log(res);
         return res.json();
       } else {
+        console.log("not res");
         return null;
       }
     })
     .then((data) => {
       if (!data || data.error) {
+        console.log("bad data");
         throw Error("API Error");
       } else {
+        console.log(data);
         return data;
       }
     });

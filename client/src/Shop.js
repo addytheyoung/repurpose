@@ -113,17 +113,18 @@ export default class Shop extends React.Component {
                 zIndex: 99,
                 width: "100vw",
                 height: "100vh",
-                position: "absolute",
+                position: "fixed",
               }}
             ></div>
             <div
               style={{
-                width: "50vw",
+                width: "60vw",
                 borderRadius: 5,
+                position: "fixed",
                 height: "80vh",
                 top: 30,
                 backgroundColor: "#f5f5f5",
-                position: "absolute",
+                // position: "absolute",
                 zIndex: 100,
                 opacity: 1,
               }}
@@ -197,7 +198,13 @@ export default class Shop extends React.Component {
                       }}
                     >
                       <div
-                        style={{ fontSize: 22, fontWeight: 500, marginTop: 30 }}
+                        style={{
+                          fontSize: 22,
+                          fontWeight: 500,
+                          marginTop: 30,
+                          textAlign: "center",
+                          padding: 10,
+                        }}
                       >
                         {this.state.modal.title}
                       </div>

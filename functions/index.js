@@ -75,12 +75,16 @@ app.get("/product-details", (req, res) => {
 });
 
 app.get("/customer", (req, res) => {
-  stripe.customers.retrieve("cus_Gz1cqDiR9R8g7V", function (err, customer) {});
+  // stripe.customers.retrieve("cus_Gz1cqDiR9R8g7V", function (err, customer) {
+
+  // });
   stripe.customers.create(
     {
       description: "A customer of collection",
     },
     function (err, customer) {
+      console.log(err);
+      console.log(customer);
       res.send(customer);
     }
   );

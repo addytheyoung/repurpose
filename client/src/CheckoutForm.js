@@ -120,7 +120,7 @@ export default class CheckoutForm extends React.Component {
                   .doc(item.category)
                   .collection("All")
                   .doc(item.uid)
-                  .delete()
+                  .get()
                   .then(() => {
                     a_index++;
                     if (a_index === cart.length) {
@@ -199,18 +199,18 @@ export default class CheckoutForm extends React.Component {
       <div>
         {this.props.deliveryType === "delivery" && (
           <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
-            {this.state.total < 5 && (
+            {this.state.total < 6 && (
               <div>
-                Flat fee of $1.00 for shipping, no matter how many items. <br />{" "}
-                <br /> <br />
-                Free shipping for $5.00+ orders. <br /> <br />
+                Flat fee of $2.00 for shipping, no matter how many items. <br />{" "}
+                <br />
+                Free shipping for $6.00+ orders. <br /> <br />
                 Items are typically delivered within 3 hours. <br /> <br />{" "}
                 <br />
               </div>
             )}
-            {this.state.total >= 5 && (
+            {this.state.total >= 6 && (
               <div>
-                $5.00+ order: free shipping! <br /> <br /> Items are typically
+                $6.00+ order: free shipping! <br /> <br /> Items are typically
                 delivered within 3 hours. <br /> <br />{" "}
               </div>
             )}
@@ -362,6 +362,7 @@ export default class CheckoutForm extends React.Component {
   }
 
   andrewMethod(ev) {
+    console.log("Andrew method");
     var myUid = null;
 
     if (firebase.auth().currentUser) {
@@ -373,25 +374,39 @@ export default class CheckoutForm extends React.Component {
     }
     ev.preventDefault();
     const x = ev.target;
-    this.checkItems().then((a) => {
-      if (a.length === this.state.myData.cart.length) {
-        this.handleSubmit(x);
-      } else {
-        alert(
-          "Something in your cart has been purchased. You have not been charged."
-        );
-        firebase
-          .firestore()
-          .collection("Users")
-          .doc(myUid)
-          .update({
-            cart: a,
-          })
-          .then(() => {
-            window.location.href = "/checkout";
+    this.checkAddress()
+      .then((b) => {
+        console.log(b);
+        if (b === true) {
+          this.checkItems().then((a) => {
+            const y = x;
+            if (a.length === this.state.myData.cart.length) {
+              this.handleSubmit(y);
+            } else {
+              alert(
+                "Something in your cart has been purchased. You have not been charged."
+              );
+              firebase
+                .firestore()
+                .collection("Users")
+                .doc(myUid)
+                .update({
+                  cart: a,
+                })
+                .then(() => {
+                  window.location.href = "/checkout";
+                });
+            }
           });
-      }
-    });
+        } else if (b == -1) {
+          alert("Please enter your address");
+        } else {
+          alert("Sorry, you are too far for delivery. We'll have pickup soon!");
+        }
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
   }
 
   setPickup(e) {
@@ -507,13 +522,13 @@ export default class CheckoutForm extends React.Component {
   async handleSubmit(ev) {
     const API_KEY = "AIzaSyBbpHHOjcFkGJeUaEIQZ-zNVaYBw0UVfzw";
 
-    // const first = document.getElementById("first").value.trim();
-    // const last = document.getElementById("last").value.trim();
-    // const address1 = document.getElementById("address1").value.trim();
-    // const address2 = document.getElementById("address2").value.trim();
-    // const zip = document.getElementById("zip").value.trim();
-    // const city = document.getElementById("city").value.trim();
-    // const state = document.getElementById("state").textContent;
+    const first = document.getElementById("first").value.trim();
+    const last = document.getElementById("last").value.trim();
+    const address1 = document.getElementById("address1").value.trim();
+    const address2 = document.getElementById("address2").value.trim();
+    const zip = document.getElementById("zip").value.trim();
+    const city = document.getElementById("city").value.trim();
+    const state = document.getElementById("state").textContent;
 
     // const url =
     //   "https://maps.googleapis.com/maps/api/geocode/json?address=" +
@@ -521,48 +536,25 @@ export default class CheckoutForm extends React.Component {
     //   "&key=" +
     //   API_KEY;
 
-    // api.getLatLng(address1).then((a) => {
-    //   const latitude = a.results[0].geometry.location.lat;
-    //   const longitude = a.results[0].geometry.location.lng;
-    //   // Check that they are within delivery range
-
-    //   api.getLatLng(localStorage.getItem("city")).then((a) => {
-    //     const latitude2 = a.results[0].geometry.location.lat;
-    //     const longitude2 = a.results[0].geometry.location.lng;
-    //     // Check that they are within delivery range
-    //     const x =
-    //       Math.pow((latitude2 - latitude) * this.latPerMile, 2) +
-    //       Math.pow((longitude2 - longitude) * this.lngPerMile, 2);
-    //     const milesBetween = Math.sqrt(x);
-    //     console.log(milesBetween);
-    //     if (milesBetween >= 15) {
-    //       alert("Sorry, you are too far for delivery.");
-    //       return;
-    //     }
-    //   });
-    // });
-
-    // return;
-
-    // if (first === "") {
-    //   alert("Please enter your first name");
-    //   return;
-    // } else if (last === "") {
-    //   alert("Please enter your last name");
-    //   return;
-    // } else if (address1 === "") {
-    //   alert("Please enter your address");
-    //   return;
-    // } else if (zip.length !== 5) {
-    //   alert("Please enter a valid zip");
-    //   return;
-    // } else if (city === "") {
-    //   alert("Please enter your city");
-    //   return;
-    // } else if (state === "State") {
-    //   alert("Please enter your state");
-    //   return;
-    // }
+    if (first === "") {
+      alert("Please enter your first name");
+      return;
+    } else if (last === "") {
+      alert("Please enter your last name");
+      return;
+    } else if (address1 === "") {
+      alert("Please enter your address");
+      return;
+    } else if (zip.length !== 5) {
+      alert("Please enter a valid zip");
+      return;
+    } else if (city === "") {
+      alert("Please enter your city");
+      return;
+    } else if (state === "State") {
+      alert("Please enter your state");
+      return;
+    }
 
     this.state.processing = true;
     // Step 3: Use clientSecret from PaymentIntent and the CardElement
@@ -620,7 +612,7 @@ export default class CheckoutForm extends React.Component {
       // });
 
       api.createCustomer().then((e) => {
-        const id = e.id;
+        console.log(e);
       });
       this.setState({
         error: null,
@@ -631,5 +623,52 @@ export default class CheckoutForm extends React.Component {
 
       console.log("[PaymentIntent]", payload.paymentIntent);
     }
+  }
+
+  async checkAddress() {
+    console.log("address");
+    var address1 = document.getElementById("address1").value;
+    const zip = document.getElementById("zip").value.trim();
+    const city = document.getElementById("city").value.trim();
+    const state = document.getElementById("state").textContent;
+    console.log(state);
+    if (address1) {
+      address1 = document.getElementById("address1").value.trim();
+    }
+    if (!address1 || !zip || !city || state === "State") {
+      return -1;
+    }
+    return api
+      .getLatLng(address1, zip, city, state)
+      .then((a) => {
+        const latitude = a.results[0].geometry.location.lat;
+        const longitude = a.results[0].geometry.location.lng;
+        // Check that they are within delivery range
+
+        return api
+          .getLatLng(localStorage.getItem("city"))
+          .then((a) => {
+            const latitude2 = a.results[0].geometry.location.lat;
+            const longitude2 = a.results[0].geometry.location.lng;
+            // Check that they are within delivery range
+            const x =
+              Math.pow((latitude2 - latitude) * this.latPerMile, 2) +
+              Math.pow((longitude2 - longitude) * this.lngPerMile, 2);
+            const milesBetween = Math.sqrt(x);
+            console.log(milesBetween);
+
+            if (milesBetween >= 15) {
+              return false;
+            } else {
+              return true;
+            }
+          })
+          .catch((e) => {
+            console.log(e.message);
+          });
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
   }
 }
