@@ -117,8 +117,11 @@ export default class CheckOut extends React.Component {
             </div>
           </a>
           <div style={{ marginTop: 50, fontWeight: 500, fontSize: 22 }}>
-            Success! Your order is complete.
+            Success! Your order is complete. Your items will be delivered soon.{" "}
+            <br />
+            <br />
           </div>
+          <div> Click the help button on the top if any issues occour.</div>
         </div>
       );
     }

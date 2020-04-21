@@ -198,6 +198,22 @@ export default class CheckoutForm extends React.Component {
     this.componentDidUpdate();
     return (
       <div>
+        {this.state.loadingIcon && (
+          <div
+            style={{
+              position: "absolute",
+              left: "45vw",
+              top: 200,
+            }}
+          >
+            <ClipLoader
+              size={150}
+              color={"#123abc"}
+              loading={this.state.loading}
+            />
+          </div>
+        )}
+
         {this.props.deliveryType === "delivery" && (
           <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
             {this.state.total < 6 && (
@@ -365,6 +381,9 @@ export default class CheckoutForm extends React.Component {
   andrewMethod(ev) {
     console.log("Andrew method");
     var myUid = null;
+    this.setState({
+      loadingIcon: true,
+    });
 
     if (firebase.auth().currentUser) {
       // Signed in
@@ -400,13 +419,22 @@ export default class CheckoutForm extends React.Component {
             }
           });
         } else if (b == -1) {
+          this.setState({
+            loadingIcon: false,
+          });
           alert("Please enter your address");
         } else {
+          this.setState({
+            loadingIcon: false,
+          });
           alert("Sorry, you are too far for delivery. We'll have pickup soon!");
         }
       })
       .catch((e) => {
         console.log(e.message);
+        this.setState({
+          loadingIcon: false,
+        });
       });
   }
 
@@ -538,21 +566,39 @@ export default class CheckoutForm extends React.Component {
     //   API_KEY;
 
     if (first === "") {
+      this.setState({
+        loadingIcon: false,
+      });
       alert("Please enter your first name");
       return;
     } else if (last === "") {
+      this.setState({
+        loadingIcon: false,
+      });
       alert("Please enter your last name");
       return;
     } else if (address1 === "") {
+      this.setState({
+        loadingIcon: false,
+      });
       alert("Please enter your address");
       return;
     } else if (zip.length !== 5) {
+      this.setState({
+        loadingIcon: false,
+      });
       alert("Please enter a valid zip");
       return;
     } else if (city === "") {
+      this.setState({
+        loadingIcon: false,
+      });
       alert("Please enter your city");
       return;
     } else if (state === "State") {
+      this.setState({
+        loadingIcon: false,
+      });
       alert("Please enter your state");
       return;
     }
@@ -574,6 +620,7 @@ export default class CheckoutForm extends React.Component {
 
     if (payload.error) {
       this.setState({
+        loadingIcon: false,
         error: `Payment failed: ${payload.error.message}`,
         processing: false,
       });
@@ -608,12 +655,16 @@ export default class CheckoutForm extends React.Component {
                   processing: false,
                   metadata: payload.paymentIntent,
                   customer_id: id,
+                  loadingIcon: false,
                 });
               });
             }
             console.log(res);
           })
           .catch((e) => {
+            this.setState({
+              loadingIcon: false,
+            });
             console.log(e.message);
           });
       }
