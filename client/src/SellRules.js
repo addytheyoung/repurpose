@@ -546,32 +546,19 @@ export default class SellRules extends React.Component {
             april: oldApril,
           })
           .then(() => {
-            this.setState({
-              bookModal: false,
-              loaded: true,
-            });
+            firebase
+              .firestore()
+              .collection("Users")
+              .doc(firebase.auth().currentUser.uid)
+              .get()
+              .then((me) => {
+                const email = me.data().email;
+                const month = this.state.currentDate.getMonth() + 1;
+                this.setState({
+                  bookModal: false,
+                  loaded: true,
+                });
 
-            const month = this.state.currentDate.getMonth() + 1;
-            alert("Success! Email sent confirming details.");
-            window.location.href = "/";
-            api
-              .sendEmail(
-                "andrewtateyoung@gmail.com",
-                "An " +
-                  localStorage.getItem("city") +
-                  " Collector will come to " +
-                  localStorage.getItem("address1") +
-                  " at " +
-                  this.state.opening +
-                  " on " +
-                  month +
-                  "/" +
-                  this.state.currentDate.getDate() +
-                  "/" +
-                  this.state.currentDate.getFullYear() +
-                  " to pick up your items.\n\nPlease reply to this email, or call 903-203-1286 if you have any questions!\n\n\n-Andrew, founder of Collection"
-              )
-              .then(() => {
                 api.sendEmail(
                   "andrewt.young@yahoo.com",
                   "An " +
@@ -579,15 +566,33 @@ export default class SellRules extends React.Component {
                     " Collector will come to " +
                     localStorage.getItem("address1") +
                     " at " +
-                    this.state.opening[0] +
+                    this.state.opening +
                     " on " +
-                    this.state.currentDate.getMonth() +
+                    month +
                     "/" +
                     this.state.currentDate.getDate() +
                     "/" +
                     this.state.currentDate.getFullYear() +
                     " to pick up your items.\n\nPlease reply to this email, or call 903-203-1286 if you have any questions!\n\n\n-Andrew, founder of Collection"
                 );
+                api.sendEmail(
+                  "andrewtateyoung@gmail.com",
+                  "An " +
+                    localStorage.getItem("city") +
+                    " Collector will come to " +
+                    localStorage.getItem("address1") +
+                    " at " +
+                    this.state.opening +
+                    " on " +
+                    month +
+                    "/" +
+                    this.state.currentDate.getDate() +
+                    "/" +
+                    this.state.currentDate.getFullYear() +
+                    " to pick up your items.\n\nPlease reply to this email, or call 903-203-1286 if you have any questions!\n\n\n-Andrew, founder of Collection"
+                );
+                alert("Success! Email will be sent confirming details.");
+                window.location.href = "/";
               });
           });
       });

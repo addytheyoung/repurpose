@@ -24,7 +24,14 @@ service cloud.firestore {
        allow read: if true;
        allow create: if true;
        allow delete: if false;
-       allow update: if false;
+       allow update: if request.resource.data.accepted == resource.data.accepted && 
+       request.resource.data.april[0].keys() == resource.data.april[0].keys() &&
+        request.resource.data.may[0].keys() == resource.data.may[0].keys() &&
+        request.resource.data.june[0].keys() == resource.data.june[0].keys() &&
+        request.resource.data.seller == resource.data.seller && 
+        request.resource.data.city == resource.data.city && 
+        request.resource.data.phone == resource.data.phone && 
+         	request.resource.data.bookings.size() == resource.data.bookings.size() + 1;
     }
     match /Users/{Any} {
     	allow read: if true;
