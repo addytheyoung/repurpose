@@ -265,6 +265,9 @@ export default class ItemUpload extends React.Component {
               >
                 {"Sporting Goods"}
               </MenuItem>
+              <MenuItem style={{ marginTop: 5, height: 50 }} value={"Test"}>
+                {"Test"}
+              </MenuItem>
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
                 value={"Toys & Hobbies"}
@@ -487,7 +490,7 @@ export default class ItemUpload extends React.Component {
                           original_price: parseInt(this.state.price),
                           location: localStorage.getItem("city"),
                           pictures: [a],
-                          category: this.state.category,
+                          category: category,
                           sub_categories: this.state.currentKeywords,
                           description: this.state.description,
                           seller: this.state.sellerStripeId,

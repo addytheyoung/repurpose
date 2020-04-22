@@ -142,12 +142,9 @@ export default class CheckoutForm extends React.Component {
                           var looping = true;
 
                           // All the users with an item in their cart
-
                           for (var k = 0; k < userDocs.length; k++) {
                             const userData = userDocs[k];
-
                             const newCart = userData.data().cart;
-                            console.log(newCart);
                             // All the items in a users cart
                             for (var p = 0; p < newCart.length; p++) {
                               // All the items we are looking for
@@ -176,6 +173,14 @@ export default class CheckoutForm extends React.Component {
                               .then(() => {
                                 b_index++;
                                 if (b_index === userDocs.length) {
+                                  // Finally, update all the items as sold for the seller.
+                                  // for (var m = 0; m < cart.length; m++) {
+                                  //   const sellerItem = cart[m]
+                                  //   firebase.firestore().collection("Users").where("stripe_user_id", "==", sellerItem.seller_stripe_id).get().then((seller) => {
+
+                                  //   })
+                                  // }
+
                                   localStorage.setItem("cart", "0");
                                   console.log("DONE");
                                   this.props.finished();
