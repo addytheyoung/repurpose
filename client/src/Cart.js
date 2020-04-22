@@ -530,8 +530,7 @@ export default class Cart extends React.Component {
                 >
                   {subTotal < 6 && (
                     <div>
-                      Flat fee of $2.00 for shipping, no matter how many items.{" "}
-                      <br /> <br />
+                      Flat fee of $2.00 for shipping. <br /> <br />
                       Free shipping for $6.00+ orders. <br /> <br />
                       Items are typically delivered within 12 hours. <br />{" "}
                       <br /> <br />

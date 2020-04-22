@@ -3,6 +3,7 @@ import { Input } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import "./css/BecomeCollector.css";
+import api from "./api";
 import * as firebase from "firebase";
 
 export default class BecomeCollector extends React.Component {
@@ -99,17 +100,16 @@ export default class BecomeCollector extends React.Component {
       alert("Invalid city");
       return;
     }
-    firebase
-      .firestore()
-      .collection("Collectors")
-      .doc()
-      .set({
-        phone: phone,
-        city: city,
-      })
-      .then(() => {
-        alert("Success! We'll reach out soon.");
-        window.location.href = "/";
-      });
+    api.sendEmail(
+      "andrew@collection.deals",
+      "A new Collector has applied to work!\n\n" +
+        "Phone: " +
+        phone +
+        " " +
+        "City: " +
+        city
+    );
+    alert("Success! We'll reach out soon.");
+    window.location.href = "/";
   }
 }

@@ -25,15 +25,17 @@ app.post("/send-email", (req, res) => {
   console.log(email);
   console.log(meeting);
   var transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true, // use SSL
     auth: {
-      user: "andrewtateyoung@gmail.com",
-      pass: "Smash#0831",
+      user: "andrew@collection.deals",
+      pass: "Collection#0831",
     },
   });
 
   var mailOptions = {
-    from: "andrewtateyoung@gmail.com",
+    from: "andrew@collection.deals",
     to: email,
     subject: "Collection: See you soon!",
     text: meeting,

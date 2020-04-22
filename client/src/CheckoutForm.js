@@ -224,8 +224,7 @@ export default class CheckoutForm extends React.Component {
           <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
             {this.state.total < 6 && (
               <div>
-                Flat fee of $2.00 for shipping, no matter how many items. <br />{" "}
-                <br />
+                Flat fee of $2.00 for shipping. <br /> <br />
                 Free shipping for $6.00+ orders. <br /> <br />
                 Items are typically delivered within 3 hours. <br /> <br />{" "}
                 <br />

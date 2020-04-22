@@ -576,7 +576,7 @@ export default class SellRules extends React.Component {
                     " to pick up your items.\n\nPlease reply to this email, or call 903-203-1286 if you have any questions!\n\n\n-Andrew, founder of Collection"
                 );
                 api.sendEmail(
-                  "andrewtateyoung@gmail.com",
+                  "andrew@collection.deals",
                   "An " +
                     localStorage.getItem("city") +
                     " Collector will come to " +
