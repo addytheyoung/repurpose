@@ -39,9 +39,9 @@ export default class Cart extends React.Component {
       myUid = null;
     }
 
-    var temporary = false;
+    var temporary = true;
     if (firebase.auth().currentUser) {
-      temporary = true;
+      temporary = false;
     }
 
     if (!myUid) {

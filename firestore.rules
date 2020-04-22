@@ -1,8 +1,34 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if true;
+    match /Categories/{Any} {
+    	match /All/{Any} {
+        allow read: if true;
+        allow create: if request.auth.uid == "q2SYPrnJwNhaC3PcMhE3LTZ1AIv1";
+        allow update: if false;
+        allow delete: if resource.data.deleting_now == true;
+      }
+       allow read: if true;
+       allow write: if false;
+    }
+    match /Collectors/{Any} {
+       allow read: if true;
+       allow create: if true;
+       allow delete: if false;
+       allow update: if false;
+    }
+    match /Users/{Any} {
+    	allow read: if true;
+    	allow create: if true;
+      allow update: if request.auth.uid == request.resource.data.uid || 
+      request.resource.data.temporary == true || 
+      (request.resource.data.orders == resource.data.orders && 
+      request.resource.data.sales == resource.data.sales && 
+      request.resource.data.pass == resource.data.pass &&
+      request.resource.data.uid == resource.data.uid &&
+      request.resource.data.stripe_user_id == resource.data.stripe_user_id &&
+      request.resource.data.cart.length < resource.data.cart.length)
+      allow delete: if false;
     }
   }
 }

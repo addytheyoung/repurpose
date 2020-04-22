@@ -113,7 +113,8 @@ export default class CheckoutForm extends React.Component {
               .doc(item.category)
               .collection("All")
               .doc(item.uid)
-              .update({ deleting_now: true })
+              .update({})
+              // .update({ deleting_now: true })
               .then(() => {
                 firebase
                   .firestore()
@@ -228,7 +229,7 @@ export default class CheckoutForm extends React.Component {
             {this.state.total >= 6 && (
               <div>
                 $6.00+ order: free shipping! <br /> <br /> Items are typically
-                delivered within 3 hours. <br /> <br />{" "}
+                delivered within 12 hours. <br /> <br />{" "}
               </div>
             )}
           </div>
@@ -399,8 +400,11 @@ export default class CheckoutForm extends React.Component {
         console.log(b);
         if (b === true) {
           this.checkItems().then((a) => {
+            console.log(a);
             const y = x;
-            if (a.length === this.state.myData.cart.length) {
+            if (!a) {
+              alert("uh oh");
+            } else if (a.length === this.state.myData.cart.length) {
               this.handleSubmit(y);
             } else {
               alert(
@@ -519,32 +523,55 @@ export default class CheckoutForm extends React.Component {
     var cart = this.state.myData.cart;
     cart["delivered"] = false;
     const orders = this.state.myData.orders;
+    console.log(cart);
 
     // Check that all items are still available
     var index = 0;
+    const itemsInDb = [];
+
     for (var i = 0; i < cart.length; i++) {
       const item = cart[i];
-      const itemsInDb = [];
-      return firebase
-        .firestore()
-        .collection("Categories")
-        .doc(item.category)
-        .collection("All")
-        .doc(item.uid)
-        .get()
-        .then((e) => {
-          index++;
-          if (e.exists) {
-            itemsInDb.push(e.data());
-          }
+      console.log(item);
+      if (i === cart.length - 1) {
+        return await firebase
+          .firestore()
+          .collection("Categories")
+          .doc(item.category)
+          .collection("All")
+          .doc(item.uid)
+          .get()
+          .then((e) => {
+            index++;
+            if (e.exists) {
+              itemsInDb.push(e.data());
+            }
+            console.log(itemsInDb);
 
-          if (index === cart.length) {
-            return itemsInDb;
-          }
-        })
-        .catch((e) => {
-          return false;
-        });
+            if (index === cart.length) {
+              return itemsInDb;
+            }
+          })
+          .catch((e) => {
+            return false;
+          });
+      } else {
+        await firebase
+          .firestore()
+          .collection("Categories")
+          .doc(item.category)
+          .collection("All")
+          .doc(item.uid)
+          .get()
+          .then((e) => {
+            index++;
+            if (e.exists) {
+              itemsInDb.push(e.data());
+            }
+          })
+          .catch((e) => {
+            return false;
+          });
+      }
     }
   }
 
@@ -583,7 +610,7 @@ export default class CheckoutForm extends React.Component {
       });
       alert("Please enter your address");
       return;
-    } else if (zip.length !== 5) {
+    } else if (zip === "") {
       this.setState({
         loadingIcon: false,
       });
@@ -603,7 +630,9 @@ export default class CheckoutForm extends React.Component {
       return;
     }
 
-    this.state.processing = true;
+    this.setState({
+      processing: true,
+    });
     // Step 3: Use clientSecret from PaymentIntent and the CardElement
     // to confirm payment with stripe.confirmCardPayment()
     const payload = await this.props.stripe.confirmCardPayment(
@@ -627,14 +656,13 @@ export default class CheckoutForm extends React.Component {
 
       console.log("[error]", payload.error);
     } else {
-      // Create our customer
+      // Pay out all the sellers (0.3% of item price)
       const sellers = [];
       for (var i = 0; i < this.state.myData.cart.length; i++) {
         const item = this.state.myData.cart[i];
         const arrItem = { id: item.seller, cost: item.original_price };
         sellers.push(arrItem);
       }
-      // Pay out all the sellers
       var i_index = 0;
       for (var i = 0; i < sellers.length; i++) {
         api
@@ -646,6 +674,7 @@ export default class CheckoutForm extends React.Component {
           .then((res) => {
             i_index++;
             if (i_index == sellers.length) {
+              // Create our customer
               api.createCustomer().then((e) => {
                 console.log(e);
                 const id = e.id;
@@ -668,7 +697,7 @@ export default class CheckoutForm extends React.Component {
             console.log(e.message);
           });
       }
-      //Pay out the gig worker
+      //Pay out the gig worker (0.6%)
       // api.createTransfers({
       //   seller: "xxx",
       //   cost: this.props.total,

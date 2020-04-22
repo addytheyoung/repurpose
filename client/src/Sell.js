@@ -668,12 +668,17 @@ export default class Sell extends React.Component {
                   temporary: false,
                 })
                 .then(() => {
-                  this.state.logout = false;
-                  this.state.email = false;
-                  this.state.newUser = false;
-                  this.state.retUser = false;
-                  this.state.profile = false;
-                  window.location.href = "/sell/agreement";
+                  firebase
+                    .auth()
+                    .signInWithEmailAndPassword(email, pass)
+                    .then(() => {
+                      this.state.logout = false;
+                      this.state.email = false;
+                      this.state.newUser = false;
+                      this.state.retUser = false;
+                      this.state.profile = false;
+                      window.location.href = "/sell/agreement";
+                    });
                 });
             });
         } else {
@@ -692,12 +697,17 @@ export default class Sell extends React.Component {
               temporary: false,
             })
             .then(() => {
-              this.state.logout = false;
-              this.state.email = false;
-              this.state.newUser = false;
-              this.state.retUser = false;
-              this.state.profile = false;
-              window.location.href = "/sell/agreement";
+              firebase
+                .auth()
+                .signInWithEmailAndPassword(email, pass)
+                .then(() => {
+                  this.state.logout = false;
+                  this.state.email = false;
+                  this.state.newUser = false;
+                  this.state.retUser = false;
+                  this.state.profile = false;
+                  window.location.href = "/sell/agreement";
+                });
             });
         }
       })
