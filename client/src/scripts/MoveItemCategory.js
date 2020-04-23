@@ -4,9 +4,9 @@ import * as firebase from "firebase";
 export default class MoveItemCategory extends React.Component {
   constructor(props) {
     super(props);
-    var old_category = "Art & Home Decoration";
-    var new_category = "Clothing, Shoes, & Accessories";
-    var item_id = "vONoi8mIzCNmhspDy0OSbCQEVFYXIK";
+    var old_category = "Books";
+    var new_category = "Art & Home Decoration";
+    var item_id = "acOWmWr5fi15o4yYCxiA1eTbYntPXH";
     firebase
       .firestore()
       .collection("Categories")

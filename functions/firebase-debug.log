@@ -1,0 +1,37 @@
+[debug] [2020-04-23T04:19:34.765Z] ----------------------------------------------------------------------
+[debug] [2020-04-23T04:19:34.769Z] Command:       /Users/ayoung/.nvm/versions/node/v8.17.0/bin/node /Users/ayoung/.nvm/versions/node/v8.17.0/bin/firebase functions:shell
+[debug] [2020-04-23T04:19:34.770Z] CLI Version:   8.0.1
+[debug] [2020-04-23T04:19:34.770Z] Platform:      darwin
+[debug] [2020-04-23T04:19:34.771Z] Node Version:  v8.17.0
+[debug] [2020-04-23T04:19:34.772Z] Time:          Wed Apr 22 2020 23:19:34 GMT-0500 (CDT)
+[debug] [2020-04-23T04:19:34.772Z] ----------------------------------------------------------------------
+[debug] [2020-04-23T04:19:34.772Z] 
+[debug] [2020-04-23T04:19:34.782Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-23T04:19:34.783Z] > authorizing via signed-in user
+[debug] [2020-04-23T04:19:34.783Z] [iam] checking project repurpose-e523f for permissions ["firebase.projects.get"]
+[debug] [2020-04-23T04:19:34.788Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/repurpose-e523f:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2020-04-23T04:19:35.642Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 23 Apr 2020 04:19:35 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=86","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-23T04:19:35.652Z] [functions] Using node@8 from host.
+[info] ✔  functions: functions emulator started at http://localhost:5000
+[debug] [2020-04-23T04:19:35.661Z] [functions] Watching "/Users/ayoung/repurpose/functions" for Cloud Functions...
+[debug] [2020-04-23T04:19:35.669Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-04-23T04:19:35.670Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2020-04-23T04:19:35.670Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2020-04-23T04:19:35.671Z] DEBUG: [worker-~diagnostic~-48f2f811-db11-40ec-b6cf-534c59c76537]: Assigning socketPath: /var/folders/hz/k8tg3wrx5ml92_bp_153hpkm0000gq/T/fire_emu_40964.sock
+[debug] [2020-04-23T04:19:35.672Z] DEBUG: [worker-~diagnostic~-48f2f811-db11-40ec-b6cf-534c59c76537]: BUSY
+[debug] [2020-04-23T04:19:35.981Z] DEBUG: [runtime-status] [40964] Functions runtime initialized. {"cwd":"/Users/ayoung/repurpose/functions","node_version":"8.17.0"}
+[debug] [2020-04-23T04:19:35.982Z] DEBUG: [runtime-status] [40964] Disabled runtime features: undefined
+[debug] [2020-04-23T04:19:35.984Z] DEBUG: [runtime-status] [40964] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/ayoung/repurpose/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-04-23T04:19:35.987Z] DEBUG: [runtime-status] [40964] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.5.0","resolution":"/Users/ayoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-04-23T04:19:35.992Z] DEBUG: [runtime-status] [40964] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2020-04-23T04:19:36.050Z] DEBUG: [runtime-status] [40964] Checked functions.config() {"config":{}}
+[debug] [2020-04-23T04:19:36.051Z] DEBUG: [runtime-status] [40964] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.5.0","resolution":"/Users/ayoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-04-23T04:19:36.052Z] DEBUG: [runtime-status] [40964] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/ayoung/repurpose/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-04-23T04:19:36.052Z] DEBUG: [runtime-status] [40964] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.5.0","resolution":"/Users/ayoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-04-23T04:19:36.052Z] DEBUG: [runtime-status] [40964] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/ayoung/repurpose/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2020-04-23T04:19:36.666Z] DEBUG: [runtime-status] [40964] initializeApp(DEFAULT) {"databaseURL":"https://repurpose-e523f.firebaseio.com","storageBucket":"repurpose-e523f.appspot.com","projectId":"repurpose-e523f","credential":{"implicit":false,"projectId":"repurpose-e523f","privateKey":"-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQChRKgU/2adtRp9\nRLnEJKplAahnZ9a32xmlzobIS56tSWjgA502oJrac/pI+QhD5K6QARbJgnfD8LB3\nGKrOKG7Z0JqMHscPv1GpZxVaMsIv+0z9bR2d9tOwMlvh/mN1dHtMIZAAfVs9OqdF\nrb3nNS7a+Pm49s+0HOOIzb0hZ22AO71i4tWOUBJo07qqTUdE3xwUuuRp5E/muJUw\n+wZyodFcKhK0ExvFcJ5Wr43GncICwoGmforM5u6ej6biVTEjt0LnzzhMhnnEB8vJ\nMPeDUGeh/Ic5o+pwcgtXO1Agk/UUTUM9AitPFLRJI1C25IH8CYISTOv+Bx9xS/5R\nd8mzIfHbAgMBAAECggEACQg127s0LZgDjEmJl/Uvv+l4W5ZCvdhdFt66yMQHdpAa\nehVpvDIBikOdnHGqJ1dK+ZC+DHosqAI2d+0fP92e278lsLxWjMi705+M4BjgrFxI\nQxdV5c95qrAfWkhrnJvx/eERVh2vOv4qeSoSbT0ayzPPlK7qEh3eFn7jXVgUF27q\nU1sQGIv/ufeMFmdUl9790tA+g6PWPa+fP9qrHNB+asfT7/NBvhYMXBSFeb7DIATv\nX82po5vfhdGskfo/AtahPleO1WZ4oDDkadwM7+Hh71/u3ftFUNFaan+f1oexYA+w\nN5NFZ8lobneyJNdFy+flw/Wm+L39PvlYVj0lP6rUyQKBgQDUs7qrL0CIrNvbuPCh\nslp88ZfMX6EQzY798B/6YwGhO8CTlIx6BhXKMD1+5HB0L+bqn8Mkgjqx0peKhY4h\nE5v24AkO/ul5VaLyIbhEsOoK/D5R9QWUpPUlcS4onVNRhji/++p1mB9TNQVWi7sX\n1jMGDA1DkbaCJtYd/17wffO8aQKBgQDCGJ6YqnLfAA4vgIUQek9/Pg3VaBSYXuHl\nrv05gFOgXMtebZeZ8mxE0JAChR7FasssIAMaCoqKlY3ckd3V2sbLfebKNVsFVkLF\nuW7yyHBZJGjbndAlu/UxO97AEdgzs2OwZVxpBpXz1NB7gjWuIxHBiRi1wHcdWIH9\ngNPfC2XDowKBgDyT54EjlwSV/pPoaxgSPLVC9VGulqe7c5MdFW5xTiCGbQVbFFsY\napJIBOuj0ec1UVXXJHO8Z00HxkMcYGtJM20vR0UvEn2NBzhgpCNkI3P3fSRIXUuF\nY5BDWLsWe4lHadg7vf250ooXGqsYZrOWPLfnLMvmrw0IVIj8lyR1KrqpAoGBAJLL\nx/cywppCEnh+vSTPPJzBs/i5NQpgiH0MMdxxX84jIHSUcloubRBGpQQi5jjtIiiH\nNZFWc52IqrgtYhfB1SRGXmyEmgiZSvr72huo2L+yt9ORscE4PKM14qxlUp0Xicf5\ngUC1iGfXhq5CtpKzV1SGebfMjsoVDItMCfHhTt/9AoGAP+aPxNmFUX/1vXaZluKX\nq1dmbzOCfLVAEmcj+bNjCr0I4PeWmsl/KSYR1TkexuialmHeuZ5hHqrrPABDNZ9R\nxo/JlYuutXp5DMIPWI1z7KuGPKoek+a/8S6T96T3PqMOy58r1x0jE6R3zHFu4Ll/\nmM19YFE4Nc2G+11RX2+nFKs=\n-----END PRIVATE KEY-----\n","clientEmail":"firebase-adminsdk-bn2gp@repurpose-e523f.iam.gserviceaccount.com","httpClient":{"retry":{"maxRetries":4,"statusCodes":[503],"ioErrorCodes":["ECONNRESET","ETIMEDOUT"],"backOffFactor":0.5,"maxDelayInMillis":60000}}}}
+[debug] [2020-04-23T04:19:36.672Z] [functions[app]] http function initialized (http://localhost:5000/repurpose-e523f/us-central1/app).
+[info] i  functions: Loaded functions: app
+[debug] [2020-04-23T04:19:36.677Z] DEBUG: [worker-~diagnostic~-48f2f811-db11-40ec-b6cf-534c59c76537]: IDLE
+[info] >  Node server listening on port 4242! {"user":"Node server listening on port 4242!"}
