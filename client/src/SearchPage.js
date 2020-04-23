@@ -28,6 +28,9 @@ export default class SearchPage extends React.Component {
         "Electronics",
         "Home & Garden",
         "Movies & Video Games",
+        "Home & Garden",
+        "Sporting Goods",
+        "Toys & Hobbies",
         "Everything Else",
       ];
       const firebaseCats = firebase.firestore().collection("Categories");

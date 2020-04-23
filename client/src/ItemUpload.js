@@ -566,7 +566,7 @@ export default class ItemUpload extends React.Component {
                               original_price: parseInt(this.state.price),
                               location: localStorage.getItem("city"),
                               pictures: [a],
-                              category: this.state.category,
+                              category: category,
                               sub_categories: this.state.currentKeywords,
                               description: this.state.description,
                               seller: this.state.sellerStripeId,

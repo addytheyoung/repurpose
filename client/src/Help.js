@@ -24,7 +24,7 @@ export default class Help extends React.Component {
           </div>
 
           <div>
-            We're very new, so please let us know if you have any problems or
+            We're VERY new, so please let us know if you have any problems or
             feedback :)
           </div>
         </div>

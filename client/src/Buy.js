@@ -32,7 +32,7 @@ export default class Buy extends React.Component {
     const categories = [
       { picture: Antiques, name: "Antiques & Collectibles", link: "antiques" },
       { picture: Art, name: "Art & Home Decoration", link: "art" },
-      { picture: Baby, name: "Baby", link: "baby" },
+      // { picture: Baby, name: "Baby", link: "baby" },
       { picture: Books, name: "Books", link: "books" },
       {
         picture: Fashion,
@@ -152,6 +152,16 @@ export default class Buy extends React.Component {
             </div>
           </div>
         </div>
+        <div
+          style={{
+            textAlign: "center",
+            fontSize: 20,
+            fontWeight: 500,
+            marginTop: 50,
+          }}
+        >
+          (More coming very soon)
+        </div>
       </div>
     );
   }
@@ -169,7 +179,7 @@ export default class Buy extends React.Component {
   }
 
   loadPage(index) {
-    if (!this.state.loaded && index == 8) {
+    if (!this.state.loaded && index == 5) {
       this.setState({
         loaded: true,
       });

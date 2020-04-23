@@ -530,15 +530,15 @@ export default class Cart extends React.Component {
                 >
                   {subTotal < 6 && (
                     <div>
-                      Flat fee of $2.00 for shipping. <br /> <br />
-                      Free shipping for $6.00+ orders. <br /> <br />
-                      Items are typically delivered within 12 hours. <br />{" "}
+                      - Flat fee of $2.00 for shipping. <br /> <br />
+                      - Free shipping for $6.00+ orders. <br /> <br />
+                      - Items are typically delivered within 12 hours. <br />{" "}
                       <br /> <br />
                     </div>
                   )}
                   {subTotal >= 6 && (
                     <div>
-                      $6.00+ order: free shipping! <br /> <br /> Items are
+                      - $6.00+ order: free shipping! <br /> <br /> - Items are
                       typically delivered within 12 hours. <br /> <br />{" "}
                     </div>
                   )}
@@ -554,26 +554,45 @@ export default class Cart extends React.Component {
               )}
 
               <div
-                onClick={() => this.goToCheckout()}
-                href={"/checkout"}
-                id="checkout"
                 style={{
-                  marginTop: 40,
-                  backgroundColor: "#a1a1a1",
-                  textDecoration: "none",
-                  color: "white",
-                  width: 120,
-                  marginTop: 30,
-                  height: 30,
+                  width: "30vw",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  borderRadius: 5,
-                  padding: 10,
-                  fontWeight: 500,
+                  marginTop: 30,
+                  flexDirection: "column",
                 }}
               >
-                CHECK OUT
+                <div
+                  onClick={() => this.goToCheckout()}
+                  href={"/checkout"}
+                  id="checkout"
+                  style={{
+                    backgroundColor: "#a1a1a1",
+                    textDecoration: "none",
+                    color: "white",
+                    width: 120,
+                    height: 30,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: 5,
+                    padding: 10,
+                    fontWeight: 500,
+                  }}
+                >
+                  CHECK OUT
+                </div>
+                <div
+                  style={{
+                    marginTop: 40,
+                    fontWeight: 500,
+                    textAlign: "center",
+                    fontSize: 20,
+                  }}
+                >
+                  Item doesn't work? We can refund you!
+                </div>
               </div>
             </div>
           )}

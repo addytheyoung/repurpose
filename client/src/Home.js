@@ -26,12 +26,14 @@ export default class Home extends React.Component {
     const categoryList = [
       "Antiques & Collectibles",
       "Art & Home Decoration",
-      "Baby",
+      "Toys & Hobbies",
       "Books",
       "Clothing, Shoes, & Accessories",
       "Electronics",
       "Home & Garden",
       "Movies & Video Games",
+      "Home & Garden",
+      "Sporting Goods",
       "Everything Else",
     ];
 
@@ -473,6 +475,14 @@ export default class Home extends React.Component {
               options={this.citiesList}
               getOptionLabel={(option) => option}
               style={{ width: 300 }}
+              renderOption={(option) => (
+                <div
+                  onClick={() => this.updateCity(option)}
+                  style={{ width: "100%", height: "1005" }}
+                >
+                  {option}
+                </div>
+              )}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -557,7 +567,7 @@ export default class Home extends React.Component {
             marginTop: 20,
           }}
         >
-          Items near Athens, Texas
+          Items in Athens, Texas
         </div>
         <div
           style={{
@@ -623,6 +633,15 @@ export default class Home extends React.Component {
         </div>
       </div>
     );
+  }
+
+  updateCity(city) {
+    if (city === "" || !this.citiesList.includes(city)) {
+      alert("Invalid city");
+      return;
+    }
+    window.localStorage.setItem("city", city);
+    window.location.href = "/";
   }
 
   showProfileModal() {

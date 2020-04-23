@@ -25,6 +25,7 @@ import SearchPage from "./SearchPage";
 import AddDatesToFirebase from "./scripts/AddDatesToFirebase";
 import Charge from "./Charge";
 import Help from "./Help";
+import MoveItemCategory from "./scripts/MoveItemCategory";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -82,6 +83,11 @@ export default class RenderRoutes extends React.Component {
               render={() => <GetTotal />}
             />
             <Route
+              path="/andrewscripts4469"
+              exact={true}
+              render={() => <MoveItemCategory />}
+            />
+            <Route
               path="/sell/agreement"
               exact={true}
               render={() => <Agreement />}
@@ -122,6 +128,11 @@ export default class RenderRoutes extends React.Component {
               path="/andrewscripts4467"
               exact={true}
               render={() => <Charge />}
+            />
+            <Route
+              path="/andrewscripts4469"
+              exact={true}
+              render={() => <MoveItemCategory />}
             />
             <Route path="/help" exact={true} render={() => <Help />} />
             <Route path="/sell" exact={true} render={() => <Sell />} />
