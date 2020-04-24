@@ -107,22 +107,26 @@ export default class CheckoutForm extends React.Component {
             const item = cart[i];
 
             // Deleted all items from database
+            console.log(item.category);
+            console.log(item.uid);
+            console.log("********(*****");
             firebase
               .firestore()
               .collection("Categories")
               .doc(item.category)
               .collection("All")
               .doc(item.uid)
-              .update({})
-              // .update({ deleting_now: true })
-              .then(() => {
+              // .update({})
+              .update({ deleting_now: true })
+              .then((f) => {
+                console.log(f);
                 firebase
                   .firestore()
                   .collection("Categories")
                   .doc(item.category)
                   .collection("All")
                   .doc(item.uid)
-                  .get()
+                  .delete()
                   .then(() => {
                     a_index++;
                     if (a_index === cart.length) {

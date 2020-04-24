@@ -517,6 +517,7 @@ export default class Home extends React.Component {
             </div>
           </div>
           <div style={{ marginTop: 50, display: "flex", flexDirection: "row" }}>
+            <div style={{ marginRight: 10, fontWeight: 600 }}>SELL</div>
             <div
               style={{
                 width: 120,
@@ -525,7 +526,7 @@ export default class Home extends React.Component {
                 marginRight: 10,
               }}
             >
-              1. We come by and pick up all your clutter
+              We come by and take away items you don't want
             </div>
             <div
               style={{
@@ -535,7 +536,7 @@ export default class Home extends React.Component {
                 marginRight: 10,
               }}
             >
-              2. We list all your items here
+              We list all your items here
             </div>
             <div
               style={{
@@ -545,8 +546,12 @@ export default class Home extends React.Component {
                 marginRight: 10,
               }}
             >
-              3. Items sell to local buyers for cheap
+              You get paid when an item is sold
             </div>
+          </div>
+          <div style={{ marginTop: 5, marginBottom: 5 }}>OR</div>
+          <div style={{ marginTop: 30, display: "flex", flexDirection: "row" }}>
+            <div style={{ marginRight: 10, fontWeight: 600 }}>BUY</div>
 
             <div
               style={{
@@ -556,10 +561,31 @@ export default class Home extends React.Component {
                 marginRight: 10,
               }}
             >
-              4. Items are delivered within a few hours
+              Find items here for cheap
+            </div>
+            <div
+              style={{
+                width: 120,
+                fontSize: 12,
+                marginLeft: 10,
+                marginRight: 10,
+              }}
+            >
+              Buy those items online
+            </div>
+            <div
+              style={{
+                width: 120,
+                fontSize: 12,
+                marginLeft: 10,
+                marginRight: 10,
+              }}
+            >
+              Items are delievered within 12 hours
             </div>
           </div>
         </div>
+
         <div
           style={{
             fontSize: 24,

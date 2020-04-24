@@ -11,6 +11,10 @@
         "source": "/public-key",
         "function": "app"
       },
+      {
+        "source": "/create-transfers",
+        "function": "app"
+      },
       { "source": "/product-details", "function": "app" },
       {
         "source": "/customer",

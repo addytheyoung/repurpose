@@ -1,7 +1,9 @@
 const functions = require("firebase-functions");
 const env = require("dotenv").config({ path: "./.env" });
-// const stripe = require("stripe")("sk_live_dCqsS9VNcLZwNGP6WmHsLNJp00IJ8KKy14");
-const stripe = require("stripe")("sk_test_hkMGIPsjJ7Ag57pFz1eX0ASX00ijQ9oo1X");
+
+// const stripe = require("stripe")("rk_live_jwpHKngcsUmcz9gHths0I1ZX003cKwZQQl");
+const stripe = require("stripe")("sk_live_MUbbkQ150n00y57q1tjlwWQM00s213LRkP");
+// const stripe = require("stripe")("sk_test_hkMGIPsjJ7Ag57pFz1eX0ASX00ijQ9oo1X");
 var admin = require("firebase-admin");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -68,7 +70,7 @@ app.post("/make-seller", async (req, res) => {
 });
 
 app.get("/public-key", (req, res) => {
-  res.send({ publicKey: "pk_test_gLPSHkmFGwodXZBWMQabXaRr00jsYpn5GL" });
+  res.send({ publicKey: "sk_live_MUbbkQ150n00y57q1tjlwWQM00s213LRkP" });
 });
 
 app.get("/product-details", (req, res) => {
@@ -137,7 +139,7 @@ app.post("/create-payment-intent", async (req, res) => {
   const options = {
     payment_method_types: ["card"],
     transfer_group: "abcdef",
-    amount: amount * 100,
+    amount: amount,
     currency: productDetails.currency,
     description: productDetails.description,
   };
