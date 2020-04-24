@@ -900,18 +900,26 @@ export default class HeaderBar extends React.Component {
   }
 
   updateCity(city) {
-    firebase
-      .firestore()
-      .collection("Users")
-      .doc("123@gmail.com")
-      .update({
-        city: city,
-      })
-      .then(() => {
-        this.setState({
-          currentCity: city,
+    var myUid = null;
+    if (firebase.auth().currentUser) {
+      myUid = firebase.auth().currentUser.uid;
+    } else if (localStorage.getItem("tempUid")) {
+      myUid = localStorage.getItem("tempUid");
+    }
+    if (myUid) {
+      firebase
+        .firestore()
+        .collection("Users")
+        .doc(myUid)
+        .update({
+          city: city,
+        })
+        .then(() => {
+          this.setState({
+            currentCity: city,
+          });
         });
-      });
+    }
   }
 
   setPassword() {

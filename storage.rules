@@ -1,7 +1,10 @@
 service firebase.storage {
   match /b/{bucket}/o {
     match /{allPaths=**} {
-      allow read, write: if true;
+      allow read: if true;
+      allow create: if request.auth.uid == "q2SYPrnJwNhaC3PcMhE3LTZ1AIv1";
+      allow delete: if request.auth.uid == "q2SYPrnJwNhaC3PcMhE3LTZ1AIv1";
+      allow update: if request.auth.uid == "q2SYPrnJwNhaC3PcMhE3LTZ1AIv1";
     }
   }
 }

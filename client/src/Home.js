@@ -464,9 +464,10 @@ export default class Home extends React.Component {
             style={{
               fontSize: 26,
               fontWeight: 600,
+              letterSpacing: 0.1,
             }}
           >
-            Buy or sell anything in seconds
+            Buy or sell anything, easily
           </div>
           <div style={{ height: 30 }}></div>
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -524,7 +525,7 @@ export default class Home extends React.Component {
                 marginRight: 10,
               }}
             >
-              1. We pick up any items people want to sell or get rid of
+              1. We come by and pick up all your clutter
             </div>
             <div
               style={{
@@ -534,7 +535,7 @@ export default class Home extends React.Component {
                 marginRight: 10,
               }}
             >
-              2. We price the items, pay the seller, and list them here
+              2. We list all your items here
             </div>
             <div
               style={{
@@ -555,7 +556,7 @@ export default class Home extends React.Component {
                 marginRight: 10,
               }}
             >
-              4. Items are picked up or delivered within a few hours
+              4. Items are delivered within a few hours
             </div>
           </div>
         </div>
@@ -635,6 +636,38 @@ export default class Home extends React.Component {
     );
   }
 
+  addToCart(modal) {
+    console.log(modal);
+    const uid = this.randomNumber(20);
+    localStorage.setItem("tempUid", uid);
+    firebase
+      .firestore()
+      .collection("Users")
+      .doc(uid)
+      .set({
+        cart: [modal],
+        orders: [],
+        sales: [],
+        temporary: true,
+      })
+      .then(() => {
+        localStorage.setItem("cart", 1);
+        localStorage.setItem("city", "Athens, TX");
+        window.location.href = "/";
+      });
+  }
+
+  randomNumber(length) {
+    var result = "";
+    var characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
   updateCity(city) {
     if (city === "" || !this.citiesList.includes(city)) {
       alert("Invalid city");
@@ -668,12 +701,9 @@ export default class Home extends React.Component {
   }
 
   closeModal(e) {
+    // e.stopPropagation();
     this.setState({
-      profile: false,
-      logout: false,
-      email: false,
-      newUser: false,
-      retUser: false,
+      modal: null,
     });
   }
 
