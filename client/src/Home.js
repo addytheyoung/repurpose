@@ -416,6 +416,23 @@ export default class Home extends React.Component {
           <div style={{ width: "100%" }}></div>
           <div
             id="become-collector"
+            onClick={() => (window.location.href = "/help/?header=fdc")}
+            style={{
+              minWidth: 100,
+              fontWeight: 500,
+              height: 80,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: 16,
+              textAlign: "center",
+              marginRight: 20,
+            }}
+          >
+            Help
+          </div>
+          <div
+            id="become-collector"
             onClick={() => (window.location.href = "/become_collector")}
             style={{
               minWidth: 100,
@@ -656,23 +673,28 @@ export default class Home extends React.Component {
   }
 
   addToCart(modal) {
-    console.log(modal);
-    const uid = this.randomNumber(20);
-    localStorage.setItem("tempUid", uid);
     firebase
-      .firestore()
-      .collection("Users")
-      .doc(uid)
-      .set({
-        cart: [modal],
-        orders: [],
-        sales: [],
-        temporary: true,
-      })
+      .auth()
+      .signOut()
       .then(() => {
-        localStorage.setItem("cart", 1);
-        localStorage.setItem("city", "Athens, TX");
-        window.location.href = "/";
+        console.log(modal);
+        const uid = this.randomNumber(20);
+        localStorage.setItem("tempUid", uid);
+        firebase
+          .firestore()
+          .collection("Users")
+          .doc(uid)
+          .set({
+            cart: [modal],
+            orders: [],
+            sales: [],
+            temporary: true,
+          })
+          .then(() => {
+            localStorage.setItem("cart", 1);
+            localStorage.setItem("city", "Athens, TX");
+            window.location.href = "/";
+          });
       });
   }
 

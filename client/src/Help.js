@@ -3,11 +3,20 @@ import HeaderBar from "./HeaderBar";
 
 export default class Help extends React.Component {
   render() {
+    const q = window.location.search;
+    const urlParams = new URLSearchParams(q);
+    const category = urlParams.get("header");
+    var header = true;
+    if (category && category == "fdc") {
+      header = false;
+    }
     return (
       <div>
-        <div>
-          <HeaderBar />
-        </div>
+        {header && (
+          <div>
+            <HeaderBar />
+          </div>
+        )}
         <div
           style={{
             display: "flex",
