@@ -426,26 +426,10 @@ export default class Home extends React.Component {
               alignItems: "center",
               fontSize: 16,
               textAlign: "center",
-              marginRight: 0,
-            }}
-          >
-            Become a Collector
-          </div>
-          <div
-            onClick={() => this.showProfileModal()}
-            id="sign-in"
-            style={{
-              minWidth: 100,
-              fontWeight: 500,
-              height: 80,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: 16,
               marginRight: 100,
             }}
           >
-            Sign in
+            Become a Collector
           </div>
         </div>
         <div
@@ -516,8 +500,15 @@ export default class Home extends React.Component {
               SHOP
             </div>
           </div>
-          <div style={{ marginTop: 50, display: "flex", flexDirection: "row" }}>
-            <div style={{ marginRight: 10, fontWeight: 600 }}>SELL</div>
+          <div
+            style={{
+              marginTop: 50,
+              marginBottom: 20,
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
+            <div style={{ marginRight: 20, fontWeight: 600 }}>SELL</div>
             <div
               style={{
                 width: 120,
@@ -549,9 +540,11 @@ export default class Home extends React.Component {
               You get paid when an item is sold
             </div>
           </div>
-          <div style={{ marginTop: 5, marginBottom: 5 }}>OR</div>
+          <div style={{ marginTop: 5, marginBottom: 5, fontWeight: 500 }}>
+            OR
+          </div>
           <div style={{ marginTop: 30, display: "flex", flexDirection: "row" }}>
-            <div style={{ marginRight: 10, fontWeight: 600 }}>BUY</div>
+            <div style={{ marginRight: 20, fontWeight: 600 }}>BUY</div>
 
             <div
               style={{
@@ -571,7 +564,7 @@ export default class Home extends React.Component {
                 marginRight: 10,
               }}
             >
-              Buy those items online
+              Buy them right here
             </div>
             <div
               style={{

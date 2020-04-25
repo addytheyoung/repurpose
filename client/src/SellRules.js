@@ -560,7 +560,7 @@ export default class SellRules extends React.Component {
                 });
 
                 api.sendEmail(
-                  "andrewt.young@yahoo.com",
+                  email,
                   "An " +
                     localStorage.getItem("city") +
                     " Collector will come to " +

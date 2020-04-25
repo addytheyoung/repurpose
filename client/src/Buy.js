@@ -158,6 +158,7 @@ export default class Buy extends React.Component {
             fontSize: 20,
             fontWeight: 500,
             marginTop: 50,
+            marginBottom: 50,
           }}
         >
           {this.state.loaded && "(More coming very soon)"}
