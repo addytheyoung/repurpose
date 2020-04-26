@@ -673,37 +673,57 @@ export default class CheckoutForm extends React.Component {
       }
       var i_index = 0;
       for (var i = 0; i < sellers.length; i++) {
-        api
-          .createTransfers({
-            seller: sellers[i].id,
-            cost: sellers[i].cost,
-            worker: false,
-          })
-          .then((res) => {
-            i_index++;
-            if (i_index == sellers.length) {
-              // Create our customer
-              api.createCustomer().then((e) => {
-                console.log(e);
-                const id = e.id;
-                this.setState({
-                  error: null,
-                  succeeded: true,
-                  processing: false,
-                  metadata: payload.paymentIntent,
-                  customer_id: id,
-                  loadingIcon: false,
+        // Regular sale, pay the seller
+        if (sellers[i].id !== "donate") {
+          api
+            .createTransfers({
+              seller: sellers[i].id,
+              cost: sellers[i].cost,
+              worker: false,
+            })
+            .then((res) => {
+              i_index++;
+              if (i_index == sellers.length) {
+                // Create our customer
+                api.createCustomer().then((e) => {
+                  console.log(e);
+                  const id = e.id;
+                  this.setState({
+                    error: null,
+                    succeeded: true,
+                    processing: false,
+                    metadata: payload.paymentIntent,
+                    customer_id: id,
+                    loadingIcon: false,
+                  });
                 });
+              }
+              console.log(res);
+            })
+            .catch((e) => {
+              this.setState({
+                loadingIcon: false,
               });
-            }
-            console.log(res);
-          })
-          .catch((e) => {
-            this.setState({
-              loadingIcon: false,
+              console.log(e.message);
             });
-            console.log(e.message);
-          });
+        } else {
+          // Don't pay anyone, donation
+          i_index++;
+          if (i_index == sellers.length) {
+            api.createCustomer().then((e) => {
+              console.log(e);
+              const id = e.id;
+              this.setState({
+                error: null,
+                succeeded: true,
+                processing: false,
+                metadata: payload.paymentIntent,
+                customer_id: id,
+                loadingIcon: false,
+              });
+            });
+          }
+        }
       }
       //Pay out the gig worker (0.6%)
       // api.createTransfers({
@@ -748,7 +768,7 @@ export default class CheckoutForm extends React.Component {
             const milesBetween = Math.sqrt(x);
             console.log(milesBetween);
 
-            if (milesBetween >= 15) {
+            if (milesBetween >= 20) {
               return false;
             } else {
               return true;

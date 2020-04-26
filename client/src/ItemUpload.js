@@ -20,6 +20,7 @@ export default class ItemUpload extends React.Component {
 
   constructor(props) {
     super(props);
+    // THIS SHOULD CHANGE WHEN I AM UPLOADING OTHER USERS ITEMS
     firebase
       .firestore()
       .collection("Collectors")
@@ -27,11 +28,19 @@ export default class ItemUpload extends React.Component {
       .get()
       .then((myData) => {
         const data = myData.data();
-        this.setState({
-          city: data.city,
-          sellerStripeId: data.seller,
-          loaded: true,
-        });
+        if (data.seller) {
+          this.setState({
+            city: data.city,
+            sellerStripeId: data.seller,
+            loaded: true,
+          });
+        } else {
+          this.setState({
+            city: data.city,
+            sellerStripeId: "donate",
+            loaded: true,
+          });
+        }
       });
     this.state = {
       loaded: false,
@@ -432,9 +441,6 @@ export default class ItemUpload extends React.Component {
     } else if (!category) {
       alert("Category");
       return;
-    } else if (!this.state.sellerStripeId) {
-      alert("Seller stripe id");
-      return;
     } else if (!this.state.croppedImgFile) {
       alert("Picture");
       return;
@@ -476,6 +482,9 @@ export default class ItemUpload extends React.Component {
                     poster_uid: firebase.auth().currentUser.uid,
                   })
                   .then(() => {
+                    if (this.state.sellerStripeId) {
+                    } else {
+                    }
                     // Add it to the users items sold so we can pay them
                     firebase
                       .firestore()

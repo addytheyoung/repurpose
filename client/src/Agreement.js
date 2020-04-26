@@ -43,7 +43,7 @@ export default class Agreement extends React.Component {
                   flexDirection: "row",
                 }}
               >
-                1. We don't take very broken items, large furniture, or trash.
+                1. We don't take very broken items or trash.
                 <img
                   style={{ marginLeft: 10, width: 20, height: 20 }}
                   src={Down}
@@ -133,27 +133,56 @@ export default class Agreement extends React.Component {
               )}
             </div>
           </div>
-          <div
-            onClick={() => this.stripeSignup()}
-            id="header-checkout"
-            style={{
-              display: "flex",
-              marginTop: 40,
-              width: 150,
-              textAlign: "center",
-              textDecoration: "none",
-              backgroundColor: "#a1a1a1",
-              borderRadius: 5,
-              padding: 10,
-              height: 20,
-              fontWeight: 600,
-              color: "white",
-              alignItems: "center",
-              justifyContent: "center",
-              minWidth: 150,
-            }}
-          >
-            LET'S GO
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <div
+              onClick={() => (window.location.href = "/sell/rules")}
+              id="header-checkout"
+              style={{
+                display: "flex",
+                marginLeft: 10,
+                marginRight: 10,
+                marginTop: 40,
+                width: 150,
+                textAlign: "center",
+                textDecoration: "none",
+                backgroundColor: "#a1a1a1",
+                borderRadius: 5,
+                padding: 10,
+                height: 20,
+                fontWeight: 600,
+                color: "white",
+                alignItems: "center",
+                justifyContent: "center",
+                minWidth: 150,
+              }}
+            >
+              DONATE my clutter
+            </div>
+            <div
+              onClick={() => this.stripeSignup()}
+              id="header-checkout"
+              style={{
+                display: "flex",
+                marginTop: 40,
+                marginLeft: 10,
+                marginRight: 10,
+                width: 150,
+                textAlign: "center",
+                textDecoration: "none",
+                backgroundColor: "#a1a1a1",
+                borderRadius: 5,
+                padding: 10,
+                height: 20,
+                fontWeight: 600,
+                color: "white",
+                alignItems: "center",
+                backgroundColor: "#E61E4D",
+                justifyContent: "center",
+                minWidth: 150,
+              }}
+            >
+              SELL my clutter
+            </div>
           </div>
         </div>
       </div>

@@ -529,7 +529,7 @@ export default class Home extends React.Component {
             <div
               style={{
                 width: 120,
-                fontSize: 12,
+                fontSize: 14,
                 marginLeft: 10,
                 marginRight: 10,
               }}
@@ -539,7 +539,7 @@ export default class Home extends React.Component {
             <div
               style={{
                 width: 120,
-                fontSize: 12,
+                fontSize: 14,
                 marginLeft: 10,
                 marginRight: 10,
               }}
@@ -549,7 +549,7 @@ export default class Home extends React.Component {
             <div
               style={{
                 width: 120,
-                fontSize: 12,
+                fontSize: 14,
                 marginLeft: 10,
                 marginRight: 10,
               }}
@@ -566,7 +566,7 @@ export default class Home extends React.Component {
             <div
               style={{
                 width: 120,
-                fontSize: 12,
+                fontSize: 14,
                 marginLeft: 10,
                 marginRight: 10,
               }}
@@ -576,7 +576,7 @@ export default class Home extends React.Component {
             <div
               style={{
                 width: 120,
-                fontSize: 12,
+                fontSize: 14,
                 marginLeft: 10,
                 marginRight: 10,
               }}
@@ -586,7 +586,7 @@ export default class Home extends React.Component {
             <div
               style={{
                 width: 120,
-                fontSize: 12,
+                fontSize: 14,
                 marginLeft: 10,
                 marginRight: 10,
               }}
@@ -673,29 +673,50 @@ export default class Home extends React.Component {
   }
 
   addToCart(modal) {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        console.log(modal);
-        const uid = this.randomNumber(20);
-        localStorage.setItem("tempUid", uid);
-        firebase
-          .firestore()
-          .collection("Users")
-          .doc(uid)
-          .set({
-            cart: [modal],
-            orders: [],
-            sales: [],
-            temporary: true,
-          })
-          .then(() => {
-            localStorage.setItem("cart", 1);
-            localStorage.setItem("city", "Athens, TX");
-            window.location.href = "/";
-          });
-      });
+    if (firebase.auth().currentUser) {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          console.log(modal);
+          const uid = this.randomNumber(20);
+          localStorage.setItem("tempUid", uid);
+          firebase
+            .firestore()
+            .collection("Users")
+            .doc(uid)
+            .set({
+              cart: [modal],
+              orders: [],
+              sales: [],
+              temporary: true,
+            })
+            .then(() => {
+              localStorage.setItem("cart", 1);
+              localStorage.setItem("city", "Athens, TX");
+              window.location.href = "/";
+            });
+        });
+    } else {
+      console.log(modal);
+      const uid = this.randomNumber(20);
+      localStorage.setItem("tempUid", uid);
+      firebase
+        .firestore()
+        .collection("Users")
+        .doc(uid)
+        .set({
+          cart: [modal],
+          orders: [],
+          sales: [],
+          temporary: true,
+        })
+        .then(() => {
+          localStorage.setItem("cart", 1);
+          localStorage.setItem("city", "Athens, TX");
+          window.location.href = "/";
+        });
+    }
   }
 
   randomNumber(length) {
