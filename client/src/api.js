@@ -175,6 +175,11 @@ const createPaymentIntent = (total, stripe_unique_id) => {
     });
 };
 
+const payWithPaypal = (x) => {
+  console.log(x);
+  return "x";
+};
+
 const getProductDetails = (cart) => {
   const subTotal = getSubtotal(cart);
   const tax = getTax(subTotal);
@@ -258,6 +263,7 @@ const getShipping = (price) => {
 };
 
 const api = {
+  payWithPaypal: payWithPaypal,
   createTransfers: createTransfers,
   sendEmail: sendEmail,
   getLatLng: getLatLng,

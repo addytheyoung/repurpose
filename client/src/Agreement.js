@@ -135,30 +135,6 @@ export default class Agreement extends React.Component {
           </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
             <div
-              onClick={() => (window.location.href = "/sell/rules")}
-              id="header-checkout"
-              style={{
-                display: "flex",
-                marginLeft: 10,
-                marginRight: 10,
-                marginTop: 40,
-                width: 150,
-                textAlign: "center",
-                textDecoration: "none",
-                backgroundColor: "#a1a1a1",
-                borderRadius: 5,
-                padding: 10,
-                height: 20,
-                fontWeight: 600,
-                color: "white",
-                alignItems: "center",
-                justifyContent: "center",
-                minWidth: 150,
-              }}
-            >
-              DONATE my clutter
-            </div>
-            <div
               onClick={() => this.stripeSignup()}
               id="header-checkout"
               style={{

@@ -70,12 +70,27 @@ export default class CheckoutForm extends React.Component {
       ];
 
       var cart = this.state.myData.cart;
-      console.log(cart);
-      cart["delivered"] = false;
+      var tempCart = JSON.parse(JSON.stringify(this.state.myData.cart));
+      console.log(tempCart);
+
+      for (var i = 0; i < tempCart.length; i++) {
+        tempCart[i]["address"] = localStorage.getItem("deliverAddress");
+        tempCart[i]["address2"] = localStorage.getItem("deliverAddress2");
+        tempCart[i]["city"] = localStorage.getItem("deliverCity");
+      }
+      localStorage.setItem("deliverAddress", "");
+      localStorage.setItem("deliverAddress2", "");
+      localStorage.setItem("deliverCity", "");
+
       const orders = this.state.myData.orders;
+      console.log(tempCart);
+      console.log(cart);
 
       // Update my own cart and remove everything
-      const newOrders = orders.concat(cart);
+
+      var newOrders = orders.concat(tempCart);
+
+      console.log(newOrders);
 
       var myUid = null;
 
@@ -100,7 +115,7 @@ export default class CheckoutForm extends React.Component {
         .collection("Users")
         .doc(myUid)
         .update({
-          customer_id: this.state.customer_id ? this.state.customer_id : null,
+          customer_id: this.state.customer_id ? this.state.customer_id : "",
           orders: newOrders,
         })
         .then(() => {
@@ -416,6 +431,10 @@ export default class CheckoutForm extends React.Component {
                 })
               }
               onClick={(e) => this.andrewMethod2(e)}
+              onError={(e) => {
+                console.log(e);
+                alert("error");
+              }}
               onSuccess={(details, data) => {
                 console.log(details);
                 console.log(data);
@@ -427,11 +446,13 @@ export default class CheckoutForm extends React.Component {
                 });
 
                 // OPTIONAL: Call your server to save the transaction
-                // return api.payWithPaypal().then((res) => {});
+                return api.payWithPaypal().then((res) => {});
               }}
               options={{
                 clientId:
-                  "AagrypGvYi5QmDHv0rhdJnr91B_Qha89rbKFeLqjv6kUBHUd5MTMMOsRj88Q_erUKM9jQaxaO4d2pLhm",
+                  "AVWKPfLbUrnVVHtF3EqllXbIqqAhJvRrlwa9vVi4k_uFGT4Jcd7TSsWxXKdGED5B66RNcrczgnnISVLk",
+                // clientId:
+                //   "AagrypGvYi5QmDHv0rhdJnr91B_Qha89rbKFeLqjv6kUBHUd5MTMMOsRj88Q_erUKM9jQaxaO4d2pLhm",
                 currency: "USD",
                 // merchantId: "3WEGGZYB8FJFL",
                 disableFunding: "card,credit",
@@ -518,6 +539,9 @@ export default class CheckoutForm extends React.Component {
     if (!this.state.call) {
       console.log("Andrew method");
       var myUid = null;
+      localStorage.setItem("deliverAddress", address1);
+      localStorage.setItem("deliverAddress2", address2);
+      localStorage.setItem("deliverCity", city);
       this.setState({
         loadingIcon: true,
         call: true,
@@ -721,15 +745,10 @@ export default class CheckoutForm extends React.Component {
   }
 
   async checkItems() {
-    var cart = this.state.myData.cart;
-    cart["delivered"] = false;
-    const orders = this.state.myData.orders;
-    console.log(cart);
-
     // Check that all items are still available
     var index = 0;
     const itemsInDb = [];
-
+    var cart = this.state.myData.cart;
     for (var i = 0; i < cart.length; i++) {
       const item = cart[i];
       console.log(item);
@@ -831,6 +850,10 @@ export default class CheckoutForm extends React.Component {
       return;
     }
 
+    localStorage.setItem("deliverAddress", address1);
+    localStorage.setItem("deliverAddress2", address2);
+    localStorage.setItem("deliverCity", city);
+
     this.setState({
       processing: true,
     });
@@ -867,56 +890,37 @@ export default class CheckoutForm extends React.Component {
       var i_index = 0;
       for (var i = 0; i < sellers.length; i++) {
         // Regular sale, pay the seller
-        if (sellers[i].id !== "donate") {
-          api
-            .createTransfers({
-              seller: sellers[i].id,
-              cost: sellers[i].cost,
-              worker: false,
-            })
-            .then((res) => {
-              i_index++;
-              if (i_index == sellers.length) {
-                // Create our customer
-                api.createCustomer().then((e) => {
-                  console.log(e);
-                  const id = e.id;
-                  this.setState({
-                    error: null,
-                    succeeded: true,
-                    processing: false,
-                    metadata: payload.paymentIntent,
-                    customer_id: id,
-                    loadingIcon: false,
-                  });
+        api
+          .createTransfers({
+            seller: sellers[i].id,
+            cost: sellers[i].cost,
+            worker: false,
+          })
+          .then((res) => {
+            i_index++;
+            if (i_index == sellers.length) {
+              // Create our customer
+              api.createCustomer().then((e) => {
+                console.log(e);
+                const id = e.id;
+                this.setState({
+                  error: null,
+                  succeeded: true,
+                  processing: false,
+                  metadata: payload.paymentIntent,
+                  customer_id: id,
+                  loadingIcon: false,
                 });
-              }
-              console.log(res);
-            })
-            .catch((e) => {
-              this.setState({
-                loadingIcon: false,
               });
-              console.log(e.message);
+            }
+            console.log(res);
+          })
+          .catch((e) => {
+            this.setState({
+              loadingIcon: false,
             });
-        } else {
-          // Don't pay anyone, donation
-          i_index++;
-          if (i_index == sellers.length) {
-            api.createCustomer().then((e) => {
-              console.log(e);
-              const id = e.id;
-              this.setState({
-                error: null,
-                succeeded: true,
-                processing: false,
-                metadata: payload.paymentIntent,
-                customer_id: id,
-                loadingIcon: false,
-              });
-            });
-          }
-        }
+            console.log(e.message);
+          });
       }
       //Pay out the gig worker (0.6%)
       // api.createTransfers({
