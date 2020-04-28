@@ -470,7 +470,7 @@ export default class Cart extends React.Component {
                   justifyContent: "space-between",
                 }}
               >
-                <div>Shipping</div>
+                <div>Delivery</div>
                 <div>{"$" + shipping}</div>
               </div>
               <div
@@ -530,15 +530,15 @@ export default class Cart extends React.Component {
                 >
                   {subTotal < 6 && (
                     <div>
-                      - Flat fee of $2.00 for shipping. <br /> <br />
-                      - Free shipping for $6.00+ orders. <br /> <br />
+                      - Flat fee of $2.00 for delivery. <br /> <br />
+                      - Free delivery for $6.00+ orders. <br /> <br />
                       - Items are typically delivered within 12 hours. <br />{" "}
                       <br /> <br />
                     </div>
                   )}
                   {subTotal >= 6 && (
                     <div>
-                      - $6.00+ order: free shipping! <br /> <br /> - Items are
+                      - $6.00+ order: free delivery! <br /> <br /> - Items are
                       typically delivered within 12 hours. <br /> <br />{" "}
                     </div>
                   )}

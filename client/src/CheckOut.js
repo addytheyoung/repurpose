@@ -289,7 +289,7 @@ export default class CheckOut extends React.Component {
           <div
             style={{
               fontWeight: 700,
-              marginTop: 50,
+              marginTop: 30,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -381,7 +381,13 @@ export default class CheckOut extends React.Component {
                       src={item.pictures[0]}
                     ></img>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      marginLeft: 10,
+                    }}
+                  >
                     {" "}
                     <div>{item.title}</div>
                     <div>{"$" + item.original_price}</div>
@@ -460,7 +466,7 @@ export default class CheckOut extends React.Component {
                   justifyContent: "space-between",
                 }}
               >
-                <div>Shipping</div>
+                <div>Delivery</div>
                 <div>{"$" + shipping}</div>
               </div>
               <div
@@ -478,11 +484,10 @@ export default class CheckOut extends React.Component {
                 <div>Total</div>
                 <div>{"$" + total}</div>
               </div>
-              <div style={{ marginTop: 50 }}></div>
+              <div style={{ marginTop: 20 }}></div>
 
               <div
                 style={{
-                  marginTop: 10,
                   width: "30vw",
                   display: "flex",
                   flexDirection: "row",
@@ -490,7 +495,7 @@ export default class CheckOut extends React.Component {
                   justifyContent: "center",
                 }}
               >
-                <RadioGroup
+                {/* <RadioGroup
                   value={this.state.deliveryType}
                   onChange={(e) => this.setPickup(e)}
                   defaultValue="pickup"
@@ -512,7 +517,7 @@ export default class CheckOut extends React.Component {
                     label="Delivery"
                     labelPlacement="top"
                   />
-                </RadioGroup>
+                </RadioGroup> */}
               </div>
 
               {

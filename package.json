@@ -20,7 +20,7 @@
     "react-calendar": "^3.0.1",
     "react-html5-camera-photo": "^1.5.4",
     "react-image-crop": "^8.6.2",
-    "react-paypal-button-v2": "^2.6.1",
+    "react-paypal-button-v2": "^2.6.2",
     "stripe": "^7.1.0"
   },
   "devDependencies": {}

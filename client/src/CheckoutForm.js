@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { CardElement, ElementsConsumer } from "@stripe/react-stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { PayPalButton } from "react-paypal-button-v2";
+
 import { Input, Select, MenuItem, Button } from "@material-ui/core";
 import "./css/CheckoutForm.css";
 
@@ -224,54 +226,70 @@ export default class CheckoutForm extends React.Component {
           </div>
         )}
 
-        {this.props.deliveryType === "delivery" && (
+        {/* {this.props.deliveryType === "delivery" && (
           <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
             {this.state.total < 6 && (
               <div>
-                Flat fee of $2.00 for shipping. <br /> <br />
-                Free shipping for $6.00+ orders. <br /> <br />
+                Flat fee of $2.00 for delivery. <br /> <br />
+                Free delivery for $6.00+ orders. <br /> <br />
                 Items are typically delivered within 3 hours. <br /> <br />{" "}
                 <br />
               </div>
             )}
             {this.state.total >= 6 && (
               <div>
-                $6.00+ order: free shipping! <br /> <br /> Items are typically
+                $6.00+ order: free delivery! <br /> <br /> Items are typically
                 delivered within 12 hours. <br /> <br />{" "}
               </div>
             )}
           </div>
-        )}
-        {this.props.deliveryType === "pickup" && (
+        )} */}
+        {/* {this.props.deliveryType === "pickup" && (
           <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
             Pickup location is 2414 Longview Street, <br />
             Athens TX. We'll send you an email to confirm.
           </div>
-        )}
+        )} */}
+
         <form
           onSubmit={(ev) => this.andrewMethod(ev)}
-          style={{ paddingLeft: 0, minWidth: 400, maxWidth: 600 }}
+          style={{
+            paddingLeft: 0,
+            minWidth: 400,
+            maxWidth: 600,
+          }}
         >
-          <div className="sr-combo-inputs">
-            <div className="sr-combo-inputs-row" style={{ width: 400 }}>
-              <CardElement
-                className="sr-input sr-card-element"
-                options={options}
-              />
-            </div>
-          </div>
-
           {this.state.error && (
             <div className="message sr-field-error">{this.state.error}</div>
           )}
 
           <div style={{ display: "flex", flexDirection: "column" }}>
+            <div
+              style={{
+                fontSize: 18,
+                fontWeight: 500,
+                marginBottom: 10,
+                textAlign: "center",
+              }}
+            >
+              Delivery Address
+            </div>
             <Input
+              defaultValue={
+                localStorage.getItem("fname")
+                  ? localStorage.getItem("fname")
+                  : ""
+              }
               id="first"
               style={{ margin: 10 }}
               placeholder="First Name"
             ></Input>
             <Input
+              defaultValue={
+                localStorage.getItem("lname")
+                  ? localStorage.getItem("lname")
+                  : ""
+              }
               id="last"
               style={{ margin: 10 }}
               placeholder="Last Name"
@@ -279,16 +297,31 @@ export default class CheckoutForm extends React.Component {
             {this.props.deliveryType === "delivery" && (
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <Input
+                  defaultValue={
+                    localStorage.getItem("address1")
+                      ? localStorage.getItem("address1")
+                      : ""
+                  }
                   id="address1"
                   style={{ margin: 10 }}
                   placeholder="Address Line 1"
                 ></Input>
                 <Input
+                  defaultValue={
+                    localStorage.getItem("address2")
+                      ? localStorage.getItem("address2")
+                      : ""
+                  }
                   id="address2"
                   style={{ margin: 10 }}
                   placeholder="Address Line 2 (optional)"
                 ></Input>
                 <Input
+                  defaultValue={
+                    localStorage.getItem("zip")
+                      ? localStorage.getItem("zip")
+                      : ""
+                  }
                   id="zip"
                   style={{ margin: 10 }}
                   placeholder="Zip Code"
@@ -360,31 +393,188 @@ export default class CheckoutForm extends React.Component {
                 </Select>
               </div>
             )}
-
-            <button
-              id="pay"
-              style={{
-                backgroundColor: "#a1a1a1",
-                height: 40,
-                color: "white",
-                fontWeight: 600,
-                fontSize: 20,
-              }}
-              // onClick={(e) => this.prevent(e)}
-              className="btn"
-              disabled={
-                this.state.processing ||
-                !this.state.clientSecret ||
-                !this.props.stripe
-              }
-            >
-              {this.state.processing ? "Processing…" : "Pay"}
-            </button>
-            <div style={{ height: 50 }}></div>
           </div>
+
+          {/* <div
+            style={{
+              textAlign: "center",
+              marginTop: 10,
+              marginBottom: 5,
+              fontWeight: 500,
+            }}
+          >
+            Pay with PayPal
+          </div> */}
+
+          <div style={{ minWidth: 400, maxWidth: 600, marginTop: 20 }}>
+            <PayPalButton
+              shippingPreference="NO_SHIPPING"
+              amount={this.props.total}
+              onCancel={(e) =>
+                this.setState({
+                  loadingIcon: false,
+                })
+              }
+              onClick={(e) => this.andrewMethod2(e)}
+              onSuccess={(details, data) => {
+                console.log(details);
+                console.log(data);
+                alert(
+                  "Transaction completed by " + details.payer.name.given_name
+                );
+
+                // OPTIONAL: Call your server to save the transaction
+                // return api.payWithPaypal().then((res) => {});
+              }}
+              options={{
+                clientId:
+                  "AagrypGvYi5QmDHv0rhdJnr91B_Qha89rbKFeLqjv6kUBHUd5MTMMOsRj88Q_erUKM9jQaxaO4d2pLhm",
+                currency: "USD",
+                // merchantId: "3WEGGZYB8FJFL",
+                disableFunding: "card,credit",
+              }}
+            />
+          </div>
+          <div
+            style={{
+              textAlign: "center",
+              fontWeight: 500,
+              marginBottom: 20,
+              marginTop: 20,
+              minWidth: 400,
+              maxWidth: 600,
+            }}
+          >
+            OR
+          </div>
+          {/* <div style={{ textAlign: "center", fontWeight: 500 }}>
+            Pay with debit
+          </div> */}
+          <div
+            className="sr-combo-inputs"
+            style={{ minWidth: 400, maxWidth: 550 }}
+          >
+            <div className="sr-combo-inputs-row">
+              <CardElement
+                className="sr-input sr-card-element"
+                options={options}
+              />
+            </div>
+          </div>
+
+          <button
+            id="pay"
+            style={{
+              backgroundColor: "#E61E4D",
+              height: 58,
+              width: "100%",
+              borderRadius: 5,
+              borderWidth: 0,
+              color: "white",
+              fontWeight: 600,
+              fontSize: 20,
+            }}
+            // onClick={(e) => this.prevent(e)}
+            className="btn"
+            disabled={
+              this.state.processing ||
+              !this.state.clientSecret ||
+              !this.props.stripe
+            }
+          >
+            {this.state.processing ? "Processing…" : "Pay with Card"}
+          </button>
+
+          <div style={{ height: 50 }}></div>
         </form>
       </div>
     );
+  }
+
+  andrewMethod2(e) {
+    const first = document.getElementById("first").value.trim();
+    const last = document.getElementById("last").value.trim();
+    const address1 = document.getElementById("address1").value.trim();
+    const address2 = document.getElementById("address2").value.trim();
+    const zip = document.getElementById("zip").value.trim();
+    const city = document.getElementById("city").value.trim();
+    const state = document.getElementById("state").textContent;
+
+    localStorage.setItem("fname", first);
+    localStorage.setItem("lname", last);
+    localStorage.setItem("address1", address1);
+    localStorage.setItem("address2", address2);
+    localStorage.setItem("zip", zip);
+
+    // const url =
+    //   "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+    //   address1 +
+    //   "&key=" +
+    //   API_KEY;
+
+    if (!this.state.call) {
+      console.log("Andrew method");
+      var myUid = null;
+      this.setState({
+        loadingIcon: true,
+        call: true,
+      });
+
+      if (firebase.auth().currentUser) {
+        // Signed in
+        myUid = firebase.auth().currentUser.uid;
+      } else if (localStorage.getItem("tempUid")) {
+        // temporarily signed in
+        myUid = localStorage.getItem("tempUid");
+      }
+
+      this.checkAddress()
+        .then((b) => {
+          console.log(b);
+          if (b === true && first && last && address1 && zip && city && state) {
+            this.checkItems().then((a) => {
+              console.log(a);
+              if (!a) {
+              } else if (a.length === this.state.myData.cart.length) {
+              } else {
+                alert(
+                  "Something in your cart has been purchased. You have not been charged."
+                );
+                firebase
+                  .firestore()
+                  .collection("Users")
+                  .doc(myUid)
+                  .update({
+                    cart: a,
+                  })
+                  .then(() => {
+                    window.location.href = "/checkout";
+                  });
+              }
+            });
+          } else if (b == -1) {
+            this.setState({
+              loadingIcon: false,
+            });
+            alert("Please fill out all info above");
+            window.location.reload();
+          } else {
+            this.setState({
+              loadingIcon: false,
+            });
+            alert(
+              "Sorry, you are too far for delivery. We'll have pickup soon!"
+            );
+            window.location.reload();
+          }
+        })
+        .catch((e) => {
+          console.log(e.message);
+          this.setState({
+            loadingIcon: false,
+          });
+        });
+    }
   }
 
   andrewMethod(ev) {
@@ -736,7 +926,9 @@ export default class CheckoutForm extends React.Component {
     }
   }
 
-  async checkAddress() {
+  async checkAddress(e) {
+    console.log(e);
+
     console.log("address");
     var address1 = document.getElementById("address1").value;
     const zip = document.getElementById("zip").value.trim();
