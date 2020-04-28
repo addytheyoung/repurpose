@@ -100,7 +100,7 @@ export default class CheckoutForm extends React.Component {
         .collection("Users")
         .doc(myUid)
         .update({
-          customer_id: this.state.customer_id,
+          customer_id: this.state.customer_id ? this.state.customer_id : null,
           orders: newOrders,
         })
         .then(() => {
@@ -419,9 +419,12 @@ export default class CheckoutForm extends React.Component {
               onSuccess={(details, data) => {
                 console.log(details);
                 console.log(data);
-                alert(
-                  "Transaction completed by " + details.payer.name.given_name
-                );
+                this.setState({
+                  error: null,
+                  succeeded: true,
+                  processing: false,
+                  loadingIcon: false,
+                });
 
                 // OPTIONAL: Call your server to save the transaction
                 // return api.payWithPaypal().then((res) => {});
