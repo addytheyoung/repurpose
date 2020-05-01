@@ -534,6 +534,7 @@ export default class SellRules extends React.Component {
           address1: localStorage.getItem("address1"),
           address2: localStorage.getItem("address2"),
           start: this.state.opening,
+          pay_type: localStorage.getItem("sell_type"),
           day: this.state.currentDate.toString(),
           seller: localStorage.getItem("stripe_user_id"),
         });

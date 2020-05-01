@@ -194,14 +194,6 @@ export default class CheckoutForm extends React.Component {
                               .then(() => {
                                 b_index++;
                                 if (b_index === userDocs.length) {
-                                  // Finally, update all the items as sold for the seller.
-                                  // for (var m = 0; m < cart.length; m++) {
-                                  //   const sellerItem = cart[m]
-                                  //   firebase.firestore().collection("Users").where("stripe_user_id", "==", sellerItem.seller_stripe_id).get().then((seller) => {
-
-                                  //   })
-                                  // }
-
                                   localStorage.setItem("cart", "0");
                                   console.log("DONE");
                                   this.props.finished();
@@ -880,6 +872,15 @@ export default class CheckoutForm extends React.Component {
 
       console.log("[error]", payload.error);
     } else {
+      this.setState({
+        error: null,
+        succeeded: true,
+        processing: false,
+        metadata: "",
+        customer_id: "",
+        loadingIcon: false,
+      });
+      return;
       // Pay out all the sellers (0.3% of item price)
       const sellers = [];
       for (var i = 0; i < this.state.myData.cart.length; i++) {
@@ -900,18 +901,30 @@ export default class CheckoutForm extends React.Component {
             i_index++;
             if (i_index == sellers.length) {
               // Create our customer
-              api.createCustomer().then((e) => {
-                console.log(e);
-                const id = e.id;
-                this.setState({
-                  error: null,
-                  succeeded: true,
-                  processing: false,
-                  metadata: payload.paymentIntent,
-                  customer_id: id,
-                  loadingIcon: false,
+              api
+                .createCustomer()
+                .then((e) => {
+                  console.log(e);
+                  const id = e.id;
+                  this.setState({
+                    error: null,
+                    succeeded: true,
+                    processing: false,
+                    metadata: payload.paymentIntent,
+                    customer_id: id,
+                    loadingIcon: false,
+                  });
+                })
+                .catch(() => {
+                  this.setState({
+                    error: null,
+                    succeeded: true,
+                    processing: false,
+                    metadata: "",
+                    customer_id: "",
+                    loadingIcon: false,
+                  });
                 });
-              });
             }
             console.log(res);
           })
@@ -919,7 +932,7 @@ export default class CheckoutForm extends React.Component {
             this.setState({
               loadingIcon: false,
             });
-            console.log(e.message);
+            alert(e.message);
           });
       }
       //Pay out the gig worker (0.6%)

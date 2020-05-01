@@ -2,6 +2,8 @@ import React from "react";
 import Down from "./images/down-arrow.png";
 import Up from "./images/up-arrow.png";
 import HeaderBar from "./HeaderBar";
+import Close from "./images/close.png";
+import { Input } from "@material-ui/core";
 import "./css/Agreement.css";
 
 export default class Agreement extends React.Component {
@@ -9,11 +11,131 @@ export default class Agreement extends React.Component {
     super(props);
     this.state = {
       one: false,
+      paypalModal: false,
     };
   }
   render() {
     return (
       <div>
+        {this.state.paypalModal && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              // alignItems: "center"
+            }}
+          >
+            <div
+              onClick={(e) => this.closeModal(e)}
+              style={{
+                backgroundColor: "#000000",
+                opacity: 0.5,
+                zIndex: 99,
+                width: "100vw",
+                height: "100vh",
+                position: "absolute",
+              }}
+            ></div>
+            <div
+              style={{
+                width: "50vw",
+                borderRadius: 5,
+                height: "80vh",
+                top: 30,
+                backgroundColor: "#f5f5f5",
+                position: "absolute",
+                zIndex: 100,
+                opacity: 1,
+              }}
+            >
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <img
+                    id="close"
+                    onClick={() => this.closeModal()}
+                    src={Close}
+                    style={{
+                      width: 20,
+                      height: 20,
+                      marginTop: 20,
+                      marginRight: 20,
+                    }}
+                  />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: 20,
+                    fontWeight: 600,
+                    marginTop: 10,
+                  }}
+                >
+                  Email, phone, OR username for Paypal account
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: 12,
+                    fontWeight: 400,
+                    marginTop: 10,
+                  }}
+                >
+                  This is so we can pay you. <br />
+                  Make sure you make an account on paypal.com if you don't have
+                  one.
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: 20,
+                  }}
+                >
+                  <Input
+                    id="paypal-id"
+                    placeholder="Email, Phone, or Username"
+                    style={{ width: 400, marginTop: 20 }}
+                  />
+                </div>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <div
+                    onClick={() => this.paypalSignup()}
+                    id="header-checkout"
+                    style={{
+                      display: "flex",
+                      width: 150,
+                      marginTop: 30,
+                      textDecoration: "none",
+                      backgroundColor: "#0072b1",
+                      borderRadius: 5,
+                      padding: 10,
+                      height: 20,
+                      fontWeight: 600,
+                      color: "white",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      minWidth: 150,
+                    }}
+                  >
+                    GET STARTED
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div>
           <HeaderBar />
         </div>
@@ -25,85 +147,8 @@ export default class Agreement extends React.Component {
             marginTop: 20,
           }}
         >
-          <div style={{ fontWeight: 600, fontSize: 22 }}>Some rules</div>
+          <div style={{ fontWeight: 600, fontSize: 22 }}></div>
           <div>
-            <div>
-              <div
-                id="one"
-                onClick={() =>
-                  this.setState({
-                    one: !this.state.one,
-                  })
-                }
-                style={{
-                  marginTop: 40,
-                  fontWeight: 500,
-                  fontSize: 18,
-                  display: "flex",
-                  flexDirection: "row",
-                }}
-              >
-                1. We don't take very broken items or trash.
-                <img
-                  style={{ marginLeft: 10, width: 20, height: 20 }}
-                  src={Down}
-                ></img>
-              </div>
-              {this.state.one && (
-                <div style={{ marginTop: 10, fontSize: 18, marginLeft: 30 }}>
-                  A toy with some pieces missing IS good.
-                </div>
-              )}
-              {this.state.one && (
-                <div style={{ fontSize: 18, marginTop: 5, marginLeft: 30 }}>
-                  A toy snapped in half is NOT good.
-                </div>
-              )}
-              {this.state.one && (
-                <div style={{ fontSize: 18, marginTop: 5, marginLeft: 30 }}>
-                  If you aren't sure, just give it to us anyways!
-                </div>
-              )}
-            </div>
-            <div>
-              <div
-                id="two"
-                onClick={() =>
-                  this.setState({
-                    two: !this.state.two,
-                  })
-                }
-                style={{ marginTop: 20, fontWeight: 500, fontSize: 18 }}
-              >
-                2. Total value of your items should be at least $10
-                <img
-                  style={{ marginLeft: 10, width: 20, height: 20 }}
-                  src={Down}
-                ></img>
-              </div>
-              {this.state.two && (
-                <div
-                  style={{
-                    marginTop: 10,
-                    fontSize: 18,
-                    marginTop: 10,
-                    marginLeft: 30,
-                  }}
-                >
-                  Just use your head, no need to count.
-                </div>
-              )}
-              {this.state.two && (
-                <div style={{ fontSize: 18, marginTop: 5, marginLeft: 30 }}>
-                  We won't pick up JUST a coffee mug and a hand towel.
-                </div>
-              )}
-              {this.state.two && (
-                <div style={{ fontSize: 18, marginTop: 5, marginLeft: 30 }}>
-                  We need more items than that!
-                </div>
-              )}
-            </div>
             <div>
               <div
                 id="three"
@@ -114,7 +159,7 @@ export default class Agreement extends React.Component {
                 }
                 style={{ marginTop: 20, fontWeight: 500, fontSize: 18 }}
               >
-                3. On your scheduled time, make sure we can get to the items.
+                On your scheduled time, make sure we can get to the items.
                 <img
                   style={{ marginLeft: 10, width: 20, height: 20 }}
                   src={Down}
@@ -133,7 +178,59 @@ export default class Agreement extends React.Component {
               )}
             </div>
           </div>
+          <div style={{ marginTop: 40, fontSize: 20, fontWeight: 500 }}>
+            How do you want to be paid?
+          </div>
+
           <div style={{ display: "flex", flexDirection: "row" }}>
+            <div
+              onClick={() => this.mailedACheck()}
+              id="header-checkout"
+              style={{
+                display: "flex",
+                marginTop: 40,
+                marginLeft: 10,
+                marginRight: 10,
+                width: 160,
+                textAlign: "center",
+                textDecoration: "none",
+                borderRadius: 5,
+                padding: 10,
+                height: 20,
+                fontWeight: 600,
+                color: "white",
+                alignItems: "center",
+                backgroundColor: "#006a4e",
+                justifyContent: "center",
+                minWidth: 150,
+              }}
+            >
+              Mailed a check
+            </div>
+            <div
+              onClick={() => this.paypal()}
+              id="header-checkout"
+              style={{
+                display: "flex",
+                marginTop: 40,
+                marginLeft: 10,
+                marginRight: 10,
+                width: 160,
+                textAlign: "center",
+                textDecoration: "none",
+                borderRadius: 5,
+                padding: 10,
+                height: 20,
+                fontWeight: 600,
+                color: "white",
+                alignItems: "center",
+                backgroundColor: "#0072b1",
+                justifyContent: "center",
+                minWidth: 150,
+              }}
+            >
+              Paypal
+            </div>
             <div
               onClick={() => this.stripeSignup()}
               id="header-checkout"
@@ -142,27 +239,50 @@ export default class Agreement extends React.Component {
                 marginTop: 40,
                 marginLeft: 10,
                 marginRight: 10,
-                width: 150,
+                width: 160,
                 textAlign: "center",
                 textDecoration: "none",
-                backgroundColor: "#a1a1a1",
                 borderRadius: 5,
                 padding: 10,
                 height: 20,
                 fontWeight: 600,
                 color: "white",
                 alignItems: "center",
-                backgroundColor: "#E61E4D",
+                backgroundColor: "#A0522D",
                 justifyContent: "center",
                 minWidth: 150,
               }}
             >
-              SELL my clutter
+              Bank deposit (Longer)
             </div>
           </div>
         </div>
       </div>
     );
+  }
+
+  mailedACheck() {
+    window.location.href = "/sell/getkit" + "/?id=mailed";
+    return;
+  }
+
+  paypal() {
+    this.setState({
+      paypalModal: true,
+    });
+    return;
+  }
+
+  paypalSignup() {
+    const id = document.getElementById("paypal-id").value;
+    localStorage.setItem("stripe_user_id", id);
+    localStorage.setItem("sell_type", "paypal");
+    if (!id || id.trim() == "") {
+      return;
+    } else {
+      window.location.href = "/sell/getkit" + "/?id=paypal";
+      return;
+    }
   }
 
   stripeSignup() {
@@ -191,5 +311,12 @@ export default class Agreement extends React.Component {
 
       window.location.href = stripe_url;
     }
+  }
+
+  closeModal(e) {
+    // e.stopPropagation();
+    this.setState({
+      paypalModal: null,
+    });
   }
 }
