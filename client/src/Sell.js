@@ -354,7 +354,7 @@ export default class Sell extends React.Component {
             }}
           >
             <div style={{ fontSize: 26, fontWeight: 600, letterSpacing: 0 }}>
-              Making money from clutter has never been easier.
+              Get rid of and get paid for clutter
             </div>
             <div
               style={{ display: "flex", flexDirection: "row", marginTop: 30 }}
@@ -370,7 +370,7 @@ export default class Sell extends React.Component {
                 }}
               >
                 <div style={{ fontSize: 18, fontWeight: 500 }}>
-                  1. Get a Collector
+                  1. We get your clutter
                 </div>
                 <div
                   style={{
@@ -379,8 +379,8 @@ export default class Sell extends React.Component {
                     color: "#a1a1a1",
                   }}
                 >
-                  At the (free) touch of a button, a Collector will come and
-                  pick up all your valid items.
+                  We come and pick up all your clutter, or items you wnat to
+                  sell.
                 </div>
               </div>
               <div
@@ -394,7 +394,7 @@ export default class Sell extends React.Component {
                 }}
               >
                 <div style={{ fontSize: 18, fontWeight: 500 }}>
-                  2. Do Whatever
+                  2. We take it away
                 </div>
                 <div
                   style={{
@@ -403,8 +403,7 @@ export default class Sell extends React.Component {
                     color: "#a1a1a1",
                   }}
                 >
-                  The Collector will price your items and list them on our
-                  website, so you don't do anything.
+                  We take it all away, so you never see it again.
                 </div>
               </div>
               <div
@@ -424,7 +423,7 @@ export default class Sell extends React.Component {
                     textAlign: "center",
                   }}
                 >
-                  3. Get Paid
+                  3. We pay you
                 </div>
                 <div
                   style={{
@@ -433,8 +432,7 @@ export default class Sell extends React.Component {
                     color: "#a1a1a1",
                   }}
                 >
-                  Whenever an item sells, 40% of the selling price is deposited
-                  into your bank account.
+                  We pay you in cash for everything.
                 </div>
               </div>
             </div>
@@ -449,7 +447,7 @@ export default class Sell extends React.Component {
                     width: 150,
                     textAlign: "center",
                     textDecoration: "none",
-                    backgroundColor: "#a1a1a1",
+                    backgroundColor: "#E61E4D",
                     borderRadius: 5,
                     padding: 10,
                     height: 20,

@@ -45,7 +45,7 @@ export default class Home extends React.Component {
         .doc(categoryList[i])
         .collection("All")
         .where("location", "==", "Athens, TX")
-        .limit(20)
+        .limit(1)
         .get()
         .then((allItems) => {
           i_index++;
@@ -503,18 +503,19 @@ export default class Home extends React.Component {
               id="start"
               style={{
                 marginLeft: 10,
-                width: 80,
-                padding: 10,
-                borderRadius: 5,
+                width: 100,
+                padding: 5,
+                borderRadius: 6,
                 backgroundColor: "#E61E4D",
                 fontWeight: 600,
+                fontSize: 15,
                 color: "white",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              SHOP
+              GET STARTED
             </div>
           </div>
           <div
@@ -525,16 +526,17 @@ export default class Home extends React.Component {
               flexDirection: "row",
             }}
           >
-            <div style={{ marginRight: 20, fontWeight: 600 }}>SELL</div>
             <div
               style={{
-                width: 120,
-                fontSize: 14,
-                marginLeft: 10,
-                marginRight: 10,
+                marginRight: 20,
+                fontWeight: 500,
+                fontSize: 20,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              We come by and take away items you don't want
+              SELL
             </div>
             <div
               style={{
@@ -544,7 +546,7 @@ export default class Home extends React.Component {
                 marginRight: 10,
               }}
             >
-              We list all your items here
+              We come pick up your clutter
             </div>
             <div
               style={{
@@ -554,14 +556,42 @@ export default class Home extends React.Component {
                 marginRight: 10,
               }}
             >
-              You get paid when an item is sold
+              We take that clutter away
+            </div>
+            <div
+              style={{
+                width: 120,
+                fontSize: 14,
+                marginLeft: 10,
+                marginRight: 10,
+              }}
+            >
+              We pay you cash for it
             </div>
           </div>
-          <div style={{ marginTop: 5, marginBottom: 5, fontWeight: 500 }}>
+          <div
+            style={{
+              marginTop: 15,
+              marginBottom: 15,
+              fontWeight: 600,
+              fontSize: 14,
+            }}
+          >
             OR
           </div>
           <div style={{ marginTop: 30, display: "flex", flexDirection: "row" }}>
-            <div style={{ marginRight: 20, fontWeight: 600 }}>BUY</div>
+            <div
+              style={{
+                marginRight: 20,
+                fontWeight: 500,
+                fontSize: 20,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              BUY
+            </div>
 
             <div
               style={{
@@ -591,7 +621,7 @@ export default class Home extends React.Component {
                 marginRight: 10,
               }}
             >
-              Items are delievered within 12 hours
+              Delivered on the same day
             </div>
           </div>
         </div>

@@ -27,7 +27,6 @@ export default class Cart extends React.Component {
     };
 
     var myUid = null;
-
     if (firebase.auth().currentUser) {
       // Signed in
       myUid = firebase.auth().currentUser.uid;
