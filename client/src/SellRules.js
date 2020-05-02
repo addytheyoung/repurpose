@@ -51,7 +51,7 @@ export default class SellRules extends React.Component {
         for (var i = 0; i < data.docs.length; i++) {
           const collector = data.docs[i].data();
           if (collector.accepted) {
-            const dates = collector.april[0];
+            const dates = collector.may[0];
             const may = collector.may[0];
             const june = collector.june[0];
             const id = data.docs[i].id;
@@ -135,38 +135,12 @@ export default class SellRules extends React.Component {
                 borderRadius: 5,
               }}
             >
-              <div style={{ fontSize: 18 }}>
-                I'll leave them outside in boxes
-              </div>
+              <div style={{ fontSize: 18 }}>I'll leave everything outside</div>
               <div style={{ fontSize: 12, marginTop: 5 }}>
                 40% commission. You don't need to be present
               </div>
             </div>
-            <div
-              onClick={() => this.setPickup(2)}
-              id="two"
-              style={{
-                width: 400,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "column",
-                marginTop: 50,
-                height: 50,
-                padding: 10,
-                borderColor: this.state.pickup === 2 ? "blueviolet" : "grey",
-                borderWidth: 2,
-                borderStyle: "solid",
-                borderRadius: 5,
-              }}
-            >
-              <div style={{ fontSize: 18 }}>
-                I'll box the items, and show you where they are
-              </div>
-              <div style={{ fontSize: 12, marginTop: 5 }}>
-                40% commission. You must be present
-              </div>
-            </div>
+
             <div
               onClick={() => this.setPickup(3)}
               id="three"
@@ -186,7 +160,7 @@ export default class SellRules extends React.Component {
               }}
             >
               <div style={{ fontSize: 18 }}>
-                I'll show you where the items are, you box them
+                I'll show you where the clutter is
               </div>
               <div style={{ fontSize: 12, marginTop: 5 }}>
                 30% commission. You must be present
@@ -227,7 +201,7 @@ export default class SellRules extends React.Component {
       // Looping through each opening on the day
       // Put these times on the screen
 
-      for (var i = 0; i < 31; i++) {
+      for (var i = 0; i <= 31; i++) {
         const opening = this.state.dates[0].dates[i];
         const tempArr = [];
         for (const openingDay in this.state.dates[0].dates[opening]) {
@@ -354,7 +328,7 @@ export default class SellRules extends React.Component {
           <div style={{ display: "flex", flexDirection: "row" }}>
             <div>
               <Calendar
-                maxDate={new Date(2020, 4, 3)}
+                maxDate={new Date(2020, 5, 0)}
                 minDate={new Date()}
                 onClickDay={(e) => this.seeTimes(e)}
               />
@@ -511,11 +485,11 @@ export default class SellRules extends React.Component {
       .doc(this.state.id.toString())
       .get()
       .then((data) => {
-        const oldApril = data.data().april;
+        const oldMay = data.data().may;
         const day = this.state.currentDate.getDate();
         var value = -1;
-        for (var i = 0; i < oldApril[0][day].length; i++) {
-          if (oldApril[0][day][i] === this.state.opening) {
+        for (var i = 0; i < oldMay[0][day].length; i++) {
+          if (oldMay[0][day][i] === this.state.opening) {
             value = i;
             break;
           }
@@ -524,13 +498,12 @@ export default class SellRules extends React.Component {
           alert("Date taken!");
           return;
         }
-        oldApril[0][day].splice(value, 1);
+        oldMay[0][day].splice(value, 1);
         var bookings = data.data().bookings;
+
         bookings.push({
-          name: localStorage.getItem("name"),
           type: this.state.pickup,
           email: localStorage.getItem("email"),
-          phone: localStorage.getItem("phone"),
           address1: localStorage.getItem("address1"),
           address2: localStorage.getItem("address2"),
           start: this.state.opening,
@@ -544,7 +517,7 @@ export default class SellRules extends React.Component {
           .doc(this.state.id.toString())
           .update({
             bookings: bookings,
-            april: oldApril,
+            may: oldMay,
           })
           .then(() => {
             firebase

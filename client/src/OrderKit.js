@@ -45,7 +45,7 @@ export default class OrderKit extends React.Component {
                   justifyContent: "center",
                 }}
               >
-                <div
+                {/* <div
                   style={{
                     display: "flex",
                     flexDirection: "column",
@@ -64,7 +64,7 @@ export default class OrderKit extends React.Component {
                   }}
                 >
                   <Input id="phone" placeholder={"Phone number (Cell)"} />
-                </div>
+                </div> */}
                 <div
                   style={{
                     display: "flex",
@@ -142,8 +142,8 @@ export default class OrderKit extends React.Component {
   sellingRules() {
     const API_KEY = "AIzaSyBbpHHOjcFkGJeUaEIQZ-zNVaYBw0UVfzw";
 
-    const name = document.getElementById("name").value.trim();
-    const phone = document.getElementById("phone").value.trim();
+    // const name = document.getElementById("name").value.trim();
+    // const phone = document.getElementById("phone").value.trim();
     const address1 = document.getElementById("address1").value.trim();
     const address2 = document.getElementById("address2").value.trim();
     const zip = document.getElementById("zip").value.trim();
@@ -180,8 +180,8 @@ export default class OrderKit extends React.Component {
           return;
         }
 
-        localStorage.setItem("name", name);
-        localStorage.setItem("phone", phone);
+        // localStorage.setItem("name", name);
+        // localStorage.setItem("phone", phone);
         localStorage.setItem("address1", address1);
         localStorage.setItem("address2", address2);
 
@@ -190,12 +190,10 @@ export default class OrderKit extends React.Component {
           .collection("Users")
           .doc(firebase.auth().currentUser.uid)
           .update({
-            name: name,
-            // address1: address1,
-            // address2: address2,
-            // city: city,
-            // state: state,
-            // zip: zip,
+            // name: name,
+            address1: address1,
+            address2: address2,
+            zip: zip,
           })
           .then(() => {
             window.location.href =

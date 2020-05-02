@@ -7,6 +7,7 @@ import api from "./api";
 export default class GetKit extends React.Component {
   constructor(props) {
     super(props);
+    console.log(firebase.auth().currentUser.uid);
 
     var code = "";
     const url = window.location.href;

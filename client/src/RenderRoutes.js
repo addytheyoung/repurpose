@@ -88,6 +88,11 @@ export default class RenderRoutes extends React.Component {
               render={() => <MoveItemCategory />}
             />
             <Route
+              path="/andrewscripts4470"
+              exact={true}
+              render={() => <AddDatesToFirebase />}
+            />
+            <Route
               path="/sell/agreement"
               exact={true}
               render={() => <Agreement />}

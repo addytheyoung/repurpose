@@ -97,7 +97,7 @@ export default class Sell extends React.Component {
                       onClick={() => this.startShopping()}
                       id="start-shopping"
                       style={{
-                        backgroundColor: "#a1a1a1",
+                        backgroundColor: "#E61E4D",
                         borderRadius: 5,
                         padding: 10,
                         height: 30,
@@ -132,7 +132,7 @@ export default class Sell extends React.Component {
                       onClick={() => this.setPassword()}
                       id="start-shopping"
                       style={{
-                        backgroundColor: "#a1a1a1",
+                        backgroundColor: "#E61E4D",
                         borderRadius: 5,
                         padding: 10,
                         height: 30,
@@ -169,7 +169,7 @@ export default class Sell extends React.Component {
                         onClick={() => this.login()}
                         id="start-shopping"
                         style={{
-                          backgroundColor: "#a1a1a1",
+                          backgroundColor: "#E61E4D",
                           borderRadius: 5,
                           padding: 10,
                           height: 30,
@@ -680,8 +680,8 @@ export default class Sell extends React.Component {
                 });
             });
         } else {
-          alert("new profile");
           // Make a new profile
+          console.log(r.user.uid);
           firebase
             .firestore()
             .collection("Users")

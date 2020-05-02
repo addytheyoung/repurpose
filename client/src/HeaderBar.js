@@ -115,7 +115,7 @@ export default class HeaderBar extends React.Component {
                       onClick={() => this.startShopping()}
                       id="start-shopping"
                       style={{
-                        backgroundColor: "#a1a1a1",
+                        backgroundColor: "#E61E4D",
                         borderRadius: 5,
                         padding: 10,
                         height: 30,
@@ -150,7 +150,7 @@ export default class HeaderBar extends React.Component {
                       onClick={() => this.setPassword()}
                       id="start-shopping"
                       style={{
-                        backgroundColor: "#a1a1a1",
+                        backgroundColor: "#E61E4D",
                         borderRadius: 5,
                         padding: 10,
                         height: 30,
@@ -187,7 +187,7 @@ export default class HeaderBar extends React.Component {
                         onClick={() => this.login()}
                         id="start-shopping"
                         style={{
-                          backgroundColor: "#a1a1a1",
+                          backgroundColor: "#E61E4D",
                           borderRadius: 5,
                           padding: 10,
                           height: 30,
@@ -938,6 +938,7 @@ export default class HeaderBar extends React.Component {
         var myUid = localStorage.getItem("tempUid");
         console.log(myUid);
         if (myUid) {
+          console.log(myUid);
           // Transfer the data
           firebase
             .firestore()
@@ -972,7 +973,7 @@ export default class HeaderBar extends React.Component {
                 });
             });
         } else {
-          alert("new profile");
+          console.log("no uid");
           // Make a new profile
           firebase
             .firestore()

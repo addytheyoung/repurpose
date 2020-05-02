@@ -183,7 +183,7 @@ export default class Home extends React.Component {
                     onClick={() => this.startShopping()}
                     id="start-shopping"
                     style={{
-                      backgroundColor: "#a1a1a1",
+                      backgroundColor: "#E61E4D",
                       borderRadius: 5,
                       padding: 10,
                       height: 30,
