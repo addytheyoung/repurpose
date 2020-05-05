@@ -379,7 +379,7 @@ export default class Sell extends React.Component {
                     color: "#a1a1a1",
                   }}
                 >
-                  We come and pick up all your clutter, or items you wnat to
+                  We come and pick up all your clutter, or items you want to
                   sell.
                 </div>
               </div>

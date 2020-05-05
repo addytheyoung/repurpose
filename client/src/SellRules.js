@@ -257,12 +257,7 @@ export default class SellRules extends React.Component {
               <div style={{ fontWeight: 500, fontSize: 20, marginTop: 10 }}>
                 {this.state.opening}
               </div>
-              <div style={{ fontWeight: 400, fontSize: 20, marginTop: 30 }}>
-                and leave around
-              </div>
-              <div style={{ fontWeight: 500, fontSize: 20, marginTop: 10 }}>
-                {this.add30Minutes(this.state.opening)}
-              </div>
+
               <div
                 style={{
                   display: "flex",
@@ -383,7 +378,7 @@ export default class SellRules extends React.Component {
                             alignItems: "center",
                           }}
                         >
-                          {opening} - {this.add30Minutes(opening)}
+                          {opening}
                         </div>
                         <div
                           onClick={() => this.showBookModal(opening, id)}
