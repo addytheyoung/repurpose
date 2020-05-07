@@ -26,6 +26,7 @@ import AddDatesToFirebase from "./scripts/AddDatesToFirebase";
 import Charge from "./Charge";
 import Help from "./Help";
 import MoveItemCategory from "./scripts/MoveItemCategory";
+import BuyOrSell from "./BuyOrSell";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -78,6 +79,11 @@ export default class RenderRoutes extends React.Component {
               render={() => <Charge />}
             />
             <Route
+              path="/facebooklink"
+              exact={true}
+              render={() => <BuyOrSell />}
+            />
+            <Route
               path="/andrewscripts4468"
               exact={true}
               render={() => <GetTotal />}
@@ -121,6 +127,12 @@ export default class RenderRoutes extends React.Component {
             {citiesList.includes(window.localStorage.getItem("city")) && (
               <Route path="/" exact={true} render={() => <Buy />} />
             )}
+
+            <Route
+              path="/facebooklink"
+              exact={true}
+              render={() => <BuyOrSell />}
+            />
 
             <Route path="/search" exact={false} render={() => <SearchPage />} />
 

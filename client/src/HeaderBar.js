@@ -410,7 +410,11 @@ export default class HeaderBar extends React.Component {
               alignItems: "center",
               minWidth: 80,
               textDecoration: "none",
-              color: "black",
+
+              color:
+                path === "/" || path.includes("shop") || path.includes("cart")
+                  ? "#000000"
+                  : "#000000",
               justifyContent: "center",
               borderWidth: 1,
               borderStyle: "solid",
@@ -430,11 +434,11 @@ export default class HeaderBar extends React.Component {
             style={{
               display: "flex",
               fontSize: 24,
-              fontWeight: path.includes("sell") ? 600 : 500,
+              fontWeight: path.includes("sell") ? 700 : 500,
               alignItems: "center",
               minWidth: 80,
               textDecoration: "none",
-              color: "black",
+              color: path.includes("sell") ? "#000000" : "#000000",
               justifyContent: "center",
               backgroundColor: path.includes("sell") ? "#d8d8d8" : "#ffffff",
               borderRadius: 3,
