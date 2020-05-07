@@ -1,12 +1,49 @@
 import React from "react";
 import HeaderBar from "./HeaderBar";
 
+import {
+  withScriptjs,
+  withGoogleMap,
+  GoogleMap,
+  Marker,
+} from "react-google-maps";
+
 export default class Sell_2 extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      markerHigh: false,
+      markers: [],
+    };
   }
 
   render() {
+    const refs = {};
+
+    const MyMapComponent = withScriptjs(
+      withGoogleMap((props) => (
+        <GoogleMap
+          defaultZoom={12}
+          defaultCenter={{ lat: 32.2049, lng: -95.8555 }}
+        >
+          {this.state.markers.map((marker, index) => {
+            return <Marker position={{ lat: marker.lat, lng: marker.lng }} />;
+          })}
+          {/* {props.isMarkerShown && !this.state.markerHigh && (
+            <Marker
+              onMouseOver={(e) => console.log(e.tb.target)}
+              position={{ lat: 32.2049, lng: -95.8555 }}
+            />
+          )}
+          {props.isMarkerShown && this.state.markerHigh && (
+            <Marker
+              onMouseOver={(e) => console.log(e.tb.target)}
+              position={{ lat: 32.2533, lng: -95.8555 }}
+            />
+          )} */}
+        </GoogleMap>
+      ))
+    );
     return (
       <div>
         <div>
@@ -65,6 +102,8 @@ export default class Sell_2 extends React.Component {
               Athens Locations
             </div>
             <div
+              onMouseEnter={(e) => this.highlightMarker(e)}
+              onMouseLeave={(e) => this.unHighlightMarker(e)}
               style={{
                 display: "flex",
                 flexDirection: "row",
@@ -168,9 +207,31 @@ export default class Sell_2 extends React.Component {
             </div>
             <div>House2</div>
           </div>
-          <div style={{ width: "60vw" }}>Map</div>
+          <div style={{ width: "60vw" }}>
+            <MyMapComponent
+              isMarkerShown={true}
+              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbpHHOjcFkGJeUaEIQZ-zNVaYBw0UVfzw"
+              loadingElement={<div style={{ height: `100%` }} />}
+              containerElement={<div style={{ height: `400px` }} />}
+              mapElement={<div style={{ height: `100%` }} />}
+            >
+              <Marker position={{ lat: 32.2049, lng: -95.8555 }} />
+            </MyMapComponent>
+          </div>
         </div>
       </div>
     );
+  }
+
+  highlightMarker(e) {
+    this.setState({
+      markers: [{ lat: 32.25, lng: -95.8555 }],
+    });
+  }
+
+  unHighlightMarker(e) {
+    this.setState({
+      markerHigh: false,
+    });
   }
 }
