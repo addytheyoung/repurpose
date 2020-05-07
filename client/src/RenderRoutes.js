@@ -27,6 +27,7 @@ import Charge from "./Charge";
 import Help from "./Help";
 import MoveItemCategory from "./scripts/MoveItemCategory";
 import BuyOrSell from "./BuyOrSell";
+import Sell_2 from "./Sell_2";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -67,6 +68,7 @@ export default class RenderRoutes extends React.Component {
             <Route path="/help" exact={true} render={() => <Help />} />
 
             <Route path="/sell" exact={true} render={() => <Sell />} />
+            <Route path="/sell2" exact={true} render={() => <Sell_2 />} />
             <Route path="/sell/kit" exact={true} render={() => <OrderKit />} />
             <Route path="/shop" exact={false} render={() => <Shop />} />
             <Route path="/item" exact={false} render={() => <Item />} />
