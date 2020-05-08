@@ -1,5 +1,9 @@
 import React from "react";
 import HeaderBar from "./HeaderBar";
+import _ from "lodash";
+import { compose, withProps, lifecycle } from "recompose";
+import { SearchBox } from "react-google-maps/lib/components/places/SearchBox";
+import api from "./api";
 
 import {
   withScriptjs,
@@ -14,38 +18,87 @@ export default class Sell_2 extends React.Component {
     this.state = {
       markerHigh: false,
       markers: [],
+      allMarkers: [],
     };
   }
 
   render() {
-    const refs = {};
+    const MapWithASearchBox = compose(
+      withProps({
+        googleMapURL:
+          "https://maps.googleapis.com/maps/api/js?key=AIzaSyBbpHHOjcFkGJeUaEIQZ-zNVaYBw0UVfzw&v=3.exp&libraries=geometry,drawing,places",
+        loadingElement: <div style={{ height: `100%` }} />,
+        containerElement: <div style={{ height: `100% ` }} />,
+        mapElement: <div style={{ height: `100%` }} />,
+      }),
+      lifecycle({
+        componentWillMount() {
+          const refs = {};
 
-    const MyMapComponent = withScriptjs(
-      withGoogleMap((props) => (
-        <GoogleMap
-          defaultZoom={12}
-          defaultCenter={{ lat: 32.2049, lng: -95.8555 }}
-        >
-          {this.state.markers.map((marker, index) => {
-            return <Marker position={{ lat: marker.lat, lng: marker.lng }} />;
-          })}
-          {/* {props.isMarkerShown && !this.state.markerHigh && (
-            <Marker
-              onMouseOver={(e) => console.log(e.tb.target)}
-              position={{ lat: 32.2049, lng: -95.8555 }}
-            />
-          )}
-          {props.isMarkerShown && this.state.markerHigh && (
-            <Marker
-              onMouseOver={(e) => console.log(e.tb.target)}
-              position={{ lat: 32.2533, lng: -95.8555 }}
-            />
-          )} */}
-        </GoogleMap>
-      ))
-    );
+          this.setState({
+            bounds: null,
+            center: {
+              lat: 32.2049,
+              lng: -95.8555,
+            },
+            markers: [],
+            hoverOverThing: () => {
+              const markerArray = [];
+              this.setState({
+                markers: markerArray,
+              });
+            },
+            leaveOverThing: () => {
+              this.setState({
+                markers: this.state.allMarkers,
+              });
+            },
+            onMapMounted: (ref) => {
+              refs.map = ref;
+              const markerArray = [];
+
+              api
+                .getLatLng("47 Westview Drive", "75148", "Malakoff", "TX")
+                .then((result) => {
+                  const position = result.results[0].geometry.location;
+                  markerArray.push(position);
+                  this.setState({
+                    markers: markerArray,
+                    allMarkers: markerArray,
+                  });
+                });
+            },
+            onBoundsChanged: () => {
+              this.setState({
+                bounds: refs.map.getBounds(),
+                center: refs.map.getCenter(),
+              });
+            },
+            onSearchBoxMounted: (ref) => {
+              refs.searchBox = ref;
+            },
+          });
+        },
+      }),
+      withScriptjs,
+      withGoogleMap
+    )((props) => (
+      <GoogleMap
+        ref={props.onMapMounted}
+        defaultZoom={13}
+        center={props.center}
+        onBoundsChanged={props.onBoundsChanged}
+      >
+        {(this.state.x = props.hoverOverThing)}
+        {(this.state.y = props.leaveOverThing)}
+        {props.markers.map((marker, index) => (
+          <Marker key={index} position={{ lat: marker.lat, lng: marker.lng }} />
+        ))}
+      </GoogleMap>
+    ));
+
     return (
-      <div>
+      <div style={{ minHeight: "100vh" }}>
         <div>
           <HeaderBar sell={true} />
         </div>
@@ -207,8 +260,9 @@ export default class Sell_2 extends React.Component {
             </div>
             <div>House2</div>
           </div>
-          <div style={{ width: "60vw" }}>
-            <MyMapComponent
+          <div style={{ width: "60vw", minHeight: "70vh" }}>
+            <MapWithASearchBox></MapWithASearchBox>
+            {/* <MyMapComponent
               isMarkerShown={true}
               googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbpHHOjcFkGJeUaEIQZ-zNVaYBw0UVfzw"
               loadingElement={<div style={{ height: `100%` }} />}
@@ -216,7 +270,7 @@ export default class Sell_2 extends React.Component {
               mapElement={<div style={{ height: `100%` }} />}
             >
               <Marker position={{ lat: 32.2049, lng: -95.8555 }} />
-            </MyMapComponent>
+            </MyMapComponent> */}
           </div>
         </div>
       </div>
@@ -224,14 +278,14 @@ export default class Sell_2 extends React.Component {
   }
 
   highlightMarker(e) {
-    this.setState({
-      markers: [{ lat: 32.25, lng: -95.8555 }],
-    });
+    if (this.state.x) {
+      this.state.x();
+    }
   }
 
   unHighlightMarker(e) {
-    this.setState({
-      markerHigh: false,
-    });
+    if (this.state.y) {
+      this.state.y();
+    }
   }
 }
