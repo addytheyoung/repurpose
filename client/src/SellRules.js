@@ -50,7 +50,8 @@ export default class SellRules extends React.Component {
         }
         for (var i = 0; i < data.docs.length; i++) {
           const collector = data.docs[i].data();
-          if (collector.accepted) {
+
+          if (collector.accepted && collector.type != "dropoff") {
             const dates = collector.may[0];
             const may = collector.may[0];
             const june = collector.june[0];
