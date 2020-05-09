@@ -17,11 +17,14 @@ import {
 export default class Sell_2 extends React.Component {
   constructor(props) {
     super(props);
+    const today = new Date();
     this.state = {
       markers: [],
       allMarkers: [],
       collectorArray: [],
       loaded: false,
+      today: today,
+      modal: false,
     };
 
     firebase
@@ -43,6 +46,7 @@ export default class Sell_2 extends React.Component {
             });
           }
         }
+        collectorArray.reverse();
         this.setState({
           loaded: true,
           collectorArray: collectorArray,
@@ -76,7 +80,7 @@ export default class Sell_2 extends React.Component {
             },
             markers: [],
             hoverOverThing: (lat, lng) => {
-              if (!this.state.allMarkers) {
+              if (!this.state.allMarkers || !this.state.markers) {
                 return null;
               }
               const temp = [];
@@ -91,6 +95,9 @@ export default class Sell_2 extends React.Component {
               });
             },
             leaveOverThing: (lat, lng) => {
+              if (!this.state.allMarkers || !this.state.markers) {
+                return null;
+              }
               this.setState({
                 markers: this.state.allMarkers,
               });
@@ -155,6 +162,7 @@ export default class Sell_2 extends React.Component {
       >
         {(this.state.x = props.hoverOverThing)}
         {(this.state.y = props.leaveOverThing)}
+
         {props.markers.map((marker, index) => (
           <Marker key={index} position={{ lat: marker.lat, lng: marker.lng }} />
         ))}
@@ -163,6 +171,88 @@ export default class Sell_2 extends React.Component {
 
     return (
       <div style={{ minHeight: "100vh" }}>
+        {this.state.modal && (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <div
+              onClick={(e) => this.closeModal(e)}
+              style={{
+                backgroundColor: "#000000",
+                opacity: 0.5,
+                zIndex: 99,
+                width: "100vw",
+                height: "100vh",
+                position: "absolute",
+              }}
+            ></div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "50vw",
+                borderRadius: 5,
+                height: "80vh",
+                top: 30,
+                backgroundColor: "#f5f5f5",
+                alignItems: "center",
+                position: "absolute",
+                zIndex: 100,
+                opacity: 1,
+              }}
+            >
+              <div style={{ marginTop: 20, fontSize: 20 }}>
+                {this.state.modal.name + " " + "is your collector!"}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    marginTop: 50,
+                    marginRight: 10,
+                  }}
+                >
+                  <img
+                    src={this.state.modal.house_picture}
+                    style={{ width: 200, height: 200 }}
+                  />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    marginTop: 50,
+                    marginLeft: 10,
+                  }}
+                >
+                  <img
+                    src={this.state.modal.collector_picture}
+                    style={{ width: 200, height: 250 }}
+                  />
+                </div>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: 100,
+                  width: "60%",
+                }}
+              >
+                {this.state.modal.description}
+              </div>
+              <div style={{ marginTop: 30, fontSize: 20 }}>
+                {this.state.modal.house_address}
+              </div>
+            </div>
+          </div>
+        )}
         <div>
           <HeaderBar sell={true} />
         </div>
@@ -170,10 +260,9 @@ export default class Sell_2 extends React.Component {
           style={{
             display: "flex",
             flexDirection: "row",
-            // justifyContent: "center",
+            justifyContent: "center",
             marginBottom: 60,
             marginTop: 20,
-            marginLeft: 20,
           }}
         >
           <div
@@ -184,9 +273,10 @@ export default class Sell_2 extends React.Component {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              fontWeight: 500,
             }}
           >
-            1. Bring your clutter to any open house
+            1. Bring your clutter / items to any location (during open hours)
           </div>
           <div
             style={{
@@ -196,9 +286,10 @@ export default class Sell_2 extends React.Component {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              fontWeight: 500,
             }}
           >
-            2. Knock or ring the doorbell
+            2. The Collector there will unload all your clutter
           </div>
           <div
             style={{
@@ -207,26 +298,10 @@ export default class Sell_2 extends React.Component {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              fontWeight: 500,
             }}
           >
-            3. Get paid cash for all your clutter
-          </div>
-          <div
-            style={{
-              padding: 10,
-              backgroundColor: "#39df83",
-              width: 150,
-              color: "white",
-              borderRadius: 5,
-              height: 30,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              fontWeight: 600,
-              marginLeft: 50,
-            }}
-          >
-            Or, let us come to you!
+            3. You get paid cash on the spot
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "row" }}>
@@ -249,6 +324,11 @@ export default class Sell_2 extends React.Component {
               console.log(collector);
               return (
                 <div
+                  onClick={() =>
+                    this.setState({
+                      modal: collector,
+                    })
+                  }
                   id={"house"}
                   key={index}
                   onMouseEnter={() =>
@@ -261,17 +341,17 @@ export default class Sell_2 extends React.Component {
                     display: "flex",
                     flexDirection: "row",
                     width: "100%",
-                    height: "25vh",
+                    height: 250,
+                    marginTop: 5,
+                    marginBottom: 5,
                   }}
                 >
-                  <div style={{ width: "50%", marginRight: 20 }}>
+                  <div style={{ width: 250, marginRight: 20 }}>
                     <img
-                      src={
-                        "https://specials-images.forbesimg.com/imageserve/1026205392/960x0.jpg?fit=scale"
-                      }
+                      src={collector.house_picture}
                       style={{
-                        width: "100%",
-                        height: "100%",
+                        width: 250,
+                        height: 250,
                         borderRadius: 5,
                       }}
                     />
@@ -283,95 +363,135 @@ export default class Sell_2 extends React.Component {
                       flexDirection: "column",
                     }}
                   >
-                    <div style={{ fontSize: 18 }}>47 Westview Circle</div>
-                    <div style={{ marginTop: 5 }}>Closed</div>
-                    <div
-                      style={{
-                        marginTop: 20,
-                        display: "flex",
-                        flexDirection: "row",
-                      }}
-                    >
-                      <div style={{ marginRight: 10, width: 90 }}>Sunday</div>
-                      <div>11AM - 9PM</div>
+                    <div style={{ fontSize: 18 }}>
+                      {collector.house_address}
                     </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                      }}
-                    >
-                      <div style={{ marginRight: 10, width: 90 }}>Sunday</div>
-                      <div>11AM - 9PM</div>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                      }}
-                    >
-                      <div style={{ marginRight: 10, width: 90 }}>Sunday</div>
-                      <div>11AM - 9PM</div>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                      }}
-                    >
+                    {!this.currentlyOpen(collector) && (
                       <div
                         style={{
-                          marginRight: 10,
-                          width: 90,
-                          fontWeight: 700,
+                          marginTop: 5,
+                          marginBottom: 20,
+                          fontWeight: 500,
                         }}
                       >
-                        Wednesday
+                        Closed
                       </div>
-                      <div style={{ fontWeight: 700 }}>11AM - 9PM</div>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                      }}
-                    >
-                      <div style={{ marginRight: 10, width: 90 }}>Sunday</div>
-                      <div>11AM - 9PM</div>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                      }}
-                    >
-                      <div style={{ marginRight: 10, width: 90 }}>Sunday</div>
-                      <div>11AM - 9PM</div>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                      }}
-                    >
-                      <div style={{ marginRight: 10, width: 90 }}>Sunday</div>
-                      <div>11AM - 9PM</div>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                      }}
-                    >
-                      <div style={{ marginRight: 10, width: 90 }}>Sunday</div>
-                      <div>11AM - 9PM</div>
-                    </div>
+                    )}
+                    {this.currentlyOpen(collector) && (
+                      <div
+                        style={{
+                          marginTop: 5,
+                          marginBottom: 20,
+                          fontWeight: 500,
+                        }}
+                      >
+                        Open
+                      </div>
+                    )}
+
+                    {collector.monday && (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                        }}
+                      >
+                        <div style={{ marginRight: 10, width: 90 }}>Monday</div>
+                        <div>{collector.monday}</div>
+                      </div>
+                    )}
+                    {collector.tuesday && (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                        }}
+                      >
+                        <div style={{ marginRight: 10, width: 90 }}>
+                          Tuesday
+                        </div>
+                        <div>{collector.tuesday}</div>
+                      </div>
+                    )}
+                    {collector.wednesday && (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                        }}
+                      >
+                        <div
+                          style={{
+                            marginRight: 10,
+                            width: 90,
+                            fontWeight: 700,
+                          }}
+                        >
+                          Wednesday
+                        </div>
+                        <div style={{ fontWeight: 700 }}>11AM - 9PM</div>
+                      </div>
+                    )}
+                    {collector.thursday && (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                        }}
+                      >
+                        <div style={{ marginRight: 10, width: 90 }}>
+                          Thursday
+                        </div>
+                        <div>11AM - 9PM</div>
+                      </div>
+                    )}
+                    {collector.friday && (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                        }}
+                      >
+                        <div style={{ marginRight: 10, width: 90 }}>Friday</div>
+                        <div>11AM - 9PM</div>
+                      </div>
+                    )}
+                    {collector.saturday && (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                        }}
+                      >
+                        <div
+                          style={{
+                            marginRight: 10,
+                            width: 90,
+                            fontWeight: 600,
+                          }}
+                        >
+                          Saturday
+                        </div>
+                        <div style={{ fontWeight: 600 }}>
+                          {collector.saturday}
+                        </div>
+                      </div>
+                    )}
+                    {collector.sunday && (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                        }}
+                      >
+                        <div style={{ marginRight: 10, width: 90 }}>Sunday</div>
+                        <div>{collector.sunday}</div>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
             })}
-
-            <div>House2</div>
           </div>
           <div style={{ width: "60vw", minHeight: "70vh" }}>
             <MapWithASearchBox></MapWithASearchBox>
@@ -390,6 +510,12 @@ export default class Sell_2 extends React.Component {
     );
   }
 
+  closeModal() {
+    this.setState({
+      modal: false,
+    });
+  }
+
   highlightMarker(lat, lng) {
     if (this.state.x) {
       this.state.x(lat, lng);
@@ -400,5 +526,9 @@ export default class Sell_2 extends React.Component {
     if (this.state.y) {
       this.state.y(lat, lng);
     }
+  }
+
+  currentlyOpen() {
+    return false;
   }
 }
