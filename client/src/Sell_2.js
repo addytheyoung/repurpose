@@ -321,7 +321,6 @@ export default class Sell_2 extends React.Component {
             </div>
 
             {this.state.collectorArray.map((collector, index) => {
-              console.log(collector);
               return (
                 <div
                   onClick={() =>
@@ -350,6 +349,7 @@ export default class Sell_2 extends React.Component {
                     <img
                       src={collector.house_picture}
                       style={{
+                        imageResolution: "5dppx",
                         width: 250,
                         height: 250,
                         borderRadius: 5,
@@ -382,7 +382,7 @@ export default class Sell_2 extends React.Component {
                         style={{
                           marginTop: 5,
                           marginBottom: 20,
-                          fontWeight: 500,
+                          fontWeight: 700,
                         }}
                       >
                         Open
@@ -467,14 +467,11 @@ export default class Sell_2 extends React.Component {
                           style={{
                             marginRight: 10,
                             width: 90,
-                            fontWeight: 600,
                           }}
                         >
                           Saturday
                         </div>
-                        <div style={{ fontWeight: 600 }}>
-                          {collector.saturday}
-                        </div>
+                        <div style={{}}>{collector.saturday}</div>
                       </div>
                     )}
                     {collector.sunday && (
@@ -482,6 +479,7 @@ export default class Sell_2 extends React.Component {
                         style={{
                           display: "flex",
                           flexDirection: "row",
+                          fontWeight: 600,
                         }}
                       >
                         <div style={{ marginRight: 10, width: 90 }}>Sunday</div>
@@ -528,7 +526,115 @@ export default class Sell_2 extends React.Component {
     }
   }
 
-  currentlyOpen() {
-    return false;
+  currentlyOpen(collector) {
+    const date = new Date();
+    var day = date.getDay();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+
+    if (day == 0 && collector.sunday) {
+      const sunday_hours = collector.sunday;
+      for (var i = 0; i < sunday_hours.length; i++) {
+        const time_slot = sunday_hours[i];
+        var start_time = "";
+        var end_time = "";
+        // Get the times as strings
+        for (var j = 0; j < time_slot.length; j++) {
+          const ch = time_slot.charAt(j);
+          if (ch == "-") {
+            start_time = time_slot.substring(0, j);
+            end_time = time_slot.substring(j + 1, time_slot.length);
+          }
+        }
+        var start_hour = -1;
+        var end_hour = -1;
+        var start_minutes = -1;
+        var end_minutes = -1;
+        var start_am_pm = -1;
+        var end_am_pm = -1;
+        var am_pm = -1;
+        var time = date
+          .toLocaleTimeString()
+          .replace(/([\d]+:[\d]{2})(:[\d]{2})(. *)/, "$1$3");
+        console.log(time);
+        for (var j = 0; j < start_time.length; j++) {
+          if (start_time.charAt(j) == ":") {
+            start_hour = parseInt(start_time.substring(0, j));
+            start_minutes = parseInt(start_time.substring(j + 1, j + 3));
+            start_am_pm = start_time.substring(j + 4, j + 6);
+          }
+        }
+        for (var j = 0; j < end_time.length; j++) {
+          if (start_time.charAt(j) == ":") {
+            end_hour = parseInt(end_time.substring(0, j));
+            end_minutes = parseInt(end_time.substring(j + 1, j + 3));
+            end_am_pm = end_time.substring(j + 4, j + 6);
+          }
+        }
+
+        for (var j = 0; j < time.length; j++) {
+          if (time.charAt(j) == ":") {
+            am_pm = time.substring(j + 4, time.length);
+            break;
+          }
+        }
+
+        // Check if the times are now
+
+        console.log(start_hour);
+        console.log(end_hour);
+        console.log(hour);
+        // hour = 3;
+        // minute = 33;
+        // am_pm = "PM";
+        if (
+          this.compare_start_hours(start_hour, hour, start_am_pm, am_pm) &&
+          this.compare_end_hours(end_hour, hour, end_am_pm, am_pm)
+        ) {
+          return true;
+        } else if (start_hour == hour) {
+          if (start_minutes <= minute) {
+            return true;
+          }
+        } else if (end_hour == hour) {
+          if (end_minutes >= minute) {
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+  }
+
+  compare_start_hours(collector_hour, hour, col_am_pm, am_pm) {
+    if (collector_hour == 10 || collector_hour == 11) {
+      if (col_am_pm == "AM" && am_pm == "PM") {
+        return true;
+      }
+    } else if (collector_hour == 12) {
+      if (col_am_pm == "PM" && am_pm == "PM") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return collector_hour < hour;
+    }
+  }
+
+  compare_end_hours(collector_hour, hour, col_am_pm, am_pm) {
+    if (collector_hour == 10 || collector_hour == 11) {
+      if (col_am_pm == "AM" && am_pm == "PM") {
+        return false;
+      }
+    } else if (collector_hour == 12) {
+      if (col_am_pm == "PM" && am_pm == "PM") {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return collector_hour > hour;
+    }
   }
 }

@@ -80,6 +80,8 @@ export default class Home extends React.Component {
   }
 
   render() {
+    window.localStorage.setItem("city", "Athens, TX");
+    window.location.href = "/";
     if (!this.state.loaded) {
       return (
         <div
