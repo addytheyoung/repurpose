@@ -60,6 +60,7 @@ export default class Sell_2 extends React.Component {
     if (!this.state.loaded) {
       return null;
     }
+    localStorage.setItem("city", "Athens, TX");
     const MapWithASearchBox = compose(
       withProps({
         googleMapURL:
@@ -394,6 +395,7 @@ export default class Sell_2 extends React.Component {
                         style={{
                           display: "flex",
                           flexDirection: "row",
+                          fontWeight: 600,
                         }}
                       >
                         <div style={{ marginRight: 10, width: 90 }}>Monday</div>
@@ -479,7 +481,6 @@ export default class Sell_2 extends React.Component {
                         style={{
                           display: "flex",
                           flexDirection: "row",
-                          fontWeight: 600,
                         }}
                       >
                         <div style={{ marginRight: 10, width: 90 }}>Sunday</div>

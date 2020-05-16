@@ -1,6 +1,6 @@
 const functions = require("firebase-functions");
 const env = require("dotenv").config({ path: "./.env" });
-
+const puppeteer = require("puppeteer");
 // const stripe = require("stripe")("rk_live_jwpHKngcsUmcz9gHths0I1ZX003cKwZQQl");
 const stripe = require("stripe")("sk_live_MUbbkQ150n00y57q1tjlwWQM00s213LRkP");
 // const stripe = require("stripe")("sk_test_hkMGIPsjJ7Ag57pFz1eX0ASX00ijQ9oo1X");
@@ -154,6 +154,44 @@ app.post("/create-payment-intent", async (req, res) => {
     res.json(err);
   }
 });
+
+app.post("/fetch-item-price", async (req, res) => {
+  const string = req.body.total;
+  const search = string.split();
+  console.log(search);
+  query = "";
+  for (let i = 2; i < search.length; i++) {
+    query += search[i] + " ";
+  }
+  console.log(string);
+  url =
+    "https://www.google.com/search?tbm=shop&ei&q=" + string.replace(" ", "%20");
+  console.log(url);
+  try {
+    const x = await scrapeProduct(url);
+    res.send(x);
+  } catch (err) {
+    res.json(err);
+  }
+});
+
+async function scrapeProduct(url) {
+  console.log("function");
+  const browser = await puppeteer.launch();
+  console.log("browser");
+  const page = await browser.newPage();
+  console.log("page");
+  await page.goto(url);
+  console.log("url");
+  let texts = await page.evaluate(() => {
+    let data = [];
+    let elements = document.getElementsByClassName("Nr22bf");
+    for (var element of elements) data.push(element.textContent);
+    return data;
+  });
+  browser.close();
+  return texts;
+}
 
 let getProductDetails = (myData) => {
   return {

@@ -14,7 +14,7 @@ import Agreement from "./Agreement.js";
 import CheckOut from "./CheckOut";
 import GetKit from "./GetKit";
 import BecomeCollector from "./BecomeCollector";
-
+import ItemPriceScraper from "./scripts/ItemPriceScraper.js";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Home from "./Home";
@@ -56,6 +56,11 @@ export default class RenderRoutes extends React.Component {
               path="/andrewitemupload4467"
               exact={true}
               render={() => <ItemUpload />}
+            />
+            <Route
+              path="/andrewitemprice4467"
+              exact={true}
+              render={() => <ItemPriceScraper />}
             />
             <Route
               path="/become_collector"

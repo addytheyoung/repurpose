@@ -18,6 +18,7 @@
     "firebase-admin": "^8.10.0",
     "lodash": "^4.17.15",
     "nodemailer": "^6.4.6",
+    "puppeteer": "^3.0.4",
     "react-calendar": "^3.0.1",
     "react-google-maps": "^9.4.5",
     "react-html5-camera-photo": "^1.5.4",

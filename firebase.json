@@ -25,6 +25,10 @@
         "function": "app"
       },
       {
+        "source": "/fetch-item-price",
+        "function": "app"
+      },
+      {
         "source": "/make-seller",
         "function": "app"
       },

@@ -262,7 +262,36 @@ const getShipping = (price) => {
   return 3.12;
 };
 
+const scrapeForPrices = (total) => {
+  const json = { total: total };
+  console.log("starting");
+  return window
+    .fetch(`/fetch-item-price`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(json),
+    })
+    .then((res) => {
+      console.log("then");
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return null;
+      }
+    })
+    .then((data) => {
+      if (!data || data.error) {
+        throw new Error("Error");
+      } else {
+        return data;
+      }
+    });
+};
+
 const api = {
+  scrapeForPrices: scrapeForPrices,
   payWithPaypal: payWithPaypal,
   createTransfers: createTransfers,
   sendEmail: sendEmail,
