@@ -1,3 +1,18 @@
 #house:hover {
   cursor: pointer;
 }
+
+#sell-here:hover {
+  opacity: 0.8 !important;
+  cursor: pointer;
+}
+
+#continue:hover {
+  cursor: pointer;
+  opacity: 0.7 !important;
+}
+
+#time-slot:hover {
+  cursor: pointer;
+  opacity: 0.5 !important;
+}

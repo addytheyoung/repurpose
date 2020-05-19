@@ -160,9 +160,7 @@ export default class Buy extends React.Component {
             marginTop: 50,
             marginBottom: 50,
           }}
-        >
-          {this.state.loaded && "(More coming very soon)"}
-        </div>
+        ></div>
       </div>
     );
   }
