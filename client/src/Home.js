@@ -507,12 +507,13 @@ export default class Home extends React.Component {
                 padding: 5,
                 borderRadius: 6,
                 backgroundColor: "#E61E4D",
-                fontWeight: 600,
-                fontSize: 15,
+                fontWeight: 700,
+                fontSize: 16,
                 color: "white",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                textAlign: "center",
               }}
             >
               GET STARTED
@@ -530,7 +531,7 @@ export default class Home extends React.Component {
               style={{
                 marginRight: 20,
                 fontWeight: 500,
-                fontSize: 20,
+                fontSize: 21,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -540,39 +541,21 @@ export default class Home extends React.Component {
             </div>
             <div
               style={{
-                width: 120,
-                fontSize: 14,
+                width: 200,
+                fontSize: 18,
                 marginLeft: 10,
                 marginRight: 10,
+                textAlign: "center",
               }}
             >
-              We come pick up your clutter
-            </div>
-            <div
-              style={{
-                width: 120,
-                fontSize: 14,
-                marginLeft: 10,
-                marginRight: 10,
-              }}
-            >
-              We take that clutter away
-            </div>
-            <div
-              style={{
-                width: 120,
-                fontSize: 14,
-                marginLeft: 10,
-                marginRight: 10,
-              }}
-            >
-              We pay you cash for it
+              We pay cash for all of your clutter
             </div>
           </div>
           <div
             style={{
               marginTop: 15,
               marginBottom: 15,
+              marginLeft: 50,
               fontWeight: 600,
               fontSize: 14,
             }}
@@ -582,7 +565,7 @@ export default class Home extends React.Component {
           <div style={{ marginTop: 30, display: "flex", flexDirection: "row" }}>
             <div
               style={{
-                marginRight: 20,
+                marginRight: 21,
                 fontWeight: 500,
                 fontSize: 20,
                 display: "flex",
@@ -595,33 +578,14 @@ export default class Home extends React.Component {
 
             <div
               style={{
-                width: 120,
-                fontSize: 14,
+                width: 200,
+                fontSize: 18,
                 marginLeft: 10,
                 marginRight: 10,
+                textAlign: "center",
               }}
             >
-              Find items here for cheap
-            </div>
-            <div
-              style={{
-                width: 120,
-                fontSize: 14,
-                marginLeft: 10,
-                marginRight: 10,
-              }}
-            >
-              Buy them right here
-            </div>
-            <div
-              style={{
-                width: 120,
-                fontSize: 14,
-                marginLeft: 10,
-                marginRight: 10,
-              }}
-            >
-              Delivered on the same day
+              Items are delivered in less than a day
             </div>
           </div>
         </div>

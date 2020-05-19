@@ -3,6 +3,21 @@
   width: 300px; */
 }
 
+#camera video {
+  width: 100vw !important;
+}
+
+#outer-circle {
+  width: 0px;
+  height: 0px;
+}
+
+#inner-circle {
+  width: 100px;
+  height: 100px;
+  top: -5px;
+}
+
 #submit:hover {
   cursor: pointer;
 }

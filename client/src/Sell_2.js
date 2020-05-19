@@ -7,7 +7,7 @@ import api from "./api";
 import { Input } from "@material-ui/core";
 import * as firebase from "firebase";
 import "./css/Sell_2.css";
-import Star from "./images/shapes-and-symbols (1).svg";
+import Star from "./images/shapes-and-symbols (2).svg";
 import Calendar from "react-calendar";
 import Close from "./images/close.png";
 import AndrewMap from "./AndrewMap";
@@ -236,7 +236,7 @@ export default class Sell_2 extends React.Component {
                 />
               </div>
               <div style={{ marginTop: 20, fontSize: 20 }}>
-                {this.state.modal.name + " " + "is your collector!"}
+                {this.state.modal.name + " " + "is the Collector!"}
               </div>
               <div
                 style={{
@@ -255,7 +255,7 @@ export default class Sell_2 extends React.Component {
                 >
                   <img
                     src={this.state.modal.house_picture}
-                    style={{ width: 200, height: 200 }}
+                    style={{ width: 200, height: 200, borderRadius: 5 }}
                   />
                 </div>
                 <div
@@ -268,7 +268,7 @@ export default class Sell_2 extends React.Component {
                 >
                   <img
                     src={this.state.modal.collector_picture}
-                    style={{ width: 200, height: 250 }}
+                    style={{ width: 200, height: 200, borderRadius: 5 }}
                   />
                 </div>
               </div>
@@ -287,7 +287,7 @@ export default class Sell_2 extends React.Component {
                 {this.state.modal.house_address}
               </div>
               <div
-                onClick={(e) => this.sellHere(e, this.state.modal)}
+                onClick={(e) => this.sellHere(e, this.state.modal, true)}
                 id="sell-here"
                 style={{
                   zIndex: 99,
@@ -364,6 +364,9 @@ export default class Sell_2 extends React.Component {
                 />
                 <div style={{ marginTop: 40, fontSize: 20 }}>
                   PayPal Account Email
+                </div>
+                <div style={{ marginTop: 10, fontSize: 12 }}>
+                  This is how we pay you
                 </div>
                 <Input
                   id="email1"
@@ -645,7 +648,7 @@ export default class Sell_2 extends React.Component {
                   </div>
                   <div
                     style={{
-                      width: "50%",
+                      width: "60%",
                       display: "flex",
                       flexDirection: "column",
                     }}
@@ -670,7 +673,12 @@ export default class Sell_2 extends React.Component {
                         }}
                       >
                         <img
-                          style={{ height: 12, width: 12, marginRight: 3 }}
+                          style={{
+                            height: 12,
+                            width: 12,
+                            marginRight: 3,
+                            filter: "greyscale(100%)",
+                          }}
                           src={Star}
                         />
                         {avgRating + " " + "(" + collector.ratings.length + ")"}
@@ -1040,8 +1048,14 @@ export default class Sell_2 extends React.Component {
     return false;
   }
 
-  sellHere(e, collector) {
+  sellHere(e, collector, otherModal) {
     e.stopPropagation();
+    if (otherModal) {
+      this.setState({
+        sellModal: collector,
+        modal: false,
+      });
+    }
     this.setState({
       sellModal: collector,
     });

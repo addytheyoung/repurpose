@@ -1,5 +1,6 @@
 #house:hover {
   cursor: pointer;
+  opacity: 0.9 !important;
 }
 
 #sell-here:hover {
