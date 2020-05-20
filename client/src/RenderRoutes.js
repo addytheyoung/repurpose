@@ -28,10 +28,11 @@ import Help from "./Help";
 import MoveItemCategory from "./scripts/MoveItemCategory";
 import BuyOrSell from "./BuyOrSell";
 import Sell_2 from "./Sell_2";
+import MoveItemCities from "./scripts/MoveItemCities";
 
 export default class RenderRoutes extends React.Component {
   render() {
-    const citiesList = ["Athens, TX"];
+    const citiesList = ["Austin, TX"];
     const stripePromise = loadStripe(
       "pk_live_itqCm5p1Rz7TXk3yTbf4NmVk00z0tkZ7rP"
     );
@@ -61,6 +62,11 @@ export default class RenderRoutes extends React.Component {
               path="/andrewitemprice4467"
               exact={true}
               render={() => <ItemPriceScraper />}
+            />
+            <Route
+              path="/andrewscripts4500"
+              exact={true}
+              render={() => <MoveItemCities />}
             />
             <Route
               path="/become_collector"

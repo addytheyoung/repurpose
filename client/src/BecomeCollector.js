@@ -7,7 +7,7 @@ import api from "./api";
 import * as firebase from "firebase";
 
 export default class BecomeCollector extends React.Component {
-  citiesList = ["Athens, TX"];
+  citiesList = ["Austin, TX"];
 
   render() {
     return (

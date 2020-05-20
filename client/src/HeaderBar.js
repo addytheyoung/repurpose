@@ -16,7 +16,7 @@ import Close from "./images/close.png";
 import city from "./images/architectonic.png";
 
 export default class HeaderBar extends React.Component {
-  citiesList = ["Athens, TX"];
+  citiesList = ["Austin, TX"];
   constructor(props) {
     super(props);
     this.state = {

@@ -254,7 +254,7 @@ export default class CheckoutForm extends React.Component {
         {/* {this.props.deliveryType === "pickup" && (
           <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
             Pickup location is 2414 Longview Street, <br />
-            Athens TX. We'll send you an email to confirm.
+            Austin TX. We'll send you an email to confirm.
           </div>
         )} */}
 
@@ -582,7 +582,7 @@ export default class CheckoutForm extends React.Component {
               loadingIcon: false,
             });
             alert(
-              "Sorry, you are too far for delivery. We'll have pickup soon!"
+              "Sorry, you are too far for delivery. We'll be in your town soon!"
             );
             window.location.reload();
           }
@@ -648,7 +648,9 @@ export default class CheckoutForm extends React.Component {
           this.setState({
             loadingIcon: false,
           });
-          alert("Sorry, you are too far for delivery. We'll have pickup soon!");
+          alert(
+            "Sorry, you are too far for delivery. We'll be in your town soon!"
+          );
         }
       })
       .catch((e) => {
@@ -980,7 +982,7 @@ export default class CheckoutForm extends React.Component {
             const milesBetween = Math.sqrt(x);
             console.log(milesBetween);
 
-            if (milesBetween >= 20) {
+            if (milesBetween >= 30) {
               return false;
             } else {
               return true;

@@ -11,7 +11,7 @@ import Art from "./images/art.jpeg";
 import Close from "./images/close.png";
 
 export default class Home extends React.Component {
-  citiesList = ["Athens, TX"];
+  citiesList = ["Austin, TX"];
   constructor(props) {
     super(props);
     this.state = {
@@ -44,7 +44,7 @@ export default class Home extends React.Component {
       firebaseCats
         .doc(categoryList[i])
         .collection("All")
-        .where("location", "==", "Athens, TX")
+        .where("location", "==", "Austin, TX")
         .limit(20)
         .get()
         .then((allItems) => {
@@ -598,7 +598,7 @@ export default class Home extends React.Component {
             marginTop: 20,
           }}
         >
-          Items in Athens, Texas
+          Items in Austin, Texas
         </div>
         <div
           style={{
@@ -687,7 +687,7 @@ export default class Home extends React.Component {
             })
             .then(() => {
               localStorage.setItem("cart", 1);
-              localStorage.setItem("city", "Athens, TX");
+              localStorage.setItem("city", "Austin, TX");
               window.location.href = "/";
             });
         });
@@ -707,7 +707,7 @@ export default class Home extends React.Component {
         })
         .then(() => {
           localStorage.setItem("cart", 1);
-          localStorage.setItem("city", "Athens, TX");
+          localStorage.setItem("city", "Austin, TX");
           window.location.href = "/";
         });
     }

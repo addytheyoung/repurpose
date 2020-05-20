@@ -121,7 +121,7 @@ export default class CheckOut extends React.Component {
             <br />
             <br />
           </div>
-          <div> Click the help button on the top if any issues occour.</div>
+          <div> Click the help button on the top if any issues occur.</div>
         </div>
       );
     }

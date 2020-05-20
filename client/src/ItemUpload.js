@@ -16,7 +16,7 @@ import CropTest from "./CropTest";
 import "./css/ItemUpload.css";
 
 export default class ItemUpload extends React.Component {
-  citiesList = ["Athens, TX"];
+  citiesList = ["Austin, TX"];
 
   constructor(props) {
     super(props);

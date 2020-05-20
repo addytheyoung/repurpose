@@ -176,7 +176,9 @@ export default class OrderKit extends React.Component {
         const milesBetween = Math.sqrt(x);
         console.log(milesBetween);
         if (milesBetween >= 15) {
-          alert("Sorry, you are too far for delivery.");
+          alert(
+            "Sorry, you are too far for delivery. We'll be in your town soon!"
+          );
           return;
         }
 
