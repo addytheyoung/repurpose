@@ -25,7 +25,7 @@ export default class Home extends React.Component {
     };
     const categoryList = [
       "Antiques & Collectibles",
-      "Art & Home Decoration",
+      "Art & Decoration",
       "Toys & Hobbies",
       "Books",
       "Clothing, Shoes, & Accessories",
@@ -151,8 +151,8 @@ export default class Home extends React.Component {
                     onClick={() => this.closeModal()}
                     src={Close}
                     style={{
-                      width: 20,
-                      height: 20,
+                      width: 30,
+                      height: 30,
                       marginTop: 20,
                       marginRight: 20,
                     }}
@@ -249,8 +249,8 @@ export default class Home extends React.Component {
                     onClick={() => this.closeModal()}
                     src={Close}
                     style={{
-                      width: 20,
-                      height: 20,
+                      width: 30,
+                      height: 30,
                       marginTop: 20,
                       marginRight: 20,
                     }}
@@ -342,6 +342,7 @@ export default class Home extends React.Component {
                             backgroundColor: "#E61E4D",
                             marginTop: 30,
                             borderRadius: 5,
+                            marginLeft: 20,
                             padding: 10,
                             width: 150,
                             height: 40,

@@ -12,6 +12,8 @@ import Fashion from "./images/shirt.jpg";
 import Movie from "./images/harry.jpg";
 import Garden from "./images/garden.jpg";
 import Health from "./images/health.webp";
+import Home from "./images/home.jpg";
+import Pet from "./images/pet.jpg";
 import Baby from "./images/baby.jpeg";
 // import Fashion from "./images/fashion.jpg";
 
@@ -30,8 +32,8 @@ export default class Buy extends React.Component {
       localStorage.setItem("city", category);
     }
     const categories = [
-      { picture: Antiques, name: "Antiques & Collectibles", link: "antiques" },
-      { picture: Art, name: "Art & Home Decoration", link: "art" },
+      { picture: Art, name: "Art & Decoration", link: "art" },
+      { picture: Home, name: "Home", link: "home" },
       // { picture: Baby, name: "Baby", link: "baby" },
       { picture: Books, name: "Books", link: "books" },
       {
@@ -39,13 +41,18 @@ export default class Buy extends React.Component {
         name: "Clothing, Shoes, & Accessories",
         link: "fashion",
       },
+      { picture: Sports, name: "Sports & Hobbies", link: "sports" },
       { picture: Electronics, name: "Electronics", link: "electronics" },
-      // { picture: Health, name: "Health & Beauty", link: "health" },
-      { picture: Garden, name: "Home & Garden", link: "home" },
-      { picture: Sports, name: "Sporting Goods", link: "sports" },
       { picture: Toys, name: "Toys & Games", link: "toys" },
 
-      { picture: Movie, name: "Movies & Video Games", link: "movies" },
+      { picture: Garden, name: "Outside & Garden", link: "garden" },
+      { picture: Health, name: "Health & Beauty", link: "health" },
+
+      { picture: Pet, name: "Pet Supplies", link: "pet" },
+
+      // { picture: Garden, name: "Home & Garden", link: "home" },
+
+      // { picture: Movie, name: "Movies & Video Games", link: "movies" },
     ];
 
     return (
@@ -144,7 +151,9 @@ export default class Buy extends React.Component {
                           overflow: "hidden",
                         }}
                       ></img>
-                      <div style={{ marginTop: 10 }}>{cat.name}</div>
+                      <div style={{ display: "flex", flexDirection: "row" }}>
+                        <div style={{ marginTop: 10 }}>{cat.name}</div>
+                      </div>
                     </div>
                   );
                 })}

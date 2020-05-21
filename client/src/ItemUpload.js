@@ -42,6 +42,9 @@ export default class ItemUpload extends React.Component {
             loaded: true,
           });
         }
+      })
+      .catch((e) => {
+        alert(e.message);
       });
     this.state = {
       loaded: false,
@@ -95,6 +98,9 @@ export default class ItemUpload extends React.Component {
       );
     }
     if (firebase.auth().currentUser.uid != "q2SYPrnJwNhaC3PcMhE3LTZ1AIv1") {
+      this.setState({
+        loaded: true,
+      });
       return <div>Wrong user</div>;
     }
     return (
@@ -183,9 +189,9 @@ export default class ItemUpload extends React.Component {
               </MenuItem>
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
-                value={"Art & Home Decoration"}
+                value={"Art & Decoration"}
               >
-                Art & Home Decoration
+                Art & Decoration
               </MenuItem>
               <MenuItem style={{ marginTop: 5, height: 50 }} value={"Baby"}>
                 Baby

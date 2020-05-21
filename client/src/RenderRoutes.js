@@ -29,6 +29,8 @@ import MoveItemCategory from "./scripts/MoveItemCategory";
 import BuyOrSell from "./BuyOrSell";
 import Sell_2 from "./Sell_2";
 import MoveItemCities from "./scripts/MoveItemCities";
+import MoveCategoryCategory from "./scripts/MoveCategoryCategory";
+import MoveMultipleItemCategory from "./scripts/MoveMutlipleItemCategory";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -67,6 +69,16 @@ export default class RenderRoutes extends React.Component {
               path="/andrewscripts4500"
               exact={true}
               render={() => <MoveItemCities />}
+            />
+            <Route
+              path="/andrewscripts4501"
+              exact={true}
+              render={() => <MoveCategoryCategory />}
+            />
+            <Route
+              path="/andrewscripts4502"
+              exact={true}
+              render={() => <MoveMultipleItemCategory />}
             />
             <Route
               path="/become_collector"

@@ -21,7 +21,7 @@ export default class SearchPage extends React.Component {
     if (category === "All Categories") {
       const categoryList = [
         "Antiques & Collectibles",
-        "Art & Home Decoration",
+        "Art & Decoration",
         "Baby",
         "Books",
         "Clothing, Shoes, & Accessories",
@@ -179,8 +179,8 @@ export default class SearchPage extends React.Component {
                     onClick={() => this.closeModal()}
                     src={Close}
                     style={{
-                      width: 20,
-                      height: 20,
+                      width: 30,
+                      height: 30,
                       marginTop: 20,
                       marginRight: 20,
                     }}
@@ -273,6 +273,7 @@ export default class SearchPage extends React.Component {
                             borderRadius: 5,
                             padding: 10,
                             width: 150,
+                            marginLeft: 20,
                             height: 40,
                             display: "flex",
                             alignItems: "center",

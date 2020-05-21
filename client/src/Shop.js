@@ -5,6 +5,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import "./css/Shop.css";
 import FilterBar from "./FilterBar";
 import Art from "./images/art.jpeg";
+import { Button, Select, MenuItem } from "@material-ui/core";
 import Close from "./images/close.png";
 
 export default class Shop extends React.Component {
@@ -20,21 +21,25 @@ export default class Shop extends React.Component {
     } else if (category === "Coins") {
       category = "Coins & Paper Money";
     } else if (category === "Art") {
-      category = "Art & Home Decoration";
+      category = "Art & Decoration";
     } else if (category === "Fashion") {
       category = "Clothing, Shoes, & Accessories";
     } else if (category === "Toys") {
-      category = "Toys & Hobbies";
+      category = "Toys & Games";
     } else if (category === "Sports") {
-      category = "Sporting Goods";
+      category = "Sports & Hobbies";
     } else if (category === "Antiques") {
       category = "Antiques & Collectibles";
-    } else if (category === "Home") {
-      category = "Home & Garden";
     } else if (category === "Health") {
       category = "Health & Beauty";
     } else if (category === "Test") {
       category = "Test";
+    } else if (category == "Home") {
+      category = "Home";
+    } else if (category == "Garden") {
+      category = "Garden";
+    } else if (category == "Pet") {
+      category = "Pet Supplies";
     }
     console.log(category);
 
@@ -47,6 +52,7 @@ export default class Shop extends React.Component {
       modal: null,
       addingToCart: false,
       numCartItems: localStorage.getItem("cart"),
+      moveCategory: false,
     };
 
     firebase
@@ -145,20 +151,31 @@ export default class Shop extends React.Component {
                     onClick={() => this.closeModal()}
                     src={Close}
                     style={{
-                      width: 20,
-                      height: 20,
+                      width: 30,
+                      height: 30,
                       marginTop: 20,
                       marginRight: 20,
                     }}
                   />
                 </div>
 
-                <div style={{ display: "flex", flexDirection: "row" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <div style={{ marginLeft: 20 }}>
                       <img
                         src={this.state.modal.pictures[0]}
-                        style={{ width: 400, height: 400 }}
+                        style={{
+                          borderRadius: 3,
+                          maxWidth: 400,
+                          maxHeight: 400,
+                          minWidth: 200,
+                          minHeight: 200,
+                        }}
                       ></img>
                     </div>
                     <div
@@ -168,23 +185,7 @@ export default class Shop extends React.Component {
                         marginLeft: 20,
                         marginTop: 10,
                       }}
-                    >
-                      {this.state.modal.pictures.map((pic, index) => {
-                        return (
-                          <div id={index}>
-                            <img
-                              src={pic}
-                              style={{
-                                width: 80,
-                                height: 80,
-                                marginLeft: 5,
-                                marginRight: 5,
-                              }}
-                            ></img>
-                          </div>
-                        );
-                      })}
-                    </div>
+                    ></div>
                   </div>
                   <div
                     style={{
@@ -239,6 +240,7 @@ export default class Shop extends React.Component {
                             borderRadius: 5,
                             padding: 10,
                             width: 150,
+                            marginLeft: 20,
                             height: 40,
                             display: "flex",
                             alignItems: "center",
@@ -285,6 +287,170 @@ export default class Shop extends React.Component {
         <div>
           <HeaderBar numCartItems={this.state.numCartItems} />
         </div>
+
+        {this.state.moveCategory && (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              position: "absolute",
+            }}
+          >
+            <Select
+              style={{
+                width: "50vw",
+                height: 120,
+                marginTop: 10,
+                height: 120,
+                fontSize: 20,
+                display: "flex",
+                flexDirection: "column",
+              }}
+              id="category"
+              defaultValue={"Category"}
+            >
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Antiques & Collectibles"}
+              >
+                Antiques & Collectibles
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Art & Decoration"}
+              >
+                Art & Decoration
+              </MenuItem>
+              <MenuItem style={{ marginTop: 5, height: 50 }} value={"Baby"}>
+                Baby
+              </MenuItem>
+              <MenuItem style={{ marginTop: 5, height: 50 }} value={"Books"}>
+                Books
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Cameras & Photo"}
+              >
+                {"Cameras & Photo"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Cell Phones & Accessories"}
+              >
+                {"Cell Phones & Accessories"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Clothing, Shoes, & Accessories"}
+              >
+                {"Clothing, Shoes, & Accessories"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Coins & Paper Money"}
+              >
+                {"Coins & Paper Money"}
+              </MenuItem>
+
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Computers & Tablets"}
+              >
+                {"Computers & Tablets"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Electronics"}
+              >
+                Electronics
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Crafts / Hobbies"}
+              >
+                {"Crafts / Hobbies"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Dolls & Bears"}
+              >
+                {"Dolls & Bears"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Gift Cards & Coupons"}
+              >
+                {"Gift Cards & Coupons"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Health & Beauty"}
+              >
+                {"Health & Beauty"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Home & Garden"}
+              >
+                {"Home & Garden"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Jewelry & Watches"}
+              >
+                {"Jewelry & Watches"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Musical Instruments & Gear"}
+              >
+                {"Musical Instruments & Gear"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Pet Supplies"}
+              >
+                {"Pet Supplies"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Pottery & Glass"}
+              >
+                {"Pottery & Glass"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Sporting Goods"}
+              >
+                {"Sporting Goods"}
+              </MenuItem>
+              <MenuItem style={{ marginTop: 5, height: 50 }} value={"Test"}>
+                {"Test"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Toys & Hobbies"}
+              >
+                {"Toys & Hobbies"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Movies & Video Games"}
+              >
+                {"Movies & Video Games"}
+              </MenuItem>
+              <MenuItem
+                style={{ marginTop: 5, height: 50 }}
+                value={"Everything Else"}
+              >
+                {"Everything Else"}
+              </MenuItem>
+            </Select>
+            <Button>SEND TO CATEGORY</Button>
+          </div>
+        )}
 
         <div
           style={{
@@ -394,6 +560,13 @@ export default class Shop extends React.Component {
                       <div style={{ marginTop: 5, fontWeight: 600 }}>
                         {"$" + item.original_price}
                       </div>
+                      {firebase.auth().currentUser &&
+                        firebase.auth().currentUser.uid ==
+                          "q2SYPrnJwNhaC3PcMhE3LTZ1AIv1" && (
+                          <Button onClick={(e) => this.moveCategories(e, item)}>
+                            Move Categories
+                          </Button>
+                        )}
                     </div>
                   </div>
                 );
@@ -403,6 +576,21 @@ export default class Shop extends React.Component {
         </div>
       </div>
     );
+  }
+
+  moveCategories(e, item) {
+    e.stopPropagation();
+    if (this.state.movingItem == item) {
+      this.setState({
+        moveCategory: false,
+        movingItem: false,
+      });
+    } else {
+      this.setState({
+        moveCategory: true,
+        movingItem: item,
+      });
+    }
   }
 
   updateFilter(min, max) {

@@ -278,7 +278,7 @@ export default class Sell_2 extends React.Component {
                   justifyContent: "center",
                   alignItems: "center",
                   marginTop: 100,
-                  width: "60%",
+                  width: "50%",
                 }}
               >
                 {this.state.modal.description}
@@ -542,6 +542,7 @@ export default class Sell_2 extends React.Component {
               justifyContent: "center",
               alignItems: "center",
               fontWeight: 500,
+              textAlign: "center",
             }}
           >
             1. Book with any place below
@@ -555,9 +556,10 @@ export default class Sell_2 extends React.Component {
               justifyContent: "center",
               alignItems: "center",
               fontWeight: 500,
+              textAlign: "center",
             }}
           >
-            2. Drive all your clutter and items there
+            2. Take all of your clutter / items there
           </div>
           <div
             style={{
@@ -567,9 +569,10 @@ export default class Sell_2 extends React.Component {
               justifyContent: "center",
               alignItems: "center",
               fontWeight: 500,
+              textAlign: "center",
             }}
           >
-            3. Get paid for everything
+            3. Get paid for everything you have
           </div>
         </div>
         <div
@@ -664,24 +667,6 @@ export default class Sell_2 extends React.Component {
                     >
                       <div style={{ fontSize: 18 }}>
                         {collector.house_address}
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          alignItems: "center",
-                        }}
-                      >
-                        <img
-                          style={{
-                            height: 12,
-                            width: 12,
-                            marginRight: 3,
-                            filter: "greyscale(100%)",
-                          }}
-                          src={Star}
-                        />
-                        {avgRating + " " + "(" + collector.ratings.length + ")"}
                       </div>
                     </div>
 
@@ -814,9 +799,29 @@ export default class Sell_2 extends React.Component {
                       SELL HERE
                     </div>
                   </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "flex-start",
+                      justifyContent: "flex-start",
+                    }}
+                  >
+                    <img
+                      style={{
+                        height: 12,
+                        width: 12,
+                        marginRight: 3,
+                        filter: "greyscale(100%)",
+                      }}
+                      src={Star}
+                    />
+                    {avgRating + " " + "(" + collector.ratings.length + ")"}
+                  </div>
                 </div>
               );
             })}
+            <div style={{ marginTop: 20 }}>More places coming soon!</div>
           </div>
           <div style={{ width: "40vw", minHeight: "70vh", marginRight: 20 }}>
             <MapWithASearchBox></MapWithASearchBox>
@@ -836,11 +841,23 @@ export default class Sell_2 extends React.Component {
     var removedArray = [];
     var removedArrayString = "";
     if (day == 0) {
+      removedArrayString = "sunday_filled";
+      removedArray = collectorData.sunday_filled;
     } else if (day == 1) {
+      removedArrayString = "monday_filled";
+      removedArray = collectorData.monday_filled;
     } else if (day == 2) {
+      removedArrayString = "tuesday_filled";
+      removedArray = collectorData.tuesday_filled;
     } else if (day == 3) {
+      removedArrayString = "wednesday_filled";
+      removedArray = collectorData.wednesday_filled;
     } else if (day == 4) {
+      removedArrayString = "thursday_filled";
+      removedArray = collectorData.thursday_filled;
     } else if (day == 5) {
+      removedArrayString = "friday_filled";
+      removedArray = collectorData.friday_filled;
     } else if (day == 6) {
       removedArrayString = "saturday_filled";
       removedArray = collectorData.saturday_filled;
@@ -899,11 +916,23 @@ export default class Sell_2 extends React.Component {
     var openTimes = [];
     var filledTimes = [];
     if (date.getDay() == 0) {
+      openTimes = collector.sunday;
+      filledTimes = collector.sunday_filled;
     } else if (date.getDay() == 1) {
+      openTimes = collector.monday;
+      filledTimes = collector.monday_filled;
     } else if (date.getDay() == 2) {
+      openTimes = collector.tuesday;
+      filledTimes = collector.tuesday_filled;
     } else if (date.getDay() == 3) {
+      openTimes = collector.wednesday;
+      filledTimes = collector.wednesday_filled;
     } else if (date.getDay() == 4) {
+      openTimes = collector.thursday;
+      filledTimes = collector.thursday_filled;
     } else if (date.getDay() == 5) {
+      openTimes = collector.friday;
+      filledTimes = collector.friday_filled;
     } else if (date.getDay() == 6) {
       openTimes = collector.saturday;
       filledTimes = collector.saturday_filled;

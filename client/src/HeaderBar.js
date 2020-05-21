@@ -87,8 +87,8 @@ export default class HeaderBar extends React.Component {
                     onClick={() => this.closeModal()}
                     src={Close}
                     style={{
-                      width: 20,
-                      height: 20,
+                      width: 30,
+                      height: 30,
                       marginTop: 20,
                       marginRight: 20,
                     }}
