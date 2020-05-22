@@ -196,7 +196,15 @@ export default class CheckoutForm extends React.Component {
                                 if (b_index === userDocs.length) {
                                   localStorage.setItem("cart", "0");
                                   console.log("DONE");
-                                  this.props.finished();
+
+                                  firebase
+                                    .firestore()
+                                    .collection("Orders")
+                                    .doc()
+                                    .set({ items: tempCart })
+                                    .then(() => {
+                                      this.props.finished();
+                                    });
                                 }
                               });
                           }
@@ -420,6 +428,7 @@ export default class CheckoutForm extends React.Component {
               onCancel={(e) =>
                 this.setState({
                   loadingIcon: false,
+                  call: false,
                 })
               }
               onClick={(e) => this.andrewMethod2(e)}
@@ -516,6 +525,9 @@ export default class CheckoutForm extends React.Component {
     const city = document.getElementById("city").value.trim();
     const state = document.getElementById("state").textContent;
 
+    console.log(address1);
+    console.log(zip);
+
     localStorage.setItem("fname", first);
     localStorage.setItem("lname", last);
     localStorage.setItem("address1", address1);
@@ -549,8 +561,10 @@ export default class CheckoutForm extends React.Component {
 
       this.checkAddress()
         .then((b) => {
+          console.log("THEN");
           console.log(b);
           if (b === true && first && last && address1 && zip && city && state) {
+            console.log("PASSED");
             this.checkItems().then((a) => {
               console.log(a);
               if (!a) {
@@ -572,12 +586,14 @@ export default class CheckoutForm extends React.Component {
               }
             });
           } else if (b == -1) {
+            console.log("FAILED");
             this.setState({
               loadingIcon: false,
             });
             alert("Please fill out all info above");
             window.location.reload();
           } else {
+            console.log("FAILED2");
             this.setState({
               loadingIcon: false,
             });
@@ -957,6 +973,9 @@ export default class CheckoutForm extends React.Component {
     const city = document.getElementById("city").value.trim();
     const state = document.getElementById("state").textContent;
     console.log(state);
+    console.log(city);
+    console.log(address1);
+    console.log(zip);
     if (address1) {
       address1 = document.getElementById("address1").value.trim();
     }

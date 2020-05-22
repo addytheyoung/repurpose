@@ -61,5 +61,12 @@ service cloud.firestore {
       request.resource.data.cart.length < resource.data.cart.length)
       allow delete: if false;
     }
+    
+    match /Orders/{Any} {
+    allow read: if true;
+    allow create: if true;
+    allow update: if true;
+    allow delete: if false;
+    }
   }
 }

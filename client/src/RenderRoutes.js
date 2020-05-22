@@ -32,6 +32,7 @@ import MoveItemCities from "./scripts/MoveItemCities";
 import MoveCategoryCategory from "./scripts/MoveCategoryCategory";
 import MoveMultipleItemCategory from "./scripts/MoveMutlipleItemCategory";
 import UpdateId from "./scripts/UpdateId";
+import ChangePrices from "./scripts/ChangePrices";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -85,6 +86,11 @@ export default class RenderRoutes extends React.Component {
               path="/andrewscripts4503"
               exact={true}
               render={() => <UpdateId />}
+            />
+            <Route
+              path="/andrewscripts4504"
+              exact={true}
+              render={() => <ChangePrices />}
             />
             <Route
               path="/become_collector"
