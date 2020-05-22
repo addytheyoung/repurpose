@@ -10,6 +10,7 @@ import Shop from "./Shop";
 import Item from "./Item";
 import Profile from "./Profile";
 import Cart from "./Cart";
+import AndrewOrders from "./AndrewOrders";
 import Agreement from "./Agreement.js";
 import CheckOut from "./CheckOut";
 import GetKit from "./GetKit";
@@ -33,6 +34,7 @@ import MoveCategoryCategory from "./scripts/MoveCategoryCategory";
 import MoveMultipleItemCategory from "./scripts/MoveMutlipleItemCategory";
 import UpdateId from "./scripts/UpdateId";
 import ChangePrices from "./scripts/ChangePrices";
+import MoveToOrders from "./scripts/MoveToOrders";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -57,6 +59,11 @@ export default class RenderRoutes extends React.Component {
             {citiesList.includes(window.localStorage.getItem("city")) && (
               <Route path="/" exact={true} render={() => <Buy />} />
             )}
+            <Route
+              path="/andreworders"
+              exact={true}
+              render={() => <AndrewOrders />}
+            />
             <Route
               path="/andrewitemupload4467"
               exact={true}
@@ -91,6 +98,11 @@ export default class RenderRoutes extends React.Component {
               path="/andrewscripts4504"
               exact={true}
               render={() => <ChangePrices />}
+            />
+            <Route
+              path="/andrewscripts4506"
+              exact={true}
+              render={() => <MoveToOrders />}
             />
             <Route
               path="/become_collector"

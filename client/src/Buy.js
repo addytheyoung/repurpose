@@ -6,6 +6,7 @@ import HeaderBar from "./HeaderBar";
 import Art from "./images/art.jpeg";
 import Electronics from "./images/electronics.jpeg";
 import Books from "./images/book.jpg";
+import * as firebase from "firebase";
 import Toys from "./images/toys.jpeg";
 import Sports from "./images/sports.jpg";
 import Fashion from "./images/shirt.jpg";
@@ -84,6 +85,18 @@ export default class Buy extends React.Component {
             }}
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
+              {firebase.auth().currentUser &&
+                firebase.auth().currentUser.uid ==
+                  "q2SYPrnJwNhaC3PcMhE3LTZ1AIv1" && (
+                  <div style={{ height: 50 }}>
+                    <div
+                      id="orders"
+                      onClick={() => (window.location.href = "/andreworders")}
+                    >
+                      Orders
+                    </div>
+                  </div>
+                )}
               <div style={{ display: "flex", flexDirection: "row" }}>
                 <div style={{ fontSize: 24, fontWeight: 600, height: 30 }}>
                   Shop by Category

@@ -4,8 +4,9 @@ import HeaderBar from "./HeaderBar";
 import ClipLoader from "react-spinners/ClipLoader";
 import "./css/Shop.css";
 import FilterBar from "./FilterBar";
+import updatePrice from "./global_methods/updatePrice";
 import Art from "./images/art.jpeg";
-import { Button, Select, MenuItem } from "@material-ui/core";
+import { Button, Select, MenuItem, Input } from "@material-ui/core";
 import Close from "./images/close.png";
 import MoveItemCategory from "./scripts/MoveItemCategory";
 
@@ -290,6 +291,15 @@ export default class Shop extends React.Component {
           <HeaderBar numCartItems={this.state.numCartItems} />
         </div>
 
+        {this.state.movePrice && (
+          <div style={{ position: "fixed", marginLeft: 20 }}>
+            <div>
+              <Input id="new-price" />
+            </div>
+            <Button onClick={() => this.newPrice()}>SEND TO PRICE</Button>
+          </div>
+        )}
+
         {this.state.moveCategory && (
           <div
             style={{
@@ -497,9 +507,16 @@ export default class Shop extends React.Component {
                       {firebase.auth().currentUser &&
                         firebase.auth().currentUser.uid ==
                           "q2SYPrnJwNhaC3PcMhE3LTZ1AIv1" && (
-                          <Button onClick={(e) => this.moveCategories(e, item)}>
-                            Move Categories
-                          </Button>
+                          <div style={{ display: "flex" }}>
+                            <Button
+                              onClick={(e) => this.moveCategories(e, item)}
+                            >
+                              Move Categories
+                            </Button>
+                            <Button onClick={(e) => this.changePrice(e, item)}>
+                              Price
+                            </Button>
+                          </div>
                         )}
                     </div>
                   </div>
@@ -510,6 +527,32 @@ export default class Shop extends React.Component {
         </div>
       </div>
     );
+  }
+
+  newPrice() {
+    const price = parseInt(document.getElementById("new-price").value);
+    if (!price) {
+      return;
+    }
+
+    updatePrice(this.state.movingItem, price, this.state.category);
+  }
+
+  changePrice(e, item) {
+    e.stopPropagation();
+    if (this.state.movingItem == item) {
+      this.setState({
+        moveCategory: false,
+        movingItem: false,
+        movePrice: false,
+      });
+    } else {
+      this.setState({
+        movePrice: true,
+        movingItem: item,
+        moveCategory: false,
+      });
+    }
   }
 
   shuffleArray(array) {
@@ -534,7 +577,9 @@ export default class Shop extends React.Component {
 
   sendToCategory() {
     const category = document.getElementById("category").innerText;
-
+    if (!category) {
+      return;
+    }
     MoveItemCategory(this.state.category, category, this.state.movingItem);
   }
 
@@ -544,11 +589,13 @@ export default class Shop extends React.Component {
       this.setState({
         moveCategory: false,
         movingItem: false,
+        movePrice: false,
       });
     } else {
       this.setState({
         moveCategory: true,
         movingItem: item,
+        movePrice: false,
       });
     }
   }

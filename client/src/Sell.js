@@ -226,7 +226,7 @@ export default class Sell extends React.Component {
                     >
                       MY ORDERS
                     </div>
-                    <div
+                    {/* <div
                       onClick={() => (window.location.href = "/mysales")}
                       id="my-sales"
                       style={{
@@ -245,7 +245,7 @@ export default class Sell extends React.Component {
                       }}
                     >
                       MY SALES
-                    </div>
+                    </div> */}
                     <div
                       onClick={() =>
                         this.setState({
