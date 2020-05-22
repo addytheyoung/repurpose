@@ -559,7 +559,7 @@ export default class Sell_2 extends React.Component {
               textAlign: "center",
             }}
           >
-            2. Take all of your clutter / items there
+            2. Bring your clutter / items
           </div>
           <div
             style={{
@@ -816,7 +816,9 @@ export default class Sell_2 extends React.Component {
                       }}
                       src={Star}
                     />
-                    {avgRating + " " + "(" + collector.ratings.length + ")"}
+                    <div style={{ width: 70 }}>
+                      {avgRating + " " + "(" + collector.ratings.length + ")"}
+                    </div>
                   </div>
                 </div>
               );

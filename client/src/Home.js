@@ -9,6 +9,7 @@ import Shop from "./Shop";
 import ClipLoader from "react-spinners/ClipLoader";
 import Art from "./images/art.jpeg";
 import Close from "./images/close.png";
+import randomizeArray from "./global_methods/randomizeArray";
 
 export default class Home extends React.Component {
   citiesList = ["Austin, TX"];
@@ -39,13 +40,12 @@ export default class Home extends React.Component {
 
     const firebaseCats = firebase.firestore().collection("Categories");
     var i_index = 0;
-    const itemArr = [];
+    var itemArr = [];
     for (var i = 0; i < categoryList.length; i++) {
       firebaseCats
         .doc(categoryList[i])
         .collection("All")
         .where("location", "==", "Austin, TX")
-        .limit(20)
         .get()
         .then((allItems) => {
           i_index++;
@@ -68,6 +68,7 @@ export default class Home extends React.Component {
               j === allItemsDocs.length - 1 &&
               i_index === categoryList.length - 1
             ) {
+              // itemArr = randomizeArray(itemArr);
               this.setState({
                 items: itemArr,
                 loaded: true,
@@ -454,7 +455,9 @@ export default class Home extends React.Component {
           style={{
             height: "40vh",
             width: "100vw",
-            backgroundColor: "#f5f5f5",
+            backgroundColor: "#fafafa",
+            paddingTop: 20,
+            paddingBottom: 20,
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",

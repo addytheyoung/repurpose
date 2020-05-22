@@ -7,6 +7,7 @@ import FilterBar from "./FilterBar";
 import Art from "./images/art.jpeg";
 import { Button, Select, MenuItem } from "@material-ui/core";
 import Close from "./images/close.png";
+import MoveItemCategory from "./scripts/MoveItemCategory";
 
 export default class Shop extends React.Component {
   constructor(props) {
@@ -64,7 +65,7 @@ export default class Shop extends React.Component {
       .get()
       .then((items) => {
         const docs = items.docs;
-        const itemArr = [];
+        var itemArr = [];
         if (docs.length == 0) {
           this.setState({
             items: [],
@@ -76,6 +77,7 @@ export default class Shop extends React.Component {
           const data = docs[i].data();
           itemArr.push(data);
           if (i === docs.length - 1) {
+            itemArr = this.shuffleArray(itemArr);
             this.setState({
               items: itemArr,
               loaded: true,
@@ -295,7 +297,7 @@ export default class Shop extends React.Component {
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
-              position: "absolute",
+              position: "fixed",
             }}
           >
             <Select
@@ -311,11 +313,8 @@ export default class Shop extends React.Component {
               id="category"
               defaultValue={"Category"}
             >
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Antiques & Collectibles"}
-              >
-                Antiques & Collectibles
+              <MenuItem style={{ marginTop: 5, height: 50 }} value={"Home"}>
+                Home
               </MenuItem>
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
@@ -329,37 +328,14 @@ export default class Shop extends React.Component {
               <MenuItem style={{ marginTop: 5, height: 50 }} value={"Books"}>
                 Books
               </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Cameras & Photo"}
-              >
-                {"Cameras & Photo"}
-              </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Cell Phones & Accessories"}
-              >
-                {"Cell Phones & Accessories"}
-              </MenuItem>
+
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
                 value={"Clothing, Shoes, & Accessories"}
               >
                 {"Clothing, Shoes, & Accessories"}
               </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Coins & Paper Money"}
-              >
-                {"Coins & Paper Money"}
-              </MenuItem>
 
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Computers & Tablets"}
-              >
-                {"Computers & Tablets"}
-              </MenuItem>
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
                 value={"Electronics"}
@@ -368,79 +344,35 @@ export default class Shop extends React.Component {
               </MenuItem>
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
-                value={"Crafts / Hobbies"}
+                value={"Sports & Hobbies"}
               >
-                {"Crafts / Hobbies"}
+                {"Sports & Hobbies"}
               </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Dolls & Bears"}
-              >
-                {"Dolls & Bears"}
-              </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Gift Cards & Coupons"}
-              >
-                {"Gift Cards & Coupons"}
-              </MenuItem>
+
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
                 value={"Health & Beauty"}
               >
                 {"Health & Beauty"}
               </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Home & Garden"}
-              >
-                {"Home & Garden"}
-              </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Jewelry & Watches"}
-              >
-                {"Jewelry & Watches"}
-              </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Musical Instruments & Gear"}
-              >
-                {"Musical Instruments & Gear"}
-              </MenuItem>
+
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
                 value={"Pet Supplies"}
               >
                 {"Pet Supplies"}
               </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Pottery & Glass"}
-              >
-                {"Pottery & Glass"}
-              </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Sporting Goods"}
-              >
-                {"Sporting Goods"}
-              </MenuItem>
+
               <MenuItem style={{ marginTop: 5, height: 50 }} value={"Test"}>
                 {"Test"}
               </MenuItem>
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
-                value={"Toys & Hobbies"}
+                value={"Toys & Games"}
               >
-                {"Toys & Hobbies"}
+                {"Toys & Games"}
               </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Movies & Video Games"}
-              >
-                {"Movies & Video Games"}
-              </MenuItem>
+
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
                 value={"Everything Else"}
@@ -448,7 +380,9 @@ export default class Shop extends React.Component {
                 {"Everything Else"}
               </MenuItem>
             </Select>
-            <Button>SEND TO CATEGORY</Button>
+            <Button onClick={() => this.sendToCategory()}>
+              SEND TO CATEGORY
+            </Button>
           </div>
         )}
 
@@ -576,6 +510,32 @@ export default class Shop extends React.Component {
         </div>
       </div>
     );
+  }
+
+  shuffleArray(array) {
+    var currentIndex = array.length,
+      temporaryValue,
+      randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  }
+
+  sendToCategory() {
+    const category = document.getElementById("category").innerText;
+
+    MoveItemCategory(this.state.category, category, this.state.movingItem);
   }
 
   moveCategories(e, item) {

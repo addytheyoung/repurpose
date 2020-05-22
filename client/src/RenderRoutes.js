@@ -31,6 +31,7 @@ import Sell_2 from "./Sell_2";
 import MoveItemCities from "./scripts/MoveItemCities";
 import MoveCategoryCategory from "./scripts/MoveCategoryCategory";
 import MoveMultipleItemCategory from "./scripts/MoveMutlipleItemCategory";
+import UpdateId from "./scripts/UpdateId";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -79,6 +80,11 @@ export default class RenderRoutes extends React.Component {
               path="/andrewscripts4502"
               exact={true}
               render={() => <MoveMultipleItemCategory />}
+            />
+            <Route
+              path="/andrewscripts4503"
+              exact={true}
+              render={() => <UpdateId />}
             />
             <Route
               path="/become_collector"
