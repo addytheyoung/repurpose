@@ -65,7 +65,7 @@ service cloud.firestore {
     match /Orders/{Any} {
     allow read: if true;
     allow create: if true;
-    allow update: if true;
+    allow update: if request.auth.uid == "q2SYPrnJwNhaC3PcMhE3LTZ1AIv1";
     allow delete: if false;
     }
   }

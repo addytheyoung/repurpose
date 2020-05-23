@@ -35,6 +35,7 @@ import MoveMultipleItemCategory from "./scripts/MoveMutlipleItemCategory";
 import UpdateId from "./scripts/UpdateId";
 import ChangePrices from "./scripts/ChangePrices";
 import MoveToOrders from "./scripts/MoveToOrders";
+import AndrewTest from "./AndrewTest";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -59,6 +60,11 @@ export default class RenderRoutes extends React.Component {
             {citiesList.includes(window.localStorage.getItem("city")) && (
               <Route path="/" exact={true} render={() => <Buy />} />
             )}
+            <Route
+              path="/andrewtest"
+              exact={true}
+              render={() => <AndrewTest />}
+            />
             <Route
               path="/andreworders"
               exact={true}

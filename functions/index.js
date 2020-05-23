@@ -155,18 +155,23 @@ app.post("/create-payment-intent", async (req, res) => {
   }
 });
 
+app.post("/post-to-fb", async (req, res) => {
+  const item = req.body.item;
+  console.log("before func");
+  const x = await postToFb(item);
+  res.send(x);
+});
+
 app.post("/fetch-item-price", async (req, res) => {
   const string = req.body.total;
   const search = string.split();
-  console.log(search);
+  console.log("Fetch");
   query = "";
   for (let i = 2; i < search.length; i++) {
     query += search[i] + " ";
   }
-  console.log(string);
   url =
     "https://www.google.com/search?tbm=shop&ei&q=" + string.replace(" ", "%20");
-  console.log(url);
   try {
     const x = await scrapeProduct(url);
     res.send(x);
@@ -175,14 +180,37 @@ app.post("/fetch-item-price", async (req, res) => {
   }
 });
 
-async function scrapeProduct(url) {
-  console.log("function");
-  const browser = await puppeteer.launch();
-  console.log("browser");
+async function postToFb(item) {
+  console.log("posting");
+  const url = "https://www.facebook.com/marketplace/create";
+  const firebase_url =
+    "https://console.firebase.google.com/u/0/project/repurpose-e523f/database/firestore/data~2FCategories~2FArt%20&%20Decoration";
+  const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
-  console.log("page");
+  await page.setViewport({ width: 1200, height: 1000 });
+  await page.goto(firebase_url, { waitUntil: "networkidle0" });
+  await page.waitFor(5000);
+  await page.click("#identifierId");
+  await page.type("#identifierId", "andrewtateyoung@gmail.com");
+  await page.waitFor(1000);
+  await page.click("#identifierNext");
+  // const email = "andrewtateyoung@gmail.com";
+  // const password = "Smash#0831";
+  // await page.waitFor("#email");
+  // await page.waitFor("#pass");
+  // await page.type("#email", email, { delay: 120 });
+  // await page.type("#pass", password, { delay: 120 });
+  // await page.click("#u_0_2");
+  // await page.waitFor(5000);
+  // await page.goto("https://www.facebook.com/marketplace/create/item/");
+  // await page.waitFor(5000);
+  return "x";
+}
+
+async function scrapeProduct(url) {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
   await page.goto(url);
-  console.log("url");
   let texts = await page.evaluate(() => {
     let data = [];
     let elements = document.getElementsByClassName("Nr22bf");

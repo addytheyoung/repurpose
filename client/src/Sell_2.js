@@ -141,6 +141,7 @@ export default class Sell_2 extends React.Component {
                               result.results[0].geometry.location;
                             markerArray.push(position);
                             if (i_index == collectorDocs.docs.length) {
+                              console.log(markerArray);
                               this.setState({
                                 markers: markerArray,
                                 allMarkers: markerArray,
@@ -670,115 +671,123 @@ export default class Sell_2 extends React.Component {
                       </div>
                     </div>
 
-                    {collector.monday && (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          fontWeight:
-                            this.state.today.getDay() == 1 ? 600 : 400,
-                        }}
-                      >
-                        <div style={{ marginRight: 10, width: 90 }}>Monday</div>
-                        <div>{collector.monday[0]}</div>
-                      </div>
-                    )}
-                    {collector.tuesday && (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          fontWeight:
-                            this.state.today.getDay() == 2 ? 600 : 400,
-                        }}
-                      >
-                        <div style={{ marginRight: 10, width: 90 }}>
-                          Tuesday
-                        </div>
-                        <div>{collector.tuesday[0]}</div>
-                      </div>
-                    )}
-                    {collector.wednesday && (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          fontWeight:
-                            this.state.today.getDay() == 3 ? 600 : 400,
-                        }}
-                      >
+                    <div style={{ fontSize: 14 }}>
+                      {collector.monday && (
                         <div
                           style={{
-                            marginRight: 10,
-                            width: 90,
+                            display: "flex",
+                            flexDirection: "row",
+                            fontWeight:
+                              this.state.today.getDay() == 1 ? 600 : 400,
                           }}
                         >
-                          Wednesday
+                          <div style={{ marginRight: 10, width: 90 }}>
+                            Monday
+                          </div>
+                          <div>{collector.monday[0]}</div>
                         </div>
-                        <div style={{}}>{collector.wednesday[0]}</div>
-                      </div>
-                    )}
-                    {collector.thursday && (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          fontWeight:
-                            this.state.today.getDay() == 4 ? 600 : 400,
-                        }}
-                      >
-                        <div style={{ marginRight: 10, width: 90 }}>
-                          Thursday
-                        </div>
-                        <div>{collector.thursday[0]}</div>
-                      </div>
-                    )}
-                    {collector.friday && (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          fontWeight:
-                            this.state.today.getDay() == 5 ? 600 : 400,
-                        }}
-                      >
-                        <div style={{ marginRight: 10, width: 90 }}>Friday</div>
-                        <div>{collector.friday[0]}</div>
-                      </div>
-                    )}
-                    {collector.saturday && (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          fontWeight:
-                            this.state.today.getDay() == 6 ? 600 : 400,
-                        }}
-                      >
+                      )}
+                      {collector.tuesday && (
                         <div
                           style={{
-                            marginRight: 10,
-                            width: 90,
+                            display: "flex",
+                            flexDirection: "row",
+                            fontWeight:
+                              this.state.today.getDay() == 2 ? 600 : 400,
                           }}
                         >
-                          Saturday
+                          <div style={{ marginRight: 10, width: 90 }}>
+                            Tuesday
+                          </div>
+                          <div>{collector.tuesday[0]}</div>
                         </div>
-                        <div style={{}}>{collector.saturday[0]}</div>
-                      </div>
-                    )}
-                    {collector.sunday && (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          fontWeight:
-                            this.state.today.getDay() == 0 ? 600 : 400,
-                        }}
-                      >
-                        <div style={{ marginRight: 10, width: 90 }}>Sunday</div>
-                        <div>{collector.sunday[0]}</div>
-                      </div>
-                    )}
+                      )}
+                      {collector.wednesday && (
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            fontWeight:
+                              this.state.today.getDay() == 3 ? 600 : 400,
+                          }}
+                        >
+                          <div
+                            style={{
+                              marginRight: 10,
+                              width: 90,
+                            }}
+                          >
+                            Wednesday
+                          </div>
+                          <div style={{}}>{collector.wednesday[0]}</div>
+                        </div>
+                      )}
+                      {collector.thursday && (
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            fontWeight:
+                              this.state.today.getDay() == 4 ? 600 : 400,
+                          }}
+                        >
+                          <div style={{ marginRight: 10, width: 90 }}>
+                            Thursday
+                          </div>
+                          <div>{collector.thursday[0]}</div>
+                        </div>
+                      )}
+                      {collector.friday && (
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            fontWeight:
+                              this.state.today.getDay() == 5 ? 600 : 400,
+                          }}
+                        >
+                          <div style={{ marginRight: 10, width: 90 }}>
+                            Friday
+                          </div>
+                          <div>{collector.friday[0]}</div>
+                        </div>
+                      )}
+                      {collector.saturday && (
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            fontWeight:
+                              this.state.today.getDay() == 6 ? 600 : 400,
+                          }}
+                        >
+                          <div
+                            style={{
+                              marginRight: 10,
+                              width: 90,
+                            }}
+                          >
+                            Saturday
+                          </div>
+                          <div style={{}}>{collector.saturday[0]}</div>
+                        </div>
+                      )}
+                      {collector.sunday && (
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            fontWeight:
+                              this.state.today.getDay() == 0 ? 600 : 400,
+                          }}
+                        >
+                          <div style={{ marginRight: 10, width: 90 }}>
+                            Sunday
+                          </div>
+                          <div>{collector.sunday[0]}</div>
+                        </div>
+                      )}
+                    </div>
                     <div
                       onClick={(e) => this.sellHere(e, collector)}
                       id="sell-here"
@@ -807,17 +816,27 @@ export default class Sell_2 extends React.Component {
                       justifyContent: "flex-start",
                     }}
                   >
-                    <img
+                    <div>
+                      <img
+                        style={{
+                          height: 12,
+                          width: 12,
+                          marginRight: 3,
+                          filter: "greyscale(100%)",
+                        }}
+                        src={Star}
+                      />
+                    </div>
+                    <div
                       style={{
-                        height: 12,
-                        width: 12,
-                        marginRight: 3,
-                        filter: "greyscale(100%)",
+                        display: "flex",
+                        flexDirection: "row",
+                        marginRight: 20,
                       }}
-                      src={Star}
-                    />
-                    <div style={{ width: 70 }}>
-                      {avgRating + " " + "(" + collector.ratings.length + ")"}
+                    >
+                      <div style={{ fontWeight: 600 }}>{avgRating + " "}</div>
+                      <div style={{ width: 5 }}></div>
+                      <div>{"(" + collector.ratings.length + ")"}</div>
                     </div>
                   </div>
                 </div>
@@ -825,7 +844,7 @@ export default class Sell_2 extends React.Component {
             })}
             <div style={{ marginTop: 20 }}>More places coming soon!</div>
           </div>
-          <div style={{ width: "40vw", minHeight: "70vh", marginRight: 20 }}>
+          <div style={{ width: "60vw", minHeight: "70vh", marginRight: 20 }}>
             <MapWithASearchBox></MapWithASearchBox>
           </div>
         </div>

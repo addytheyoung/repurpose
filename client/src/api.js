@@ -263,6 +263,7 @@ const getShipping = (price) => {
 };
 
 const scrapeForPrices = (total) => {
+  console.log("API");
   const json = { total: total };
   console.log("starting");
   return window
@@ -290,7 +291,35 @@ const scrapeForPrices = (total) => {
     });
 };
 
+const postToFb = (item) => {
+  const json = { item: item };
+  console.log("API");
+  return window
+    .fetch(`/post-to-fb`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(json),
+    })
+    .then((res) => {
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return null;
+      }
+    })
+    .then((data) => {
+      if (!data || data.error) {
+        throw new Error("Error");
+      } else {
+        return data;
+      }
+    });
+};
+
 const api = {
+  postToFb: postToFb,
   scrapeForPrices: scrapeForPrices,
   payWithPaypal: payWithPaypal,
   createTransfers: createTransfers,
