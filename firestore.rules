@@ -27,25 +27,15 @@ service cloud.firestore {
        allow read: if true;
        allow create: if true;
        allow delete: if false;
-       allow update: if request.auth.uid == "q2SYPrnJwNhaC3PcMhE3LTZ1AIv1" ||
-       (request.resource.data.accepted == resource.data.accepted && 
-   			request.resource.data.collector_picture == resource.data.collector_picture &&
+       allow update: if 
+       (request.resource.data.collector_picture == resource.data.collector_picture &&
         request.resource.data.seller == resource.data.seller && 
-        request.resource.data.saturday == resource.data.saturday &&
         request.resource.data.description == resource.data.description &&
         request.resource.data.house_picture == resource.data.house_picture &&
         request.resource.data.lat == resource.data.lat &&
         request.resource.data.lng == resource.data.lng && 
         request.resource.data.ratings == resource.data.ratings &&
-        request.resource.data.friday == resource.data.friday && 
-        request.resource.data.sunday == resource.data.sunday &&
-        request.resource.data.monday == resource.data.monday &&
-        request.resource.data.tuesday == resource.data.tuesday &&
-        request.resource.data.wednesday == resource.data.wednesday &&
-        request.resource.data.thursday == resource.data.thursday &&
         request.resource.data.house_address == resource.data.house_address &&
-        request.resource.data.saturday_filled.size() == resource.data.saturday_filled.size() + 1 &&
-        request.resource.data.bookings.size() == resource.data.bookings.size() + 1 &&
         request.resource.data.city == resource.data.city)
     }
     match /Users/{Any} {

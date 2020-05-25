@@ -400,127 +400,8 @@ export default class Sell_2 extends React.Component {
                     fontWeight: 600,
                   }}
                 >
-                  CONTINUE
+                  SELL MY STUFF
                 </div>
-              </div>
-            )}
-            {this.state.question == 2 && (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "50vw",
-                  borderRadius: 5,
-                  height: "80vh",
-                  top: 30,
-                  backgroundColor: "#ffffff",
-                  alignItems: "center",
-                  position: "absolute",
-                  zIndex: 100,
-                  opacity: 1,
-                }}
-              >
-                <div
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "flex-end",
-                  }}
-                >
-                  <img
-                    id="close"
-                    onClick={(e) => this.closeSellModal(e)}
-                    src={Close}
-                    style={{
-                      width: 30,
-                      height: 30,
-                      marginTop: 20,
-                      marginRight: 20,
-                    }}
-                  />
-                </div>
-                <div
-                  style={{
-                    marginTop: 0,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                  }}
-                >
-                  <div style={{ marginBottom: 20, fontWeight: 600 }}>
-                    Roughly, when do you want to dropoff? <br />
-                    Dropoff takes about 10 minutes!
-                  </div>
-                  <Calendar
-                    maxDate={new Date(2020, 5, 0)}
-                    minDate={new Date()}
-                    onClickDay={(e) => this.seeTimes(e, this.state.sellModal)}
-                  />
-                </div>
-                {this.state.currentDates && (
-                  <div
-                    style={{
-                      display: "flex",
-                      marginTop: 20,
-                      width: 606,
-                      marginBottom: 20,
-                      justifyContent: "flex-start",
-                      alignItems: "flex-start",
-                      flexWrap: "wrap",
-                    }}
-                  >
-                    {this.state.currentDates.map((date) => {
-                      return (
-                        <div
-                          onClick={() => this.selectTime(date)}
-                          id="time-slot"
-                          style={{
-                            width: 70,
-                            height: 30,
-                            borderStyle: "solid",
-                            borderWidth:
-                              this.state.currentSelectedTime == date ? 2 : 0,
-                            borderColor:
-                              this.state.currentSelectedTime == date
-                                ? "#E61E4D"
-                                : "#f1f1f1",
-                            padding: 5,
-                            backgroundColor: "#f1f1f1",
-                            borderRadius: 5,
-                            opacity: 1,
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            margin: 3,
-                          }}
-                        >
-                          {date}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-                {this.state.currentSelectedTime && (
-                  <div
-                    id="continue"
-                    onClick={(e) => this.submit()}
-                    style={{
-                      zIndex: 99,
-                      padding: 10,
-                      borderRadius: 5,
-                      backgroundColor: "#E61E4D",
-                      width: 150,
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "center",
-                      color: "#ffffff",
-                      fontWeight: 600,
-                    }}
-                  >
-                    SELL MY CLUTTER
-                  </div>
-                )}
               </div>
             )}
           </div>
@@ -913,6 +794,22 @@ export default class Sell_2 extends React.Component {
       date: date,
     });
 
+    api.sendEmail(
+      paypalEmail,
+      "Well see you at " +
+        time +
+        " on " +
+        month +
+        "/" +
+        date +
+        "/" +
+        "20 at " +
+        collectorData.house_address +
+        "!" +
+        "\n\n" +
+        "Just knock or call 903-203-1286 when you arrive. Call the number if you have any questions as well!"
+    );
+
     firebase
       .firestore()
       .collection("Collectors")
@@ -1085,10 +982,33 @@ export default class Sell_2 extends React.Component {
       alert("Bad email");
       return;
     }
-    this.setState({
-      question: 2,
-      paypalEmail: email1,
-    });
+
+    const collectorData = this.state.sellModal;
+    const tempBookings = collectorData.bookings;
+    api.sendEmail(
+      email1,
+      "Well see you at " +
+        collectorData.house_address +
+        "!" +
+        "\n\n" +
+        "Just knock or call 903-203-1286 when you arrive. Call the number if you have any questions as well!"
+    );
+    console.log(tempBookings);
+    tempBookings.push({ paypal_email: email1 });
+    firebase
+      .firestore()
+      .collection("Collectors")
+      .doc("andrewhouse")
+      .update({
+        bookings: tempBookings,
+      })
+      .then(() => {
+        alert("Email sent confirming details!");
+        window.location = "/";
+      })
+      .catch((e) => {
+        alert(e.message);
+      });
   }
 
   checkEmail(email) {
