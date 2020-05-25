@@ -298,6 +298,8 @@ function clearContent(props, handleClose, clear) {
 }
 
 function saveContent(props, saved, handleClose) {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   props.changeCategory(saved);
   handleClose();
 }
