@@ -22,6 +22,9 @@ import {
 export default class Sell_2 extends React.Component {
   constructor(props) {
     super(props);
+    if (!localStorage.getItem("city") || localStorage.getItem("city") == "") {
+      localStorage.setItem("city", "Austin, TX");
+    }
     const today = new Date();
     this.state = {
       markers: [],
@@ -844,7 +847,7 @@ export default class Sell_2 extends React.Component {
             })}
             <div style={{ marginTop: 20 }}>More places coming soon!</div>
           </div>
-          <div style={{ width: "60vw", minHeight: "70vh", marginRight: 20 }}>
+          <div style={{ width: "70vw", minHeight: "80vh", marginRight: 20 }}>
             <MapWithASearchBox></MapWithASearchBox>
           </div>
         </div>

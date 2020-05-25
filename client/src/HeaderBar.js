@@ -14,6 +14,7 @@ import cart2 from "./images/cart-green.svg";
 import Shop from "./Shop";
 import Close from "./images/close.png";
 import city from "./images/architectonic.png";
+import FilterBar from "./FilterBar";
 
 export default class HeaderBar extends React.Component {
   citiesList = ["Austin, TX"];
@@ -366,6 +367,7 @@ export default class HeaderBar extends React.Component {
             borderBottomWidth: 1,
             borderBottomColor: "#e8e8e8",
             borderBottomStyle: "solid",
+            backgroundColor: "#ffffff",
             width: "100vw",
           }}
         >
@@ -449,7 +451,13 @@ export default class HeaderBar extends React.Component {
           >
             Sell
           </Link>
-          <div style={{ width: "100%" }}></div>
+
+          <div style={{ width: "100%" }}>
+            {/* <FilterBar
+                updateFilter={(a, b) => this.props.updateFilter(a, b)}
+              /> */}
+          </div>
+
           <div
             onClick={() =>
               this.setState({

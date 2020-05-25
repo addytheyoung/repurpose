@@ -78,14 +78,16 @@ function SimpleDialog(props) {
       </div>
 
       <div
+        id="clear"
         style={{
-          backgroundColor: "#a1a1a1",
+          backgroundColor: "#d1d1d1",
           padding: 10,
           width: 100,
           alignSelf: "center",
           textAlign: "center",
           borderRadius: 5,
           marginTop: 50,
+          fontWeight: 600,
           marginBottom: 50,
         }}
         onClick={() => clearContent(props, handleClose, clear)}
@@ -94,14 +96,16 @@ function SimpleDialog(props) {
       </div>
 
       <div
+        id="save"
         style={{
-          backgroundColor: "#a1a1a1",
+          backgroundColor: "#d1d1d1",
           padding: 10,
           width: 100,
           alignSelf: "center",
           textAlign: "center",
           borderRadius: 5,
           marginTop: 50,
+          fontWeight: 600,
           marginBottom: 50,
         }}
         onClick={() => saveContent(props, min, max, handleClose)}
@@ -184,12 +188,16 @@ export default function SimpleDialogDemo(props) {
           borderWidth: 1,
           borderRadius: 20,
           borderStyle: "solid",
-          padding: 10,
-          paddingLeft: 15,
-          paddingRight: 15,
+          paddingTop: 10,
+          paddingBottom: 10,
+
+          paddingLeft: 25,
+          paddingRight: 25,
           borderColor: "#a1a1a1",
-          marginLeft: 5,
-          marginRight: 5,
+          marginTop: 10,
+          fontSize: 20,
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         Price

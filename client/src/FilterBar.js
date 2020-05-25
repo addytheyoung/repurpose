@@ -1,57 +1,57 @@
 import React from "react";
 import "./css/FilterBar.css";
 import DialogPrice from "./DialogPrice";
+import DialogCategory from "./DialogCategory";
 
 export default class FilterBar extends React.Component {
   render() {
     return (
-      <div>
+      <div style={{}}>
         <div
           id="bar"
           style={{
             display: "flex",
-            flexDirection: "row",
-            marginTop: 10,
-            marginLeft: 100,
+            flexDirection: "column",
+            marginLeft: "7vw",
+            paddingTop: 10,
+            paddingBottom: 10,
           }}
         >
+          {/* <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            Filters
+          </div> */}
           <DialogPrice
             clearContent={() => this.changePrice("$0", "$999999")}
             changePrice={(min, max) => this.changePrice(min, max)}
           />
-          {/* <div
-            onClick={() => this.changeDelivery()}
-            id="delivery"
-            style={{
-              borderWidth: 1,
-              borderRadius: 20,
-              borderStyle: "solid",
-              padding: 10,
-              borderColor: "#a1a1a1",
-              marginLeft: 5,
-              marginRight: 5
-            }}
-          >
-            Delivery Options
-          </div>
-          <div
-            onClick={() => this.changeTime()}
-            id="delivery"
-            style={{
-              borderWidth: 1,
-              borderRadius: 20,
-              borderStyle: "solid",
-              padding: 10,
-              borderColor: "#a1a1a1",
-              marginLeft: 5,
-              marginRight: 5
-            }}
-          >
-            Time on Site
-          </div> */}
+          <DialogCategory
+            clearContent={() =>
+              this.changeCategory([
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+              ])
+            }
+            changeCategory={(categories) => this.changeCategory(categories)}
+          />
         </div>
       </div>
     );
+  }
+
+  changeCategory(categories) {
+    this.props.updateCategoryFilter(categories);
   }
 
   changePrice(min, max) {
