@@ -425,12 +425,12 @@ export default class Sell_2 extends React.Component {
               width: 200,
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
+              alignItems: "flex-start",
               fontWeight: 500,
               textAlign: "center",
             }}
           >
-            1. Book with any place below
+            1. Choose any place below
           </div>
           <div
             style={{
@@ -439,12 +439,12 @@ export default class Sell_2 extends React.Component {
               width: 200,
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
+              alignItems: "flex-start",
               fontWeight: 500,
               textAlign: "center",
             }}
           >
-            2. Bring your clutter / items
+            2. Bring any clutter / items to sell
           </div>
           <div
             style={{
@@ -452,12 +452,12 @@ export default class Sell_2 extends React.Component {
               width: 200,
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
+              alignItems: "flex-start",
               fontWeight: 500,
               textAlign: "center",
             }}
           >
-            3. Get paid for everything you have
+            3. We pay for everything you have
           </div>
         </div>
         <div
@@ -784,7 +784,7 @@ export default class Sell_2 extends React.Component {
         collectorData.house_address +
         "!" +
         "\n\n" +
-        "Just knock or call 903-203-1286 when you arrive. Call the number if you have any questions as well!"
+        "Just knock or call 903-203-1286 when you arrive. Call the number if you have any questions!"
     );
     const tempBookings = collectorData.bookings;
     tempBookings.push({
