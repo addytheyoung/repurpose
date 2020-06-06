@@ -3,7 +3,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Getting Started
 
-git clone 
+git clone https://github.com/andrewtateyoung/repurpose.git
+cd repurpose
+code .
+npm install
+cd functions
+npm install
+cd ..
+yarn start
+
 
 ## Available Scripts
 
