@@ -5,9 +5,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 git clone https://github.com/andrewtateyoung/repurpose.git
 
+node version 8.17.0 for launching
+node version 10.18.1 for installing
+yarn version 1.22.4
+
 cd repurpose
 
 code .
+
+yarn install?
 
 npm install
 
