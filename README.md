@@ -9,6 +9,8 @@ cd repurpose
 
 code .
 
+yarn install?
+
 npm install
 
 cd functions
