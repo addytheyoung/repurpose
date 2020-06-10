@@ -243,20 +243,12 @@ export default class CheckoutForm extends React.Component {
 
         {/* {this.props.deliveryType === "delivery" && (
           <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
-            {this.state.total < 6 && (
+       
               <div>
-                Flat fee of $2.00 for delivery. <br /> <br />
-                Free delivery for $6.00+ orders. <br /> <br />
-                Items are typically delivered within 3 hours. <br /> <br />{" "}
+                Flat fee of $1.00 for delivery. <br /> <br />
                 <br />
               </div>
-            )}
-            {this.state.total >= 6 && (
-              <div>
-                $6.00+ order: free delivery! <br /> <br /> Items are typically
-                delivered within 12 hours. <br /> <br />{" "}
-              </div>
-            )}
+            
           </div>
         )} */}
         {/* {this.props.deliveryType === "pickup" && (
@@ -710,7 +702,7 @@ export default class CheckoutForm extends React.Component {
     var total = this.total;
 
     if (this.state.deliveryType === "delivery") {
-      total += 2;
+      total += 1;
     }
 
     // Step 1: Fetch product details such as amount and currency from

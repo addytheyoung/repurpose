@@ -526,22 +526,7 @@ export default class Cart extends React.Component {
               {this.state.deliveryType === "delivery" && (
                 <div
                   style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}
-                >
-                  {subTotal < 6 && (
-                    <div>
-                      - Flat fee of $2.00 for delivery. <br /> <br />
-                      - Free delivery for $6.00+ orders. <br /> <br />
-                      - Items are typically delivered within 12 hours. <br />{" "}
-                      <br /> <br />
-                    </div>
-                  )}
-                  {subTotal >= 6 && (
-                    <div>
-                      - $6.00+ order: free delivery! <br /> <br /> - Items are
-                      typically delivered within 12 hours. <br /> <br />{" "}
-                    </div>
-                  )}
-                </div>
+                ></div>
               )}
               {this.state.deliveryType === "pickup" && (
                 <div
@@ -693,10 +678,7 @@ export default class Cart extends React.Component {
 
   getShipping(price) {
     if (this.state.deliveryType === "delivery") {
-      if (price >= 6) {
-        return 0;
-      }
-      return ((2.0 / 100) * 100).toFixed(2);
+      return ((1.0 / 100) * 100).toFixed(2);
     } else {
       return ((0.0 / 100) * 100).toFixed(2);
     }

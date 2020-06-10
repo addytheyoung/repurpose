@@ -139,6 +139,7 @@ export default class Sell_2 extends React.Component {
                             collectorData.state
                           )
                           .then((result) => {
+                            console.log(result);
                             i_index++;
                             const position =
                               result.results[0].geometry.location;
@@ -290,7 +291,7 @@ export default class Sell_2 extends React.Component {
               <div style={{ marginTop: 30, fontSize: 20 }}>
                 {this.state.modal.house_address}
               </div>
-              <div
+              {/* <div
                 onClick={(e) => this.sellHere(e, this.state.modal, true)}
                 id="sell-here"
                 style={{
@@ -308,7 +309,7 @@ export default class Sell_2 extends React.Component {
                 }}
               >
                 SELL HERE
-              </div>
+              </div> */}
             </div>
           </div>
         )}
@@ -444,7 +445,7 @@ export default class Sell_2 extends React.Component {
               textAlign: "center",
             }}
           >
-            2. Bring any clutter / items to sell
+            2. During open hours, bring ANY items
           </div>
           <div
             style={{
@@ -457,7 +458,7 @@ export default class Sell_2 extends React.Component {
               textAlign: "center",
             }}
           >
-            3. We pay for everything you have
+            3. We pay cash for everything you have
           </div>
         </div>
         <div
@@ -672,7 +673,7 @@ export default class Sell_2 extends React.Component {
                         </div>
                       )}
                     </div>
-                    <div
+                    {/* <div
                       onClick={(e) => this.sellHere(e, collector)}
                       id="sell-here"
                       style={{
@@ -690,7 +691,7 @@ export default class Sell_2 extends React.Component {
                       }}
                     >
                       SELL HERE
-                    </div>
+                    </div> */}
                   </div>
                   <div
                     style={{

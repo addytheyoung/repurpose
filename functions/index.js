@@ -172,12 +172,28 @@ app.post("/fetch-item-price", async (req, res) => {
   }
   url =
     "https://www.google.com/search?tbm=shop&ei&q=" + string.replace(" ", "%20");
-  try {
-    const x = await scrapeProduct(url);
-    res.send(x);
-  } catch (err) {
-    res.json(err);
-  }
+
+  await Promise.all([
+    scrapeProduct(url),
+    scrapeProduct(url),
+    scrapeProduct(url),
+    scrapeProduct(url),
+  ])
+    .then((values) => {
+      console.log(values);
+      var arr = [];
+      for (var i = 0; i < values.length; i++) {
+        arr = arr.concat(values[i]);
+      }
+
+      res.json(arr);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+
+  // console.log(x);
+  res.send(x);
 });
 
 async function postToFb(item) {

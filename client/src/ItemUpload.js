@@ -65,6 +65,9 @@ export default class ItemUpload extends React.Component {
       croppedImgFile: "",
       currentKeywords: [],
       keyword: "",
+      brand: "",
+      size: "",
+      gender: "",
     };
   }
 
@@ -180,6 +183,11 @@ export default class ItemUpload extends React.Component {
               }}
               id="category"
               defaultValue={"Category"}
+              onChange={(e) =>
+                this.setState({
+                  category: e.target.value,
+                })
+              }
             >
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
@@ -319,6 +327,40 @@ export default class ItemUpload extends React.Component {
               </MenuItem>
             </Select>
           </div>
+
+          {this.state.category == "Clothing, Shoes, & Accessories" && (
+            <div style={{ height: 450, width: "80vw" }}>
+              <Input
+                style={{ width: "80vw", height: 120, marginTop: 10 }}
+                onChange={(e) => this.changeValue(e, "brand")}
+                value={this.state.brand}
+                placeholder={"Brand"}
+              />
+              <Input
+                style={{ width: "80vw", height: 120, marginTop: 10 }}
+                onChange={(e) => this.changeValue(e, "size")}
+                value={this.state.size}
+                placeholder={"Size"}
+              />
+              <Select
+                style={{ width: "80vw", height: 120, marginTop: 10 }}
+                value={this.state.gender}
+                placeholder={"Gender"}
+                onChange={(e) =>
+                  this.setState({
+                    gender: e.target.value,
+                  })
+                }
+              >
+                <MenuItem style={{ marginTop: 5, height: 50 }} value={"female"}>
+                  {"F"}
+                </MenuItem>
+                <MenuItem style={{ marginTop: 5, height: 50 }} value={"male"}>
+                  {"M"}
+                </MenuItem>
+              </Select>
+            </div>
+          )}
           <div>
             <Input
               style={{ width: "80vw", height: 50, marginTop: 10 }}
@@ -469,6 +511,19 @@ export default class ItemUpload extends React.Component {
       alert("Picture");
       return;
     }
+    if (category == "Clothing, Shoes, & Accessories") {
+      // Check the brand, size, gender
+      if (!this.state.gender) {
+        alert("Gender");
+        return;
+      } else if (!this.state.brand) {
+        alert("Brand");
+        return;
+      } else if (!this.state.size) {
+        alert("Size");
+        return;
+      }
+    }
     this.setState({
       loaded: false,
     });
@@ -503,6 +558,9 @@ export default class ItemUpload extends React.Component {
                       location: localStorage.getItem("city"),
                       pictures: [a],
                       category: category,
+                      brand: this.state.brand,
+                      size: this.state.size,
+                      gender: this.state.gender,
                       sub_categories: this.state.currentKeywords,
                       description: this.state.description,
                       seller: this.state.sellerStripeId,
