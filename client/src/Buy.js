@@ -33,10 +33,13 @@ export default class Buy extends React.Component {
       currentItemIndex: 0,
       items: [],
       finalDoc: 0,
+      newCategory: true,
       finishedLoading: false,
+      appended: false,
       activeCategories: [true, true, true, true, true, true, true, true, true],
+      finishedPullingItems: true,
     };
-
+    this.state.finishedPullingItems = false;
     this.pullItemsFromDatabase(this.state.activeCategories);
   }
   render() {
@@ -313,14 +316,14 @@ export default class Buy extends React.Component {
                     alignItems: "center",
                   }}
                 >
+                  {console.log(this.state.items.length)}
+                  {console.log(this.state.finishedLoading)}
                   <InfiniteScroll
                     children={this.state.items}
                     dataLength={this.state.items.length} //This is important field to render the next data
-                    next={() =>
-                      this.pullItemsFromDatabase(this.state.activeCategories)
-                    }
+                    next={() => this.next()}
                     hasMore={!this.state.finishedLoading}
-                    scrollThreshold={0.9}
+                    scrollThreshold={0.95}
                     loader={<h4></h4>}
                     endMessage={
                       <p style={{ textAlign: "center" }}>
@@ -364,38 +367,77 @@ export default class Buy extends React.Component {
                         ) {
                           return null;
                         }
-                        return (
-                          <div
-                            key={index}
-                            onClick={() => this.itemPage(item)}
-                            id="box"
-                            style={{
-                              width: 220,
-                              marginLeft: 10,
-                              marginRight: 10,
-                              height: 300,
-                            }}
-                          >
-                            <img
-                              src={item.pictures[0]}
-                              style={{
-                                width: 220,
-                                height: 200,
-                                borderRadius: 5,
-                                overflow: "hidden",
-                              }}
-                            ></img>
+                        var prevItemCat =
+                          index == 0
+                            ? ""
+                            : this.state.items[index - 1].category;
+                        if (typeof item == "string") {
+                          return (
                             <div
                               style={{
-                                display: "flex",
-                                flexDirection: "column",
+                                marginTop: 20,
+                                marginLeft: 60,
+                                marginBottom: 20,
+                                width: "70vw",
+                                fontWeight: 600,
+                                fontSize: 24,
                               }}
                             >
-                              <div style={{ fontSize: 18, fontWeight: 400 }}>
-                                {item.title}
-                              </div>
-                              <div style={{ marginTop: 5, fontWeight: 600 }}>
-                                {"$" + item.original_price}
+                              {item}
+                            </div>
+                          );
+                        }
+                        return (
+                          <div>
+                            {/* {this.state.activeCategories[
+                              this.state.currentCategoryIndex
+                            ] &&
+                              item.category != prevItemCat && (
+                                <div
+                                  style={{
+                                    marginTop: 20,
+                                    paddingLeft: 20,
+                                    marginBottom: 10,
+                                    // width: "70vw",
+                                    fontWeight: 500,
+                                    fontSize: 20,
+                                  }}
+                                >
+                                  {item.category}
+                                </div>
+                              )} */}
+                            <div
+                              key={index}
+                              onClick={() => this.itemPage(item)}
+                              id="box"
+                              style={{
+                                width: 220,
+                                marginLeft: 10,
+                                marginRight: 10,
+                                height: 300,
+                              }}
+                            >
+                              <img
+                                src={item.pictures[0]}
+                                style={{
+                                  width: 220,
+                                  height: 200,
+                                  borderRadius: 5,
+                                  overflow: "hidden",
+                                }}
+                              ></img>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                }}
+                              >
+                                <div style={{ fontSize: 18, fontWeight: 400 }}>
+                                  {item.title}
+                                </div>
+                                <div style={{ marginTop: 5, fontWeight: 600 }}>
+                                  {"$" + item.original_price}
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -429,6 +471,12 @@ export default class Buy extends React.Component {
         ></div>
       </div>
     );
+  }
+
+  next() {
+    if (this.state.finishedPullingItems) {
+      this.pullItemsFromDatabase(this.state.activeCategories);
+    }
   }
 
   itemPage(item) {
@@ -659,17 +707,29 @@ export default class Buy extends React.Component {
       for (var i = currentCategoryIndex; i < categories.length; i++) {
         if (categories[i] == true) {
           currentCategory = categoryList[i];
+          if (currentCategory == "Clothing, Shoes, & Accessories") {
+            console.log("here1");
+          }
+          itemArr.push(currentCategory);
           currentCategoryIndex = i;
+          this.state.currentCategoryIndex = i;
           found = true;
           break;
         }
       }
       if (!found) {
+        console.log(categories);
+        console.log(currentCategoryIndex);
         this.setState({
           finishedLoading: true,
         });
         return;
       }
+    } else if (!itemArr.includes(currentCategory)) {
+      if (currentCategory == "Clothing, Shoes, & Accessories") {
+        console.log("here2");
+      }
+      itemArr.push(currentCategory);
     }
 
     firebase
@@ -684,46 +744,64 @@ export default class Buy extends React.Component {
       .get()
       .then((allItems) => {
         const allItemsDocs = allItems.docs;
+
+        for (var j = 0; j < allItemsDocs.length; j++) {
+          const itemData = allItemsDocs[j].data();
+        }
+
         if (allItems.empty) {
           if (this.state.currentCategoryIndex == categoryList.length - 1) {
+            alert("2");
             this.setState({
               finishedLoading: true,
             });
           } else {
+            if (this.state.currentCategoryIndex != categoryList.length - 1) {
+              // if (itemArr.includes(categoryList[currentCategoryIndex + 1])) {
+              //   return;
+              // }
+              // itemArr.push(categoryList[currentCategoryIndex + 1]);
+            }
             // Go to the next category
-
             this.setState({
               currentCategoryIndex: currentCategoryIndex + 1,
               items: itemArr,
               loaded: true,
+              newCategory: true,
               modal: null,
               finalDoc: 0,
             });
+            this.state.finishedPullingItems = false;
             this.pullItemsFromDatabase(categories);
           }
         } else if (allItemsDocs.length < 20) {
           // Go to the next category
-
           const finalDoc = allItemsDocs[allItemsDocs.length - 1];
           for (var j = 0; j < allItemsDocs.length; j++) {
             const itemData = allItemsDocs[j].data();
-            // See if the search matches
             itemArr.push(itemData);
             // Find a way to render all the items here
             if (j === allItemsDocs.length - 1) {
-              // itemArr = randomizeArray(itemArr);
+              if (this.state.currentCategoryIndex != categoryList.length - 1) {
+                // if (itemArr.includes(categoryList[currentCategoryIndex + 1])) {
+                //   return;
+                // }
+                // itemArr.push(categoryList[currentCategoryIndex + 1]);
+              }
               this.setState({
                 items: itemArr,
                 loaded: true,
                 modal: null,
                 finalDoc: 0,
                 currentCategoryIndex: currentCategoryIndex + 1,
+                newCategory: true,
                 currentItemIndex:
                   this.state.currentItemIndex + allItemsDocs.length,
               });
             }
           }
 
+          this.state.finishedPullingItems = false;
           this.pullItemsFromDatabase(categories);
         } else {
           const finalDoc = allItemsDocs[allItemsDocs.length - 1];
@@ -733,10 +811,20 @@ export default class Buy extends React.Component {
             itemArr.push(itemData);
             // Find a way to render all the items here
             if (j === allItemsDocs.length - 1) {
+              if (
+                this.state.currentCategoryIndex == 0 &&
+                this.state.currentItemIndex == 0
+              ) {
+                // alert(categoryList[this.state.currentCategoryIndex]);
+                // itemArr.unshift(categoryList[this.state.currentCategoryIndex]);
+              }
               // itemArr = randomizeArray(itemArr);
               this.setState({
                 items: itemArr,
                 loaded: true,
+                finishedPullingItems: true,
+                newCategory:
+                  this.state.currentCategoryIndex == 0 ? true : false,
                 modal: null,
                 finalDoc: finalDoc,
                 currentItemIndex: this.state.currentItemIndex + 20,
@@ -759,6 +847,8 @@ export default class Buy extends React.Component {
       modal: null,
       finalDoc: 0,
     });
+    console.log("cleared");
+    console.log(this.state.finishedLoading);
     this.pullItemsFromDatabase(categories, true);
   }
 

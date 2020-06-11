@@ -41,6 +41,7 @@ export default class FilterBar extends React.Component {
                 true,
                 true,
                 true,
+                true,
               ])
             }
             changeCategory={(categories) => this.changeCategory(categories)}

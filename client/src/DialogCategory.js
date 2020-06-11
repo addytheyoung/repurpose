@@ -39,6 +39,7 @@ function SimpleDialog(props) {
     true,
     true,
     true,
+    true,
   ]);
 
   const handleChange = (index) => {
@@ -62,7 +63,7 @@ function SimpleDialog(props) {
   };
 
   const clear = () => {
-    setChecked([true, true, true, true, true, true, true, true, true]);
+    setChecked([true, true, true, true, true, true, true, true, true, true]);
   };
 
   return (
