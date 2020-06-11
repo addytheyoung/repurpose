@@ -5,6 +5,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Art from "./images/art.jpeg";
 import Close from "./images/close.png";
 import Bin from "./images/bin.png";
+import { Input } from "@material-ui/core";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -24,6 +25,7 @@ export default class Cart extends React.Component {
       numCartItems: localStorage.getItem("cart"),
       deliveryType: "delivery",
       delivery: true,
+      signInModal: false,
     };
 
     var myUid = null;
@@ -126,6 +128,9 @@ export default class Cart extends React.Component {
         </div>
       );
     }
+    const singedin = !!firebase.auth().currentUser;
+    const signedModal = !singedin && !this.state.newUser && !this.state.retUser;
+    const path = window.location.pathname;
     const subTotal = this.getSubtotal(this.state.myData.cart);
     const tax = this.getTax(subTotal);
     const shipping = this.getShipping(subTotal);
@@ -138,6 +143,329 @@ export default class Cart extends React.Component {
 
     return (
       <div>
+        {this.state.profile && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+
+              // alignItems: "center"
+            }}
+          >
+            <div
+              onClick={(e) => this.closeModal(e)}
+              style={{
+                backgroundColor: "#000000",
+                opacity: 0.5,
+                zIndex: 99,
+                width: "100vw",
+                height: "100vh",
+                position: "fixed",
+              }}
+            ></div>
+            <div
+              style={{
+                width: "30vw",
+                borderRadius: 5,
+                height: "40vh",
+                top: 30,
+                backgroundColor: "#f5f5f5",
+                position: "fixed",
+                zIndex: 100,
+                opacity: 1,
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <img
+                    id="close"
+                    onClick={() => this.closeModal()}
+                    src={Close}
+                    style={{
+                      width: 30,
+                      height: 30,
+                      marginTop: 20,
+                      marginRight: 20,
+                    }}
+                  />
+                </div>
+                {signedModal && (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div style={{ fontSize: 20, fontWeight: 600 }}>
+                      Sign up / sign in
+                    </div>
+                    <Input
+                      id="email"
+                      placeholder="Enter your email"
+                      style={{ width: 300, marginTop: 20 }}
+                    />
+                    <div
+                      onClick={() => this.startShopping()}
+                      id="start-shopping"
+                      style={{
+                        backgroundColor: "#E61E4D",
+                        borderRadius: 5,
+                        padding: 10,
+                        height: 30,
+                        width: 300,
+                        color: "white",
+                        fontWeight: 600,
+                        marginTop: 10,
+                        marginBottom: 10,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      START SHOPPING
+                    </div>
+                  </div>
+                )}
+                {!singedin && this.state.newUser && (
+                  <div>
+                    <div
+                      style={{ fontSize: 20, fontWeight: 600, marginTop: 20 }}
+                    >
+                      What will your password be?
+                    </div>
+                    <Input
+                      id="pass"
+                      type="password"
+                      placeholder="Password"
+                      style={{ width: 300, marginTop: 30 }}
+                    />
+                    <div
+                      onClick={() => this.setPassword()}
+                      id="start-shopping"
+                      style={{
+                        backgroundColor: "#E61E4D",
+                        borderRadius: 5,
+                        padding: 10,
+                        height: 30,
+                        width: 300,
+                        color: "white",
+                        fontWeight: 600,
+                        marginTop: 10,
+                        marginBottom: 10,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      START SHOPPING
+                    </div>
+                  </div>
+                )}
+                {!singedin && this.state.retUser && (
+                  <div>
+                    {" "}
+                    <div>
+                      <div
+                        style={{ fontSize: 20, fontWeight: 600, marginTop: 20 }}
+                      >
+                        Welcome back! What is your password?
+                      </div>
+                      <Input
+                        id="pass"
+                        type="password"
+                        placeholder="Password"
+                        style={{ width: 300, marginTop: 30 }}
+                      />
+                      <div
+                        onClick={() => this.login()}
+                        id="start-shopping"
+                        style={{
+                          backgroundColor: "#E61E4D",
+                          borderRadius: 5,
+                          padding: 10,
+                          height: 30,
+                          width: 300,
+                          color: "white",
+                          fontWeight: 600,
+                          marginTop: 10,
+                          marginBottom: 10,
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        START SHOPPING
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {singedin && !this.state.logout && (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontSize: 22,
+                        fontWeight: 600,
+                        marginBottom: 20,
+                      }}
+                    >
+                      Profile
+                    </div>
+                    <div
+                      onClick={() => (window.location.href = "/orders")}
+                      id="my-orders"
+                      style={{
+                        backgroundColor: "#a1a1a1",
+                        borderRadius: 5,
+                        padding: 10,
+                        height: 30,
+                        width: 100,
+                        color: "white",
+                        fontWeight: 600,
+                        marginTop: 10,
+                        marginBottom: 10,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      MY ORDERS
+                    </div>
+                    {/* <div
+                      onClick={() => (window.location.href = "/mysales")}
+                      id="my-sales"
+                      style={{
+                        backgroundColor: "#a1a1a1",
+                        borderRadius: 5,
+                        padding: 10,
+                        height: 30,
+                        width: 100,
+                        color: "white",
+                        fontWeight: 600,
+                        marginTop: 10,
+                        marginBottom: 10,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      MY SALES
+                    </div> */}
+                    <div
+                      onClick={() =>
+                        this.setState({
+                          logout: true,
+                        })
+                      }
+                      id="logout"
+                      style={{
+                        backgroundColor: "#a1a1a1",
+                        borderRadius: 5,
+                        padding: 10,
+                        height: 30,
+                        width: 100,
+                        color: "white",
+                        fontWeight: 600,
+                        marginTop: 10,
+                        marginBottom: 10,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      LOG OUT
+                    </div>
+                  </div>
+                )}
+                {this.state.logout && (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <div style={{ fontSize: 22, fontWeight: 600 }}>
+                      Are you sure you want to logout?
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        marginTop: 20,
+                      }}
+                    >
+                      <div
+                        id="logout-yes"
+                        onClick={() => this.logout()}
+                        style={{
+                          backgroundColor: "#a1a1a1",
+                          borderRadius: 5,
+                          padding: 10,
+                          height: 30,
+                          width: 100,
+                          color: "white",
+                          fontWeight: 600,
+                          marginTop: 10,
+                          marginBottom: 10,
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          marginRight: 10,
+                        }}
+                      >
+                        YES
+                      </div>
+                      <div
+                        id="logout-no"
+                        onClick={() => this.closeModal()}
+                        style={{
+                          marginLeft: 10,
+                          backgroundColor: "#a1a1a1",
+                          borderRadius: 5,
+                          padding: 10,
+                          height: 30,
+                          width: 100,
+                          color: "white",
+                          fontWeight: 600,
+                          marginTop: 10,
+                          marginBottom: 10,
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        CANCEL
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
         {this.state.modal && (
           <div
             style={{
@@ -458,7 +786,7 @@ export default class Cart extends React.Component {
                 <div>{"$" + tax}</div>
               </div>
 
-              <div
+              {/* <div
                 style={{
                   display: "flex",
                   flexDirection: "row",
@@ -521,7 +849,7 @@ export default class Cart extends React.Component {
                     labelPlacement="top"
                   />
                 </RadioGroup>
-              </div>
+              </div> */}
 
               {this.state.deliveryType === "delivery" && (
                 <div
@@ -584,9 +912,51 @@ export default class Cart extends React.Component {
       </div>
     );
   }
+  startShopping() {
+    const email = document.getElementById("email").value;
+    if (!this.checkEmail(email)) {
+      return;
+    }
+    var myUid = null;
+    if (localStorage.getItem("tempUid")) {
+      // We have a profile. Transfer the data
+      myUid = localStorage.getItem("tempUid");
+    } else {
+      // We don't have a profile. Make a new one
+    }
+
+    firebase
+      .firestore()
+      .collection("Users")
+      .where("email", "==", email)
+      .get()
+      .then((user) => {
+        const user2 = user.docs;
+        if (user2.length !== 0) {
+          // Returning user
+          this.setState({
+            retUser: true,
+            email: email,
+          });
+        } else {
+          // New account, render that screen.
+          this.setState({
+            newUser: true,
+            email: email,
+          });
+        }
+      });
+  }
 
   goToCheckout() {
-    window.location.href = "/checkout";
+    if (firebase.auth().currentUser) {
+      window.location.href = "/checkout";
+    } else {
+      // Bring up sign up modal
+      this.setState({
+        profile: true,
+      });
+    }
   }
 
   setPickup(e) {
@@ -655,7 +1025,6 @@ export default class Cart extends React.Component {
       })
       .then(() => {
         localStorage.setItem("cart", numCartItems);
-
         this.setState({
           numCartItems: numCartItems,
         });
@@ -693,5 +1062,181 @@ export default class Cart extends React.Component {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
+  }
+
+  checkEmail(email) {
+    if (!email) {
+      alert("Bad email");
+      return false;
+    }
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return true;
+    }
+    alert("Bad email");
+    return false;
+  }
+
+  updateCity(city) {
+    var myUid = null;
+    if (firebase.auth().currentUser) {
+      myUid = firebase.auth().currentUser.uid;
+    } else if (localStorage.getItem("tempUid")) {
+      myUid = localStorage.getItem("tempUid");
+    }
+    if (myUid) {
+      firebase
+        .firestore()
+        .collection("Users")
+        .doc(myUid)
+        .update({
+          city: city,
+        })
+        .then(() => {
+          this.setState({
+            currentCity: city,
+          });
+        });
+    }
+  }
+
+  setPassword() {
+    const email = this.state.email;
+    const pass = document.getElementById("pass").value;
+
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, pass)
+      .then((r) => {
+        this.state.logout = false;
+        this.state.email = false;
+        this.state.newUser = false;
+        this.state.retUser = false;
+        this.state.profile = false;
+        var myUid = localStorage.getItem("tempUid");
+        console.log(myUid);
+        if (myUid) {
+          console.log(myUid);
+          // Transfer the data
+          firebase
+            .firestore()
+            .collection("Users")
+            .doc(myUid)
+            .get()
+            .then((me) => {
+              console.log(me.data());
+              const cart = me.data().cart;
+              const orders = me.data().orders;
+              const sales = me.data().sales;
+              localStorage.setItem("cart", cart.length);
+              firebase
+                .firestore()
+                .collection("Users")
+                .doc(r.user.uid)
+                .set({
+                  cart: cart,
+                  orders: orders,
+                  sales: sales,
+                  email: email,
+                  uid: r.user.uid,
+                  temporary: false,
+                })
+                .then(() => {
+                  this.state.logout = false;
+                  this.state.email = false;
+                  this.state.newUser = false;
+                  this.state.retUser = false;
+                  this.state.profile = false;
+                  window.location.href = "/checkout";
+                });
+            });
+        } else {
+          console.log("no uid");
+          // Make a new profile
+          firebase
+            .firestore()
+            .collection("Users")
+            .doc(r.user.uid)
+            .set({
+              cart: [],
+              orders: [],
+              sales: [],
+              email: email,
+              uid: r.user.uid,
+              temporary: false,
+            })
+            .then(() => {
+              this.state.logout = false;
+              this.state.email = false;
+              this.state.newUser = false;
+              this.state.retUser = false;
+              this.state.profile = false;
+              window.location.href = "/checkout";
+            });
+        }
+      })
+      .catch((e) => {
+        alert(e.message);
+      });
+  }
+
+  setCity() {
+    this.setState({
+      city: !this.state.city,
+      searching: false,
+    });
+  }
+
+  login() {
+    const email = this.state.email;
+    const pass = document.getElementById("pass").value;
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, pass)
+      .then((r) => {
+        this.state.logout = false;
+        this.state.email = false;
+        this.state.newUser = false;
+        this.state.retUser = false;
+        this.state.profile = false;
+        window.location.href = "/checkout";
+      })
+      .catch((e) => {
+        alert(e.message);
+      });
+  }
+
+  showProfileModal() {
+    this.setState({
+      profile: true,
+      searching: false,
+      city: false,
+      logout: false,
+    });
+  }
+
+  closeModal(e) {
+    this.setState({
+      profile: false,
+      logout: false,
+      email: false,
+      newUser: false,
+      retUser: false,
+    });
+  }
+
+  logout() {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        localStorage.setItem("cart", "0");
+        localStorage.setItem("tempUid", "");
+        this.state.logout = false;
+        this.state.email = false;
+        this.state.newUser = false;
+        this.state.retUser = false;
+        this.state.profile = false;
+        window.location.href = "/";
+      });
   }
 }

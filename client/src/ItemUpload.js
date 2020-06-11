@@ -1,6 +1,6 @@
 import React from "react";
 import * as firebase from "firebase";
-import { Input, MenuItem, Select, Avatar } from "@material-ui/core";
+import { Input, MenuItem, Select, Avatar, Button } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -9,7 +9,7 @@ import "react-html5-camera-photo/build/css/index.css";
 import ReactCrop from "react-image-crop";
 import FormControl from "@material-ui/core/FormControl";
 import Chip from "@material-ui/core/Chip";
-
+import api from "./api";
 import "react-image-crop/dist/ReactCrop.css";
 import CropTest from "./CropTest";
 
@@ -55,6 +55,7 @@ export default class ItemUpload extends React.Component {
       description: "",
       sellerStripeId: "",
       city: "",
+      res: 0,
       sub_category: "",
       crop: {
         unit: "px",
@@ -457,10 +458,102 @@ export default class ItemUpload extends React.Component {
           >
             UPLOAD
           </div>
+          <div>
+            <Input
+              id="item"
+              placeholder={"Item"}
+              style={{ width: "50vw", height: 100, marginTop: 50 }}
+            />
+            <Button
+              onClick={() => this.scrapeItem()}
+              style={{
+                backgroundColor: "#f1f1f1",
+                fontWeight: 600,
+                fontSize: 18,
+                padding: 20,
+                marginTop: 20,
+                marginLeft: 20,
+                marginRight: 20,
+              }}
+            >
+              GET PRICE
+            </Button>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                marginTop: 10,
+              }}
+            >
+              <div>{"Price: " + parseInt(this.state.res)}</div>
+              <div>{"Pay: " + parseInt(parseInt(this.state.res) * 0.25)}</div>
+            </div>
+          </div>
           <div style={{ height: 100 }}></div>
         </div>
       </div>
     );
+  }
+
+  scrapeItem() {
+    this.setState({
+      loading: true,
+    });
+    const item = document.getElementById("item").value;
+    if (!item) {
+      return;
+    }
+    console.log(item + " used");
+    api.scrapeForPrices(item + " used").then((res) => {
+      console.log(res);
+      var min = 1000000;
+      var max = -1;
+      for (var i = 0; i < res.length; i++) {
+        var string = res[i];
+        string = string.substring(1, string.length - 1);
+        const val = parseFloat(string);
+        if (val > max) {
+          max = val;
+        }
+        if (val < min) {
+          min = val;
+        }
+      }
+      for (var i = 0; i < res.length; i++) {
+        var string = res[i];
+        string = string.substring(1, string.length - 1);
+        const val = parseFloat(string);
+        if (val == max) {
+          res.splice(i, 1);
+          i--;
+        }
+        if (val == min) {
+          res.splice(i, 1);
+          i--;
+        }
+      }
+      console.log(res);
+
+      var avg = -1;
+      for (var i = 0; i < res.length; i++) {
+        var string = res[i];
+        string = string.substring(1, string.length - 1);
+        const val = parseFloat(string);
+        avg += val;
+      }
+
+      avg /= res.length;
+      avg = parseInt(avg);
+      var total = this.state.total;
+      total += avg;
+      console.log(avg);
+      this.setState({
+        loading: false,
+        res: avg,
+        total: total,
+        count: this.state.count + 1,
+      });
+    });
   }
 
   handleChange(e) {

@@ -39,6 +39,7 @@ export default class CheckoutForm extends React.Component {
 
   render() {
     this.state.myData = this.props.myData;
+
     const options = {
       style: {
         base: {
@@ -72,6 +73,37 @@ export default class CheckoutForm extends React.Component {
       var cart = this.state.myData.cart;
       var tempCart = JSON.parse(JSON.stringify(this.state.myData.cart));
       console.log(tempCart);
+
+      api.sendEmail(
+        this.state.myData.email,
+        "Thank you for your purchase!\n\n You purchased: " +
+          this.state.myData.cart.length +
+          " items for $" +
+          this.props.total +
+          ". " +
+          "\n\nItems will be delivered to " +
+          localStorage.getItem("deliverAddress") +
+          " " +
+          localStorage.getItem("deliverAddress2") +
+          " " +
+          localStorage.getItem("deliverCity") +
+          "the next morning!"
+      );
+      api.sendEmail(
+        "andrew@collection.deals",
+        "Thank you for your purchase!\n\n You purchased: " +
+          this.state.myData.cart.length +
+          " items for $" +
+          this.props.total +
+          ". " +
+          "\n\nItems will be delivered to " +
+          localStorage.getItem("deliverAddress") +
+          " " +
+          localStorage.getItem("deliverAddress2") +
+          " " +
+          localStorage.getItem("deliverCity") +
+          "the next morning!"
+      );
 
       for (var i = 0; i < tempCart.length; i++) {
         tempCart[i]["address"] = localStorage.getItem("deliverAddress");

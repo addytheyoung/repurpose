@@ -131,6 +131,9 @@ export default class ItemPriceScraper extends React.Component {
       loading: true,
     });
     const item = document.getElementById("item").value;
+    if (!item) {
+      return;
+    }
     console.log(item + " used");
     api.scrapeForPrices(item + " used").then((res) => {
       console.log(res);

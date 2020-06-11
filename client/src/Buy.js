@@ -268,6 +268,7 @@ export default class Buy extends React.Component {
           </div>
           <div style={{ position: "fixed", top: 200 }}>
             <FilterBar
+              updateFilter={(a, b) => this.updateFilter(a, b)}
               updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
             />
           </div>
@@ -299,7 +300,7 @@ export default class Buy extends React.Component {
                     justifyContent: "center",
                     alignItems: "center",
                     fontSize: 32,
-                    fontWeight: 800,
+                    fontWeight: 700,
                     marginBottom: 20,
                   }}
                 >
