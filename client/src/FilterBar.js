@@ -2,6 +2,7 @@ import React from "react";
 import "./css/FilterBar.css";
 import DialogPrice from "./DialogPrice";
 import DialogCategory from "./DialogCategory";
+import DialogElse from "./DialogElse";
 
 export default class FilterBar extends React.Component {
   render() {
@@ -46,13 +47,23 @@ export default class FilterBar extends React.Component {
             }
             changeCategory={(categories) => this.changeCategory(categories)}
           />
+          <DialogElse
+            clearContent={() => this.clearContent()}
+            changeContent={(clothing) => this.changeContent(clothing)}
+          />
         </div>
       </div>
     );
   }
 
-  changeCategory(categories) {
-    this.props.updateCategoryFilter(categories);
+  changeContent(clothing) {
+    const type = clothing[0];
+    const gender = clothing[1];
+    this.props.updateMoreFilter(type, gender);
+  }
+
+  clearContent() {
+    this.props.updateMoreFilter("all", "all");
   }
 
   changePrice(min, max) {

@@ -33,6 +33,8 @@ export default class Buy extends React.Component {
       currentItemIndex: 0,
       items: [],
       finalDoc: 0,
+      activeClothingType: "all",
+      activeClothingGender: "all",
       newCategory: true,
       finishedLoading: false,
       appended: false,
@@ -273,6 +275,7 @@ export default class Buy extends React.Component {
             <FilterBar
               updateFilter={(a, b) => this.updateFilter(a, b)}
               updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
+              updateMoreFilter={(a, b) => this.updateMoreFilter(a, b)}
             />
           </div>
 
@@ -304,7 +307,7 @@ export default class Buy extends React.Component {
                     alignItems: "center",
                     fontSize: 32,
                     fontWeight: 700,
-                    marginBottom: 20,
+                    marginBottom: 15,
                   }}
                 >
                   Items in Austin, TX
@@ -314,10 +317,20 @@ export default class Buy extends React.Component {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    fontSize: 14,
+                    fontWeight: 400,
+                    marginBottom: 20,
                   }}
                 >
-                  {console.log(this.state.items.length)}
-                  {console.log(this.state.finishedLoading)}
+                  Delivered to your doorstep
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <InfiniteScroll
                     children={this.state.items}
                     dataLength={this.state.items.length} //This is important field to render the next data
@@ -380,12 +393,26 @@ export default class Buy extends React.Component {
                                 marginBottom: 20,
                                 width: "70vw",
                                 fontWeight: 600,
-                                fontSize: 24,
+                                fontSize: 26,
                               }}
                             >
                               {item}
                             </div>
                           );
+                        }
+                        if (item.category == "Clothing, Shoes, & Accessories") {
+                          if (this.state.activeClothingGender != "all") {
+                            if (
+                              item.gender != this.state.activeClothingGender
+                            ) {
+                              return null;
+                            }
+                          }
+                          if (this.state.activeClothingType != "all") {
+                            if (item.type != this.state.activeClothingType) {
+                              return null;
+                            }
+                          }
                         }
                         return (
                           <div>
@@ -471,6 +498,16 @@ export default class Buy extends React.Component {
         ></div>
       </div>
     );
+  }
+
+  updateMoreFilter(a, b) {
+    console.log(a, b);
+    const type = a;
+    const gender = b;
+    this.setState({
+      activeClothingType: type,
+      activeClothingGender: gender,
+    });
   }
 
   next() {

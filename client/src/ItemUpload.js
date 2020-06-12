@@ -69,6 +69,7 @@ export default class ItemUpload extends React.Component {
       brand: "",
       size: "",
       gender: "",
+      type: "",
     };
   }
 
@@ -343,6 +344,23 @@ export default class ItemUpload extends React.Component {
                 value={this.state.size}
                 placeholder={"Size"}
               />
+              <Select
+                style={{ width: "80vw", height: 120, marginTop: 10 }}
+                value={this.state.type}
+                placeholder={"Type"}
+                onChange={(e) =>
+                  this.setState({
+                    type: e.target.value,
+                  })
+                }
+              >
+                <MenuItem style={{ marginTop: 5, height: 50 }} value={"female"}>
+                  {"Shirt"}
+                </MenuItem>
+                <MenuItem style={{ marginTop: 5, height: 50 }} value={"male"}>
+                  {"Pants"}
+                </MenuItem>
+              </Select>
               <Select
                 style={{ width: "80vw", height: 120, marginTop: 10 }}
                 value={this.state.gender}
@@ -652,6 +670,7 @@ export default class ItemUpload extends React.Component {
                       pictures: [a],
                       category: category,
                       brand: this.state.brand,
+                      type: this.state.type,
                       size: this.state.size,
                       gender: this.state.gender,
                       sub_categories: this.state.currentKeywords,
