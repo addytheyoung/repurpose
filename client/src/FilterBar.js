@@ -14,6 +14,7 @@ export default class FilterBar extends React.Component {
             display: "flex",
             flexDirection: "column",
             marginLeft: "7vw",
+            maxWidth: 150,
             paddingTop: 10,
             paddingBottom: 10,
           }}

@@ -499,34 +499,133 @@ export default class SearchPage extends React.Component {
       numCartItems = 1;
     }
 
-    console.log(item);
     this.setState({
       addingToCart: true,
     });
 
-    firebase
-      .firestore()
-      .collection("Users")
-      .doc(firebase.auth().currentUser.uid)
-      .get()
-      .then((me) => {
-        const myCart = me.data().cart;
-        myCart.push(item);
-        firebase
-          .firestore()
-          .collection("Users")
-          .doc(firebase.auth().currentUser.uid)
-          .update({
-            cart: myCart,
-          })
-          .then(() => {
-            localStorage.setItem("cart", numCartItems);
-            this.setState({
-              modal: null,
-              addingToCart: false,
-              numCartItems: numCartItems,
-            });
+    var myUid = null;
+
+    if (firebase.auth().currentUser) {
+      // Signed in
+      myUid = firebase.auth().currentUser.uid;
+    } else if (localStorage.getItem("tempUid")) {
+      // temporarily signed in
+      myUid = localStorage.getItem("tempUid");
+    } else {
+      // Not signed in
+      myUid = null;
+    }
+
+    if (!myUid) {
+      // Create a new temporary user
+      const uid = this.randomNumber(20);
+      localStorage.setItem("tempUid", uid);
+      firebase
+        .firestore()
+        .collection("Users")
+        .doc(uid)
+        .set({
+          cart: [item],
+          orders: [],
+          sales: [],
+          temporary: true,
+        })
+        .then(() => {
+          localStorage.setItem("cart", 1);
+          this.setState({
+            modal: null,
+            addingToCart: false,
+            numCartItems: 1,
           });
-      });
+        });
+    } else {
+      firebase
+        .firestore()
+        .collection("Users")
+        .doc(myUid)
+        .get()
+        .then((me) => {
+          if (!me.exists) {
+            firebase
+              .firestore()
+              .collection("Users")
+              .doc(myUid)
+              .set({
+                cart: [],
+                temporary: true,
+                orders: [],
+                sales: [],
+              })
+              .then(() => {
+                firebase
+                  .firestore()
+                  .collection("Users")
+                  .doc(myUid)
+                  .get()
+                  .then((me) => {
+                    const myCart = me.data().cart;
+                    for (var i = 0; i < myCart.length; i++) {
+                      if (myCart[i].uid == item.uid) {
+                        alert("Item already in your cart!");
+                        this.setState({
+                          modal: null,
+                          addingToCart: false,
+                          numCartItems: numCartItems,
+                        });
+                        return;
+                      }
+                    }
+
+                    myCart.push(item);
+                    firebase
+                      .firestore()
+                      .collection("Users")
+                      .doc(myUid)
+                      .update({
+                        cart: myCart,
+                      })
+                      .then(() => {
+                        localStorage.setItem("cart", numCartItems);
+                        this.setState({
+                          modal: null,
+                          addingToCart: false,
+                          numCartItems: numCartItems,
+                        });
+                      });
+                  });
+              });
+          } else {
+            const myCart = me.data().cart;
+            for (var i = 0; i < myCart.length; i++) {
+              if (myCart[i].uid == item.uid) {
+                alert("Item already in your cart!");
+                this.setState({
+                  modal: null,
+                  addingToCart: false,
+                  numCartItems: numCartItems,
+                });
+                return;
+              }
+            }
+
+            myCart.push(item);
+            firebase
+              .firestore()
+              .collection("Users")
+              .doc(myUid)
+              .update({
+                cart: myCart,
+              })
+              .then(() => {
+                localStorage.setItem("cart", numCartItems);
+                this.setState({
+                  modal: null,
+                  addingToCart: false,
+                  numCartItems: numCartItems,
+                });
+              });
+          }
+        });
+    }
   }
 }
