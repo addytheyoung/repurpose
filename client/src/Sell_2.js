@@ -415,7 +415,7 @@ export default class Sell_2 extends React.Component {
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            marginBottom: 60,
+            marginBottom: 30,
             marginTop: 20,
           }}
         >
@@ -460,6 +460,16 @@ export default class Sell_2 extends React.Component {
           >
             3. We pay cash for everything you have
           </div>
+        </div>
+        <div
+          style={{
+            textAlign: "center",
+            marginBottom: 30,
+            fontSize: 18,
+            fontWeight: 500,
+          }}
+        >
+          Call 903-203-1286 if any problems occour!
         </div>
         <div
           style={{

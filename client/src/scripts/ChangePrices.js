@@ -14,9 +14,12 @@ export default class ChangePrices extends React.Component {
       .get()
       .then((cat) => {
         const catDocs = cat.docs;
+        console.log(catDocs.length);
+        var i_index = 0;
         for (var i = 0; i < catDocs.length; i++) {
           const item = catDocs[i].data();
-          if (item.original_price != 1) {
+          if (true) {
+            i_index++;
             firebase
               .firestore()
               .collection("Categories")
@@ -24,8 +27,11 @@ export default class ChangePrices extends React.Component {
               .collection("All")
               .doc(catDocs[i].id)
               .update({
-                original_price: item.original_price - 1,
+                original_price: item.original_price + 1,
               });
+            if (i_index == catDocs.length) {
+              alert("Done");
+            }
           }
         }
       });

@@ -10,6 +10,7 @@ import Art from "./images/art.jpeg";
 import Electronics from "./images/electronics.jpeg";
 import Books from "./images/book.jpg";
 import * as firebase from "firebase";
+import randomizeArray from "./global_methods/randomizeArray";
 import Toys from "./images/toys.jpeg";
 import Sports from "./images/sports.jpg";
 import Fashion from "./images/shirt.jpg";
@@ -781,6 +782,9 @@ export default class Buy extends React.Component {
       .get()
       .then((allItems) => {
         const allItemsDocs = allItems.docs;
+        const finalDoc = allItemsDocs[allItemsDocs.length - 1];
+
+        randomizeArray(allItemsDocs);
 
         for (var j = 0; j < allItemsDocs.length; j++) {
           const itemData = allItemsDocs[j].data();
@@ -813,7 +817,7 @@ export default class Buy extends React.Component {
           }
         } else if (allItemsDocs.length < 20) {
           // Go to the next category
-          const finalDoc = allItemsDocs[allItemsDocs.length - 1];
+
           for (var j = 0; j < allItemsDocs.length; j++) {
             const itemData = allItemsDocs[j].data();
             itemArr.push(itemData);
@@ -841,7 +845,6 @@ export default class Buy extends React.Component {
           this.state.finishedPullingItems = false;
           this.pullItemsFromDatabase(categories);
         } else {
-          const finalDoc = allItemsDocs[allItemsDocs.length - 1];
           for (var j = 0; j < allItemsDocs.length; j++) {
             const itemData = allItemsDocs[j].data();
             // See if the search matches

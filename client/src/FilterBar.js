@@ -57,6 +57,10 @@ export default class FilterBar extends React.Component {
     );
   }
 
+  changeCategory(categories) {
+    this.props.updateCategoryFilter(categories);
+  }
+
   changeContent(clothing) {
     const type = clothing[0];
     const gender = clothing[1];

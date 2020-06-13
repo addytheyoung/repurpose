@@ -25,7 +25,6 @@ export default class Home extends React.Component {
       addingToCart: false,
     };
     const categoryList = [
-      "Antiques & Collectibles",
       "Art & Decoration",
       "Toys & Hobbies",
       "Books",
@@ -46,6 +45,7 @@ export default class Home extends React.Component {
         .doc(categoryList[i])
         .collection("All")
         .where("location", "==", "Austin, TX")
+        .limit(20)
         .get()
         .then((allItems) => {
           i_index++;
@@ -433,7 +433,7 @@ export default class Home extends React.Component {
           >
             Help
           </div>
-          <div
+          {/* <div
             id="become-collector"
             onClick={() => (window.location.href = "/become_collector")}
             style={{
@@ -449,7 +449,7 @@ export default class Home extends React.Component {
             }}
           >
             Become a Collector
-          </div>
+          </div> */}
         </div>
         <div
           style={{
@@ -512,7 +512,7 @@ export default class Home extends React.Component {
                 borderRadius: 6,
                 backgroundColor: "#E61E4D",
                 fontWeight: 700,
-                fontSize: 16,
+                fontSize: 18,
                 color: "white",
                 display: "flex",
                 justifyContent: "center",
@@ -557,8 +557,8 @@ export default class Home extends React.Component {
           </div>
           <div
             style={{
-              marginTop: 15,
-              marginBottom: 15,
+              marginTop: 5,
+              marginBottom: 5,
               marginLeft: 50,
               fontWeight: 600,
               fontSize: 14,
@@ -589,7 +589,7 @@ export default class Home extends React.Component {
                 textAlign: "center",
               }}
             >
-              Items are delivered in less than a day
+              Items are delivered quickly to your doorstep
             </div>
           </div>
         </div>
@@ -602,7 +602,7 @@ export default class Home extends React.Component {
             marginTop: 20,
           }}
         >
-          Items in Austin, Texas
+          (Some) Items in Austin, TX
         </div>
         <div
           style={{
@@ -615,10 +615,11 @@ export default class Home extends React.Component {
             style={{
               display: "flex",
               flexDirection: "row",
-              width: "70vw",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              alignItems: "center",
+              // width: "90vw",
+              // flexWrap: "wrap",
+              overflowX: "scroll",
+              // justifyContent: "center",
+              // alignItems: "center",
               marginTop: 20,
               marginLeft: 50,
               marginRight: 50,
