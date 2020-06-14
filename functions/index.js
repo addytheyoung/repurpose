@@ -163,6 +163,7 @@ app.post("/post-to-fb", async (req, res) => {
 });
 
 app.post("/fetch-item-price", async (req, res) => {
+  console.log("CALLING FETCH PRICES");
   const string = req.body.total;
   const search = string.split();
   console.log("Fetch");
@@ -175,12 +176,12 @@ app.post("/fetch-item-price", async (req, res) => {
 
   await Promise.all([
     scrapeProduct(url),
-    scrapeProduct(url),
-    scrapeProduct(url),
-    scrapeProduct(url),
+    // scrapeProduct(url),
+    // scrapeProduct(url),
+    // scrapeProduct(url),
   ])
     .then((values) => {
-      console.log(values);
+      // console.log("values: " + values);
       var arr = [];
       for (var i = 0; i < values.length; i++) {
         arr = arr.concat(values[i]);
@@ -191,9 +192,6 @@ app.post("/fetch-item-price", async (req, res) => {
     .catch((err) => {
       res.json(err);
     });
-
-  // console.log(x);
-  res.send(x);
 });
 
 async function postToFb(item) {
@@ -224,16 +222,26 @@ async function postToFb(item) {
 }
 
 async function scrapeProduct(url) {
-  const browser = await puppeteer.launch();
+  console.log("scraping: " + url);
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ["--no-sandbox"],
+  });
+  console.log("browser");
   const page = await browser.newPage();
+  console.log("page");
   await page.goto(url);
+  console.log("goto page");
   let texts = await page.evaluate(() => {
+    console.log("texts promise");
     let data = [];
     let elements = document.getElementsByClassName("Nr22bf");
     for (var element of elements) data.push(element.textContent);
     return data;
   });
+
   browser.close();
+  console.log("return text");
   return texts;
 }
 

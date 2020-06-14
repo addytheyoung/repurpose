@@ -15,7 +15,7 @@ import Agreement from "./Agreement.js";
 import CheckOut from "./CheckOut";
 import GetKit from "./GetKit";
 import BecomeCollector from "./BecomeCollector";
-import ItemPriceScraper from "./scripts/ItemPriceScraper.js";
+import ItemPriceScraper from "./ItemPriceScraper.js";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Home from "./Home";

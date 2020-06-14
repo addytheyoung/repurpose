@@ -277,12 +277,14 @@ const scrapeForPrices = (total) => {
     .then((res) => {
       console.log("then");
       if (res.status === 200) {
+        console.log(res);
         return res.json();
       } else {
         return null;
       }
     })
     .then((data) => {
+      console.log(data);
       if (!data || data.error) {
         throw new Error("Error");
       } else {
