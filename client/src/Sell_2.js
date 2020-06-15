@@ -458,7 +458,7 @@ export default class Sell_2 extends React.Component {
               textAlign: "center",
             }}
           >
-            3. We pay cash for everything you have
+            3. We pay cash for everything you have!
           </div>
         </div>
         <div
