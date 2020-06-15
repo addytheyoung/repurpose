@@ -5,8 +5,8 @@ import Buy from "./Buy";
 import Sell from "./Sell";
 import GetTotal from "./scripts/GetTotal";
 import OrderKit from "./OrderKit";
-import SellRules from "./SellRules";
 import Shop from "./Shop";
+import SellInfo from "./SellInfo";
 import Item from "./Item";
 import Profile from "./Profile";
 import Cart from "./Cart";
@@ -159,9 +159,9 @@ export default class RenderRoutes extends React.Component {
               render={() => <Agreement />}
             />
             <Route
-              path="/sell/rules"
+              path="/sell-info"
               exact={false}
-              render={() => <SellRules />}
+              render={() => <SellInfo />}
             />
             <Route
               path="/sell/getkit"

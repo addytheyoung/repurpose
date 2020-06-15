@@ -1,19 +1,4 @@
-#house:hover {
+#sell-button:hover {
   cursor: pointer;
-  opacity: 0.9 !important;
-}
-
-#sell-here:hover {
-  opacity: 0.8 !important;
-  cursor: pointer;
-}
-
-#continue:hover {
-  cursor: pointer;
-  opacity: 0.7 !important;
-}
-
-#time-slot:hover {
-  cursor: pointer;
-  opacity: 0.5 !important;
+  opacity: 0.8;
 }
