@@ -9,6 +9,7 @@ import "./css/ScheduleTime.css";
 export default class ScheduleTime extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
     firebase
       .firestore()
       .collection("Collectors")
@@ -41,6 +42,7 @@ export default class ScheduleTime extends React.Component {
     if (!this.state.loaded) {
       return null;
     }
+
     var openTimesToday = null;
     var dateS = null;
     if (this.state.activeDay) {
@@ -83,16 +85,27 @@ export default class ScheduleTime extends React.Component {
                 backgroundColor: "#ffffff",
               }}
             >
-              <div>
-                {"Well show up around " +
-                  this.state.timeSelected +
-                  " on " +
-                  dateS +
-                  "."}
+              <div style={{ marginTop: 20, fontSize: 20 }}>
+                {"Well show up at " + this.state.timeSelected + " on " + dateS}
               </div>
-              <div> Does this work?</div>
+              <div style={{ marginTop: 20, fontSize: 20, marginTop: 50 }}>
+                Does this work?
+              </div>
               <div style={{ display: "flex", flexDirection: "row" }}>
-                <Button
+                <div
+                  id="next"
+                  style={{
+                    marginTop: 50,
+                    padding: 10,
+                    backgroundColor: "#c1c1c1",
+                    borderRadius: 5,
+                    fontWeight: 600,
+                    color: "#ffffff",
+                    marginLeft: 10,
+                    marginRight: 10,
+                    width: 100,
+                    textAlign: "center",
+                  }}
                   onClick={() =>
                     this.setState({
                       timeSelected: null,
@@ -100,8 +113,25 @@ export default class ScheduleTime extends React.Component {
                   }
                 >
                   NO
-                </Button>
-                <Button onClick={() => this.submit()}>YES</Button>
+                </div>
+                <div
+                  id="next"
+                  style={{
+                    marginTop: 50,
+                    padding: 10,
+                    backgroundColor: "rgb(230, 30, 77)",
+                    borderRadius: 5,
+                    fontWeight: 600,
+                    color: "#ffffff",
+                    marginLeft: 10,
+                    marginRight: 10,
+                    width: 100,
+                    textAlign: "center",
+                  }}
+                  onClick={() => this.submit()}
+                >
+                  YES
+                </div>
               </div>
             </div>
           </Modal>
@@ -159,6 +189,21 @@ export default class ScheduleTime extends React.Component {
   }
 
   submit() {
+    const {
+      mailAddress1,
+      mailAddress2,
+      mailCity,
+      mailState,
+      mailZip,
+      paymentType,
+      paypalEmail,
+      phone,
+      pickupAddress1,
+      pickupAddress2,
+      pickupCity,
+      pickupState,
+      pickupZip,
+    } = this.props;
     const time = this.state.timeSelected;
     const activeDay = this.state.activeDay;
     this.setState({
@@ -183,8 +228,17 @@ export default class ScheduleTime extends React.Component {
         time +
         " on " +
         dateS +
+        " at " +
+        pickupAddress1 +
+        " " +
+        pickupAddress2 +
+        ", " +
+        pickupCity +
         "!\n\n" +
-        "Call 903-203-1286 if you have any problems or concerns."
+        "Andrew will be picking up your items! Call 903-203-1286 to speak to him if you have any problems or concerns." +
+        "\n\nWe'll call " +
+        phone +
+        " if we have any issues. See you soon!"
     );
     api.sendEmail(
       "andrew@collection.deals",
@@ -192,19 +246,54 @@ export default class ScheduleTime extends React.Component {
         time +
         " on " +
         dateS +
+        " at " +
+        pickupAddress1 +
+        " " +
+        pickupAddress2 +
+        ", " +
+        pickupCity +
         "!\n\n" +
-        "Call 903-203-1286 if you have any problems or concerns."
+        "Andrew will be picking up your items! Call 903-203-1286 to speak to him if you have any problems or concerns." +
+        "\n\nWe'll call " +
+        phone +
+        " if we have any issues. See you soon!"
     );
     firebase
       .firestore()
       .collection("Collectors")
       .doc("andrewtateyoung")
-      .update({
-        [dateS]: newOpenTimesToday,
-      })
+      .update({ [dateS]: newOpenTimesToday })
       .then(() => {
-        alert("An Email has been sent to you. See you soon!");
-        window.location.href = "/";
+        firebase
+          .firestore()
+          .collection("Appointments")
+          .doc()
+          .set({
+            paymentType: paymentType,
+            mailAddress1: mailAddress1,
+            mailAddress2: mailAddress2,
+            mailCity: mailCity,
+            mailState: mailState,
+            mailZip: mailZip,
+            phone: phone,
+            paypalEmail: paypalEmail,
+            pickupAddress1: pickupAddress1,
+            pickupAddress2: pickupAddress2,
+            pickupCity: pickupCity,
+            pickupState: pickupState,
+            pickupZip: pickupZip,
+            uid: firebase.auth().currentUser
+              ? firebase.auth().currentUser.uid
+              : "",
+            email: this.state.userData.email,
+          })
+          .then(() => {
+            alert("An Email has been sent to you. See you soon!");
+            window.location.href = "/";
+          })
+          .catch((e) => {
+            alert(e.message);
+          });
       })
       .catch((e) => {
         alert(e.message);

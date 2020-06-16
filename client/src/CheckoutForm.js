@@ -87,7 +87,7 @@ export default class CheckoutForm extends React.Component {
           localStorage.getItem("deliverAddress2") +
           " " +
           localStorage.getItem("deliverCity") +
-          "the next morning!"
+          " the next morning!"
       );
       api.sendEmail(
         "andrew@collection.deals",
@@ -102,7 +102,7 @@ export default class CheckoutForm extends React.Component {
           localStorage.getItem("deliverAddress2") +
           " " +
           localStorage.getItem("deliverCity") +
-          "the next morning!"
+          " the next morning!"
       );
 
       for (var i = 0; i < tempCart.length; i++) {

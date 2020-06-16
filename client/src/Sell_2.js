@@ -128,7 +128,7 @@ export default class Sell_2 extends React.Component {
             style={{
               marginTop: 50,
               padding: 10,
-              backgroundColor: "#51d132",
+              backgroundColor: "rgb(230, 30, 77)",
               borderRadius: 5,
               fontWeight: 600,
               color: "#ffffff",

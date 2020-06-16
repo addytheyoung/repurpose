@@ -14,6 +14,18 @@ export default class SellInfo extends React.Component {
     this.state = {
       paymentType: "paypal",
       question: 1,
+      mailAddress1: "",
+      mailAddress2: "",
+      mailCity: "",
+      mailState: "",
+      mailZip: "",
+      phone: "",
+      paypalEmail: "",
+      pickupAddress1: "",
+      pickupAddress2: "",
+      pickupCity: "",
+      pickupState: "",
+      pickupZip: "",
     };
   }
 
@@ -33,7 +45,7 @@ export default class SellInfo extends React.Component {
           }}
         >
           <div style={{ fontWeight: 600, fontSize: 20 }}>Call 903-203-1286</div>
-          <div style={{ marginTop: 20, marginBottom: 20 }}>
+          <div style={{ marginTop: 10, marginBottom: 20, fontSize: 12 }}>
             Or fill out the form below!
           </div>
           {this.state.question == 1 && (
@@ -160,7 +172,20 @@ export default class SellInfo extends React.Component {
                   </div>
                 </div>
               )}
-              <Button onClick={() => this.nextQuestion()}>NEXT</Button>{" "}
+              <div
+                id="next"
+                style={{
+                  marginTop: 50,
+                  padding: 10,
+                  backgroundColor: "#000000",
+                  borderRadius: 5,
+                  fontWeight: 600,
+                  color: "#ffffff",
+                }}
+                onClick={() => this.nextQuestion()}
+              >
+                NEXT
+              </div>
             </div>
           )}
           {this.state.question == 2 && (
@@ -172,7 +197,7 @@ export default class SellInfo extends React.Component {
                 alignItems: "center",
               }}
             >
-              <div>Where are we headed?</div>
+              <div>Where are we headed? (2/3)</div>
               <Input
                 id="address1"
                 style={{ marginTop: 10, marginBottom: 5, width: 250 }}
@@ -200,10 +225,26 @@ export default class SellInfo extends React.Component {
                 placeholder="Zip Code"
               ></Input>
 
-              <Button onClick={() => this.nextQuestion2()}>NEXT</Button>
+              <div
+                id="next"
+                style={{
+                  marginTop: 50,
+                  padding: 10,
+                  backgroundColor: "#000000",
+
+                  borderRadius: 5,
+                  fontWeight: 600,
+                  color: "#ffffff",
+                }}
+                onClick={() => this.nextQuestion2()}
+              >
+                NEXT
+              </div>
             </div>
           )}
-          {this.state.question == 3 && <ScheduleTime></ScheduleTime>}
+          {this.state.question == 3 && (
+            <ScheduleTime {...this.state}></ScheduleTime>
+          )}
         </div>
       </div>
     );
@@ -241,6 +282,11 @@ export default class SellInfo extends React.Component {
         } else {
           this.setState({
             question: 3,
+            pickupAddress1: address1,
+            pickupAddress2: address2,
+            pickupCity: city,
+            pickupState: state,
+            pickupZip: zip,
           });
         }
       });
@@ -259,6 +305,16 @@ export default class SellInfo extends React.Component {
         alert("Please fill out the above");
         return;
       }
+      this.setState({
+        question: 2,
+        mailAddress1: address1,
+        mailAddress2: address2,
+        mailCity: city,
+        mailState: state,
+        mailZip: zip,
+        phone: phone,
+        paypalEmail: "",
+      });
     } else {
       const paypal1 = document.getElementById("paypal1").value;
       const paypal2 = document.getElementById("paypal2").value;
@@ -273,10 +329,17 @@ export default class SellInfo extends React.Component {
       if (!this.checkEmail(paypal1)) {
         return;
       }
+      this.setState({
+        question: 2,
+        mailAddress1: "",
+        mailAddress2: "",
+        mailCity: "",
+        mailState: "",
+        mailZip: "",
+        phone: phone,
+        paypalEmail: paypal1,
+      });
     }
-    this.setState({
-      question: 2,
-    });
   }
 
   checkEmail(email) {

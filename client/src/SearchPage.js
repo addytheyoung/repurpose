@@ -45,9 +45,7 @@ export default class SearchPage extends React.Component {
           .get()
           .then((allItems) => {
             i_index++;
-            console.log(allItems);
             const allItemsDocs = allItems.docs;
-
             var j_index = 0;
             for (var j = 0; j < allItemsDocs.length; j++) {
               const itemData = allItemsDocs[j].data();
@@ -56,8 +54,7 @@ export default class SearchPage extends React.Component {
                 itemArr.push(itemData);
               }
               // Find a way to render all the items here
-              console.log("i_index: " + i_index);
-              console.log("catList: " + categoryList.length);
+
               if (
                 j === allItemsDocs.length - 1 &&
                 i_index === categoryList.length - 1
@@ -437,6 +434,17 @@ export default class SearchPage extends React.Component {
     );
   }
 
+  randomNumber(length) {
+    var result = "";
+    var characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
   loadPage(index, pictureLength) {
     if (!this.state.loaded && index == pictureLength - 1) {
       this.setState({
@@ -468,7 +476,6 @@ export default class SearchPage extends React.Component {
   }
 
   updateFilter(min, max) {
-    console.log(min, max);
     min = min.substring(1, min.length);
     max = max.substring(1, max.length);
     this.setState({
