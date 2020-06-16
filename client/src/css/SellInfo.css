@@ -1,0 +1,6 @@
+#mail:hover,
+#paypal:hover {
+  cursor: pointer;
+  /* border-color: burlywood !important; */
+  opacity: 0.7;
+}

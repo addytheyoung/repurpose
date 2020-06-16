@@ -28,6 +28,7 @@ service cloud.firestore {
        allow create: if true;
        allow delete: if false;
        allow update: if 
+       request.auth.uid == "q2SYPrnJwNhaC3PcMhE3LTZ1AIv1" ||
        (request.resource.data.collector_picture == resource.data.collector_picture &&
         request.resource.data.seller == resource.data.seller && 
         request.resource.data.description == resource.data.description &&
