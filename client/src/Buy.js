@@ -390,9 +390,10 @@ export default class Buy extends React.Component {
                             <div
                               style={{
                                 marginTop: 20,
-                                marginLeft: 60,
+
                                 marginBottom: 20,
                                 width: "70vw",
+                                textAlign: "center",
                                 fontWeight: 600,
                                 fontSize: 26,
                               }}

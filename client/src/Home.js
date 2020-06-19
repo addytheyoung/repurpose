@@ -467,7 +467,7 @@ export default class Home extends React.Component {
           <div
             id="buy-sell-title"
             style={{
-              fontSize: 26,
+              fontSize: 28,
               fontWeight: 600,
               letterSpacing: 0.1,
             }}
@@ -507,12 +507,12 @@ export default class Home extends React.Component {
               id="start"
               style={{
                 marginLeft: 10,
-                width: 100,
+                width: 140,
                 padding: 5,
                 borderRadius: 6,
                 backgroundColor: "#E61E4D",
                 fontWeight: 700,
-                fontSize: 18,
+                fontSize: 20,
                 color: "white",
                 display: "flex",
                 justifyContent: "center",
@@ -552,7 +552,7 @@ export default class Home extends React.Component {
                 textAlign: "center",
               }}
             >
-              We pay cash for all of your clutter
+              We pick up and buy all your clutter
             </div>
           </div>
           <div
