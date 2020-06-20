@@ -15,6 +15,7 @@ import Next from "./images/next.svg";
 import Clock from "./images/clock.svg";
 import Money from "./images/money.svg";
 import Delivery from "./images/delivery.svg";
+import MultImageUpload from "./MultiImageUpload";
 
 import {
   withScriptjs,
@@ -33,6 +34,7 @@ export default class Sell_2 extends React.Component {
     }
     this.state = {
       profile: false,
+      priceItems: true,
     };
   }
 
@@ -155,7 +157,7 @@ export default class Sell_2 extends React.Component {
                   textAlign: "center",
                 }}
               >
-                We price each item, and pay you quickly
+                We price each item, and pay you within an hour
               </div>
               <img
                 src={Money}
@@ -172,10 +174,71 @@ export default class Sell_2 extends React.Component {
             <div style={{ fontWeight: 800, fontSize: 26 }}>(903)-203-1286</div>
           </div>
           <div style={{ marginTop: 10, fontSize: 14 }}>
-            Open 24 hours a day, 7 days a week!
+            Call 24 hours a day, 7 days a week!
           </div>
 
-          <div
+          {this.state.priceItems && (
+            <div
+              style={{
+                marginTop: 20,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <div
+                style={{
+                  marginTop: 40,
+                  marginBottom: 20,
+                  width: 350,
+                  textAlign: "center",
+                }}
+              >
+                Upload a picture OR some info, and we'll let you know how much
+                we would pay for it!
+              </div>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <MultImageUpload />
+              </div>
+            </div>
+          )}
+
+          {!this.state.priceItems && (
+            <div>
+              <div style={{ marginTop: 120 }}>
+                See how much we'll pay you for your items here!
+              </div>
+              {/* <div
+            style={{
+              // marginTop: 40,
+              fontSize: 16,
+              textAlign: "center",
+              marginBottom: 10,
+            }}
+          >
+            We've bought over $9,000 worth of items in Austin already
+          </div> */}
+              <div
+                onClick={() => this.priceMyItems()}
+                id="sell-button"
+                style={{
+                  // marginTop: 120,
+                  padding: 10,
+                  marginTop: 20,
+                  width: 160,
+                  textAlign: "center",
+                  backgroundColor: "rgb(230, 30, 77)",
+                  borderRadius: 5,
+                  fontWeight: 700,
+                  color: "#ffffff",
+                }}
+              >
+                PRICE MY ITEMS
+              </div>
+            </div>
+          )}
+          {/* <div
             onClick={() => this.startSelling()}
             id="sell-button"
             style={{
@@ -190,17 +253,8 @@ export default class Sell_2 extends React.Component {
             }}
           >
             Or, fill out your own info here!
-          </div>
-          <div
-            style={{
-              marginTop: 40,
-              fontSize: 16,
-              textAlign: "center",
-              marginBottom: 10,
-            }}
-          >
-            We've bought over $9,000 worth of items in Austin already!
-          </div>
+          </div> */}
+
           <div
             style={{
               paddingTop: 40,
@@ -278,6 +332,12 @@ export default class Sell_2 extends React.Component {
         </div>
       </div>
     );
+  }
+
+  priceMyItems() {
+    this.setState({
+      priceItems: true,
+    });
   }
 
   startSelling() {
