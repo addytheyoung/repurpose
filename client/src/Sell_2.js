@@ -171,6 +171,9 @@ export default class Sell_2 extends React.Component {
             </div>
             <div style={{ fontWeight: 800, fontSize: 26 }}>(903)-203-1286</div>
           </div>
+          <div style={{ marginTop: 10, fontSize: 14 }}>
+            Open 24 hours a day, 7 days a week!
+          </div>
 
           <div
             onClick={() => this.startSelling()}
