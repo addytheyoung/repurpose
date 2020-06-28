@@ -220,7 +220,7 @@ export default class Buy extends React.Component {
                             onClick={() => this.addToCart(this.state.modal)}
                             id="add-to-cart"
                             style={{
-                              backgroundColor: "#E61E4D",
+                              backgroundColor: "#426CB4",
                               marginTop: 30,
                               borderRadius: 5,
                               padding: 10,

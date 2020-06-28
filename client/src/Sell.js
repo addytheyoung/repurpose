@@ -97,7 +97,7 @@ export default class Sell extends React.Component {
                       onClick={() => this.startShopping()}
                       id="start-shopping"
                       style={{
-                        backgroundColor: "#E61E4D",
+                        backgroundColor: "#426CB4",
                         borderRadius: 5,
                         padding: 10,
                         height: 30,
@@ -132,7 +132,7 @@ export default class Sell extends React.Component {
                       onClick={() => this.setPassword()}
                       id="start-shopping"
                       style={{
-                        backgroundColor: "#E61E4D",
+                        backgroundColor: "#426CB4",
                         borderRadius: 5,
                         padding: 10,
                         height: 30,
@@ -169,7 +169,7 @@ export default class Sell extends React.Component {
                         onClick={() => this.login()}
                         id="start-shopping"
                         style={{
-                          backgroundColor: "#E61E4D",
+                          backgroundColor: "#426CB4",
                           borderRadius: 5,
                           padding: 10,
                           height: 30,
@@ -447,7 +447,7 @@ export default class Sell extends React.Component {
                     width: 150,
                     textAlign: "center",
                     textDecoration: "none",
-                    backgroundColor: "#E61E4D",
+                    backgroundColor: "#426CB4",
                     borderRadius: 5,
                     padding: 10,
                     height: 20,

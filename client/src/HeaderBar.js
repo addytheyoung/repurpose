@@ -116,7 +116,7 @@ export default class HeaderBar extends React.Component {
                       onClick={() => this.startShopping()}
                       id="start-shopping"
                       style={{
-                        backgroundColor: "#E61E4D",
+                        backgroundColor: "#426CB4",
                         borderRadius: 5,
                         padding: 10,
                         height: 30,
@@ -151,7 +151,7 @@ export default class HeaderBar extends React.Component {
                       onClick={() => this.setPassword()}
                       id="start-shopping"
                       style={{
-                        backgroundColor: "#E61E4D",
+                        backgroundColor: "#426CB4",
                         borderRadius: 5,
                         padding: 10,
                         height: 30,
@@ -188,7 +188,7 @@ export default class HeaderBar extends React.Component {
                         onClick={() => this.login()}
                         id="start-shopping"
                         style={{
-                          backgroundColor: "#E61E4D",
+                          backgroundColor: "#426CB4",
                           borderRadius: 5,
                           padding: 10,
                           height: 30,
@@ -383,20 +383,36 @@ export default class HeaderBar extends React.Component {
               overflow: "hidden",
             }}
           >
-            <div
-              style={{
-                width: 160,
-                fontWeight: 700,
-                height: 80,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                fontSize: 24,
-                color: "#7628dd",
-                marginLeft: 50,
-              }}
-            >
-              Collection
+            <div style={{ display: "flex", flexDirection: "row", width: 180 }}>
+              <div
+                style={{
+                  fontWeight: 600,
+                  height: 80,
+                  fontFamily: "Pridi",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: 28,
+                  color: "#426CB4",
+                  marginLeft: 50,
+                }}
+              >
+                Tates
+              </div>
+              <div
+                style={{
+                  fontWeight: 600,
+                  height: 80,
+                  fontFamily: "Pridi",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: 28,
+                  color: "#c06826",
+                }}
+              >
+                crate
+              </div>
             </div>
           </Link>
           <Link

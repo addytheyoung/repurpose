@@ -184,7 +184,7 @@ export default class Home extends React.Component {
                     onClick={() => this.startShopping()}
                     id="start-shopping"
                     style={{
-                      backgroundColor: "#E61E4D",
+                      backgroundColor: "#426CB4",
                       borderRadius: 5,
                       padding: 10,
                       height: 30,
@@ -340,7 +340,7 @@ export default class Home extends React.Component {
                           onClick={() => this.addToCart(this.state.modal)}
                           id="add-to-cart"
                           style={{
-                            backgroundColor: "#E61E4D",
+                            backgroundColor: "#426CB4",
                             marginTop: 30,
                             borderRadius: 5,
                             marginLeft: 20,
@@ -400,20 +400,36 @@ export default class Home extends React.Component {
             width: "100vw",
           }}
         >
-          <div
-            style={{
-              width: 160,
-              fontWeight: 700,
-              height: 80,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: 24,
-              color: "#7628dd",
-              marginLeft: 100,
-            }}
-          >
-            Collection
+          <div style={{ display: "flex", flexDirection: "row", width: 180 }}>
+            <div
+              style={{
+                fontWeight: 600,
+                height: 80,
+                fontFamily: "Pridi",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontSize: 28,
+                color: "426CB4",
+                marginLeft: 50,
+              }}
+            >
+              Tates
+            </div>
+            <div
+              style={{
+                fontWeight: 600,
+                height: 80,
+                fontFamily: "Pridi",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontSize: 28,
+                color: "#c06826",
+              }}
+            >
+              crate
+            </div>
           </div>
           <div style={{ width: "100%" }}></div>
           <div
@@ -510,7 +526,7 @@ export default class Home extends React.Component {
                 width: 140,
                 padding: 5,
                 borderRadius: 6,
-                backgroundColor: "#E61E4D",
+                backgroundColor: "#426CB4",
                 fontWeight: 700,
                 fontSize: 20,
                 color: "white",

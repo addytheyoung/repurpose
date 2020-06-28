@@ -514,7 +514,7 @@ export default class CheckoutForm extends React.Component {
           <button
             id="pay"
             style={{
-              backgroundColor: "#E61E4D",
+              backgroundColor: "#426CB4",
               height: 58,
               width: "100%",
               borderRadius: 5,

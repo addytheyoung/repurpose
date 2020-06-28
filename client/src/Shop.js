@@ -238,7 +238,7 @@ export default class Shop extends React.Component {
                           onClick={() => this.addToCart(this.state.modal)}
                           id="add-to-cart"
                           style={{
-                            backgroundColor: "#E61E4D",
+                            backgroundColor: "#426CB4",
                             marginTop: 30,
                             borderRadius: 5,
                             padding: 10,
@@ -436,8 +436,7 @@ export default class Shop extends React.Component {
                   style={{ textAlign: "center", marginTop: 10, fontSize: 18 }}
                 >
                   <br />
-                  We add more every hour, and Collection is less than a week
-                  old.
+                  We add more every hour.
                   <br />
                   Check back very soon!
                 </div>

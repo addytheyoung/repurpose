@@ -34,7 +34,7 @@ export default class Sell_2 extends React.Component {
     }
     this.state = {
       profile: false,
-      priceItems: true,
+      priceItems: false,
     };
   }
 
@@ -60,8 +60,8 @@ export default class Sell_2 extends React.Component {
             flexDirection: "column",
           }}
         >
-          <div style={{ fontSize: 30, fontWeight: 600 }}>
-            We buy all your clutter!
+          <div style={{ fontSize: 30, fontWeight: 600, fontFamily: "Pridi" }}>
+            Sell your clutter with Tatescrate
           </div>
           <div style={{ display: "flex", flexDirection: "row", marginTop: 60 }}>
             <div
@@ -76,7 +76,7 @@ export default class Sell_2 extends React.Component {
                 style={{
                   marginRight: 5,
                   marginLeft: 5,
-                  width: 150,
+                  width: 190,
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
@@ -113,7 +113,7 @@ export default class Sell_2 extends React.Component {
                 style={{
                   marginRight: 5,
                   marginLeft: 5,
-                  width: 180,
+                  width: 190,
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
@@ -150,14 +150,14 @@ export default class Sell_2 extends React.Component {
                 style={{
                   marginRight: 5,
                   marginLeft: 5,
-                  width: 180,
+                  width: 190,
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                   textAlign: "center",
                 }}
               >
-                We price each item, and pay you within an hour
+                We price each item, and pay YOU when they sell
               </div>
               <img
                 src={Money}
@@ -173,8 +173,17 @@ export default class Sell_2 extends React.Component {
             </div>
             <div style={{ fontWeight: 800, fontSize: 26 }}>(903)-203-1286</div>
           </div>
-          <div style={{ marginTop: 10, fontSize: 14 }}>
-            Call 24 hours a day, 7 days a week!
+          <div style={{ display: "flex", flexDirection: "row", marginTop: 8 }}>
+            <div style={{ fontSize: 14 }}>
+              Call 24 hours a day, 7 days a week.
+            </div>
+            <div
+              id="click"
+              style={{ color: "blue", fontSize: 14, marginLeft: 5 }}
+              onClick={() => this.startSelling()}
+            >
+              Or, fill out the form here!
+            </div>
           </div>
 
           {this.state.priceItems && (
@@ -205,10 +214,20 @@ export default class Sell_2 extends React.Component {
           )}
 
           {!this.state.priceItems && (
-            <div>
-              <div style={{ marginTop: 120 }}>
-                See how much we'll pay you for your items here!
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <div style={{ marginTop: 120, fontWeight: 500, fontSize: 20 }}>
+                See how much you'll make from your items here
               </div>
+              <div style={{ fontSize: 13, marginTop: 10 }}>
+                Our sellers have made over $9,000 already!
+              </div>
+
               {/* <div
             style={{
               // marginTop: 40,
@@ -265,7 +284,7 @@ export default class Sell_2 extends React.Component {
               marginBottom: 100,
             }}
           >
-            <div
+            {/* <div
               style={{
                 textAlign: "center",
                 marginBottom: 20,
@@ -274,7 +293,7 @@ export default class Sell_2 extends React.Component {
               }}
             >
               Testimonials
-            </div>
+            </div> */}
 
             <div style={{ display: "flex", flexDirection: "row" }}>
               <div>
@@ -298,7 +317,7 @@ export default class Sell_2 extends React.Component {
                   }}
                 >
                   "Super easy. They came and took away all my old clothes and
-                  furniure, and payed me more than I thought it was worth!"
+                  furniure, and I got paid more than I thought it was worth!"
                 </div>
               </div>
               <div>
@@ -322,9 +341,9 @@ export default class Sell_2 extends React.Component {
                   }}
                 >
                   "We were moving, and I was going to just take all our stuff to
-                  Goodwill one car at a time, but they came and actually paid me
-                  to take it all away! We'll be using Collection again for
-                  sure."
+                  Goodwill one car at a time, but they came and actually took it
+                  all away, and paid me for it! We'll be using Tatescrate again
+                  for sure."
                 </div>
               </div>
             </div>
