@@ -410,7 +410,7 @@ export default class Home extends React.Component {
                 justifyContent: "center",
                 alignItems: "center",
                 fontSize: 28,
-                color: "426CB4",
+                color: "#426CB4",
                 marginLeft: 50,
               }}
             >

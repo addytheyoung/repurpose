@@ -907,10 +907,7 @@ export default class Buy extends React.Component {
     if (window.location.href.includes("localhost")) {
       window.open("http://localhost:3000/shop/?category=" + cat.link, "_self");
     } else {
-      window.open(
-        "https://collection.deals/shop/?category=" + cat.link,
-        "_self"
-      );
+      window.open("https://tatescrate.com/shop/?category=" + cat.link, "_self");
     }
   }
 
