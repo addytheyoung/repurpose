@@ -7,6 +7,7 @@ import GetTotal from "./scripts/GetTotal";
 import OrderKit from "./OrderKit";
 import Shop from "./Shop";
 import SellInfo from "./SellInfo";
+import WhatHaveISoldPage from "./WhatHaveISoldPage";
 import Item from "./Item";
 import Profile from "./Profile";
 import Cart from "./Cart";
@@ -60,6 +61,11 @@ export default class RenderRoutes extends React.Component {
             {citiesList.includes(window.localStorage.getItem("city")) && (
               <Route path="/" exact={true} render={() => <Buy />} />
             )}
+            <Route
+              path="/what-have-i-sold"
+              exact={true}
+              render={() => <WhatHaveISoldPage />}
+            />
             <Route
               path="/andrewtest"
               exact={true}
