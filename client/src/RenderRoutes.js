@@ -22,7 +22,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import Home from "./Home";
 import ItemUpload from "./ItemUpload";
 import Orders from "./Orders";
-import Sales from "./Sales";
 import SearchPage from "./SearchPage";
 import AddDatesToFirebase from "./scripts/AddDatesToFirebase";
 import Charge from "./Charge";
@@ -122,7 +121,6 @@ export default class RenderRoutes extends React.Component {
               render={() => <BecomeCollector />}
             />
             <Route path="/orders" exact={true} render={() => <Orders />} />
-            <Route path="/mysales" exact={true} render={() => <Sales />} />
             <Route path="/search" exact={false} render={() => <SearchPage />} />
             <Route path="/help" exact={true} render={() => <Help />} />
 

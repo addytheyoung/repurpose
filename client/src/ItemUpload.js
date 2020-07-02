@@ -16,6 +16,7 @@ import CropTest from "./CropTest";
 import "./css/ItemUpload.css";
 
 export default class ItemUpload extends React.Component {
+  sellerID = "acct_1GYhwhAl4Gm50gII";
   citiesList = ["Austin, TX"];
 
   constructor(props) {
@@ -424,8 +425,8 @@ export default class ItemUpload extends React.Component {
             <Input
               style={{ width: "80vw", height: 50, marginTop: 10 }}
               onChange={(e) => this.changeValue(e, "sellerStripeId")}
-              value={this.state.sellerStripeId}
-              placeholder={"Seller Stripe id"}
+              value={this.sellerID}
+              placeholder={"Seller ID"}
             />
           </div>
           {/* <div>
@@ -649,7 +650,6 @@ export default class ItemUpload extends React.Component {
         download
           .then((a) => {
             console.log(a);
-
             firebase
               .firestore()
               .collection("Categories")
