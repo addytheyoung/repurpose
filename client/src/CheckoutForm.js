@@ -228,12 +228,23 @@ export default class CheckoutForm extends React.Component {
                                 if (b_index === userDocs.length) {
                                   localStorage.setItem("cart", "0");
                                   console.log("DONE");
-
+                                  // Go through and add all the unique ID's to seller_array
+                                  const sellerArray = [];
+                                  tempCart.forEach((uniqueItem) => {
+                                    const seller = uniqueItem.seller;
+                                    if (!sellerArray.includes(seller)) {
+                                      sellerArray.push(seller);
+                                    }
+                                  });
+                                  // Add to our orders
                                   firebase
                                     .firestore()
                                     .collection("Orders")
                                     .doc()
-                                    .set({ items: tempCart })
+                                    .set({
+                                      items: tempCart,
+                                      seller_array: sellerArray,
+                                    })
                                     .then(() => {
                                       this.props.finished();
                                     });
