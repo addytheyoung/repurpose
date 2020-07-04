@@ -6,7 +6,7 @@ export default class WhatHaveISoldPage extends React.Component {
   constructor(props) {
     super(props);
 
-    const mySellerId = "acct_1GYhwhAl4Gm50gII";
+    const mySellerId = firebase.auth().currentUser.uid;
     console.log(firebase.auth().currentUser.uid);
     const allItemSold = [];
     // Go through all the orders, find the orders that contain my seller id

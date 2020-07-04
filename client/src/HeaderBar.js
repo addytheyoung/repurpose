@@ -397,7 +397,7 @@ export default class HeaderBar extends React.Component {
                   marginLeft: 50,
                 }}
               >
-                Tates
+                Collect
               </div>
               <div
                 style={{
@@ -408,10 +408,10 @@ export default class HeaderBar extends React.Component {
                   justifyContent: "center",
                   alignItems: "center",
                   fontSize: 28,
-                  color: "#c06826",
+                  color: "#426CB4",
                 }}
               >
-                crate
+                ion
               </div>
             </div>
           </Link>

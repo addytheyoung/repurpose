@@ -61,7 +61,7 @@ export default class Sell_2 extends React.Component {
           }}
         >
           <div style={{ fontSize: 30, fontWeight: 600, fontFamily: "Pridi" }}>
-            Sell your clutter with Tatescrate
+            Sell your clutter with Collection
           </div>
           <div style={{ display: "flex", flexDirection: "row", marginTop: 60 }}>
             <div
@@ -342,7 +342,7 @@ export default class Sell_2 extends React.Component {
                 >
                   "We were moving, and I was going to just take all our stuff to
                   Goodwill one car at a time, but they came and actually took it
-                  all away, and paid me for it! We'll be using Tatescrate again
+                  all away, and paid me for it! We'll be using Collection again
                   for sure."
                 </div>
               </div>

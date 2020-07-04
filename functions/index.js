@@ -40,7 +40,7 @@ app.post("/send-email", (req, res) => {
   var mailOptions = {
     from: "andrew@collection.deals",
     to: email,
-    subject: "Tatescrates: See you soon!",
+    subject: "Collection: See you soon!",
     text: meeting,
   };
 

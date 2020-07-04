@@ -113,7 +113,7 @@ export default class CheckOut extends React.Component {
                 color: "#7628dd",
               }}
             >
-              TatesCrate
+              Collection
             </div>
           </a>
           <div style={{ marginTop: 50, fontWeight: 500, fontSize: 22 }}>
@@ -301,7 +301,7 @@ export default class CheckOut extends React.Component {
               color: "#7628dd",
             }}
           >
-            Tatescrate
+            Collection
           </div>
         </a>
         <div
