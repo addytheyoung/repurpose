@@ -11,6 +11,7 @@ import WhatHaveISoldPage from "./WhatHaveISoldPage";
 import Item from "./Item";
 import Profile from "./Profile";
 import Cart from "./Cart";
+import AndrewItemPage from "./AndrewItemPage";
 import AndrewOrders from "./AndrewOrders";
 import Agreement from "./Agreement.js";
 import CheckOut from "./CheckOut";
@@ -69,6 +70,11 @@ export default class RenderRoutes extends React.Component {
               path="/andrewtest"
               exact={true}
               render={() => <AndrewTest />}
+            />
+            <Route
+              path="/andrewitempage"
+              exact={true}
+              render={() => <AndrewItemPage />}
             />
             <Route
               path="/andreworders"

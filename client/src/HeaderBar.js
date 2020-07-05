@@ -725,7 +725,7 @@ export default class HeaderBar extends React.Component {
                 marginRight: 5,
               }}
             />
-            <div style={{ fontWeight: 600 }}>Help</div>
+            <div style={{ fontWeight: 600 }}>About</div>
           </div>
 
           <div

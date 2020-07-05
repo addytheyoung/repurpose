@@ -71,6 +71,7 @@ export default class ItemUpload extends React.Component {
       size: "",
       gender: "",
       type: "",
+      storageID: "",
     };
   }
 
@@ -456,6 +457,19 @@ export default class ItemUpload extends React.Component {
               freeSolo={true}
             />
           </div>
+          <div>
+            <Input
+              style={{
+                width: "80vw",
+                fontSize: 20,
+                height: 120,
+                marginTop: 10,
+              }}
+              onChange={(e) => this.changeValue(e, "storageID")}
+              value={this.state.storageID}
+              placeholder={"Storage ID"}
+            />
+          </div>
           <div
             id="submit"
             onClick={() => this.uploadItem()}
@@ -676,6 +690,7 @@ export default class ItemUpload extends React.Component {
                       sub_categories: this.state.currentKeywords,
                       description: this.state.description,
                       seller: this.state.sellerStripeId,
+                      storageID: this.state.storageID,
                       uid: number,
                       poster_uid: firebase.auth().currentUser.uid,
                       new_item: true,
@@ -723,6 +738,7 @@ export default class ItemUpload extends React.Component {
                           sub_categories: this.state.currentKeywords,
                           description: this.state.description,
                           seller: this.state.sellerStripeId,
+                          storageID: this.state.storageID,
                           uid: number,
                           poster_uid: firebase.auth().currentUser.uid,
                           new_item: true,

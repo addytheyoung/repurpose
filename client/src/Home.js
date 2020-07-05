@@ -447,7 +447,7 @@ export default class Home extends React.Component {
               marginRight: 20,
             }}
           >
-            Help
+            About
           </div>
           {/* <div
             id="become-collector"
