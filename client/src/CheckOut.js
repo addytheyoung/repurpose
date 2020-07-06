@@ -597,7 +597,7 @@ export default class CheckOut extends React.Component {
   }
 
   getShipping(price) {
-    return ((1.0 / 100) * 100).toFixed(2);
+    return ((1.5 / 100) * 100).toFixed(2);
     if (localStorage.getItem("deliveryType") === "delivery") {
       return ((1.0 / 100) * 100).toFixed(2);
     } else {

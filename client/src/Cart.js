@@ -786,7 +786,7 @@ export default class Cart extends React.Component {
                 <div>{"$" + tax}</div>
               </div>
 
-              {/* <div
+              <div
                 style={{
                   display: "flex",
                   flexDirection: "row",
@@ -816,7 +816,7 @@ export default class Cart extends React.Component {
                 <div>{"$" + total}</div>
               </div>
 
-              <div
+              {/* <div
                 style={{
                   marginTop: 10,
                   width: "30vw",
@@ -1047,7 +1047,7 @@ export default class Cart extends React.Component {
 
   getShipping(price) {
     if (this.state.deliveryType === "delivery") {
-      return ((1.0 / 100) * 100).toFixed(2);
+      return ((1.5 / 100) * 100).toFixed(2);
     } else {
       return ((0.0 / 100) * 100).toFixed(2);
     }

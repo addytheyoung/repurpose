@@ -24,6 +24,10 @@ export default class AndrewItemPage extends React.Component {
       alert("Bad user!");
       return null;
     }
+    var total = 0;
+    for (var i = 0; i < this.state.activeItems.length; i++) {
+      total += parseInt(this.state.activeItems[i].original_price);
+    }
     return (
       <div>
         {this.state.activeModal && (
@@ -122,6 +126,24 @@ export default class AndrewItemPage extends React.Component {
                         Price
                       </Button>
                     </div>
+                    <div>
+                      <Button
+                        onClick={() => {
+                          this.changeDescription();
+                        }}
+                      >
+                        Description
+                      </Button>
+                    </div>
+                    <div style={{ marginTop: 20 }}>
+                      <Button
+                        onClick={() => {
+                          this.deleteItem();
+                        }}
+                      >
+                        DELETE
+                      </Button>
+                    </div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <div>
@@ -145,7 +167,7 @@ export default class AndrewItemPage extends React.Component {
                             flexDirection: "column",
                           }}
                           id="category2"
-                          defaultValue={"Category"}
+                          defaultValue={this.state.activeModal.category}
                           onChange={(e) =>
                             this.setState({
                               modalCategory: e.target.value,
@@ -228,17 +250,39 @@ export default class AndrewItemPage extends React.Component {
                       </div>
                     </div>
                     <div>
-                      <Input id="seller-change" placeholder="Seller"></Input>
+                      <Input
+                        defaultValue={this.state.activeModal.uid}
+                        placeholder="ID"
+                      ></Input>
                     </div>
                     <div>
-                      <Input id="title-change" placeholder="Title">
-                        Title
-                      </Input>
+                      <Input
+                        defaultValue={this.state.activeModal.seller}
+                        id="seller-change"
+                        placeholder="Seller"
+                      ></Input>
                     </div>
                     <div>
-                      <Input id="price-change" placeholder="Price">
-                        Price
-                      </Input>
+                      <Input
+                        defaultValue={this.state.activeModal.title}
+                        id="title-change"
+                        placeholder="Title"
+                      ></Input>
+                    </div>
+                    <div>
+                      <Input
+                        defaultValue={this.state.activeModal.original_price}
+                        id="price-change"
+                        placeholder="Price"
+                      ></Input>
+                    </div>
+                    <div>
+                      <Input
+                        multiline={true}
+                        defaultValue={this.state.activeModal.description}
+                        id="description-change"
+                        placeholder="Description"
+                      ></Input>
                     </div>
                   </div>
                 </div>
@@ -343,6 +387,7 @@ export default class AndrewItemPage extends React.Component {
             defaultValue={this.state.activeSeller}
           ></Input>
           <Button onClick={() => this.filterForItems()}>FIND</Button>
+          <div> {total}</div>
         </div>
         <div
           style={{
@@ -535,23 +580,42 @@ export default class AndrewItemPage extends React.Component {
   }
 
   changeCategory() {
-    const item = this.state.activeModal;
+    var item = this.state.activeModal;
+    const oldCategory = item.category;
     const newCategory = this.state.modalCategory;
+    item["category"] = newCategory;
+
     if (!newCategory) {
       alert("Put in a category");
       return;
     }
+
     firebase
       .firestore()
       .collection("Categories")
-      .doc(item.category)
+      .doc(newCategory)
       .collection("All")
       .doc(item.uid)
-      .update({
-        category: newCategory,
-      })
+      .set(item)
       .then(() => {
-        window.location.reload();
+        firebase
+          .firestore()
+          .collection("Categories")
+          .doc(oldCategory)
+          .collection("All")
+          .doc(item.uid)
+          .delete()
+          .then(() => {
+            this.setState({
+              activeModal: null,
+            });
+          })
+          .catch((e) => {
+            alert(e.message);
+          });
+      })
+      .catch((e) => {
+        alert(e.message);
       });
   }
 
@@ -571,7 +635,9 @@ export default class AndrewItemPage extends React.Component {
         seller: seller,
       })
       .then(() => {
-        window.location.reload();
+        this.setState({
+          activeModal: null,
+        });
       });
   }
 
@@ -589,7 +655,9 @@ export default class AndrewItemPage extends React.Component {
         title: title,
       })
       .then(() => {
-        window.location.reload();
+        this.setState({
+          activeModal: null,
+        });
       });
   }
 
@@ -609,7 +677,47 @@ export default class AndrewItemPage extends React.Component {
         original_price: price,
       })
       .then(() => {
-        window.location.reload();
+        this.setState({
+          activeModal: null,
+        });
+      });
+  }
+
+  changeDescription() {
+    const item = this.state.activeModal;
+    const description = document.getElementById("description-change").value;
+    if (!description) {
+      return;
+    }
+    firebase
+      .firestore()
+      .collection("Categories")
+      .doc(item.category)
+      .collection("All")
+      .doc(item.uid)
+      .update({
+        description: description,
+      })
+      .then(() => {
+        this.setState({
+          activeModal: null,
+        });
+      });
+  }
+
+  deleteItem() {
+    const item = this.state.activeModal;
+    firebase
+      .firestore()
+      .collection("Categories")
+      .doc(item.category)
+      .collection("All")
+      .doc(item.uid)
+      .delete()
+      .then(() => {
+        this.setState({
+          activeModal: null,
+        });
       });
   }
 }

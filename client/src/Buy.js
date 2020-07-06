@@ -22,6 +22,7 @@ import Home from "./images/home.jpg";
 import Pet from "./images/pet.jpg";
 import Baby from "./images/baby.jpeg";
 import FilterBar from "./FilterBar";
+import { TextareaAutosize } from "@material-ui/core";
 // import Fashion from "./images/fashion.jpg";
 
 export default class Buy extends React.Component {
@@ -41,12 +42,15 @@ export default class Buy extends React.Component {
       appended: false,
       activeCategories: [true, true, true, true, true, true, true, true, true],
       finishedPullingItems: true,
+      newItems: [],
+      foundNewItems: false,
     };
     this.state.finishedPullingItems = false;
-    this.pullItemsFromDatabase(this.state.activeCategories);
+    this.pullItemsFromDatabase(this.state.activeCategories, null, true);
+    this.pullNewItemsFromDatabase();
   }
   render() {
-    if (!this.state.loaded) {
+    if (!this.state.loaded || !this.state.foundNewItems) {
       return (
         <div
           style={{
@@ -69,7 +73,6 @@ export default class Buy extends React.Component {
     if (category) {
       localStorage.setItem("city", category);
     }
-
     var foundItem = false;
 
     return (
@@ -325,6 +328,80 @@ export default class Buy extends React.Component {
                 >
                   Delivered to your doorstep
                 </div>
+                {this.state.newItems &&
+                  this.state.activeCategories &&
+                  !this.state.activeCategories.includes(false) && (
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <div
+                        style={{ fontSize: 26, fontWeight: 600, marginTop: 50 }}
+                      >
+                        Items just added
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          width: "60vw",
+                          overflowX: "scroll",
+                          marginTop: 20,
+                          marginLeft: 50,
+                          marginRight: 50,
+                        }}
+                      >
+                        {this.state.newItems.map((item, index) => {
+                          return (
+                            <div>
+                              <div
+                                key={index}
+                                onClick={() => this.itemPage(item)}
+                                id="box"
+                                style={{
+                                  width: 220,
+                                  marginLeft: 10,
+                                  marginRight: 10,
+                                  height: 300,
+                                }}
+                              >
+                                <img
+                                  src={item.pictures[0]}
+                                  style={{
+                                    width: 220,
+                                    height: 200,
+                                    borderRadius: 5,
+                                    overflow: "hidden",
+                                  }}
+                                ></img>
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                  }}
+                                >
+                                  <div
+                                    style={{ fontSize: 18, fontWeight: 400 }}
+                                  >
+                                    {item.title}
+                                  </div>
+                                  <div
+                                    style={{ marginTop: 5, fontWeight: 600 }}
+                                  >
+                                    {"$" + item.original_price}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
                 <div
                   style={{
                     display: "flex",
@@ -344,19 +421,6 @@ export default class Buy extends React.Component {
                         <b>Check back often for new items</b>
                       </p>
                     }
-                    // below props only if you need pull down functionality
-                    // refreshFunction={() => alert("refresh")}
-                    // pullDownToRefresh
-                    // pullDownToRefreshContent={
-                    //   <h3 style={{ textAlign: "center" }}>
-                    //     &#8595; Pull down to refresh
-                    //   </h3>
-                    // }
-                    // releaseToRefreshContent={
-                    //   <h3 style={{ textAlign: "center" }}>
-                    //     &#8593; Release to refresh
-                    //   </h3>
-                    // }
                   >
                     <div
                       style={{
@@ -707,7 +771,7 @@ export default class Buy extends React.Component {
     }
   }
 
-  pullItemsFromDatabase(categories, reset) {
+  pullItemsFromDatabase(categories, reset, first) {
     if (reset) {
       this.state.items = [];
       this.state.currentCategoryIndex = 0;
@@ -746,9 +810,6 @@ export default class Buy extends React.Component {
       for (var i = currentCategoryIndex; i < categories.length; i++) {
         if (categories[i] == true) {
           currentCategory = categoryList[i];
-          if (currentCategory == "Clothing, Shoes, & Accessories") {
-            console.log("here1");
-          }
           itemArr.push(currentCategory);
           currentCategoryIndex = i;
           this.state.currentCategoryIndex = i;
@@ -877,6 +938,64 @@ export default class Buy extends React.Component {
       .catch((e) => {
         console.log(e.message);
       });
+  }
+
+  pullNewItemsFromDatabase() {
+    const categoryList = [
+      "Art & Decoration",
+      "Books",
+      "Clothing, Shoes, & Accessories",
+      "Electronics",
+      "Home",
+      "Garden",
+      "Pet Supplies",
+      "Sports & Hobbies",
+      "Toys & Games",
+      "Everything Else",
+    ];
+
+    const finalArr = [];
+    var i_index = 0;
+    for (var i = 0; i < categoryList.length; i++) {
+      const category = categoryList[i];
+      firebase
+        .firestore()
+        .collection("Categories")
+        .doc(category)
+        .collection("All")
+        .where("new_item", "==", true)
+        .get()
+        .then((allDocs) => {
+          i_index++;
+          if (allDocs.docs.length === 0) {
+            if (i_index == categoryList.length) {
+              // Found everything. Set state
+              randomizeArray(finalArr);
+
+              this.setState({
+                newItems: finalArr,
+                foundNewItems: true,
+              });
+            }
+          }
+          for (var j = 0; j < allDocs.docs.length; j++) {
+            const doc = allDocs.docs[j];
+            finalArr.push(doc.data());
+            if (
+              i_index == categoryList.length &&
+              j == allDocs.docs.length - 1
+            ) {
+              randomizeArray(finalArr);
+
+              // Found everything. Set state
+              this.setState({
+                newItems: finalArr,
+                foundNewItems: true,
+              });
+            }
+          }
+        });
+    }
   }
 
   updateCategoryFilter(categories) {
