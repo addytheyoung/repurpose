@@ -326,7 +326,7 @@ export default class Buy extends React.Component {
                     marginBottom: 20,
                   }}
                 >
-                  Delivered to your doorstep
+                  Delivered to your doorstep in less than 24 hours.
                 </div>
                 {this.state.newItems &&
                   this.state.activeCategories &&

@@ -3,6 +3,7 @@ import * as firebase from "firebase";
 import HeaderBar from "./HeaderBar";
 import { Input, Select, MenuItem, Button } from "@material-ui/core";
 import Close from "./images/close.png";
+import MoveItemCategory from "./scripts/MoveItemCategory";
 
 export default class AndrewItemPage extends React.Component {
   constructor(props) {
@@ -478,8 +479,6 @@ export default class AndrewItemPage extends React.Component {
     const activeSeller = document.getElementById("seller").value;
 
     if (!activeCategory && !activeSeller) {
-      alert("Enter data");
-      return;
     } else if (!activeCategory && activeSeller) {
       // Just filter with the seller id
       const finalArr = [];

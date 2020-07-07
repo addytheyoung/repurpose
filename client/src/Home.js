@@ -30,10 +30,10 @@ export default class Home extends React.Component {
       "Books",
       "Clothing, Shoes, & Accessories",
       "Electronics",
-      "Home & Garden",
-      "Movies & Video Games",
-      "Home & Garden",
-      "Sporting Goods",
+      "Home",
+      "Toys & Games",
+      "Garden",
+      "Sports & Hobbies",
       "Everything Else",
     ];
 

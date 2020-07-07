@@ -630,7 +630,7 @@ export default class ItemUpload extends React.Component {
     if (!this.state.price.trim()) {
       alert("Price");
       return;
-    } else if (!category) {
+    } else if (!category || category.trim() == "") {
       alert("Category");
       return;
     } else if (!this.state.croppedImgFile) {
