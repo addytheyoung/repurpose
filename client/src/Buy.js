@@ -3,27 +3,12 @@ import "./css/Buy.css";
 import ClipLoader from "react-spinners/ClipLoader";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Close from "./images/close.png";
-
-import Antiques from "./images/antiques.jpg";
 import HeaderBar from "./HeaderBar";
-import Art from "./images/art.jpeg";
-import Electronics from "./images/electronics.jpeg";
-import Books from "./images/book.jpg";
 import * as firebase from "firebase";
 import randomizeArray from "./global_methods/randomizeArray";
-import Toys from "./images/toys.jpeg";
-import Sports from "./images/sports.jpg";
-import Fashion from "./images/shirt.jpg";
-import Movie from "./images/harry.jpg";
-
-import Garden from "./images/garden.jpg";
-import Health from "./images/health.webp";
-import Home from "./images/home.jpg";
-import Pet from "./images/pet.jpg";
-import Baby from "./images/baby.jpeg";
 import FilterBar from "./FilterBar";
-import { TextareaAutosize } from "@material-ui/core";
-// import Fashion from "./images/fashion.jpg";
+import Back from "./images/back.png";
+import Front from "./images/arrow.png";
 
 export default class Buy extends React.Component {
   constructor(props) {
@@ -348,57 +333,91 @@ export default class Buy extends React.Component {
                         style={{
                           display: "flex",
                           flexDirection: "row",
-                          width: "60vw",
-                          overflowX: "scroll",
-                          marginTop: 20,
-                          marginLeft: 50,
-                          marginRight: 50,
+                          alignItems: "center",
+                          justifyContent: "center",
                         }}
                       >
-                        {this.state.newItems.map((item, index) => {
-                          return (
-                            <div>
-                              <div
-                                key={index}
-                                onClick={() => this.itemPage(item)}
-                                id="box"
-                                style={{
-                                  width: 220,
-                                  marginLeft: 10,
-                                  marginRight: 10,
-                                  height: 300,
-                                }}
-                              >
-                                <img
-                                  src={item.pictures[0]}
+                        <img
+                          id="direction-left"
+                          src={Back}
+                          style={{ width: 50, height: 50 }}
+                          onClick={() =>
+                            this.scrollLeft(
+                              document.getElementById("scroll"),
+                              -300,
+                              100
+                            )
+                          }
+                        ></img>
+                        <div
+                          id="scroll"
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            width: "50vw",
+                            overflowX: "scroll",
+                            marginTop: 20,
+                            marginLeft: 50,
+                            marginRight: 50,
+                          }}
+                        >
+                          {this.state.newItems.map((item, index) => {
+                            return (
+                              <div>
+                                <div
+                                  key={index}
+                                  onClick={() => this.itemPage(item)}
+                                  id="box"
                                   style={{
                                     width: 220,
-                                    height: 200,
-                                    borderRadius: 5,
-                                    overflow: "hidden",
-                                  }}
-                                ></img>
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    flexDirection: "column",
+                                    marginLeft: 10,
+                                    marginRight: 10,
+                                    height: 300,
                                   }}
                                 >
+                                  <img
+                                    src={item.pictures[0]}
+                                    style={{
+                                      width: 220,
+                                      height: 200,
+                                      borderRadius: 5,
+                                      overflow: "hidden",
+                                    }}
+                                  ></img>
                                   <div
-                                    style={{ fontSize: 18, fontWeight: 400 }}
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                    }}
                                   >
-                                    {item.title}
-                                  </div>
-                                  <div
-                                    style={{ marginTop: 5, fontWeight: 600 }}
-                                  >
-                                    {"$" + item.original_price}
+                                    <div
+                                      style={{ fontSize: 18, fontWeight: 400 }}
+                                    >
+                                      {item.title}
+                                    </div>
+                                    <div
+                                      style={{ marginTop: 5, fontWeight: 600 }}
+                                    >
+                                      {"$" + item.original_price}
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          );
-                        })}
+                            );
+                          })}
+                        </div>
+                        <img
+                          src={Front}
+                          style={{ width: 50, height: 50 }}
+                          id="direction-right"
+                          onClick={() =>
+                            this.scrollLeft(
+                              document.getElementById("scroll"),
+                              300,
+                              100
+                            )
+                          }
+                        ></img>
                       </div>
                     </div>
                   )}
@@ -1039,5 +1058,30 @@ export default class Buy extends React.Component {
         loaded: true,
       });
     }
+  }
+
+  easeInOutQuad(t, b, c, d) {
+    t /= d / 2;
+    if (t < 1) return (c / 2) * t * t + b;
+    t--;
+    return (-c / 2) * (t * (t - 2) - 1) + b;
+  }
+
+  scrollLeft(element, change, duration) {
+    var start = element.scrollLeft,
+      currentTime = 0,
+      increment = 20;
+
+    console.log(start);
+    const t = this;
+    var animateScroll = function () {
+      currentTime += increment;
+      var val = t.easeInOutQuad(currentTime, start, change, duration);
+      element.scrollLeft = val;
+      if (currentTime < duration) {
+        setTimeout(animateScroll, increment);
+      }
+    };
+    animateScroll();
   }
 }

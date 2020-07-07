@@ -72,6 +72,7 @@ export default class ItemUpload extends React.Component {
       gender: "",
       type: "",
       storageID: "",
+      furniture: "false",
     };
   }
 
@@ -195,134 +196,60 @@ export default class ItemUpload extends React.Component {
             >
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
-                value={"Antiques & Collectibles"}
-              >
-                Antiques & Collectibles
-              </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
                 value={"Art & Decoration"}
               >
                 Art & Decoration
               </MenuItem>
-              <MenuItem style={{ marginTop: 5, height: 50 }} value={"Baby"}>
-                Baby
-              </MenuItem>
+
               <MenuItem style={{ marginTop: 5, height: 50 }} value={"Books"}>
                 Books
               </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Cameras & Photo"}
-              >
-                {"Cameras & Photo"}
-              </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Cell Phones & Accessories"}
-              >
-                {"Cell Phones & Accessories"}
-              </MenuItem>
+
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
                 value={"Clothing, Shoes, & Accessories"}
               >
                 {"Clothing, Shoes, & Accessories"}
               </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Coins & Paper Money"}
-              >
-                {"Coins & Paper Money"}
-              </MenuItem>
 
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Computers & Tablets"}
-              >
-                {"Computers & Tablets"}
-              </MenuItem>
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
                 value={"Electronics"}
               >
                 Electronics
               </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Crafts / Hobbies"}
-              >
-                {"Crafts / Hobbies"}
+
+              <MenuItem style={{ marginTop: 5, height: 50 }} value={"Home"}>
+                {"Home"}
               </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Dolls & Bears"}
-              >
-                {"Dolls & Bears"}
+
+              <MenuItem style={{ marginTop: 5, height: 50 }} value={"Garden"}>
+                {"Garden"}
               </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Gift Cards & Coupons"}
-              >
-                {"Gift Cards & Coupons"}
-              </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Health & Beauty"}
-              >
-                {"Health & Beauty"}
-              </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Home & Garden"}
-              >
-                {"Home & Garden"}
-              </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Jewelry & Watches"}
-              >
-                {"Jewelry & Watches"}
-              </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Musical Instruments & Gear"}
-              >
-                {"Musical Instruments & Gear"}
-              </MenuItem>
+
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
                 value={"Pet Supplies"}
               >
                 {"Pet Supplies"}
               </MenuItem>
+
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
-                value={"Pottery & Glass"}
+                value={"Sports & Hobbies"}
               >
-                {"Pottery & Glass"}
-              </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Sporting Goods"}
-              >
-                {"Sporting Goods"}
+                {"Sports & Hobbies"}
               </MenuItem>
               <MenuItem style={{ marginTop: 5, height: 50 }} value={"Test"}>
                 {"Test"}
               </MenuItem>
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
-                value={"Toys & Hobbies"}
+                value={"Toys & Games"}
               >
-                {"Toys & Hobbies"}
+                {"Toys & Games"}
               </MenuItem>
-              <MenuItem
-                style={{ marginTop: 5, height: 50 }}
-                value={"Movies & Video Games"}
-              >
-                {"Movies & Video Games"}
-              </MenuItem>
+
               <MenuItem
                 style={{ marginTop: 5, height: 50 }}
                 value={"Everything Else"}
@@ -331,6 +258,46 @@ export default class ItemUpload extends React.Component {
               </MenuItem>
             </Select>
           </div>
+
+          {this.state.category == "Home" && (
+            <div
+              style={{
+                height: 150,
+                width: "80vw",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div>Furniture?</div>
+              <Select
+                style={{
+                  width: "50vw",
+                  height: 120,
+                  marginTop: 10,
+                  height: 120,
+                  fontSize: 20,
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+                id="category3"
+                defaultValue={"false"}
+                onChange={(e) =>
+                  this.setState({
+                    furniture: e.target.value,
+                  })
+                }
+              >
+                <MenuItem style={{ marginTop: 5, height: 50 }} value={"false"}>
+                  {"false"}
+                </MenuItem>
+                <MenuItem style={{ marginTop: 5, height: 50 }} value={"true"}>
+                  {"true"}
+                </MenuItem>
+              </Select>
+            </div>
+          )}
 
           {this.state.category == "Clothing, Shoes, & Accessories" && (
             <div style={{ height: 450, width: "80vw" }}>
@@ -694,6 +661,7 @@ export default class ItemUpload extends React.Component {
                       uid: number,
                       poster_uid: firebase.auth().currentUser.uid,
                       new_item: true,
+                      furniture: this.state.furniture,
                     })
                     .then(() => {
                       // Add it to the users items sold so we can pay them
@@ -704,6 +672,7 @@ export default class ItemUpload extends React.Component {
                         picture: "",
                         category: "",
                         description: "",
+                        furniture: "false",
                         number: "",
                         keyword: "",
                         currentKeywords: [],
@@ -742,6 +711,7 @@ export default class ItemUpload extends React.Component {
                           uid: number,
                           poster_uid: firebase.auth().currentUser.uid,
                           new_item: true,
+                          furniture: this.state.furniture,
                         })
                         .then(() => {
                           // Add it to the users items sold so we can pay them
@@ -755,6 +725,7 @@ export default class ItemUpload extends React.Component {
                             number: "",
                             keyword: "",
                             currentKeywords: [],
+                            furniture: "false",
                           });
                         })
                         .catch((e) => {

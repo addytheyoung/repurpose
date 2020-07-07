@@ -31,7 +31,8 @@ li {
   margin-top: 10px;
 }
 
-#category2 {
+#category2,
+#category3 {
   width: 30%;
   height: 200px;
 }
