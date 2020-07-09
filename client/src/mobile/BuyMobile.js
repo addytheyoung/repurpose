@@ -10,12 +10,13 @@ import FilterBar from "../FilterBar";
 import Back from "../images/back.png";
 import Front from "../images/arrow.png";
 import HeaderMobile from "./HeaderMobile";
+import FooterMobile from "./FooterMobile";
 
 export default class BuyMobile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loaded: false,
+      loaded: true,
       currentIndex: 0,
       currentCategoryIndex: 0,
       currentItemIndex: 0,
@@ -24,16 +25,16 @@ export default class BuyMobile extends React.Component {
       activeClothingType: "all",
       activeClothingGender: "all",
       newCategory: true,
-      finishedLoading: false,
+      finishedLoading: true,
       appended: false,
       activeCategories: [true, true, true, true, true, true, true, true, true],
       finishedPullingItems: true,
       newItems: [],
-      foundNewItems: false,
+      foundNewItems: true,
     };
-    this.state.finishedPullingItems = false;
-    this.pullItemsFromDatabase(this.state.activeCategories, null, true);
-    this.pullNewItemsFromDatabase();
+    // this.state.finishedPullingItems = false;
+    // this.pullItemsFromDatabase(this.state.activeCategories, null, true);
+    // this.pullNewItemsFromDatabase();
   }
   render() {
     if (!this.state.loaded || !this.state.foundNewItems) {
@@ -265,6 +266,9 @@ export default class BuyMobile extends React.Component {
           <div style={{ position: "fixed", top: 0 }}>
             <HeaderMobile updateFilter={(a, b) => this.updateFilter(a, b)} />
           </div>
+          <div style={{ position: "fixed", bottom: 0 }}>
+            <FooterMobile updateFilter={(a, b) => this.updateFilter(a, b)} />
+          </div>
           {/* <div style={{ position: "fixed", top: 200 }}>
             <FilterBar
               updateFilter={(a, b) => this.updateFilter(a, b)}
@@ -275,7 +279,7 @@ export default class BuyMobile extends React.Component {
 
           <div
             style={{
-              marginTop: "12vh",
+              marginTop: "15vh",
               overflowX: "hidden",
             }}
           >

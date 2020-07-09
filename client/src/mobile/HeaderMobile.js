@@ -15,6 +15,7 @@ import Shop from "../Shop";
 import Close from "../images/close.png";
 import city from "../images/architectonic.png";
 import FilterBar from "../FilterBar";
+import Filter from "../images/filter.png";
 
 export default class HeaderBar extends React.Component {
   citiesList = ["Austin, TX"];
@@ -359,247 +360,103 @@ export default class HeaderBar extends React.Component {
             </div>
           </div>
         )}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            borderBottomWidth: 1,
-            height: "10vh",
-            borderBottomColor: "#e8e8e8",
-            borderBottomStyle: "solid",
-            backgroundColor: "#ffffff",
-            width: "100vw",
-          }}
-        >
-          <Link
-            id="buy-link"
-            to="/"
-            style={{
-              display: "flex",
-              fontSize: 24,
-              fontWeight:
-                path === "/" || path.includes("shop") || path.includes("cart")
-                  ? 600
-                  : 500,
-              alignItems: "center",
-              minWidth: 80,
-              textDecoration: "none",
-
-              color:
-                path === "/" || path.includes("shop") || path.includes("cart")
-                  ? "#000000"
-                  : "#000000",
-              justifyContent: "center",
-              borderWidth: 1,
-              borderStyle: "solid",
-              borderColor: "#d1d1d1",
-              backgroundColor:
-                path === "/" || path.includes("shop") || path.includes("cart")
-                  ? "#d8d8d8"
-                  : "#ffffff",
-              borderRadius: 3,
-            }}
-          >
-            Buy
-          </Link>
-          <Link
-            id="sell-link"
-            to="/sell"
-            style={{
-              display: "flex",
-              fontSize: 24,
-              fontWeight: path.includes("sell") ? 700 : 500,
-              alignItems: "center",
-              minWidth: 80,
-              textDecoration: "none",
-              color: path.includes("sell") ? "#000000" : "#000000",
-              justifyContent: "center",
-              backgroundColor: path.includes("sell") ? "#d8d8d8" : "#ffffff",
-              borderRadius: 3,
-              borderWidth: 1,
-              borderStyle: "solid",
-              borderColor: "#d1d1d1",
-            }}
-          >
-            Sell
-          </Link>
-
-          <div style={{ width: "100%" }}>
-            {/* <FilterBar
-                updateFilter={(a, b) => this.props.updateFilter(a, b)}
-              /> */}
-          </div>
-
+        <div>
           <div
-            onClick={() =>
-              this.setState({
-                searching: !this.state.searching,
-                city: false,
-              })
-            }
             style={{
               display: "flex",
-              justifyContent: "center",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              borderBottomWidth: 2,
+              height: "10vh",
               alignItems: "center",
+              borderBottomColor: "#e8e8e8",
+              borderBottomStyle: "solid",
+              backgroundColor: "#ffffff",
+              width: "100vw",
             }}
           >
-            <div
-              id="search"
+            <Link
+              id="buy-link"
+              to="/"
               style={{
-                height: 30,
                 display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
+                fontSize: 36,
+                fontWeight:
+                  path === "/" || path.includes("shop") || path.includes("cart")
+                    ? 600
+                    : 500,
                 alignItems: "center",
+                minWidth: "12vw",
+                textDecoration: "none",
+                height: "9vh",
+                color:
+                  path === "/" || path.includes("shop") || path.includes("cart")
+                    ? "#000000"
+                    : "#000000",
+                justifyContent: "center",
+                borderWidth: 1,
+                borderStyle: "solid",
+                borderColor: "#d1d1d1",
+                backgroundColor:
+                  path === "/" || path.includes("shop") || path.includes("cart")
+                    ? "#d8d8d8"
+                    : "#ffffff",
+                borderRadius: 3,
               }}
             >
-              {this.state.searching === false && (
-                <img
-                  src={search}
-                  style={{
-                    width: "7vw",
-                    height: "7vw",
-                    borderWidth: 1,
-                    borderStyle: "solid",
-                    borderRadius: 5,
-                    padding: 5,
-                  }}
-                />
-              )}
-            </div>
-          </div>
-          {this.state.searching && (
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Input
-                  defaultValue={
-                    this.props.searchTerm ? this.props.searchTerm : ""
-                  }
-                  id="address-input"
-                  placeholder="Search for anything"
-                  style={{ marginRight: 5, height: 40 }}
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: 120,
-                }}
-              >
-                <Select
-                  style={{ height: 40, fontSize: 14, width: 120 }}
-                  id="category"
-                  defaultValue={"All Categories"}
-                >
-                  <MenuItem value={"All Categories"}>All Categories</MenuItem>
-                  <MenuItem value={"Art & Decoration"}>
-                    Art & Decoration
-                  </MenuItem>
-                  <MenuItem value={"Books"}>Books</MenuItem>
-                  <MenuItem value={"Clothing, Shoes, & Accessories"}>
-                    {"Clothing, Shoes, & Accessories"}
-                  </MenuItem>
-                  <MenuItem value={"Electronics"}>{"Electronics"}</MenuItem>
-                  <MenuItem value={"Home"}>{"Home"}</MenuItem>
-                  <MenuItem value={"Garden"}>{"Garden"}</MenuItem>
-
-                  <MenuItem value={"Pet Supplies"}>{"Pet Supplies"}</MenuItem>
-
-                  <MenuItem value={"Sports & Hobbies"}>
-                    {"Sports & Hobbies"}
-                  </MenuItem>
-                  <MenuItem value={"Toys & Games"}>{"Toys & Games"}</MenuItem>
-                </Select>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <div
-                  id="search-button"
-                  onClick={() => this.search()}
-                  style={{
-                    marginLeft: 5,
-                    borderRadius: 5,
-                    width: 40,
-                    height: 40,
-                    backgroundColor: "#e1e1e1",
-                    display: "flex",
-                    justifyContent: "center",
-                    minWidth: 30,
-                    alignItems: "center",
-                    marginRight: 20,
-                  }}
-                >
-                  <img src={search} style={{ width: 20, height: 20 }} />
-                </div>
-              </div>
-            </div>
-          )}
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <div
+              Buy
+            </Link>
+            <Link
+              id="sell-link"
+              to="/sell"
               style={{
                 display: "flex",
-                flexDirection: "row",
+                minWidth: "12vw",
+                fontSize: 36,
+                height: "9vh",
+                fontWeight: path.includes("sell") ? 700 : 500,
+                alignItems: "center",
+                textDecoration: "none",
+                color: path.includes("sell") ? "#000000" : "#000000",
+                justifyContent: "center",
+                backgroundColor: path.includes("sell") ? "#d8d8d8" : "#ffffff",
+                borderRadius: 3,
+                borderWidth: 1,
+                borderStyle: "solid",
+                borderColor: "#d1d1d1",
+              }}
+            >
+              Sell
+            </Link>
+
+            <div
+              onClick={() =>
+                this.setState({
+                  searching: !this.state.searching,
+                  city: false,
+                })
+              }
+              style={{
+                display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
               }}
             >
               <div
-                onClick={() => this.setCity()}
                 id="search"
                 style={{
-                  height: 30,
                   display: "flex",
-                  flexWrap: "nowrap",
                   flexDirection: "row",
                   justifyContent: "center",
                   alignItems: "center",
-                  whiteSpace: "nowrap",
+                  borderWidth: 1,
+                  borderStyle: "solid",
+                  borderRadius: 5,
+                  fontSize: 32,
+                  padding: 5,
                 }}
               >
-                {!this.state.city && (
-                  <img
-                    src={city}
-                    style={{
-                      width: "7vw",
-                      height: "7vw",
-                      borderWidth: 1,
-                      borderStyle: "solid",
-                      borderRadius: 5,
-                      padding: 5,
-                    }}
-                  />
-                )}
-              </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                {this.state.city && (
+                {this.state.searching === false && (
                   <div
                     style={{
                       display: "flex",
@@ -608,53 +465,240 @@ export default class HeaderBar extends React.Component {
                       alignItems: "center",
                     }}
                   >
-                    <Autocomplete
-                      value={this.state.currentCity}
-                      id="city"
-                      options={this.citiesList}
-                      getOptionLabel={(option) => option}
-                      style={{ width: 300 }}
-                      renderOption={(option) => (
-                        <div
-                          onClick={() => this.updateCity(option)}
-                          style={{ width: "100%", height: "1005" }}
-                        >
-                          {option}
-                        </div>
-                      )}
-                      renderInput={(params) => (
-                        <div>
-                          <TextField
-                            {...params}
-                            placeholder="We add more cities every day!"
-                            label="City"
-                            variant="outlined"
-                            fullWidth
-                          />
-                        </div>
-                      )}
-                      freeSolo={true}
-                      style={{ width: "300px" }}
-                    />
-                    {/* <img
-                      id="close"
-                      onClick={() => this.setCity()}
-                      src={Close}
+                    <img
+                      src={search}
                       style={{
-                        width: 20,
-                        height: 20,
-                        marginLeft: 10,
-                        marginRight: 10
+                        width: "6vw",
+                        height: "6vw",
                       }}
-                    /> */}
+                    />
+                    <div style={{ fontWeight: 500 }}>Search</div>
                   </div>
                 )}
               </div>
             </div>
+            {this.state.searching && (
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Input
+                    defaultValue={
+                      this.props.searchTerm ? this.props.searchTerm : ""
+                    }
+                    id="address-input"
+                    placeholder="Search for anything"
+                    style={{ marginRight: 5, height: 40 }}
+                  />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: 120,
+                  }}
+                >
+                  <Select
+                    style={{ height: 40, fontSize: 14, width: 120 }}
+                    id="category"
+                    defaultValue={"All Categories"}
+                  >
+                    <MenuItem value={"All Categories"}>All Categories</MenuItem>
+                    <MenuItem value={"Art & Decoration"}>
+                      Art & Decoration
+                    </MenuItem>
+                    <MenuItem value={"Books"}>Books</MenuItem>
+                    <MenuItem value={"Clothing, Shoes, & Accessories"}>
+                      {"Clothing, Shoes, & Accessories"}
+                    </MenuItem>
+                    <MenuItem value={"Electronics"}>{"Electronics"}</MenuItem>
+                    <MenuItem value={"Home"}>{"Home"}</MenuItem>
+                    <MenuItem value={"Garden"}>{"Garden"}</MenuItem>
+
+                    <MenuItem value={"Pet Supplies"}>{"Pet Supplies"}</MenuItem>
+
+                    <MenuItem value={"Sports & Hobbies"}>
+                      {"Sports & Hobbies"}
+                    </MenuItem>
+                    <MenuItem value={"Toys & Games"}>{"Toys & Games"}</MenuItem>
+                  </Select>
+                </div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <div
+                    id="search-button"
+                    onClick={() => this.search()}
+                    style={{
+                      marginLeft: 5,
+                      borderRadius: 5,
+                      width: 40,
+                      height: 40,
+                      backgroundColor: "#e1e1e1",
+                      display: "flex",
+                      justifyContent: "center",
+                      minWidth: 30,
+                      alignItems: "center",
+                      marginRight: 20,
+                    }}
+                  >
+                    <img src={search} style={{ width: 20, height: 20 }} />
+                  </div>
+                </div>
+              </div>
+            )}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div
+                id="profile-button"
+                onClick={() => this.showProfileModal()}
+                style={{
+                  display: "flex",
+                  width: 160,
+                  textDecoration: "none",
+                  color: "black",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderWidth: 1,
+                  borderStyle: "solid",
+                  borderRadius: 5,
+                  padding: 5,
+                  backgroundColor: "#f1f1f1",
+                }}
+              >
+                <AccountCircleOutlinedIcon
+                  style={{
+                    width: "5vw",
+                    height: "5vw",
+                  }}
+                ></AccountCircleOutlinedIcon>
+                <div style={{ fontWeight: 500, fontSize: 32 }}>Profile</div>
+              </div>
+            </div>
+
+            <a
+              href="/cart"
+              style={{
+                display: "flex",
+                textDecoration: "none",
+                color: "black",
+                alignItems: "center",
+                justifyContent: "center",
+                marginRight: 50,
+              }}
+            >
+              {!localStorage.getItem("cart") ||
+                (localStorage.getItem("cart") == 0 && (
+                  <ShoppingCartOutlinedIcon
+                    style={{
+                      width: "9vw",
+                      height: "9vw",
+                      borderWidth: 1,
+                      borderStyle: "solid",
+                      borderRadius: 5,
+                      padding: 5,
+                    }}
+                  ></ShoppingCartOutlinedIcon>
+                ))}
+
+              {localStorage.getItem("cart") &&
+                localStorage.getItem("cart") != 0 && (
+                  <img style={{ width: 25, height: 25 }} src={cart2} />
+                )}
+
+              <div
+                style={{
+                  color: "green",
+                  fontWeight: 700,
+                  fontSize: 18,
+                  padding: 5,
+                }}
+              >
+                {localStorage.getItem("cart") &&
+                  localStorage.getItem("cart") != 0 &&
+                  "(" + localStorage.getItem("cart") + ")"}
+              </div>
+            </a>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            ></div>
           </div>
+        </div>
+        <div
+          style={{ height: 65, display: "flex", backgroundColor: "#ffffff" }}
+        >
           <div
+            id="search"
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: 32,
+              borderWidth: 1,
+              width: 150,
+              marginRight: 15,
+              borderStyle: "solid",
+              borderRadius: 5,
+              padding: 5,
+              marginLeft: 10,
+              backgroundColor: "#f1f1f1",
+            }}
+          >
+            <img
+              src={Filter}
+              style={{
+                width: "5vw",
+                height: "5vw",
+                marginRight: "1vw",
+              }}
+            />
+            <div style={{ fontWeight: 500 }}>Filter</div>
+          </div>
+          {/* <div
             onClick={() => (window.location.href = "/help")}
             id="help"
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              width: 160,
+              justifyContent: "center",
+              alignItems: "center",
+              borderWidth: 1,
+              borderStyle: "solid",
+              borderRadius: 5,
+              padding: 5,
+            }}
+          >
+            <img
+              src={Info}
+              style={{
+                width: "5vw",
+                height: "5vw",
+              }}
+            />
+            <div style={{ fontWeight: 500, fontSize: 32 }}>About</div>
+          </div> */}
+          <div
             style={{
               display: "flex",
               flexDirection: "row",
@@ -662,91 +706,92 @@ export default class HeaderBar extends React.Component {
               alignItems: "center",
             }}
           >
-            <img
-              src={Info}
-              style={{
-                width: "7vw",
-                height: "7vw",
-                borderWidth: 1,
-                borderStyle: "solid",
-                borderRadius: 5,
-                padding: 5,
-              }}
-            />
-          </div>
-
-          <div
-            id="profile-button"
-            onClick={() => this.showProfileModal()}
-            style={{
-              display: "flex",
-              textDecoration: "none",
-              color: "black",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <AccountCircleOutlinedIcon
-              style={{
-                width: "7vw",
-                height: "7vw",
-                borderWidth: 1,
-                borderStyle: "solid",
-                borderRadius: 5,
-                padding: 5,
-              }}
-            ></AccountCircleOutlinedIcon>
-          </div>
-          <a
-            href="/cart"
-            style={{
-              display: "flex",
-              textDecoration: "none",
-              color: "black",
-              alignItems: "center",
-              justifyContent: "center",
-              marginRight: 50,
-            }}
-          >
-            {!localStorage.getItem("cart") ||
-              (localStorage.getItem("cart") == 0 && (
-                <ShoppingCartOutlinedIcon
-                  style={{
-                    width: "9vw",
-                    height: "9vw",
-                    borderWidth: 1,
-                    borderStyle: "solid",
-                    borderRadius: 5,
-                    padding: 5,
-                  }}
-                ></ShoppingCartOutlinedIcon>
-              ))}
-
-            {localStorage.getItem("cart") &&
-              localStorage.getItem("cart") != 0 && (
-                <img style={{ width: 25, height: 25 }} src={cart2} />
-              )}
-
             <div
+              onClick={() => this.setCity()}
+              id="search"
               style={{
-                color: "green",
-                fontWeight: 700,
-                fontSize: 18,
+                display: "flex",
+                flexWrap: "nowrap",
+                flexDirection: "row",
+                width: 160,
+                justifyContent: "center",
+                alignItems: "center",
+                whiteSpace: "nowrap",
+                backgroundColor: "#f1f1f1",
+                borderWidth: 1,
+                borderStyle: "solid",
+                borderRadius: 5,
                 padding: 5,
               }}
             >
-              {localStorage.getItem("cart") &&
-                localStorage.getItem("cart") != 0 &&
-                "(" + localStorage.getItem("cart") + ")"}
+              {!this.state.city && (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    src={city}
+                    style={{
+                      width: "5vw",
+                      height: "5vw",
+                    }}
+                  />
+                  <div style={{ fontWeight: 500, fontSize: 32 }}>City</div>
+                </div>
+              )}
             </div>
-          </a>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          ></div>
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {this.state.city && (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Autocomplete
+                    value={this.state.currentCity}
+                    id="city"
+                    options={this.citiesList}
+                    getOptionLabel={(option) => option}
+                    style={{ width: 300 }}
+                    renderOption={(option) => (
+                      <div
+                        onClick={() => this.updateCity(option)}
+                        style={{ width: "100%", height: "1005" }}
+                      >
+                        {option}
+                      </div>
+                    )}
+                    renderInput={(params) => (
+                      <div>
+                        <TextField
+                          {...params}
+                          placeholder="We add more cities every day!"
+                          label="City"
+                          variant="outlined"
+                          fullWidth
+                        />
+                      </div>
+                    )}
+                    freeSolo={true}
+                    style={{ width: "300px" }}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     );
