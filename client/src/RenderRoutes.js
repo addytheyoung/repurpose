@@ -38,6 +38,16 @@ import ChangePrices from "./scripts/ChangePrices";
 import MoveToOrders from "./scripts/MoveToOrders";
 import AndrewTest from "./AndrewTest";
 
+import HomeMobile from "./mobile/HomeMobile";
+import BuyMobile from "./mobile/BuyMobile";
+
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+} from "react-device-detect";
+
 export default class RenderRoutes extends React.Component {
   render() {
     const citiesList = ["Austin, TX"];
@@ -51,6 +61,27 @@ export default class RenderRoutes extends React.Component {
       localStorage.setItem("city", category);
     }
     if (firebase.auth().currentUser) {
+      // Mobile?
+      if (isMobile) {
+        return (
+          <Elements stripe={stripePromise}>
+            <Router>
+              {!citiesList.includes(window.localStorage.getItem("city")) && (
+                <Route path="/" exact={true} render={() => <HomeMobile />} />
+              )}
+
+              {citiesList.includes(window.localStorage.getItem("city")) && (
+                <Route path="/" exact={true} render={() => <BuyMobile />} />
+              )}
+              <Route
+                path="/what-have-i-sold"
+                exact={true}
+                render={() => <WhatHaveISoldPage />}
+              />
+            </Router>
+          </Elements>
+        );
+      }
       return (
         <Elements stripe={stripePromise}>
           <Router>
