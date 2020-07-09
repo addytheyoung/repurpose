@@ -9,6 +9,8 @@ import Info from "../images/info.png";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
+import FilterListOutlinedIcon from "@material-ui/icons/FilterListOutlined";
+import LocationCityOutlinedIcon from "@material-ui/icons/LocationCityOutlined";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 import cart2 from "../images/cart-green.svg";
 import Shop from "../Shop";
@@ -16,6 +18,7 @@ import Close from "../images/close.png";
 import city from "../images/architectonic.png";
 import FilterBar from "../FilterBar";
 import Filter from "../images/filter.png";
+import AttachMoneyOutlinedIcon from "@material-ui/icons/AttachMoneyOutlined";
 
 export default class HeaderBar extends React.Component {
   citiesList = ["Austin, TX"];
@@ -367,7 +370,7 @@ export default class HeaderBar extends React.Component {
               flexDirection: "row",
               justifyContent: "flex-start",
               borderBottomWidth: 2,
-              height: "10vh",
+              height: "8vh",
               alignItems: "center",
               borderBottomColor: "#e8e8e8",
               borderBottomStyle: "solid",
@@ -375,20 +378,128 @@ export default class HeaderBar extends React.Component {
               width: "100vw",
             }}
           >
-            <Link
+            <div
+              style={{
+                minHeight: "60%",
+
+                marginLeft: 20,
+                width: "20vw",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                borderWidth: 1,
+                borderStyle: "solid",
+                borderRadius: 5,
+                backgroundColor: "#c7d4ea",
+              }}
+            >
+              <div
+                id="search"
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: 36,
+                }}
+              >
+                <FilterListOutlinedIcon
+                  style={{
+                    width: "8vw",
+                    height: "8vw",
+                  }}
+                ></FilterListOutlinedIcon>
+                <div style={{ fontWeight: 500, fontSize: 32 }}>Filters</div>
+              </div>
+            </div>
+
+            <div
+              style={{
+                minHeight: "60%",
+                width: "20vw",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                borderWidth: 1,
+                borderStyle: "solid",
+                borderRadius: 5,
+                marginLeft: 15,
+                backgroundColor: "#c7d4ea",
+              }}
+            >
+              <div
+                id="search"
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: 36,
+                }}
+              >
+                <LocationCityOutlinedIcon
+                  style={{
+                    width: "8vw",
+                    height: "8vw",
+                  }}
+                ></LocationCityOutlinedIcon>
+                <div style={{ fontWeight: 500, fontSize: 32 }}>
+                  {localStorage.getItem("city")}
+                </div>
+              </div>
+            </div>
+
+            <div
+              style={{
+                minHeight: "60%",
+                marginLeft: 15,
+
+                width: "15vw",
+                paddingRight: 10,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                borderWidth: 1,
+                borderStyle: "solid",
+                borderRadius: 5,
+                backgroundColor: "#c7d4ea",
+              }}
+            >
+              <div
+                id="search"
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: 36,
+                }}
+              >
+                <AttachMoneyOutlinedIcon
+                  style={{
+                    width: "8vw",
+                    height: "8vw",
+                  }}
+                ></AttachMoneyOutlinedIcon>
+                <div style={{ fontWeight: 500, fontSize: 32 }}>Buy</div>
+              </div>
+            </div>
+
+            {/* <Link
               id="buy-link"
               to="/"
               style={{
                 display: "flex",
+                marginLeft: 30,
                 fontSize: 36,
                 fontWeight:
                   path === "/" || path.includes("shop") || path.includes("cart")
                     ? 600
                     : 500,
                 alignItems: "center",
-                minWidth: "12vw",
+                width: "15vw",
                 textDecoration: "none",
-                height: "9vh",
+                height: "10vw",
                 color:
                   path === "/" || path.includes("shop") || path.includes("cart")
                     ? "#000000"
@@ -411,9 +522,9 @@ export default class HeaderBar extends React.Component {
               to="/sell"
               style={{
                 display: "flex",
-                minWidth: "12vw",
+                width: "15vw",
                 fontSize: 36,
-                height: "9vh",
+                height: "10vw",
                 fontWeight: path.includes("sell") ? 700 : 500,
                 alignItems: "center",
                 textDecoration: "none",
@@ -427,9 +538,9 @@ export default class HeaderBar extends React.Component {
               }}
             >
               Sell
-            </Link>
+            </Link> */}
 
-            <div
+            {/* <div
               onClick={() =>
                 this.setState({
                   searching: !this.state.searching,
@@ -449,11 +560,6 @@ export default class HeaderBar extends React.Component {
                   flexDirection: "row",
                   justifyContent: "center",
                   alignItems: "center",
-                  borderWidth: 1,
-                  borderStyle: "solid",
-                  borderRadius: 5,
-                  fontSize: 32,
-                  padding: 5,
                 }}
               >
                 {this.state.searching === false && (
@@ -556,241 +662,7 @@ export default class HeaderBar extends React.Component {
                   </div>
                 </div>
               </div>
-            )}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <div
-                id="profile-button"
-                onClick={() => this.showProfileModal()}
-                style={{
-                  display: "flex",
-                  width: 160,
-                  textDecoration: "none",
-                  color: "black",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderWidth: 1,
-                  borderStyle: "solid",
-                  borderRadius: 5,
-                  padding: 5,
-                  backgroundColor: "#f1f1f1",
-                }}
-              >
-                <AccountCircleOutlinedIcon
-                  style={{
-                    width: "5vw",
-                    height: "5vw",
-                  }}
-                ></AccountCircleOutlinedIcon>
-                <div style={{ fontWeight: 500, fontSize: 32 }}>Profile</div>
-              </div>
-            </div>
-
-            <a
-              href="/cart"
-              style={{
-                display: "flex",
-                textDecoration: "none",
-                color: "black",
-                alignItems: "center",
-                justifyContent: "center",
-                marginRight: 50,
-              }}
-            >
-              {!localStorage.getItem("cart") ||
-                (localStorage.getItem("cart") == 0 && (
-                  <ShoppingCartOutlinedIcon
-                    style={{
-                      width: "9vw",
-                      height: "9vw",
-                      borderWidth: 1,
-                      borderStyle: "solid",
-                      borderRadius: 5,
-                      padding: 5,
-                    }}
-                  ></ShoppingCartOutlinedIcon>
-                ))}
-
-              {localStorage.getItem("cart") &&
-                localStorage.getItem("cart") != 0 && (
-                  <img style={{ width: 25, height: 25 }} src={cart2} />
-                )}
-
-              <div
-                style={{
-                  color: "green",
-                  fontWeight: 700,
-                  fontSize: 18,
-                  padding: 5,
-                }}
-              >
-                {localStorage.getItem("cart") &&
-                  localStorage.getItem("cart") != 0 &&
-                  "(" + localStorage.getItem("cart") + ")"}
-              </div>
-            </a>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            ></div>
-          </div>
-        </div>
-        <div
-          style={{ height: 65, display: "flex", backgroundColor: "#ffffff" }}
-        >
-          <div
-            id="search"
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: 32,
-              borderWidth: 1,
-              width: 150,
-              marginRight: 15,
-              borderStyle: "solid",
-              borderRadius: 5,
-              padding: 5,
-              marginLeft: 10,
-              backgroundColor: "#f1f1f1",
-            }}
-          >
-            <img
-              src={Filter}
-              style={{
-                width: "5vw",
-                height: "5vw",
-                marginRight: "1vw",
-              }}
-            />
-            <div style={{ fontWeight: 500 }}>Filter</div>
-          </div>
-          {/* <div
-            onClick={() => (window.location.href = "/help")}
-            id="help"
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              width: 160,
-              justifyContent: "center",
-              alignItems: "center",
-              borderWidth: 1,
-              borderStyle: "solid",
-              borderRadius: 5,
-              padding: 5,
-            }}
-          >
-            <img
-              src={Info}
-              style={{
-                width: "5vw",
-                height: "5vw",
-              }}
-            />
-            <div style={{ fontWeight: 500, fontSize: 32 }}>About</div>
-          </div> */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <div
-              onClick={() => this.setCity()}
-              id="search"
-              style={{
-                display: "flex",
-                flexWrap: "nowrap",
-                flexDirection: "row",
-                width: 160,
-                justifyContent: "center",
-                alignItems: "center",
-                whiteSpace: "nowrap",
-                backgroundColor: "#f1f1f1",
-                borderWidth: 1,
-                borderStyle: "solid",
-                borderRadius: 5,
-                padding: 5,
-              }}
-            >
-              {!this.state.city && (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <img
-                    src={city}
-                    style={{
-                      width: "5vw",
-                      height: "5vw",
-                    }}
-                  />
-                  <div style={{ fontWeight: 500, fontSize: 32 }}>City</div>
-                </div>
-              )}
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {this.state.city && (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Autocomplete
-                    value={this.state.currentCity}
-                    id="city"
-                    options={this.citiesList}
-                    getOptionLabel={(option) => option}
-                    style={{ width: 300 }}
-                    renderOption={(option) => (
-                      <div
-                        onClick={() => this.updateCity(option)}
-                        style={{ width: "100%", height: "1005" }}
-                      >
-                        {option}
-                      </div>
-                    )}
-                    renderInput={(params) => (
-                      <div>
-                        <TextField
-                          {...params}
-                          placeholder="We add more cities every day!"
-                          label="City"
-                          variant="outlined"
-                          fullWidth
-                        />
-                      </div>
-                    )}
-                    freeSolo={true}
-                    style={{ width: "300px" }}
-                  />
-                </div>
-              )}
-            </div>
+            )}*/}
           </div>
         </div>
       </div>
