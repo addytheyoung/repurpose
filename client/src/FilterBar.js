@@ -19,15 +19,6 @@ export default class FilterBar extends React.Component {
             paddingBottom: 10,
           }}
         >
-          {/* <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            Filters
-          </div> */}
           <DialogPrice
             clearContent={() => this.changePrice("$0", "$999999")}
             changePrice={(min, max) => this.changePrice(min, max)}

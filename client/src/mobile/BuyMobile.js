@@ -16,7 +16,7 @@ export default class BuyMobile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loaded: true,
+      loaded: false,
       currentIndex: 0,
       currentCategoryIndex: 0,
       currentItemIndex: 0,
@@ -28,13 +28,13 @@ export default class BuyMobile extends React.Component {
       finishedLoading: true,
       appended: false,
       activeCategories: [true, true, true, true, true, true, true, true, true],
-      finishedPullingItems: true,
+      finishedPullingItems: false,
       newItems: [],
-      foundNewItems: true,
+      foundNewItems: false,
     };
-    // this.state.finishedPullingItems = false;
-    // this.pullItemsFromDatabase(this.state.activeCategories, null, true);
-    // this.pullNewItemsFromDatabase();
+    this.state.finishedPullingItems = false;
+    this.pullItemsFromDatabase(this.state.activeCategories, null, true);
+    this.pullNewItemsFromDatabase();
   }
   render() {
     if (!this.state.loaded || !this.state.foundNewItems) {
@@ -264,19 +264,11 @@ export default class BuyMobile extends React.Component {
             </div>
           )}
           <div style={{ position: "fixed", top: 0 }}>
-            <HeaderMobile updateFilter={(a, b) => this.updateFilter(a, b)} />
+            <HeaderMobile setPriceFilter={(a, b) => this.updateFilter(a, b)} />
           </div>
           <div style={{ position: "fixed", bottom: 0 }}>
             <FooterMobile updateFilter={(a, b) => this.updateFilter(a, b)} />
           </div>
-          {/* <div style={{ position: "fixed", top: 200 }}>
-            <FilterBar
-              updateFilter={(a, b) => this.updateFilter(a, b)}
-              updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
-              updateMoreFilter={(a, b) => this.updateMoreFilter(a, b)}
-            />
-          </div> */}
-
           <div
             style={{
               marginTop: "15vh",
@@ -1006,8 +998,6 @@ export default class BuyMobile extends React.Component {
   }
 
   updateFilter(min, max) {
-    min = min.substring(1, min.length);
-    max = max.substring(1, max.length);
     this.setState({
       minPrice: min,
       maxPrice: max,

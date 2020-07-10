@@ -17,8 +17,12 @@ import Shop from "../Shop";
 import Close from "../images/close.png";
 import city from "../images/architectonic.png";
 import FilterBar from "../FilterBar";
+import FilterPageMobile from "./FilterPageMobile.js";
 import Filter from "../images/filter.png";
 import AttachMoneyOutlinedIcon from "@material-ui/icons/AttachMoneyOutlined";
+import SignInModal from "../SignInModal";
+import CityPageMobile from "./CityPageMobile";
+import BuySellPageMobile from "./BuySellPageMobile";
 
 export default class HeaderBar extends React.Component {
   citiesList = ["Austin, TX"];
@@ -32,335 +36,39 @@ export default class HeaderBar extends React.Component {
       email: "",
       searching: false,
       currentCity: localStorage.getItem("city"),
+      filterPage: false,
+      cityPage: false,
+      buySellPage: false,
+      minPrice: "",
+      maxPrice: "",
     };
   }
   render() {
-    const singedin = !!firebase.auth().currentUser;
-    const signedModal = !singedin && !this.state.newUser && !this.state.retUser;
-    const path = window.location.pathname;
     return (
       <div>
+        {this.state.filterPage && (
+          <div>
+            <FilterPageMobile
+              minPrice={this.state.minPrice}
+              maxPrice={this.state.maxPrice}
+              updateFilter={(a, b) => this.updateFilter(a, b)}
+              closePage={() => this.closePage()}
+            />
+          </div>
+        )}
+        {this.state.cityPage && (
+          <div>
+            <CityPageMobile closePage={() => this.closePage()} />
+          </div>
+        )}
+        {this.state.buySellPage && (
+          <div>
+            <FilterPageMobile closePage={() => this.closePage()} />
+          </div>
+        )}
         {this.state.profile && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-
-              // alignItems: "center"
-            }}
-          >
-            <div
-              onClick={(e) => this.closeModal(e)}
-              style={{
-                backgroundColor: "#000000",
-                opacity: 0.5,
-                zIndex: 99,
-                width: "100vw",
-                height: "100vh",
-                position: "fixed",
-              }}
-            ></div>
-            <div
-              style={{
-                width: "30vw",
-                borderRadius: 5,
-                height: "40vh",
-                top: 30,
-                backgroundColor: "#f5f5f5",
-                position: "fixed",
-                zIndex: 100,
-                opacity: 1,
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <div
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "flex-end",
-                  }}
-                >
-                  <img
-                    id="close"
-                    onClick={() => this.closeModal()}
-                    src={Close}
-                    style={{
-                      width: 30,
-                      height: 30,
-                      marginTop: 20,
-                      marginRight: 20,
-                    }}
-                  />
-                </div>
-                {signedModal && (
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <div style={{ fontSize: 20, fontWeight: 600 }}>
-                      Sign up / sign in
-                    </div>
-                    <Input
-                      id="email"
-                      placeholder="Enter your email"
-                      style={{ width: 300, marginTop: 20 }}
-                    />
-                    <div
-                      onClick={() => this.startShopping()}
-                      id="start-shopping"
-                      style={{
-                        backgroundColor: "#426CB4",
-                        borderRadius: 5,
-                        padding: 10,
-                        height: 30,
-                        width: 300,
-                        color: "white",
-                        fontWeight: 600,
-                        marginTop: 10,
-                        marginBottom: 10,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      START SHOPPING
-                    </div>
-                  </div>
-                )}
-                {!singedin && this.state.newUser && (
-                  <div>
-                    <div
-                      style={{ fontSize: 20, fontWeight: 600, marginTop: 20 }}
-                    >
-                      What will your password be?
-                    </div>
-                    <Input
-                      id="pass"
-                      type="password"
-                      placeholder="Password"
-                      style={{ width: 300, marginTop: 30 }}
-                    />
-                    <div
-                      onClick={() => this.setPassword()}
-                      id="start-shopping"
-                      style={{
-                        backgroundColor: "#426CB4",
-                        borderRadius: 5,
-                        padding: 10,
-                        height: 30,
-                        width: 300,
-                        color: "white",
-                        fontWeight: 600,
-                        marginTop: 10,
-                        marginBottom: 10,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      START SHOPPING
-                    </div>
-                  </div>
-                )}
-                {!singedin && this.state.retUser && (
-                  <div>
-                    {" "}
-                    <div>
-                      <div
-                        style={{ fontSize: 20, fontWeight: 600, marginTop: 20 }}
-                      >
-                        Welcome back! What is your password?
-                      </div>
-                      <Input
-                        id="pass"
-                        type="password"
-                        placeholder="Password"
-                        style={{ width: 300, marginTop: 30 }}
-                      />
-                      <div
-                        onClick={() => this.login()}
-                        id="start-shopping"
-                        style={{
-                          backgroundColor: "#426CB4",
-                          borderRadius: 5,
-                          padding: 10,
-                          height: 30,
-                          width: 300,
-                          color: "white",
-                          fontWeight: 600,
-                          marginTop: 10,
-                          marginBottom: 10,
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        START SHOPPING
-                      </div>
-                    </div>
-                  </div>
-                )}
-                {singedin && !this.state.logout && (
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontSize: 22,
-                        fontWeight: 600,
-                        marginBottom: 20,
-                      }}
-                    >
-                      Profile
-                    </div>
-                    <div
-                      onClick={() => (window.location.href = "/orders")}
-                      id="my-orders"
-                      style={{
-                        backgroundColor: "#a1a1a1",
-                        borderRadius: 5,
-                        padding: 10,
-                        height: 30,
-                        width: 100,
-                        color: "white",
-                        fontWeight: 600,
-                        marginTop: 10,
-                        marginBottom: 10,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      MY ORDERS
-                    </div>
-                    {/* <div
-                      onClick={() => (window.location.href = "/mysales")}
-                      id="my-sales"
-                      style={{
-                        backgroundColor: "#a1a1a1",
-                        borderRadius: 5,
-                        padding: 10,
-                        height: 30,
-                        width: 100,
-                        color: "white",
-                        fontWeight: 600,
-                        marginTop: 10,
-                        marginBottom: 10,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      MY SALES
-                    </div> */}
-                    <div
-                      onClick={() =>
-                        this.setState({
-                          logout: true,
-                        })
-                      }
-                      id="logout"
-                      style={{
-                        backgroundColor: "#a1a1a1",
-                        borderRadius: 5,
-                        padding: 10,
-                        height: 30,
-                        width: 100,
-                        color: "white",
-                        fontWeight: 600,
-                        marginTop: 10,
-                        marginBottom: 10,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      LOG OUT
-                    </div>
-                  </div>
-                )}
-                {this.state.logout && (
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <div style={{ fontSize: 22, fontWeight: 600 }}>
-                      Are you sure you want to logout?
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        marginTop: 20,
-                      }}
-                    >
-                      <div
-                        id="logout-yes"
-                        onClick={() => this.logout()}
-                        style={{
-                          backgroundColor: "#a1a1a1",
-                          borderRadius: 5,
-                          padding: 10,
-                          height: 30,
-                          width: 100,
-                          color: "white",
-                          fontWeight: 600,
-                          marginTop: 10,
-                          marginBottom: 10,
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          marginRight: 10,
-                        }}
-                      >
-                        YES
-                      </div>
-                      <div
-                        id="logout-no"
-                        onClick={() => this.closeModal()}
-                        style={{
-                          marginLeft: 10,
-                          backgroundColor: "#a1a1a1",
-                          borderRadius: 5,
-                          padding: 10,
-                          height: 30,
-                          width: 100,
-                          color: "white",
-                          fontWeight: 600,
-                          marginTop: 10,
-                          marginBottom: 10,
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        CANCEL
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
+          <div>
+            <SignInModal />
           </div>
         )}
         <div>
@@ -379,18 +87,19 @@ export default class HeaderBar extends React.Component {
             }}
           >
             <div
+              onClick={() => this.openFilterPage()}
               style={{
                 minHeight: "60%",
-
+                paddingLeft: 3,
                 marginLeft: 20,
-                width: "20vw",
+                minWidth: "20vw",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                borderWidth: 1,
+                borderWidth: 0,
                 borderStyle: "solid",
-                borderRadius: 5,
-                backgroundColor: "#c7d4ea",
+                borderRadius: 10,
+                backgroundColor: "#dae2f1",
               }}
             >
               <div
@@ -407,24 +116,31 @@ export default class HeaderBar extends React.Component {
                   style={{
                     width: "8vw",
                     height: "8vw",
+                    color: "#375995",
                   }}
                 ></FilterListOutlinedIcon>
-                <div style={{ fontWeight: 500, fontSize: 32 }}>Filters</div>
+                <div
+                  style={{ fontWeight: 600, fontSize: 32, color: "#375995" }}
+                >
+                  Filters
+                </div>
               </div>
             </div>
 
             <div
               style={{
                 minHeight: "60%",
-                width: "20vw",
+                minWidth: "20vw",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                borderWidth: 1,
+                borderWidth: 0,
                 borderStyle: "solid",
-                borderRadius: 5,
+                borderRadius: 10,
                 marginLeft: 15,
-                backgroundColor: "#c7d4ea",
+                paddingLeft: 3,
+                backgroundColor: "#dae2f1",
+                paddingRight: 10,
               }}
             >
               <div
@@ -441,9 +157,12 @@ export default class HeaderBar extends React.Component {
                   style={{
                     width: "8vw",
                     height: "8vw",
+                    color: "#375995",
                   }}
                 ></LocationCityOutlinedIcon>
-                <div style={{ fontWeight: 500, fontSize: 32 }}>
+                <div
+                  style={{ fontWeight: 600, fontSize: 32, color: "#375995" }}
+                >
                   {localStorage.getItem("city")}
                 </div>
               </div>
@@ -453,16 +172,16 @@ export default class HeaderBar extends React.Component {
               style={{
                 minHeight: "60%",
                 marginLeft: 15,
-
-                width: "15vw",
-                paddingRight: 10,
+                minWidth: "15vw",
+                paddingRight: 20,
+                paddingLeft: 0,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                borderWidth: 1,
+                borderWidth: 0,
                 borderStyle: "solid",
-                borderRadius: 5,
-                backgroundColor: "#c7d4ea",
+                borderRadius: 10,
+                backgroundColor: "#dae2f1",
               }}
             >
               <div
@@ -473,15 +192,22 @@ export default class HeaderBar extends React.Component {
                   justifyContent: "center",
                   alignItems: "center",
                   fontSize: 36,
+                  height: "100%",
+                  width: "100%",
                 }}
               >
                 <AttachMoneyOutlinedIcon
                   style={{
                     width: "8vw",
                     height: "8vw",
+                    color: "#375995",
                   }}
                 ></AttachMoneyOutlinedIcon>
-                <div style={{ fontWeight: 500, fontSize: 32 }}>Buy</div>
+                <div
+                  style={{ fontWeight: 600, fontSize: 32, color: "#375995" }}
+                >
+                  Buy
+                </div>
               </div>
             </div>
 
@@ -667,6 +393,31 @@ export default class HeaderBar extends React.Component {
         </div>
       </div>
     );
+  }
+
+  updateFilter(min, max) {
+    min = min.substring(1, min.length);
+    max = max.substring(1, max.length);
+    this.setState({
+      minPrice: min,
+      maxPrice: max,
+    });
+
+    this.props.setPriceFilter(min, max);
+  }
+
+  closePage() {
+    this.setState({
+      filterPage: false,
+      cityPage: false,
+      buySellPage: false,
+    });
+  }
+
+  openFilterPage() {
+    this.setState({
+      filterPage: true,
+    });
   }
 
   getCityFromAddress(address) {
