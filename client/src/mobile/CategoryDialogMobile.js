@@ -28,20 +28,9 @@ const useStyles = makeStyles({
 
 function SimpleDialog(props) {
   const classes = useStyles();
-  const { onClose, selectedValue, open } = props;
+  const { onClose, selectedValue, open, categories } = props;
 
-  const [checked, setChecked] = React.useState([
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-  ]);
+  const [checked, setChecked] = React.useState(categories);
 
   const handleChange = (index) => {
     var temp = [];
@@ -316,14 +305,19 @@ function SimpleDialog(props) {
       <div
         id="clear"
         style={{
-          backgroundColor: "#d1d1d1",
+          backgroundColor: "#dae2f1",
           padding: 10,
-          width: 100,
+          width: "25vw",
+          height: "5vh",
           alignSelf: "center",
           textAlign: "center",
+          fontSize: 46,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           borderRadius: 5,
-          fontWeight: 600,
           marginTop: 50,
+          fontWeight: 600,
           marginBottom: 50,
         }}
         onClick={() => clearContent(props, handleClose, clear)}
@@ -334,11 +328,17 @@ function SimpleDialog(props) {
       <div
         id="save"
         style={{
-          backgroundColor: "#d1d1d1",
+          backgroundColor: "#dae2f1",
           padding: 10,
           width: 100,
           alignSelf: "center",
+          width: "25vw",
+          height: "5vh",
+          display: "flex",
+          justifyContent: "center",
+          fontSize: 46,
           textAlign: "center",
+          alignItems: "center",
           borderRadius: 5,
           marginTop: 50,
           fontWeight: 600,
@@ -412,6 +412,7 @@ export default function SimpleDialogDemo(props) {
         Category
       </div>
       <SimpleDialog
+        categories={props.categories}
         clearContent={props.clearContent}
         changeCategory={props.changeCategory}
         selectedValue={selectedValue}

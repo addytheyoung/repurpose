@@ -90,10 +90,11 @@ export default class FilterPageMobile extends React.Component {
               <PriceDialogMobile
                 minPrice={this.props.minPrice}
                 maxPrice={this.props.maxPrice}
-                clearContent={() => this.changePrice("$0", "$999999")}
+                clearContent={() => this.changePrice("$", "$")}
                 changePrice={(min, max) => this.changePrice(min, max)}
               />
               <CategoryDialogMobile
+                categories={this.props.categories}
                 clearContent={() =>
                   this.changeCategory([
                     true,
@@ -114,6 +115,10 @@ export default class FilterPageMobile extends React.Component {
         </div>
       </div>
     );
+  }
+
+  changeCategory(categories) {
+    this.props.updateCategoryFilter(categories);
   }
 
   changePrice(min, max) {

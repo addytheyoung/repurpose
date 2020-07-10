@@ -264,7 +264,10 @@ export default class BuyMobile extends React.Component {
             </div>
           )}
           <div style={{ position: "fixed", top: 0 }}>
-            <HeaderMobile setPriceFilter={(a, b) => this.updateFilter(a, b)} />
+            <HeaderMobile
+              updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
+              setPriceFilter={(a, b) => this.updateFilter(a, b)}
+            />
           </div>
           <div style={{ position: "fixed", bottom: 0 }}>
             <FooterMobile updateFilter={(a, b) => this.updateFilter(a, b)} />
