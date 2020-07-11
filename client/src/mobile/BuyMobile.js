@@ -11,6 +11,8 @@ import Back from "../images/back.png";
 import Front from "../images/arrow.png";
 import HeaderMobile from "./HeaderMobile";
 import FooterMobile from "./FooterMobile";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import SearchPageMobile from "./SearchPageMobile";
 
 export default class BuyMobile extends React.Component {
   constructor(props) {
@@ -25,7 +27,7 @@ export default class BuyMobile extends React.Component {
       activeClothingType: "all",
       activeClothingGender: "all",
       newCategory: true,
-      finishedLoading: true,
+      finishedLoading: false,
       appended: false,
       activeCategories: [true, true, true, true, true, true, true, true, true],
       finishedPullingItems: false,
@@ -37,6 +39,7 @@ export default class BuyMobile extends React.Component {
     this.pullNewItemsFromDatabase();
   }
   render() {
+    console.log(!this.state.finishedLoading);
     if (!this.state.loaded || !this.state.foundNewItems) {
       return (
         <div
@@ -184,6 +187,7 @@ export default class BuyMobile extends React.Component {
                           display: "flex",
                           flexDirection: "column",
                           justifyContent: "center",
+                          alignItems: "centers",
                         }}
                       >
                         <div
@@ -218,13 +222,13 @@ export default class BuyMobile extends React.Component {
                             borderRadius: 5,
                             padding: 10,
                             width: 300,
-                            marginLeft: 20,
+
                             height: "7vh",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
                             color: "#ffffff",
-                            fontWeight: 500,
+                            fontWeight: 600,
                             fontSize: 36,
                           }}
                         >
@@ -269,12 +273,13 @@ export default class BuyMobile extends React.Component {
               setPriceFilter={(a, b) => this.updateFilter(a, b)}
             />
           </div>
-          <div style={{ position: "fixed", bottom: 0 }}>
+          <div style={{ position: "fixed", bottom: 0, zIndex: 102 }}>
             <FooterMobile updateFilter={(a, b) => this.updateFilter(a, b)} />
           </div>
+
           <div
             style={{
-              marginTop: "15vh",
+              marginTop: "12vh",
               overflowX: "hidden",
             }}
           >
@@ -304,7 +309,7 @@ export default class BuyMobile extends React.Component {
                   }}
                 >
                   All purchases are delivered to your <br />
-                  doorstep in less than 24 hours
+                  doorstep in less than 24 hours!
                 </div>
                 {this.state.newItems &&
                   this.state.activeCategories &&
@@ -408,7 +413,7 @@ export default class BuyMobile extends React.Component {
                     dataLength={this.state.items.length} //This is important field to render the next data
                     next={() => this.next()}
                     hasMore={!this.state.finishedLoading}
-                    scrollThreshold={0.95}
+                    scrollThreshold={0.7}
                     loader={<h4></h4>}
                     endMessage={
                       <p style={{ textAlign: "center" }}>
@@ -446,13 +451,13 @@ export default class BuyMobile extends React.Component {
                           return (
                             <div
                               style={{
-                                marginTop: 20,
+                                marginTop: "4vh",
 
-                                marginBottom: 20,
+                                marginBottom: "2vh",
                                 width: "70vw",
                                 textAlign: "center",
                                 fontWeight: 600,
-                                fontSize: 42,
+                                fontSize: 52,
                               }}
                             >
                               {item}
@@ -478,8 +483,8 @@ export default class BuyMobile extends React.Component {
                             key={index}
                             style={{
                               width: "49vw",
-                              marginLeft: "0.5vw",
-                              marginRight: "0.5vw",
+                              marginLeft: "0.3vw",
+                              marginRight: "0.3vw",
                               marginBottom: "1vh",
                             }}
                           >
@@ -565,6 +570,7 @@ export default class BuyMobile extends React.Component {
   }
 
   next() {
+    console.log("next");
     if (this.state.finishedPullingItems) {
       this.pullItemsFromDatabase(this.state.activeCategories);
     }

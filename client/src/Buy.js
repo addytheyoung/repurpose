@@ -35,6 +35,7 @@ export default class Buy extends React.Component {
     this.pullNewItemsFromDatabase();
   }
   render() {
+    console.log(!this.state.finishedLoading);
     if (!this.state.loaded || !this.state.foundNewItems) {
       return (
         <div

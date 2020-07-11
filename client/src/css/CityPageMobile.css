@@ -1,0 +1,14 @@
+#combo-box-demo-mobile {
+  height: 5vh;
+  font-size: 42px;
+}
+
+#combo-box-demo-mobile-div svg {
+  height: 5vh;
+  width: 5vh;
+}
+
+#combo-box-demo-mobile-div div {
+  right: 0;
+  top: calc(50% - 2.5vh) !important;
+}

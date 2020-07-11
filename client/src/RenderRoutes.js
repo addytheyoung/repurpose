@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import * as firebase from "firebase";
 import Buy from "./Buy";
+import FooterMobile from "./mobile/FooterMobile";
 import Sell from "./Sell";
 import GetTotal from "./scripts/GetTotal";
 import OrderKit from "./OrderKit";
@@ -47,6 +48,7 @@ import {
   isBrowser,
   isMobile,
 } from "react-device-detect";
+import SearchPageMobile from "./mobile/SearchPageMobile";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -77,6 +79,11 @@ export default class RenderRoutes extends React.Component {
                 path="/what-have-i-sold"
                 exact={true}
                 render={() => <WhatHaveISoldPage />}
+              />
+              <Route
+                path="/search"
+                exact={true}
+                render={() => <SearchPageMobile />}
               />
             </Router>
           </Elements>
@@ -213,6 +220,31 @@ export default class RenderRoutes extends React.Component {
         </Elements>
       );
     } else {
+      if (isMobile) {
+        return (
+          <Elements stripe={stripePromise}>
+            <Router>
+              {!citiesList.includes(window.localStorage.getItem("city")) && (
+                <Route path="/" exact={true} render={() => <HomeMobile />} />
+              )}
+
+              {citiesList.includes(window.localStorage.getItem("city")) && (
+                <Route path="/" exact={true} render={() => <BuyMobile />} />
+              )}
+              <Route
+                path="/what-have-i-sold"
+                exact={true}
+                render={() => <WhatHaveISoldPage />}
+              />
+              <Route
+                path="/search"
+                exact={true}
+                render={() => <SearchPage />}
+              />
+            </Router>
+          </Elements>
+        );
+      }
       return (
         <Elements stripe={stripePromise}>
           <Router>

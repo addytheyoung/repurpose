@@ -1,7 +1,7 @@
 import React from "react";
 import Close from "../images/close.png";
 
-export default class BuySellPageMobile extends React.Component {
+export default class AboutPageMobile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -13,7 +13,7 @@ export default class BuySellPageMobile extends React.Component {
         style={{
           display: "flex",
           justifyContent: "center",
-          // alignItems: "center"
+          zIndex: 100,
         }}
       >
         <div
@@ -61,11 +61,17 @@ export default class BuySellPageMobile extends React.Component {
                 }}
               />
             </div>
-          </div>
-
-          <div>
-            <div>Buy</div>
-            <div>Sell</div>
+            <div
+              id="bar"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                paddingTop: 10,
+                paddingBottom: 10,
+              }}
+            ></div>
           </div>
         </div>
       </div>

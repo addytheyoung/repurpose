@@ -66,7 +66,7 @@ export default class HeaderBar extends React.Component {
         )}
         {this.state.buySellPage && (
           <div>
-            <FilterPageMobile closePage={() => this.closePage()} />
+            <BuySellPageMobile closePage={() => this.closePage()} />
           </div>
         )}
         {this.state.profile && (
@@ -131,6 +131,11 @@ export default class HeaderBar extends React.Component {
             </div>
 
             <div
+              onClick={() =>
+                this.setState({
+                  cityPage: true,
+                })
+              }
               style={{
                 minHeight: "60%",
                 minWidth: "20vw",
@@ -171,7 +176,12 @@ export default class HeaderBar extends React.Component {
               </div>
             </div>
 
-            <div
+            {/* <div
+              onClick={() =>
+                this.setState({
+                  buySellPage: true,
+                })
+              }
               style={{
                 minHeight: "60%",
                 marginLeft: 15,
@@ -212,7 +222,7 @@ export default class HeaderBar extends React.Component {
                   Buy
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* <Link
               id="buy-link"
