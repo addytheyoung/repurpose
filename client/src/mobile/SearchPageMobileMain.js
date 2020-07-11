@@ -1,46 +1,121 @@
 import React from "react";
-import "../css/Buy.css";
+import * as firebase from "firebase";
 import ClipLoader from "react-spinners/ClipLoader";
+import "../css/Shop.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Close from "../images/close.png";
-import HeaderBar from "../HeaderBar";
-import * as firebase from "firebase";
-import randomizeArray from "../global_methods/randomizeArray";
-import FilterBar from "../FilterBar";
-import Back from "../images/back.png";
-import Front from "../images/arrow.png";
 import HeaderMobile from "./HeaderMobile";
 import FooterMobile from "./FooterMobile";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import SearchPageMobile from "./SearchPageMobile";
 
-export default class BuyMobile extends React.Component {
+export default class SearchPageMobileMain extends React.Component {
   constructor(props) {
     super(props);
+
+    const q = window.location.search;
+    const urlParams = new URLSearchParams(q);
+    const search = urlParams.get("search");
+    const category = urlParams.get("category");
+    const city = localStorage.getItem("city");
+
+    if (category === "All Categories") {
+      const categoryList = [
+        "Antiques & Collectibles",
+        "Art & Decoration",
+        "Baby",
+        "Books",
+        "Clothing, Shoes, & Accessories",
+        "Electronics",
+        "Home",
+        "Movies & Video Games",
+        "Garden",
+        "Sporting Goods",
+        "Toys & Hobbies",
+        "Everything Else",
+      ];
+      const firebaseCats = firebase.firestore().collection("Categories");
+      var i_index = 0;
+      const itemArr = [];
+      for (var i = 0; i < categoryList.length; i++) {
+        firebaseCats
+          .doc(categoryList[i])
+          .collection("All")
+          .where("location", "==", city)
+          // .limit(30)
+          .get()
+          .then((allItems) => {
+            i_index++;
+            const allItemsDocs = allItems.docs;
+            var j_index = 0;
+            for (var j = 0; j < allItemsDocs.length; j++) {
+              const itemData = allItemsDocs[j].data();
+              // See if the search matches
+              if (this.searchMatchesItem(search, itemData)) {
+                itemArr.push(itemData);
+              }
+              // Find a way to render all the items here
+
+              if (
+                j === allItemsDocs.length - 1 &&
+                i_index === categoryList.length - 1
+              ) {
+                this.setState({
+                  items: itemArr,
+                  loaded: true,
+                  modal: null,
+                });
+              }
+            }
+          });
+      }
+    }
+    // else {
+    //   firebase
+    //     .firestore()
+    //     .collection("Categories")
+    //     .doc(category)
+    //     .collection("All")
+    //     .where("location", "==", city)
+    //     .get()
+    //     .then((allItems) => {
+    //       const docs = allItems.docs;
+    //       const itemArr = [];
+
+    //       // Filter here
+    //       for (var i = 0; i < docs.length; i++) {
+    //         const itemData = docs[i].data();
+    //         // See if the search matches
+    //         if (this.searchMatchesItem(search, itemData)) {
+    //           itemArr.push(itemData);
+    //         }
+    //         // Find a way to render all the items here
+    //         if (i === docs.length - 1) {
+    //           this.setState({
+    //             items: itemArr,
+    //             loaded: true,
+    //             modal: null,
+    //           });
+    //         }
+    //       }
+    //     });
+    // }
+    window.localStorage.setItem("city", city);
+    // window.location.href = "/";
+
     this.state = {
       loaded: false,
-      currentIndex: 0,
-      currentCategoryIndex: 0,
-      currentItemIndex: 0,
       items: [],
-      finalDoc: 0,
-      activeClothingType: "all",
-      activeClothingGender: "all",
-      newCategory: true,
-      finishedLoading: false,
-      appended: false,
-      activeCategories: [true, true, true, true, true, true, true, true, true],
-      finishedPullingItems: false,
-      newItems: [],
-      foundNewItems: false,
+      category: category,
+      searchTerm: search,
+      minPrice: null,
+      maxPrice: null,
+      modal: null,
+      addingToCart: false,
+      numCartItems: localStorage.getItem("cart"),
     };
-    this.state.finishedPullingItems = false;
-    this.pullItemsFromDatabase(this.state.activeCategories, null, true);
-    this.pullNewItemsFromDatabase();
   }
+
   render() {
-    console.log(!this.state.finishedLoading);
-    if (!this.state.loaded || !this.state.foundNewItems) {
+    if (!this.state.loaded)
       return (
         <div
           style={{
@@ -56,13 +131,6 @@ export default class BuyMobile extends React.Component {
           />
         </div>
       );
-    }
-    const q = window.location.search;
-    const urlParams = new URLSearchParams(q);
-    const category = urlParams.get("city");
-    if (category) {
-      localStorage.setItem("city", category);
-    }
 
     return (
       <div style={{ overflowX: "hidden" }}>
@@ -266,14 +334,14 @@ export default class BuyMobile extends React.Component {
               </div>
             </div>
           )}
-          <div style={{ position: "fixed", top: 0 }}>
+          {/* <div style={{ position: "fixed", top: 0 }}>
             <HeaderMobile
               updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
               setPriceFilter={(a, b) => this.updateFilter(a, b)}
             />
-          </div>
+          </div> */}
           <div style={{ position: "fixed", bottom: 0, zIndex: 105 }}>
-            <FooterMobile updateFilter={(a, b) => this.updateFilter(a, b)} />
+            <FooterMobile searchPage={true} />
           </div>
 
           <div
@@ -407,129 +475,112 @@ export default class BuyMobile extends React.Component {
                     alignItems: "center",
                   }}
                 >
-                  <InfiniteScroll
-                    children={this.state.items}
-                    dataLength={this.state.items.length} //This is important field to render the next data
-                    next={() => this.next()}
-                    hasMore={!this.state.finishedLoading}
-                    scrollThreshold={0.7}
-                    loader={<h4></h4>}
-                    endMessage={
-                      <p style={{ textAlign: "center" }}>
-                        <b>Check back often for new items</b>
-                      </p>
-                    }
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      width: "100vw",
+                      overflowX: "hidden",
+                      minHeight: "80vh",
+                      flexWrap: "wrap",
+                      justifyContent: "center",
+                      alignItems: "flex-start",
+                      overflowY: "hidden",
+                      marginTop: 20,
+                    }}
                   >
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        width: "100vw",
-                        overflowX: "hidden",
-                        minHeight: "80vh",
-                        flexWrap: "wrap",
-                        justifyContent: "center",
-                        alignItems: "flex-start",
-                        marginTop: 20,
-                      }}
-                    >
-                      {this.state.items.map((item, index) => {
-                        if (
-                          (this.state.minPrice &&
-                            item.original_price < this.state.minPrice) ||
-                          (this.state.maxPrice &&
-                            item.original_price > this.state.maxPrice)
-                        ) {
-                          return null;
-                        }
-                        var prevItemCat =
-                          index == 0
-                            ? ""
-                            : this.state.items[index - 1].category;
-                        if (typeof item == "string") {
-                          return (
-                            <div
-                              style={{
-                                marginTop: "4vh",
-
-                                marginBottom: "2vh",
-                                width: "70vw",
-                                textAlign: "center",
-                                fontWeight: 600,
-                                fontSize: 52,
-                              }}
-                            >
-                              {item}
-                            </div>
-                          );
-                        }
-                        if (item.category == "Clothing, Shoes, & Accessories") {
-                          if (this.state.activeClothingGender != "all") {
-                            if (
-                              item.gender != this.state.activeClothingGender
-                            ) {
-                              return null;
-                            }
-                          }
-                          if (this.state.activeClothingType != "all") {
-                            if (item.type != this.state.activeClothingType) {
-                              return null;
-                            }
-                          }
-                        }
+                    {this.state.items.map((item, index) => {
+                      if (
+                        (this.state.minPrice &&
+                          item.original_price < this.state.minPrice) ||
+                        (this.state.maxPrice &&
+                          item.original_price > this.state.maxPrice)
+                      ) {
+                        return null;
+                      }
+                      var prevItemCat =
+                        index == 0 ? "" : this.state.items[index - 1].category;
+                      if (typeof item == "string") {
                         return (
                           <div
-                            key={index}
                             style={{
-                              width: "49vw",
-                              marginLeft: "0.3vw",
-                              marginRight: "0.3vw",
-                              marginBottom: "1vh",
+                              marginTop: "4vh",
+
+                              marginBottom: "2vh",
+                              width: "70vw",
+                              textAlign: "center",
+                              fontWeight: 600,
+                              fontSize: 52,
                             }}
                           >
-                            <div
-                              onClick={() => this.itemPage(item)}
-                              id="box"
+                            {item}
+                          </div>
+                        );
+                      }
+                      if (item.category == "Clothing, Shoes, & Accessories") {
+                        if (this.state.activeClothingGender != "all") {
+                          if (item.gender != this.state.activeClothingGender) {
+                            return null;
+                          }
+                        }
+                        if (this.state.activeClothingType != "all") {
+                          if (item.type != this.state.activeClothingType) {
+                            return null;
+                          }
+                        }
+                      }
+                      return (
+                        <div
+                          key={index}
+                          style={{
+                            width: "49vw",
+                            marginLeft: "0.3vw",
+                            marginRight: "0.3vw",
+                            marginBottom: "1vh",
+                          }}
+                        >
+                          <div
+                            onClick={() => this.itemPage(item)}
+                            id="box"
+                            style={{
+                              width: "49vw",
+                            }}
+                          >
+                            <img
+                              src={item.pictures[0]}
                               style={{
                                 width: "49vw",
+                                height: "49vw",
+                                borderRadius: 5,
+                                overflow: "hidden",
+                              }}
+                            ></img>
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                height: 100,
+                                display: "block",
                               }}
                             >
-                              <img
-                                src={item.pictures[0]}
-                                style={{
-                                  width: "49vw",
-                                  height: "49vw",
-                                  borderRadius: 5,
-                                  overflow: "hidden",
-                                }}
-                              ></img>
+                              <div style={{ fontSize: 36, fontWeight: 400 }}>
+                                {item.title}
+                              </div>
                               <div
                                 style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  height: 100,
-                                  display: "block",
+                                  marginTop: 5,
+                                  fontSize: 36,
+                                  fontWeight: 600,
                                 }}
                               >
-                                <div style={{ fontSize: 36, fontWeight: 400 }}>
-                                  {item.title}
-                                </div>
-                                <div
-                                  style={{
-                                    marginTop: 5,
-                                    fontSize: 36,
-                                    fontWeight: 600,
-                                  }}
-                                >
-                                  {"$" + item.original_price}
-                                </div>
+                                {"$" + item.original_price}
                               </div>
                             </div>
                           </div>
-                        );
-                      })}
-                    </div>
-                  </InfiniteScroll>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
 
@@ -537,9 +588,9 @@ export default class BuyMobile extends React.Component {
                 style={{
                   display: "flex",
                   flexDirection: "row",
-                  flexWrap: "wrap",
-                  width: "70vw",
-                  height: "15vh",
+                  width: "1vw",
+                  height: "1vh",
+                  marginTop: "10vh",
                   justifyContent: "center",
                 }}
               ></div>
@@ -559,20 +610,44 @@ export default class BuyMobile extends React.Component {
     );
   }
 
-  updateMoreFilter(a, b) {
-    console.log(a, b);
-    const type = a;
-    const gender = b;
-    this.setState({
-      activeClothingType: type,
-      activeClothingGender: gender,
-    });
+  randomNumber(length) {
+    var result = "";
+    var characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   }
 
-  next() {
-    console.log("next");
-    if (this.state.finishedPullingItems) {
-      this.pullItemsFromDatabase(this.state.activeCategories);
+  loadPage(index, pictureLength) {
+    if (!this.state.loaded && index == pictureLength - 1) {
+      this.setState({
+        loaded: true,
+      });
+    }
+  }
+
+  searchMatchesItem(search, itemData) {
+    const searchArr = search.split(" ");
+    if (!itemData || !itemData.title) {
+      return false;
+    }
+    for (var t = 0; t < searchArr.length; t++) {
+      const searchTerm = searchArr[t];
+      if (
+        // Title matches directly
+        itemData.title.toString().toLowerCase().includes(searchTerm)
+      ) {
+        return true;
+      }
+      for (var i = 0; i < itemData.sub_categories.length; i++) {
+        const subCategory = itemData.sub_categories[i];
+        if (subCategory.includes(searchTerm)) {
+          return true;
+        }
+      }
     }
   }
 
@@ -726,335 +801,5 @@ export default class BuyMobile extends React.Component {
           }
         });
     }
-  }
-
-  randomNumber(length) {
-    var result = "";
-    var characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-  }
-
-  checkCategory(item) {
-    const itemCategory = item.category;
-    const activeCategories = this.state.activeCategories;
-    if (itemCategory == "Art & Decoration") {
-      return activeCategories[0] == true;
-    } else if (itemCategory == "Books") {
-      return activeCategories[1] == true;
-    } else if (itemCategory == "Clothing, Shoes, & Accessories") {
-      return activeCategories[2] == true;
-    } else if (itemCategory == "Electronics") {
-      return activeCategories[3] == true;
-    } else if (itemCategory == "Home") {
-      return activeCategories[4] == true;
-    } else if (itemCategory == "Garden") {
-      return activeCategories[5];
-    } else if (itemCategory == "Pet Supplies") {
-      return activeCategories[6];
-    } else if (itemCategory == "Sports & Hobbies") {
-      return activeCategories[7];
-    } else if (itemCategory == "Toys & Games") {
-      return activeCategories[8];
-    } else {
-      return true;
-    }
-  }
-
-  pullItemsFromDatabase(categories, reset, first) {
-    if (reset) {
-      this.state.items = [];
-      this.state.currentCategoryIndex = 0;
-      this.state.finalDoc = 0;
-      this.state.finishedLoading = false;
-    }
-    const categoryList = [
-      "Art & Decoration",
-      "Books",
-      "Clothing, Shoes, & Accessories",
-      "Electronics",
-      "Home",
-      "Garden",
-      "Pet Supplies",
-      "Sports & Hobbies",
-      "Toys & Games",
-      // "Everything Else",
-    ];
-
-    // Keep track of an index for each category.
-    // Keep track of the category we are currently on.
-    // Once we get through a category, go to the next one
-
-    const firebaseCats = firebase.firestore().collection("Categories");
-    var i_index = 0;
-    var itemArr = [];
-    if (this.state.items) {
-      itemArr = this.state.items;
-    }
-    var currentCategoryIndex = this.state.currentCategoryIndex;
-    var currentCategory = categoryList[currentCategoryIndex];
-
-    if (!categories[currentCategoryIndex]) {
-      var found = false;
-      //Loop through and find the next occourance
-      for (var i = currentCategoryIndex; i < categories.length; i++) {
-        if (categories[i] == true) {
-          currentCategory = categoryList[i];
-          itemArr.push(currentCategory);
-          currentCategoryIndex = i;
-          this.state.currentCategoryIndex = i;
-          found = true;
-          break;
-        }
-      }
-      if (!found) {
-        console.log(categories);
-        console.log(currentCategoryIndex);
-        this.setState({
-          finishedLoading: true,
-        });
-        return;
-      }
-    } else if (!itemArr.includes(currentCategory)) {
-      if (currentCategory == "Clothing, Shoes, & Accessories") {
-        console.log("here2");
-      }
-      itemArr.push(currentCategory);
-    }
-
-    firebase
-      .firestore()
-      .collection("Categories")
-      .doc(currentCategory)
-      .collection("All")
-      .where("location", "==", "Austin, TX")
-      .orderBy("uid")
-      .limit(20)
-      .startAfter(this.state.finalDoc)
-      .get()
-      .then((allItems) => {
-        const allItemsDocs = allItems.docs;
-        const finalDoc = allItemsDocs[allItemsDocs.length - 1];
-
-        randomizeArray(allItemsDocs);
-
-        for (var j = 0; j < allItemsDocs.length; j++) {
-          const itemData = allItemsDocs[j].data();
-        }
-
-        if (allItems.empty) {
-          if (this.state.currentCategoryIndex == categoryList.length - 1) {
-            alert("2");
-            this.setState({
-              finishedLoading: true,
-            });
-          } else {
-            if (this.state.currentCategoryIndex != categoryList.length - 1) {
-              // if (itemArr.includes(categoryList[currentCategoryIndex + 1])) {
-              //   return;
-              // }
-              // itemArr.push(categoryList[currentCategoryIndex + 1]);
-            }
-            // Go to the next category
-            this.setState({
-              currentCategoryIndex: currentCategoryIndex + 1,
-              items: itemArr,
-              loaded: true,
-              newCategory: true,
-              modal: null,
-              finalDoc: 0,
-            });
-            this.state.finishedPullingItems = false;
-            this.pullItemsFromDatabase(categories);
-          }
-        } else if (allItemsDocs.length < 20) {
-          // Go to the next category
-
-          for (var j = 0; j < allItemsDocs.length; j++) {
-            const itemData = allItemsDocs[j].data();
-            itemArr.push(itemData);
-            // Find a way to render all the items here
-            if (j === allItemsDocs.length - 1) {
-              if (this.state.currentCategoryIndex != categoryList.length - 1) {
-                // if (itemArr.includes(categoryList[currentCategoryIndex + 1])) {
-                //   return;
-                // }
-                // itemArr.push(categoryList[currentCategoryIndex + 1]);
-              }
-              this.setState({
-                items: itemArr,
-                loaded: true,
-                modal: null,
-                finalDoc: 0,
-                currentCategoryIndex: currentCategoryIndex + 1,
-                newCategory: true,
-                currentItemIndex:
-                  this.state.currentItemIndex + allItemsDocs.length,
-              });
-            }
-          }
-
-          this.state.finishedPullingItems = false;
-          this.pullItemsFromDatabase(categories);
-        } else {
-          for (var j = 0; j < allItemsDocs.length; j++) {
-            const itemData = allItemsDocs[j].data();
-            // See if the search matches
-            itemArr.push(itemData);
-            // Find a way to render all the items here
-            if (j === allItemsDocs.length - 1) {
-              if (
-                this.state.currentCategoryIndex == 0 &&
-                this.state.currentItemIndex == 0
-              ) {
-                // alert(categoryList[this.state.currentCategoryIndex]);
-                // itemArr.unshift(categoryList[this.state.currentCategoryIndex]);
-              }
-              // itemArr = randomizeArray(itemArr);
-              this.setState({
-                items: itemArr,
-                loaded: true,
-                finishedPullingItems: true,
-                newCategory:
-                  this.state.currentCategoryIndex == 0 ? true : false,
-                modal: null,
-                finalDoc: finalDoc,
-                currentItemIndex: this.state.currentItemIndex + 20,
-              });
-            }
-          }
-        }
-      })
-      .catch((e) => {
-        console.log(e.message);
-      });
-  }
-
-  pullNewItemsFromDatabase() {
-    const categoryList = [
-      "Art & Decoration",
-      "Books",
-      "Clothing, Shoes, & Accessories",
-      "Electronics",
-      "Home",
-      "Garden",
-      "Pet Supplies",
-      "Sports & Hobbies",
-      "Toys & Games",
-      "Everything Else",
-    ];
-
-    const finalArr = [];
-    var i_index = 0;
-    for (var i = 0; i < categoryList.length; i++) {
-      const category = categoryList[i];
-      firebase
-        .firestore()
-        .collection("Categories")
-        .doc(category)
-        .collection("All")
-        .where("new_item", "==", true)
-        .get()
-        .then((allDocs) => {
-          i_index++;
-          if (allDocs.docs.length === 0) {
-            if (i_index == categoryList.length) {
-              // Found everything. Set state
-              randomizeArray(finalArr);
-
-              this.setState({
-                newItems: finalArr,
-                foundNewItems: true,
-              });
-            }
-          }
-          for (var j = 0; j < allDocs.docs.length; j++) {
-            const doc = allDocs.docs[j];
-            finalArr.push(doc.data());
-            if (
-              i_index == categoryList.length &&
-              j == allDocs.docs.length - 1
-            ) {
-              randomizeArray(finalArr);
-
-              // Found everything. Set state
-              this.setState({
-                newItems: finalArr,
-                foundNewItems: true,
-              });
-            }
-          }
-        });
-    }
-  }
-
-  updateCategoryFilter(categories) {
-    this.setState({
-      activeCategories: categories,
-      currentCategoryIndex: 0,
-      finishedLoading: false,
-      items: [],
-      modal: null,
-      finalDoc: 0,
-    });
-    console.log("cleared");
-    console.log(this.state.finishedLoading);
-    this.pullItemsFromDatabase(categories, true);
-  }
-
-  updateFilter(min, max) {
-    this.setState({
-      minPrice: min,
-      maxPrice: max,
-    });
-  }
-
-  goToCategory(cat) {
-    //  window.open("https://collection.deals/shop/" + cat.link, "_self");
-    if (window.location.href.includes("localhost")) {
-      window.open("http://localhost:3000/shop/?category=" + cat.link, "_self");
-    } else {
-      window.open(
-        "https://collection.deals/shop/?category=" + cat.link,
-        "_self"
-      );
-    }
-  }
-
-  loadPage(index) {
-    if (!this.state.loaded && index == 5) {
-      this.setState({
-        loaded: true,
-      });
-    }
-  }
-
-  easeInOutQuad(t, b, c, d) {
-    t /= d / 2;
-    if (t < 1) return (c / 2) * t * t + b;
-    t--;
-    return (-c / 2) * (t * (t - 2) - 1) + b;
-  }
-
-  scrollLeft(element, change, duration) {
-    var start = element.scrollLeft,
-      currentTime = 0,
-      increment = 20;
-
-    console.log(start);
-    const t = this;
-    var animateScroll = function () {
-      currentTime += increment;
-      var val = t.easeInOutQuad(currentTime, start, change, duration);
-      element.scrollLeft = val;
-      if (currentTime < duration) {
-        setTimeout(animateScroll, increment);
-      }
-    };
-    animateScroll();
   }
 }

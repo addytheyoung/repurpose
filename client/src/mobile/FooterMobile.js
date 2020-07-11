@@ -19,7 +19,17 @@ export default class FooterMobile extends React.Component {
       aboutPage: false,
       searchPage: false,
       profilePage: false,
+      mainSearchPage: false,
     };
+    if (this.props.searchPage) {
+      this.state = {
+        homePage: false,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: false,
+        mainSearchPage: true,
+      };
+    }
   }
 
   render() {
@@ -47,14 +57,7 @@ export default class FooterMobile extends React.Component {
           }}
         >
           <div
-            onClick={() =>
-              this.setState({
-                homePage: true,
-                aboutPage: false,
-                searchPage: false,
-                profilePage: false,
-              })
-            }
+            onClick={() => this.takeMeHome()}
             style={{
               height: "100%",
               width: "17vw",
@@ -99,6 +102,7 @@ export default class FooterMobile extends React.Component {
                 aboutPage: true,
                 searchPage: false,
                 profilePage: false,
+                mainSearchPage: false,
               })
             }
             style={{
@@ -145,6 +149,7 @@ export default class FooterMobile extends React.Component {
                 aboutPage: false,
                 searchPage: true,
                 profilePage: false,
+                mainSearchPage: false,
               })
             }
             style={{
@@ -169,14 +174,20 @@ export default class FooterMobile extends React.Component {
                 style={{
                   width: "8vw",
                   height: "8vw",
-                  color: this.state.searchPage ? "#426CB4" : "#000000",
+                  color:
+                    this.state.searchPage || this.state.mainSearchPage
+                      ? "#426CB4"
+                      : "#000000",
                 }}
               ></SearchOutlinedIcon>
               <div
                 style={{
                   fontWeight: 500,
                   marginTop: 10,
-                  color: this.state.searchPage ? "#426CB4" : "#000000",
+                  color:
+                    this.state.searchPage || this.state.mainSearchPage
+                      ? "#426CB4"
+                      : "#000000",
                 }}
               >
                 Search
@@ -191,6 +202,7 @@ export default class FooterMobile extends React.Component {
                 aboutPage: false,
                 searchPage: false,
                 profilePage: true,
+                mainSearchPage: false,
               })
             }
             style={{
@@ -273,6 +285,27 @@ export default class FooterMobile extends React.Component {
         </div>
       </div>
     );
+  }
+
+  takeMeHome() {
+    if (window.location.pathname != "/") {
+      this.setState({
+        homePage: true,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: false,
+        mainSearchPage: false,
+      });
+      window.location.href = "/";
+    } else {
+      this.setState({
+        homePage: true,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: false,
+        mainSearchPage: false,
+      });
+    }
   }
 
   closePage() {

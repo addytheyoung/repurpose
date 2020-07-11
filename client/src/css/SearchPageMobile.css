@@ -1,0 +1,15 @@
+#search-input-mobile {
+  height: 5vh;
+  font-size: 36px;
+  width: 50vw;
+}
+
+#category-mobile {
+  height: 5vh;
+  font-size: 36px;
+  width: 25vw;
+}
+
+#category-mobile li {
+  font-size: 36px !important;
+}

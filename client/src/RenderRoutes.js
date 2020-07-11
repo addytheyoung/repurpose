@@ -38,7 +38,6 @@ import UpdateId from "./scripts/UpdateId";
 import ChangePrices from "./scripts/ChangePrices";
 import MoveToOrders from "./scripts/MoveToOrders";
 import AndrewTest from "./AndrewTest";
-
 import HomeMobile from "./mobile/HomeMobile";
 import BuyMobile from "./mobile/BuyMobile";
 
@@ -49,6 +48,7 @@ import {
   isMobile,
 } from "react-device-detect";
 import SearchPageMobile from "./mobile/SearchPageMobile";
+import SearchPageMobileMain from "./mobile/SearchPageMobileMain";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -83,7 +83,7 @@ export default class RenderRoutes extends React.Component {
               <Route
                 path="/search"
                 exact={true}
-                render={() => <SearchPageMobile />}
+                render={() => <SearchPageMobileMain />}
               />
             </Router>
           </Elements>
@@ -239,7 +239,7 @@ export default class RenderRoutes extends React.Component {
               <Route
                 path="/search"
                 exact={true}
-                render={() => <SearchPage />}
+                render={() => <SearchPageMobileMain />}
               />
             </Router>
           </Elements>

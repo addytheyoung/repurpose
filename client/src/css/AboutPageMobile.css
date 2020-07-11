@@ -1,0 +1,40 @@
+.about-1 {
+  font-size: 32px;
+  text-align: center;
+  padding-left: 5vw;
+  padding-right: 5vw;
+  font-weight: 600;
+  margin-bottom: 2vh;
+}
+
+.about-2 div {
+  font-size: 32px;
+  padding-left: 5vw;
+  padding-right: 5vw;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
+
+.about-3 {
+  font-size: 36px !important;
+  font-weight: 600;
+  margin-top: 3vh;
+  margin-bottom: 2vh;
+}
+
+.about-button {
+  background-color: #426cb4;
+  color: white;
+  margin-top: 30px;
+  border-radius: 5px;
+  margin-bottom: 1vh;
+  margin-left: 20px;
+  padding: 10px;
+  height: 5vh;
+  display: flex;
+  font-size: 36px !important;
+  align-items: center;
+  justify-content: center;
+  color: "#ffffff";
+  font-weight: 600;
+}
