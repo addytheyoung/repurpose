@@ -13,65 +13,36 @@ export default class AboutPageMobile extends React.Component {
         style={{
           display: "flex",
           justifyContent: "center",
-          zIndex: 100,
+          zIndex: 1,
         }}
       >
         <div
-          onClick={(e) => this.closeModal(e)}
           style={{
-            backgroundColor: "#000000",
-            opacity: 0.5,
-            zIndex: 99,
             width: "100vw",
-            height: "100vh",
             position: "fixed",
-          }}
-        ></div>
-        <div
-          style={{
-            width: "100vw",
+            zIndex: 1,
             borderRadius: 5,
-            position: "fixed",
-            height: "100vh",
+            height: "92.2vh",
             top: 0,
             backgroundColor: "#f5f5f5",
-            // position: "absolute",
-            zIndex: 100,
             opacity: 1,
           }}
         >
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div
-              style={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "flex-end",
-              }}
-            >
-              <img
-                id="close"
-                onClick={() => this.closeModal()}
-                src={Close}
-                style={{
-                  width: "10vw",
-                  height: "10vw",
-                  marginTop: 40,
-                  marginRight: 40,
-                }}
-              />
-            </div>
-            <div
               id="bar"
               style={{
                 display: "flex",
+
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
                 paddingTop: 10,
                 paddingBottom: 10,
               }}
-            ></div>
+            >
+              asdSDFSDFASDFASDFASDFASDFASDF
+            </div>
           </div>
         </div>
       </div>

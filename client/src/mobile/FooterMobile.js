@@ -24,9 +24,9 @@ export default class FooterMobile extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{ zIndex: 102 }}>
         {this.state.aboutPage && (
-          <div style={{ zIndex: 102 }}>
+          <div style={{ zIndex: 1 }}>
             <AboutPageMobile closePage={() => this.closePage()} />
           </div>
         )}
