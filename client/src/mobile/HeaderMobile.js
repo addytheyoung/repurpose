@@ -112,7 +112,7 @@ export default class HeaderBar extends React.Component {
                   flexDirection: "row",
                   justifyContent: "center",
                   alignItems: "center",
-                  fontSize: 36,
+                  fontSize: 14,
                 }}
               >
                 <FilterListOutlinedIcon
@@ -123,7 +123,7 @@ export default class HeaderBar extends React.Component {
                   }}
                 ></FilterListOutlinedIcon>
                 <div
-                  style={{ fontWeight: 600, fontSize: 14, color: "#375995" }}
+                  style={{ fontWeight: 600, fontSize: 12, color: "#375995" }}
                 >
                   Filters
                 </div>
@@ -158,7 +158,7 @@ export default class HeaderBar extends React.Component {
                   flexDirection: "row",
                   justifyContent: "center",
                   alignItems: "center",
-                  fontSize: 36,
+                  fontSize: 14,
                 }}
               >
                 <LocationCityOutlinedIcon
@@ -169,7 +169,7 @@ export default class HeaderBar extends React.Component {
                   }}
                 ></LocationCityOutlinedIcon>
                 <div
-                  style={{ fontWeight: 600, fontSize: 32, color: "#375995" }}
+                  style={{ fontWeight: 600, fontSize: 14, color: "#375995" }}
                 >
                   {localStorage.getItem("city")}
                 </div>
@@ -204,7 +204,7 @@ export default class HeaderBar extends React.Component {
                   flexDirection: "row",
                   justifyContent: "center",
                   alignItems: "center",
-                  fontSize: 36,
+                  fontSize: 14,
                   height: "100%",
                   width: "100%",
                 }}
@@ -217,7 +217,7 @@ export default class HeaderBar extends React.Component {
                   }}
                 ></AttachMoneyOutlinedIcon>
                 <div
-                  style={{ fontWeight: 600, fontSize: 32, color: "#375995" }}
+                  style={{ fontWeight: 600, fontSize: 14, color: "#375995" }}
                 >
                   Buy
                 </div>
@@ -230,7 +230,7 @@ export default class HeaderBar extends React.Component {
               style={{
                 display: "flex",
                 marginLeft: 30,
-                fontSize: 36,
+                fontSize: 14,
                 fontWeight:
                   path === "/" || path.includes("shop") || path.includes("cart")
                     ? 600
@@ -262,7 +262,7 @@ export default class HeaderBar extends React.Component {
               style={{
                 display: "flex",
                 width: "15vw",
-                fontSize: 36,
+                fontSize: 14,
                 height: "10vw",
                 fontWeight: path.includes("sell") ? 700 : 500,
                 alignItems: "center",

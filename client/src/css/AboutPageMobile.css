@@ -1,5 +1,5 @@
 .about-1 {
-  font-size: 32px;
+  font-size: 14px;
   text-align: center;
   padding-left: 5vw;
   padding-right: 5vw;
@@ -8,7 +8,7 @@
 }
 
 .about-2 div {
-  font-size: 32px;
+  font-size: 14px;
   padding-left: 5vw;
   padding-right: 5vw;
   margin-top: 1vh;
@@ -16,7 +16,7 @@
 }
 
 .about-3 {
-  font-size: 36px !important;
+  font-size: 16px !important;
   font-weight: 600;
   margin-top: 3vh;
   margin-bottom: 2vh;
@@ -32,7 +32,7 @@
   padding: 10px;
   height: 5vh;
   display: flex;
-  font-size: 36px !important;
+  font-size: 16px !important;
   align-items: center;
   justify-content: center;
   color: "#ffffff";

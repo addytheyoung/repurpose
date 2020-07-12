@@ -305,7 +305,7 @@ export default class CheckOutFormMobile extends React.Component {
           onSubmit={(ev) => this.andrewMethod(ev)}
           style={{
             paddingLeft: 0,
-            minWidth: 400,
+            marginTop: "3vh",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -324,8 +324,8 @@ export default class CheckOutFormMobile extends React.Component {
           >
             <div
               style={{
-                fontSize: 42,
-                fontWeight: 500,
+                fontSize: 18,
+                fontWeight: 600,
                 marginBottom: 10,
                 textAlign: "center",
               }}
@@ -469,7 +469,7 @@ export default class CheckOutFormMobile extends React.Component {
             style={{
               width: "100vw",
               textAlign: "center",
-              fontSize: 42,
+              fontSize: 18,
               fontWeight: 600,
               marginBottom: "2vh",
               marginTop: "2vh",
@@ -478,17 +478,9 @@ export default class CheckOutFormMobile extends React.Component {
             Payment Info
           </div>
 
-          <div
-            id="test1"
-            style={{
-              marginTop: 20,
-              width: "100vw",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
+          <div id="test1">
             <PayPalButton
-              style={{ height: 55, width: "100%" }}
+              style={{ height: 55 }}
               shippingPreference="NO_SHIPPING"
               amount={this.props.total}
               onCancel={(e) =>
@@ -530,9 +522,9 @@ export default class CheckOutFormMobile extends React.Component {
             style={{
               textAlign: "center",
               fontWeight: 600,
-              marginBottom: "3vh",
-              fontSize: 36,
-              marginTop: "3vh",
+              marginBottom: "2vh",
+              fontSize: 16,
+              marginTop: "4vh",
             }}
           >
             OR
@@ -543,10 +535,10 @@ export default class CheckOutFormMobile extends React.Component {
           <div
             className="sr-combo-inputs"
             style={{
-              width: "52vw",
+              width: "80vw",
             }}
           >
-            <div className="sr-combo-inputs-row" style={{ height: "5vh" }}>
+            <div className="sr-combo-inputs-row" style={{}}>
               <CardElement
                 className="sr-input sr-card-element"
                 options={options}
@@ -559,12 +551,12 @@ export default class CheckOutFormMobile extends React.Component {
             style={{
               backgroundColor: "#426CB4",
               height: 58,
-              width: "55vw",
+              width: "80vw",
               borderRadius: 5,
               borderWidth: 0,
               color: "white",
               fontWeight: 600,
-              fontSize: 36,
+              fontSize: 18,
             }}
             // onClick={(e) => this.prevent(e)}
             className="btn"

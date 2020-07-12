@@ -153,17 +153,20 @@ export default class CartMobile extends React.Component {
             backgroundColor: "#426CB4",
             textDecoration: "none",
             color: "white",
-            width: "96vw",
-            height: "5vh",
+            width: "98vw",
+            paddingTop: 10,
+            paddingBottom: 10,
+            height: "4vh",
             bottom: "8vh",
             left: "1vw",
+            // right: "1vw",
             position: "fixed",
-            fontSize: 40,
+            fontSize: 20,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             borderRadius: 5,
-            padding: 10,
+            // padding: 10,
             fontWeight: 700,
           }}
         >
@@ -180,7 +183,7 @@ export default class CartMobile extends React.Component {
             style={{
               display: "flex",
               flexDirection: "column",
-              width: "96vw",
+              width: "100vw",
               alignItems: "center",
             }}
           >
@@ -190,10 +193,10 @@ export default class CartMobile extends React.Component {
                 borderBottomStyle: "solid",
                 borderBottomWidth: 1,
                 paddingBottom: 10,
-                width: "96vw",
+                width: "100vw",
                 textAlign: "center",
                 marginBottom: 10,
-                fontSize: 42,
+                fontSize: 20,
                 fontWeight: 600,
                 marginTop: 30,
               }}
@@ -202,7 +205,7 @@ export default class CartMobile extends React.Component {
             </div>
             {this.state.myData.cart.length === 0 && (
               <div>
-                <div style={{ fontSize: 36, fontWeight: 600, marginTop: 50 }}>
+                <div style={{ fontSize: 16, fontWeight: 600, marginTop: 50 }}>
                   Cart is empty!
                 </div>
                 <a
@@ -259,8 +262,8 @@ export default class CartMobile extends React.Component {
                       width: "26vw",
                     }}
                   >
-                    <div style={{ fontSize: 36 }}>{item.title}</div>
-                    <div style={{ fontSize: 36, fontWeight: 500 }}>
+                    <div style={{ fontSize: 16 }}>{item.title}</div>
+                    <div style={{ fontSize: 16, fontWeight: 500 }}>
                       {"$" + item.original_price}
                     </div>
                   </div>
@@ -287,7 +290,7 @@ export default class CartMobile extends React.Component {
                 width: "100vw",
                 backgroundColor: "#ffffff",
                 position: "fixed",
-                bottom: "14vh",
+                bottom: "17vh",
                 marginTop: "3vh",
                 paddingBottom: 10,
               }}
@@ -297,7 +300,7 @@ export default class CartMobile extends React.Component {
                   display: "flex",
                   flexDirection: "row",
                   fontSize: 18,
-                  fontSize: 36,
+                  fontSize: 16,
                   fontWeight: 500,
                   alignItems: "center",
                   width: "96vw",
@@ -310,7 +313,7 @@ export default class CartMobile extends React.Component {
               <div
                 style={{
                   display: "flex",
-                  fontSize: 36,
+                  fontSize: 16,
                   fontWeight: 500,
                   flexDirection: "row",
                   alignItems: "center",
@@ -326,7 +329,7 @@ export default class CartMobile extends React.Component {
                 style={{
                   display: "flex",
                   flexDirection: "row",
-                  fontSize: 36,
+                  fontSize: 16,
                   fontWeight: 500,
                   alignItems: "center",
                   width: "96vw",
@@ -341,7 +344,7 @@ export default class CartMobile extends React.Component {
                   marginTop: 20,
                   display: "flex",
                   flexDirection: "row",
-                  fontSize: 36,
+                  fontSize: 16,
                   fontWeight: 600,
                   alignItems: "center",
                   width: "96vw",

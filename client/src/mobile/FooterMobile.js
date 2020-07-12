@@ -56,7 +56,7 @@ export default class FooterMobile extends React.Component {
       });
     }
     return (
-      <div style={{ zIndex: 102 }}>
+      <div>
         {this.state.aboutPage && (
           <div style={{ zIndex: 1 }}>
             <AboutPageMobile closePage={() => this.closePage()} />
@@ -95,11 +95,10 @@ export default class FooterMobile extends React.Component {
               id="search"
               style={{
                 display: "flex",
-
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-                fontSize: 32,
+                fontSize: 14,
               }}
             >
               <HomeOutlinedIcon
@@ -112,7 +111,7 @@ export default class FooterMobile extends React.Component {
               <div
                 style={{
                   fontWeight: 500,
-                  marginTop: 10,
+                  marginTop: "0.4vh",
                   color: this.state.homePage ? "#426CB4" : "#000000",
                 }}
               >
@@ -146,7 +145,7 @@ export default class FooterMobile extends React.Component {
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-                fontSize: 32,
+                fontSize: 14,
               }}
             >
               <InfoOutlinedIcon
@@ -159,7 +158,7 @@ export default class FooterMobile extends React.Component {
               <div
                 style={{
                   fontWeight: 500,
-                  marginTop: 10,
+                  marginTop: "0.4vh",
                   color: this.state.aboutPage ? "#426CB4" : "#000000",
                 }}
               >
@@ -194,7 +193,7 @@ export default class FooterMobile extends React.Component {
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-                fontSize: 32,
+                fontSize: 14,
               }}
             >
               <SearchOutlinedIcon
@@ -210,7 +209,7 @@ export default class FooterMobile extends React.Component {
               <div
                 style={{
                   fontWeight: 500,
-                  marginTop: 10,
+                  marginTop: "0.4vh",
                   color:
                     this.state.searchPage || this.state.mainSearchPage
                       ? "#426CB4"
@@ -248,7 +247,7 @@ export default class FooterMobile extends React.Component {
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-                fontSize: 32,
+                fontSize: 14,
               }}
             >
               <AccountCircleOutlinedIcon
@@ -261,7 +260,7 @@ export default class FooterMobile extends React.Component {
               <div
                 style={{
                   fontWeight: 500,
-                  marginTop: 10,
+                  marginTop: "0.4vh",
                   color: this.state.profilePage ? "#426CB4" : "#000000",
                 }}
               >
@@ -287,7 +286,7 @@ export default class FooterMobile extends React.Component {
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-                fontSize: 32,
+                fontSize: 14,
               }}
             >
               <ShoppingCartOutlinedIcon
@@ -301,7 +300,7 @@ export default class FooterMobile extends React.Component {
               <div
                 style={{
                   fontWeight: 500,
-                  marginTop: 10,
+                  marginTop: "0.4vh",
 
                   color: this.state.cartPage ? "#426CB4" : "#000000",
                 }}

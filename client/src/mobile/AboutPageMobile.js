@@ -15,17 +15,17 @@ export default class AboutPageMobile extends React.Component {
           display: "flex",
           justifyContent: "center",
           zIndex: 1,
+          overflowY: "scroll",
+          height: "92.2vh",
+          backgroundColor: "#f5f5f5",
+          top: 0,
         }}
       >
         <div
           style={{
             width: "100vw",
-            position: "fixed",
             zIndex: 1,
             borderRadius: 5,
-            height: "92.2vh",
-            top: 0,
-            backgroundColor: "#f5f5f5",
             opacity: 1,
           }}
         >
@@ -45,7 +45,7 @@ export default class AboutPageMobile extends React.Component {
                 alignItems: "center",
                 paddingTop: 10,
                 paddingBottom: 10,
-                fontSize: 50,
+                fontSize: 22,
                 fontWeight: 700,
                 color: "#426CB4",
                 marginTop: "2vh",
@@ -113,6 +113,7 @@ export default class AboutPageMobile extends React.Component {
               >
                 SELL NOW
               </div>
+              {/* <div style={{ height: "8vh" }}></div> */}
             </div>
           </div>
         </div>

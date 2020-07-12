@@ -283,7 +283,7 @@ export default class CheckOutMobile extends Component {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              fontSize: 46,
+              fontSize: 26,
               color: "#7628dd",
             }}
           >
@@ -314,7 +314,7 @@ export default class CheckOutMobile extends Component {
                   display: "flex",
                   flexDirection: "row",
                   fontSize: 18,
-                  fontSize: 36,
+                  fontSize: 16,
                   fontWeight: 500,
                   alignItems: "center",
                   width: "96vw",
@@ -327,7 +327,7 @@ export default class CheckOutMobile extends Component {
               <div
                 style={{
                   display: "flex",
-                  fontSize: 36,
+                  fontSize: 16,
                   fontWeight: 500,
                   flexDirection: "row",
                   alignItems: "center",
@@ -343,7 +343,7 @@ export default class CheckOutMobile extends Component {
                 style={{
                   display: "flex",
                   flexDirection: "row",
-                  fontSize: 36,
+                  fontSize: 16,
                   fontWeight: 500,
                   alignItems: "center",
                   width: "96vw",
@@ -359,7 +359,7 @@ export default class CheckOutMobile extends Component {
                   marginTop: 20,
                   display: "flex",
                   flexDirection: "row",
-                  fontSize: 36,
+                  fontSize: 16,
                   fontWeight: 600,
                   alignItems: "center",
                   width: "96vw",

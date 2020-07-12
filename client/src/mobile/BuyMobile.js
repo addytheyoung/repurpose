@@ -191,7 +191,7 @@ export default class BuyMobile extends React.Component {
                       >
                         <div
                           style={{
-                            fontSize: 40,
+                            fontSize: 24,
                             fontWeight: 500,
                             marginTop: 30,
                             textAlign: "center",
@@ -205,7 +205,7 @@ export default class BuyMobile extends React.Component {
                           style={{
                             marginTop: 30,
                             fontWeight: 700,
-                            fontSize: 36,
+                            fontSize: 14,
                             textAlign: "center",
                           }}
                         >
@@ -228,7 +228,7 @@ export default class BuyMobile extends React.Component {
                             justifyContent: "center",
                             color: "#ffffff",
                             fontWeight: 600,
-                            fontSize: 36,
+                            fontSize: 14,
                           }}
                         >
                           {!this.state.addingToCart && "ADD TO CART"}
@@ -240,7 +240,7 @@ export default class BuyMobile extends React.Component {
                   <div
                     style={{
                       marginLeft: 20,
-                      fontSize: 36,
+                      fontSize: 14,
                       marginTop: 20,
                       fontWeight: 600,
                     }}
@@ -250,7 +250,7 @@ export default class BuyMobile extends React.Component {
                   <div
                     style={{
                       marginTop: 10,
-                      fontSize: 32,
+                      fontSize: 14,
                       marginLeft: 20,
                       marginRight: 20,
                       borderTopColor: "#a1a1a1",
@@ -289,7 +289,7 @@ export default class BuyMobile extends React.Component {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    fontSize: 46,
+                    fontSize: 24,
                     fontWeight: 700,
                     marginBottom: 15,
                   }}
@@ -302,7 +302,7 @@ export default class BuyMobile extends React.Component {
                     justifyContent: "center",
                     alignItems: "center",
                     textAlign: "center",
-                    fontSize: 34,
+                    fontSize: 20,
                     fontWeight: 400,
                     marginBottom: 20,
                   }}
@@ -322,7 +322,7 @@ export default class BuyMobile extends React.Component {
                       }}
                     >
                       <div
-                        style={{ fontSize: 42, fontWeight: 600, marginTop: 50 }}
+                        style={{ fontSize: 24, fontWeight: 600, marginTop: 50 }}
                       >
                         Items just added
                       </div>
@@ -377,7 +377,7 @@ export default class BuyMobile extends React.Component {
                                       style={{
                                         fontSize: 18,
                                         fontWeight: 400,
-                                        fontSize: 36,
+                                        fontSize: 14,
                                       }}
                                     >
                                       {item.title}
@@ -386,7 +386,7 @@ export default class BuyMobile extends React.Component {
                                       style={{
                                         marginTop: 5,
                                         fontWeight: 600,
-                                        fontSize: 36,
+                                        fontSize: 14,
                                       }}
                                     >
                                       {"$" + item.original_price}
@@ -456,7 +456,7 @@ export default class BuyMobile extends React.Component {
                                 width: "70vw",
                                 textAlign: "center",
                                 fontWeight: 600,
-                                fontSize: 52,
+                                fontSize: 24,
                               }}
                             >
                               {item}
@@ -507,17 +507,17 @@ export default class BuyMobile extends React.Component {
                                 style={{
                                   display: "flex",
                                   flexDirection: "column",
-                                  height: 100,
+                                  minHeight: 50,
                                   display: "block",
                                 }}
                               >
-                                <div style={{ fontSize: 36, fontWeight: 400 }}>
+                                <div style={{ fontSize: 14, fontWeight: 400 }}>
                                   {item.title}
                                 </div>
                                 <div
                                   style={{
                                     marginTop: 5,
-                                    fontSize: 36,
+                                    fontSize: 14,
                                     fontWeight: 600,
                                   }}
                                 >

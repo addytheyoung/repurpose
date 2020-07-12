@@ -273,7 +273,7 @@ export default class SearchPageMobileMain extends React.Component {
                           style={{
                             marginTop: 30,
                             fontWeight: 700,
-                            fontSize: 36,
+                            fontSize: 16,
                             textAlign: "center",
                           }}
                         >
@@ -296,7 +296,7 @@ export default class SearchPageMobileMain extends React.Component {
                             justifyContent: "center",
                             color: "#ffffff",
                             fontWeight: 600,
-                            fontSize: 36,
+                            fontSize: 16,
                           }}
                         >
                           {!this.state.addingToCart && "ADD TO CART"}
@@ -308,7 +308,7 @@ export default class SearchPageMobileMain extends React.Component {
                   <div
                     style={{
                       marginLeft: 20,
-                      fontSize: 36,
+                      fontSize: 16,
                       marginTop: 20,
                       fontWeight: 600,
                     }}
@@ -318,7 +318,7 @@ export default class SearchPageMobileMain extends React.Component {
                   <div
                     style={{
                       marginTop: 10,
-                      fontSize: 32,
+                      fontSize: 14,
                       marginLeft: 20,
                       marginRight: 20,
                       borderTopColor: "#a1a1a1",
@@ -357,7 +357,7 @@ export default class SearchPageMobileMain extends React.Component {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    fontSize: 46,
+                    fontSize: 20,
                     fontWeight: 700,
                     marginBottom: 15,
                   }}
@@ -370,7 +370,7 @@ export default class SearchPageMobileMain extends React.Component {
                     justifyContent: "center",
                     alignItems: "center",
                     textAlign: "center",
-                    fontSize: 34,
+                    fontSize: 12,
                     fontWeight: 400,
                     marginBottom: 20,
                   }}
@@ -390,7 +390,7 @@ export default class SearchPageMobileMain extends React.Component {
                       }}
                     >
                       <div
-                        style={{ fontSize: 42, fontWeight: 600, marginTop: 50 }}
+                        style={{ fontSize: 16, fontWeight: 600, marginTop: 50 }}
                       >
                         Items just added
                       </div>
@@ -445,7 +445,7 @@ export default class SearchPageMobileMain extends React.Component {
                                       style={{
                                         fontSize: 18,
                                         fontWeight: 400,
-                                        fontSize: 36,
+                                        fontSize: 16,
                                       }}
                                     >
                                       {item.title}
@@ -454,7 +454,7 @@ export default class SearchPageMobileMain extends React.Component {
                                       style={{
                                         marginTop: 5,
                                         fontWeight: 600,
-                                        fontSize: 36,
+                                        fontSize: 16,
                                       }}
                                     >
                                       {"$" + item.original_price}
@@ -510,7 +510,7 @@ export default class SearchPageMobileMain extends React.Component {
                               width: "70vw",
                               textAlign: "center",
                               fontWeight: 600,
-                              fontSize: 52,
+                              fontSize: 20,
                             }}
                           >
                             {item}
@@ -563,13 +563,13 @@ export default class SearchPageMobileMain extends React.Component {
                                 display: "block",
                               }}
                             >
-                              <div style={{ fontSize: 36, fontWeight: 400 }}>
+                              <div style={{ fontSize: 16, fontWeight: 400 }}>
                                 {item.title}
                               </div>
                               <div
                                 style={{
                                   marginTop: 5,
-                                  fontSize: 36,
+                                  fontSize: 16,
                                   fontWeight: 600,
                                 }}
                               >

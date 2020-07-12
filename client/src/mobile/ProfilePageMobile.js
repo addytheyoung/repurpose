@@ -59,7 +59,7 @@ export default class ProfilePageMobile extends React.Component {
                   {this.props.redirectToCheckout && (
                     <div
                       style={{
-                        fontSize: 42,
+                        fontSize: 18,
                         fontWeight: 700,
                         marginBottom: "3vh",
                       }}
@@ -68,14 +68,14 @@ export default class ProfilePageMobile extends React.Component {
                     </div>
                   )}
                   {!this.props.redirectToCheckout && (
-                    <div style={{ fontSize: 42, fontWeight: 700 }}>
+                    <div style={{ fontSize: 18, fontWeight: 700 }}>
                       Sign up / sign in
                     </div>
                   )}
                   <Input
                     id="email"
                     placeholder="Enter your email"
-                    style={{ width: "60vw", marginTop: "3vh", fontSize: 36 }}
+                    style={{ width: "60vw", marginTop: "3vh", fontSize: 16 }}
                   />
                   <div
                     onClick={() => this.startShopping()}
@@ -86,7 +86,7 @@ export default class ProfilePageMobile extends React.Component {
                       padding: 10,
                       height: "5vh",
                       width: "60vw",
-                      fontSize: 36,
+                      fontSize: 16,
                       color: "white",
                       fontWeight: 600,
                       marginTop: "2vh",
@@ -102,14 +102,14 @@ export default class ProfilePageMobile extends React.Component {
               )}
               {!singedin && this.state.newUser && (
                 <div style={{ marginTop: "20vh" }}>
-                  <div style={{ fontSize: 42, fontWeight: 700, marginTop: 20 }}>
+                  <div style={{ fontSize: 18, fontWeight: 700, marginTop: 20 }}>
                     What will your password be?
                   </div>
                   <Input
                     id="pass"
                     type="password"
                     placeholder="Password"
-                    style={{ width: "60vw", marginTop: "3vh", fontSize: 36 }}
+                    style={{ width: "60vw", marginTop: "3vh", fontSize: 16 }}
                   />
                   <div
                     onClick={() => this.setPassword()}
@@ -120,7 +120,7 @@ export default class ProfilePageMobile extends React.Component {
                       padding: 10,
                       height: "5vh",
                       width: "60vw",
-                      fontSize: 36,
+                      fontSize: 16,
                       color: "white",
                       fontWeight: 600,
                       marginTop: 10,
@@ -146,7 +146,7 @@ export default class ProfilePageMobile extends React.Component {
                   >
                     <div
                       style={{
-                        fontSize: 42,
+                        fontSize: 18,
                         fontWeight: 700,
                       }}
                     >
@@ -156,7 +156,7 @@ export default class ProfilePageMobile extends React.Component {
                       id="pass"
                       type="password"
                       placeholder="Password"
-                      style={{ width: "60vw", marginTop: "3vh", fontSize: 36 }}
+                      style={{ width: "60vw", marginTop: "3vh", fontSize: 16 }}
                     />
                     <div
                       onClick={() => this.login()}
@@ -167,7 +167,7 @@ export default class ProfilePageMobile extends React.Component {
                         padding: 10,
                         height: "5vh",
                         width: "60vw",
-                        fontSize: 36,
+                        fontSize: 16,
                         color: "white",
                         fontWeight: 600,
                         marginTop: "2vh",
@@ -193,7 +193,7 @@ export default class ProfilePageMobile extends React.Component {
                 >
                   <div
                     style={{
-                      fontSize: 42,
+                      fontSize: 18,
                       fontWeight: 700,
                       marginBottom: 20,
                     }}
@@ -205,7 +205,7 @@ export default class ProfilePageMobile extends React.Component {
                     id="my-orders"
                     style={{
                       backgroundColor: "#426CB4",
-                      fontSize: 36,
+                      fontSize: 16,
                       borderRadius: 5,
                       padding: 10,
                       height: "5vh",
@@ -251,7 +251,7 @@ export default class ProfilePageMobile extends React.Component {
                     id="logout"
                     style={{
                       backgroundColor: "#426CB4",
-                      fontSize: 36,
+                      fontSize: 16,
                       borderRadius: 5,
                       padding: 10,
                       height: "5vh",
@@ -279,7 +279,7 @@ export default class ProfilePageMobile extends React.Component {
                     flexDirection: "column",
                   }}
                 >
-                  <div style={{ fontSize: 42, fontWeight: 700 }}>
+                  <div style={{ fontSize: 18, fontWeight: 700 }}>
                     Are you sure you want to logout?
                   </div>
                   <div
@@ -298,7 +298,7 @@ export default class ProfilePageMobile extends React.Component {
                         padding: 10,
                         height: "5vh",
                         width: "20vw",
-                        fontSize: 36,
+                        fontSize: 16,
                         color: "white",
                         fontWeight: 600,
                         marginTop: 10,
@@ -321,7 +321,7 @@ export default class ProfilePageMobile extends React.Component {
                         padding: 10,
                         height: "5vh",
                         width: "20vw",
-                        fontSize: 36,
+                        fontSize: 16,
                         color: "white",
                         fontWeight: 600,
                         marginTop: 10,

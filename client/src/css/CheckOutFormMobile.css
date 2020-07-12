@@ -6,19 +6,11 @@
 #city,
 #state {
   margin: 10px;
-  font-size: 36px;
+  font-size: 16px;
   height: 5vh;
   width: 80vw;
 }
 
-#menu- li {
-  font-size: 36px;
-}
-
 #test1 div {
-  width: 52vw;
-}
-
-.__PrivateStripeElement-input {
-  font-size: 36px !important;
+  width: 80vw;
 }
