@@ -20,6 +20,7 @@ export default class FooterMobile extends React.Component {
       searchPage: false,
       profilePage: false,
       mainSearchPage: false,
+      cartPage: false,
     };
     if (this.props.searchPage) {
       this.state = {
@@ -28,11 +29,32 @@ export default class FooterMobile extends React.Component {
         searchPage: false,
         profilePage: false,
         mainSearchPage: true,
+        cartPage: false,
+      };
+    } else if (this.props.cartPage) {
+      this.state = {
+        homePage: false,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: false,
+        mainSearchPage: false,
+        cartPage: true,
       };
     }
   }
 
   render() {
+    if (this.props.profilePage && !this.state.profilePage) {
+      this.setState({
+        homePage: false,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: true,
+        mainSearchPage: false,
+        redirectToCheckout: true,
+        cartPage: false,
+      });
+    }
     return (
       <div style={{ zIndex: 102 }}>
         {this.state.aboutPage && (
@@ -44,7 +66,10 @@ export default class FooterMobile extends React.Component {
           <SearchPageMobile closePage={() => this.closePage()} />
         )}
         {this.state.profilePage && (
-          <ProfilePageMobile closePage={() => this.closePage()} />
+          <ProfilePageMobile
+            redirectToCheckout={this.state.redirectToCheckout}
+            closePage={() => this.closePage()}
+          />
         )}
         <div
           style={{
@@ -103,6 +128,7 @@ export default class FooterMobile extends React.Component {
                 searchPage: false,
                 profilePage: false,
                 mainSearchPage: false,
+                cartPage: false,
               })
             }
             style={{
@@ -150,6 +176,7 @@ export default class FooterMobile extends React.Component {
                 searchPage: true,
                 profilePage: false,
                 mainSearchPage: false,
+                cartPage: false,
               })
             }
             style={{
@@ -203,6 +230,7 @@ export default class FooterMobile extends React.Component {
                 searchPage: false,
                 profilePage: true,
                 mainSearchPage: false,
+                cartPage: false,
               })
             }
             style={{
@@ -243,7 +271,7 @@ export default class FooterMobile extends React.Component {
           </div>
 
           <div
-            onClick={() => (window.location.href = "/cart")}
+            onClick={() => this.goCart()}
             style={{
               height: "100%",
               width: "17vw",
@@ -266,16 +294,16 @@ export default class FooterMobile extends React.Component {
                 style={{
                   width: "8vw",
                   height: "8vw",
-                  color:
-                    window.location.pathname == "/cart" ? "#426CB4" : "#000000",
+
+                  color: this.state.cartPage ? "#426CB4" : "#000000",
                 }}
               ></ShoppingCartOutlinedIcon>
               <div
                 style={{
                   fontWeight: 500,
                   marginTop: 10,
-                  color:
-                    window.location.pathname == "/cart" ? "#426CB4" : "#000000",
+
+                  color: this.state.cartPage ? "#426CB4" : "#000000",
                 }}
               >
                 Cart
@@ -287,6 +315,29 @@ export default class FooterMobile extends React.Component {
     );
   }
 
+  goCart() {
+    if (window.location.pathname == "/cart") {
+      this.setState({
+        homePage: false,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: false,
+        mainSearchPage: false,
+        cartPage: false,
+      });
+    } else {
+      this.setState({
+        homePage: false,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: false,
+        mainSearchPage: false,
+        cartPage: true,
+      });
+      window.location.href = "/cart";
+    }
+  }
+
   takeMeHome() {
     if (window.location.pathname != "/") {
       this.setState({
@@ -295,6 +346,7 @@ export default class FooterMobile extends React.Component {
         searchPage: false,
         profilePage: false,
         mainSearchPage: false,
+        cartPage: false,
       });
       window.location.href = "/";
     } else {
@@ -304,16 +356,30 @@ export default class FooterMobile extends React.Component {
         searchPage: false,
         profilePage: false,
         mainSearchPage: false,
+        cartPage: false,
       });
     }
   }
 
   closePage() {
-    this.setState({
-      homePage: true,
-      aboutPage: false,
-      searchPage: false,
-      profilePage: false,
-    });
+    if (this.props.cartPage) {
+      this.setState({
+        homePage: false,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: false,
+        mainSearchPage: false,
+        cartPage: true,
+      });
+    } else {
+      this.setState({
+        homePage: true,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: false,
+        mainSearchPage: false,
+        cartPage: false,
+      });
+    }
   }
 }

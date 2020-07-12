@@ -40,7 +40,7 @@ import MoveToOrders from "./scripts/MoveToOrders";
 import AndrewTest from "./AndrewTest";
 import HomeMobile from "./mobile/HomeMobile";
 import BuyMobile from "./mobile/BuyMobile";
-
+import CartMobile from "./mobile/CartMobile";
 import {
   BrowserView,
   MobileView,
@@ -48,6 +48,7 @@ import {
   isMobile,
 } from "react-device-detect";
 import SearchPageMobile from "./mobile/SearchPageMobile";
+import CheckOutMobile from "./mobile/CheckOutMobile";
 import SearchPageMobileMain from "./mobile/SearchPageMobileMain";
 
 export default class RenderRoutes extends React.Component {
@@ -84,6 +85,12 @@ export default class RenderRoutes extends React.Component {
                 path="/search"
                 exact={true}
                 render={() => <SearchPageMobileMain />}
+              />
+              <Route path="/cart" exact={true} render={() => <CartMobile />} />
+              <Route
+                path="/checkout"
+                exact={true}
+                render={() => <CheckOutMobile />}
               />
             </Router>
           </Elements>
@@ -240,6 +247,12 @@ export default class RenderRoutes extends React.Component {
                 path="/search"
                 exact={true}
                 render={() => <SearchPageMobileMain />}
+              />
+              <Route path="/cart" exact={true} render={() => <CartMobile />} />
+              <Route
+                path="/checkout"
+                exact={true}
+                render={() => <CheckOutMobile />}
               />
             </Router>
           </Elements>

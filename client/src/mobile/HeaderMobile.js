@@ -64,7 +64,7 @@ export default class HeaderBar extends React.Component {
             <CityPageMobile closePage={() => this.closePage()} />
           </div>
         )}
-        {this.state.buySellPage && (
+        {/* {this.state.buySellPage && (
           <div>
             <BuySellPageMobile closePage={() => this.closePage()} />
           </div>
@@ -73,7 +73,7 @@ export default class HeaderBar extends React.Component {
           <div>
             <SignInModal />
           </div>
-        )}
+        )} */}
         <div>
           <div
             style={{
@@ -123,7 +123,7 @@ export default class HeaderBar extends React.Component {
                   }}
                 ></FilterListOutlinedIcon>
                 <div
-                  style={{ fontWeight: 600, fontSize: 32, color: "#375995" }}
+                  style={{ fontWeight: 600, fontSize: 14, color: "#375995" }}
                 >
                   Filters
                 </div>
