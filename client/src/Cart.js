@@ -913,7 +913,10 @@ export default class Cart extends React.Component {
     );
   }
   startShopping() {
-    const email = document.getElementById("email").value;
+    var email = document.getElementById("email").value;
+    if (email) {
+      email = email.toLowerCase();
+    }
     if (!this.checkEmail(email)) {
       return;
     }

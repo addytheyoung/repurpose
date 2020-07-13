@@ -146,32 +146,34 @@ export default class CartMobile extends React.Component {
         <div style={{ position: "fixed", bottom: 0, zIndex: 105 }}>
           <FooterMobile profilePage={this.state.profilePage} cartPage={true} />
         </div>
-        <div
-          onClick={() => this.goToCheckout()}
-          id="checkout-mobile"
-          style={{
-            backgroundColor: "#426CB4",
-            textDecoration: "none",
-            color: "white",
-            width: "98vw",
-            paddingTop: 10,
-            paddingBottom: 10,
-            height: "4vh",
-            bottom: "8vh",
-            left: "1vw",
-            // right: "1vw",
-            position: "fixed",
-            fontSize: 20,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: 5,
-            // padding: 10,
-            fontWeight: 700,
-          }}
-        >
-          CHECK OUT
-        </div>
+        {this.state.myData.cart.length !== 0 && (
+          <div
+            onClick={() => this.goToCheckout()}
+            id="checkout-mobile"
+            style={{
+              backgroundColor: "#426CB4",
+              textDecoration: "none",
+              color: "white",
+              width: "98vw",
+              paddingTop: 10,
+              paddingBottom: 10,
+              height: "4vh",
+              bottom: "9vh",
+              left: "1vw",
+              // right: "1vw",
+              position: "fixed",
+              fontSize: 20,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: 5,
+              // padding: 10,
+              fontWeight: 700,
+            }}
+          >
+            CHECK OUT
+          </div>
+        )}
 
         <div
           style={{
@@ -204,7 +206,13 @@ export default class CartMobile extends React.Component {
               Cart
             </div>
             {this.state.myData.cart.length === 0 && (
-              <div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
                 <div style={{ fontSize: 16, fontWeight: 600, marginTop: 50 }}>
                   Cart is empty!
                 </div>
@@ -212,7 +220,7 @@ export default class CartMobile extends React.Component {
                   href="/"
                   id="shop"
                   style={{
-                    backgroundColor: "#a1a1a1",
+                    backgroundColor: "#426CB4",
                     textDecoration: "none",
                     color: "white",
                     width: 120,
@@ -363,7 +371,10 @@ export default class CartMobile extends React.Component {
   }
 
   startShopping() {
-    const email = document.getElementById("email").value;
+    var email = document.getElementById("email").value;
+    if (email) {
+      email = email.toLowerCase();
+    }
     if (!this.checkEmail(email)) {
       return;
     }

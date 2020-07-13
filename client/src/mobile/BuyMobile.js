@@ -111,7 +111,8 @@ export default class BuyMobile extends React.Component {
                   width: "100vw",
                   borderRadius: 5,
                   position: "fixed",
-                  height: "100vh",
+                  height: "91.2vh",
+                  overflowY: "scroll",
                   top: 0,
                   backgroundColor: "#f5f5f5",
                   // position: "absolute",
@@ -179,6 +180,7 @@ export default class BuyMobile extends React.Component {
                         width: "100%",
                         display: "flex",
                         justifyContent: "center",
+                        alignItems: "center",
                       }}
                     >
                       <div
@@ -186,7 +188,7 @@ export default class BuyMobile extends React.Component {
                           display: "flex",
                           flexDirection: "column",
                           justifyContent: "center",
-                          alignItems: "centers",
+                          alignItems: "center",
                         }}
                       >
                         <div
@@ -205,7 +207,7 @@ export default class BuyMobile extends React.Component {
                           style={{
                             marginTop: 30,
                             fontWeight: 700,
-                            fontSize: 14,
+                            fontSize: 24,
                             textAlign: "center",
                           }}
                         >
@@ -261,6 +263,7 @@ export default class BuyMobile extends React.Component {
                     <div style={{ marginTop: 5 }}>
                       {this.state.modal.description}
                     </div>
+                    <div style={{ height: "8vh" }}></div>
                   </div>
                 </div>
               </div>

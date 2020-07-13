@@ -73,7 +73,7 @@ export default class FooterMobile extends React.Component {
         )}
         <div
           style={{
-            height: "8vh",
+            height: "9vh",
             zIndex: 102,
             width: "100vw",
             backgroundColor: "#ffffff",
@@ -88,7 +88,8 @@ export default class FooterMobile extends React.Component {
               width: "17vw",
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
+              marginTop: "1vh",
+              // alignItems: "center",
             }}
           >
             <div
@@ -96,7 +97,7 @@ export default class FooterMobile extends React.Component {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "center",
+                // justifyContent: "center",
                 alignItems: "center",
                 fontSize: 14,
               }}
@@ -111,7 +112,7 @@ export default class FooterMobile extends React.Component {
               <div
                 style={{
                   fontWeight: 500,
-                  marginTop: "0.4vh",
+                  marginTop: "0.2vh",
                   color: this.state.homePage ? "#426CB4" : "#000000",
                 }}
               >
@@ -135,7 +136,8 @@ export default class FooterMobile extends React.Component {
               width: "17vw",
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
+              marginTop: "1vh",
+              // alignItems: "center",
             }}
           >
             <div
@@ -143,7 +145,7 @@ export default class FooterMobile extends React.Component {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "center",
+                // justifyContent: "center",
                 alignItems: "center",
                 fontSize: 14,
               }}
@@ -158,7 +160,7 @@ export default class FooterMobile extends React.Component {
               <div
                 style={{
                   fontWeight: 500,
-                  marginTop: "0.4vh",
+                  marginTop: "0.2vh",
                   color: this.state.aboutPage ? "#426CB4" : "#000000",
                 }}
               >
@@ -183,7 +185,8 @@ export default class FooterMobile extends React.Component {
               width: "17vw",
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
+              marginTop: "1vh",
+              // alignItems: "center",
             }}
           >
             <div
@@ -191,7 +194,7 @@ export default class FooterMobile extends React.Component {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "center",
+                // justifyContent: "center",
                 alignItems: "center",
                 fontSize: 14,
               }}
@@ -209,7 +212,7 @@ export default class FooterMobile extends React.Component {
               <div
                 style={{
                   fontWeight: 500,
-                  marginTop: "0.4vh",
+                  marginTop: "0.2vh",
                   color:
                     this.state.searchPage || this.state.mainSearchPage
                       ? "#426CB4"
@@ -237,7 +240,8 @@ export default class FooterMobile extends React.Component {
               width: "17vw",
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
+              marginTop: "1vh",
+              // alignItems: "center",
             }}
           >
             <div
@@ -245,7 +249,7 @@ export default class FooterMobile extends React.Component {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "center",
+                // justifyContent: "center",
                 alignItems: "center",
                 fontSize: 14,
               }}
@@ -260,7 +264,7 @@ export default class FooterMobile extends React.Component {
               <div
                 style={{
                   fontWeight: 500,
-                  marginTop: "0.4vh",
+                  marginTop: "0.2vh",
                   color: this.state.profilePage ? "#426CB4" : "#000000",
                 }}
               >
@@ -276,7 +280,8 @@ export default class FooterMobile extends React.Component {
               width: "17vw",
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
+              marginTop: "1vh",
+              // alignItems: "center",
             }}
           >
             <div
@@ -284,7 +289,6 @@ export default class FooterMobile extends React.Component {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "center",
                 alignItems: "center",
                 fontSize: 14,
               }}
@@ -297,10 +301,11 @@ export default class FooterMobile extends React.Component {
                   color: this.state.cartPage ? "#426CB4" : "#000000",
                 }}
               ></ShoppingCartOutlinedIcon>
+
               <div
                 style={{
                   fontWeight: 500,
-                  marginTop: "0.4vh",
+                  marginTop: "0.2vh",
 
                   color: this.state.cartPage ? "#426CB4" : "#000000",
                 }}
@@ -308,6 +313,26 @@ export default class FooterMobile extends React.Component {
                 Cart
               </div>
             </div>
+            {localStorage.getItem("cart") && localStorage.getItem("cart") != 0 && (
+              <div
+                style={{
+                  color: "white",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontWeight: 700,
+                  fontSize: 12,
+                  backgroundColor: "red",
+                  borderRadius: 100,
+                  position: "absolute",
+                  width: "4vw",
+                  height: "4vw",
+                  marginLeft: "3vw",
+                }}
+              >
+                {localStorage.getItem("cart")}
+              </div>
+            )}
           </div>
         </div>
       </div>

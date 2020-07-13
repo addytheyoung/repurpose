@@ -151,6 +151,7 @@ export default class CheckOutFormMobile extends React.Component {
           orders: newOrders,
         })
         .then(() => {
+          console.log("1*");
           var a_index = 0;
           for (var i = 0; i < cart.length; i++) {
             const item = cart[i];
@@ -168,6 +169,8 @@ export default class CheckOutFormMobile extends React.Component {
               // .update({})
               .update({ deleting_now: true })
               .then((f) => {
+                console.log("2*");
+
                 console.log(f);
                 firebase
                   .firestore()
@@ -177,6 +180,8 @@ export default class CheckOutFormMobile extends React.Component {
                   .doc(item.uid)
                   .delete()
                   .then(() => {
+                    console.log("3*");
+
                     a_index++;
                     if (a_index === cart.length) {
                       firebase
@@ -185,6 +190,8 @@ export default class CheckOutFormMobile extends React.Component {
                         .where("cart", "array-contains-any", cart)
                         .get()
                         .then((user) => {
+                          console.log("4*");
+
                           const userDocs = user.docs;
                           console.log(userDocs.length);
                           if (userDocs.length === 0) {
@@ -224,6 +231,8 @@ export default class CheckOutFormMobile extends React.Component {
                                 cart: newCart,
                               })
                               .then(() => {
+                                console.log("5*");
+
                                 b_index++;
                                 if (b_index === userDocs.length) {
                                   localStorage.setItem("cart", "0");
@@ -246,6 +255,8 @@ export default class CheckOutFormMobile extends React.Component {
                                       seller_array: sellerArray,
                                     })
                                     .then(() => {
+                                      console.log("6*");
+
                                       this.props.finished();
                                     });
                                 }
@@ -260,7 +271,10 @@ export default class CheckOutFormMobile extends React.Component {
 
       return (
         <div>
-          <div>Your payment was successful!</div>
+          <div>
+            Your payment was successful! You've been emailed a reciept. Call if
+            you have any questions or concerns!
+          </div>
         </div>
       );
     }
@@ -332,6 +346,7 @@ export default class CheckOutFormMobile extends React.Component {
             >
               Delivery Info
             </div>
+            <div style={{ textAlign: "center" }}>(Central Texas only)</div>
             <Input
               defaultValue={
                 localStorage.getItem("fname")
@@ -483,12 +498,7 @@ export default class CheckOutFormMobile extends React.Component {
               style={{ height: 55 }}
               shippingPreference="NO_SHIPPING"
               amount={this.props.total}
-              onCancel={(e) =>
-                this.setState({
-                  loadingIcon: false,
-                  call: false,
-                })
-              }
+              onCancel={(e) => this.cancelPaypal()}
               onClick={(e) => this.andrewMethod2(e)}
               onError={(e) => {
                 console.log(e);
@@ -505,7 +515,7 @@ export default class CheckOutFormMobile extends React.Component {
                 });
 
                 // OPTIONAL: Call your server to save the transaction
-                return api.payWithPaypal().then((res) => {});
+                // return api.payWithPaypal().then((res) => {});
               }}
               options={{
                 clientId:
@@ -575,6 +585,13 @@ export default class CheckOutFormMobile extends React.Component {
     );
   }
 
+  cancelPaypal(e) {
+    this.setState({
+      loadingIcon: false,
+      call: false,
+    });
+  }
+
   andrewMethod2(e) {
     const first = document.getElementById("first").value.trim();
     const last = document.getElementById("last").value.trim();
@@ -625,7 +642,8 @@ export default class CheckOutFormMobile extends React.Component {
           if (b === true && first && last && address1 && zip && city && state) {
             console.log("PASSED");
             this.checkItems().then((a) => {
-              console.log(a);
+              console.log(a.length);
+              console.log(this.state.myData.cart.length);
               if (!a) {
               } else if (a.length === this.state.myData.cart.length) {
               } else {

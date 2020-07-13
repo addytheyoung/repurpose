@@ -24,6 +24,10 @@ export default class Home extends React.Component {
       modal: null,
       addingToCart: false,
     };
+
+    localStorage.setItem("city", "Austin, TX");
+    window.location.reload();
+    return;
     const categoryList = [
       "Art & Decoration",
       "Toys & Hobbies",
@@ -785,7 +789,10 @@ export default class Home extends React.Component {
   }
 
   startShopping() {
-    const email = document.getElementById("email").value;
+    var email = document.getElementById("email").value;
+    if (email) {
+      email = email.toLowerCase();
+    }
 
     if (!this.checkEmail(email)) {
       return;

@@ -16,7 +16,7 @@ export default class AboutPageMobile extends React.Component {
           justifyContent: "center",
           zIndex: 1,
           overflowY: "scroll",
-          height: "92.2vh",
+          height: "91.2vh",
           backgroundColor: "#f5f5f5",
           top: 0,
         }}
@@ -56,7 +56,8 @@ export default class AboutPageMobile extends React.Component {
             </div>
             <div className="about-1">
               Call 903-203-1286 or email andrew@collection.deals if you have any
-              concerns or questions!
+              concerns or questions! We're somewhat new, and always looking for
+              feedback!
             </div>
             <div
               className="about-2"

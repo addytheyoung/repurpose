@@ -37,6 +37,10 @@ export default class HomeMobile extends React.Component {
       "Everything Else",
     ];
 
+    localStorage.setItem("city", "Austin, TX");
+    window.location.reload();
+    return;
+
     const firebaseCats = firebase.firestore().collection("Categories");
     var i_index = 0;
     var itemArr = [];
@@ -785,7 +789,10 @@ export default class HomeMobile extends React.Component {
   }
 
   startShopping() {
-    const email = document.getElementById("email").value;
+    var email = document.getElementById("email").value;
+    if (email) {
+      email = email.toLowerCase();
+    }
 
     if (!this.checkEmail(email)) {
       return;

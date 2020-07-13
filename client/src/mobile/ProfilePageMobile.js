@@ -24,10 +24,11 @@ export default class ProfilePageMobile extends React.Component {
         <div
           style={{
             width: "100vw",
-            position: "fixed",
+            overflowY: "scroll",
+            height: "91.2vh",
             zIndex: 1,
             borderRadius: 5,
-            height: "92.2vh",
+
             top: 0,
             backgroundColor: "#f5f5f5",
             opacity: 1,
@@ -348,7 +349,10 @@ export default class ProfilePageMobile extends React.Component {
   }
 
   startShopping() {
-    const email = document.getElementById("email").value;
+    var email = document.getElementById("email").value;
+    if (email) {
+      email = email.toLowerCase();
+    }
     if (!this.checkEmail(email)) {
       return;
     }
