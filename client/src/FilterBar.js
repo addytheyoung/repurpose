@@ -39,10 +39,10 @@ export default class FilterBar extends React.Component {
             }
             changeCategory={(categories) => this.changeCategory(categories)}
           />
-          <DialogElse
+          {/* <DialogElse
             clearContent={() => this.clearContent()}
             changeContent={(clothing) => this.changeContent(clothing)}
-          />
+          /> */}
         </div>
       </div>
     );

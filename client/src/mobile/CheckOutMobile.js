@@ -465,7 +465,7 @@ export default class CheckOutMobile extends Component {
   getSubtotal(cart) {
     var totalPrice = 0;
     for (var i = 0; i < cart.length; i++) {
-      const price = cart[i].original_price;
+      const price = parseInt(cart[i].original_price);
       totalPrice += price;
     }
     return ((totalPrice / 100) * 100).toFixed(2);

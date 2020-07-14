@@ -86,7 +86,6 @@ export default class CartMobile extends React.Component {
                 });
               });
           } else {
-            console.log(me);
             console.log(me.data());
             const myData = me.data();
             var numItems = 0;
@@ -296,11 +295,12 @@ export default class CartMobile extends React.Component {
                 flexDirection: "column",
                 alignItems: "center",
                 width: "100vw",
-                backgroundColor: "#ffffff",
+                backgroundColor: "#fafafa",
                 position: "fixed",
-                bottom: "17vh",
+                bottom: "15vh",
                 marginTop: "3vh",
                 paddingBottom: 10,
+                paddingTop: 10,
               }}
             >
               <div
@@ -494,11 +494,13 @@ export default class CartMobile extends React.Component {
   }
 
   getSubtotal(cart) {
+    console.log(cart);
     var totalPrice = 0;
     for (var i = 0; i < cart.length; i++) {
-      const price = cart[i].original_price;
+      const price = parseInt(cart[i].original_price);
       totalPrice += price;
     }
+
     return ((totalPrice / 100) * 100).toFixed(2);
   }
 

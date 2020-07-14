@@ -9,6 +9,7 @@ import randomizeArray from "./global_methods/randomizeArray";
 import FilterBar from "./FilterBar";
 import Back from "./images/back.png";
 import Front from "./images/arrow.png";
+import { MixpanelProvider, MixpanelConsumer } from "react-mixpanel";
 
 export default class Buy extends React.Component {
   constructor(props) {
@@ -35,7 +36,6 @@ export default class Buy extends React.Component {
     this.pullNewItemsFromDatabase();
   }
   render() {
-    console.log(!this.state.finishedLoading);
     if (!this.state.loaded || !this.state.foundNewItems) {
       return (
         <div
@@ -223,6 +223,11 @@ export default class Buy extends React.Component {
                               fontWeight: 500,
                             }}
                           >
+                            {/* {this.state.addingToCart && (
+                              <MixpanelConsumer>
+                                {(mixpanel) => this.setMixpanel(mixpanel)}
+                              </MixpanelConsumer>
+                            )} */}
                             {!this.state.addingToCart && "ADD TO CART"}
                             {this.state.addingToCart && "Adding..."}
                           </div>
@@ -302,6 +307,7 @@ export default class Buy extends React.Component {
                 >
                   Items in Austin, TX
                 </div>
+
                 <div
                   style={{
                     display: "flex",
@@ -586,6 +592,13 @@ export default class Buy extends React.Component {
     );
   }
 
+  setMixpanel(mixpanel) {
+    mixpanel.track("Video play", {
+      genre: "hip-hop",
+      "duration in seconds": 42,
+    });
+  }
+
   updateMoreFilter(a, b) {
     console.log(a, b);
     const type = a;
@@ -616,8 +629,22 @@ export default class Buy extends React.Component {
   }
 
   addToCart(item) {
-    var numCartItems = localStorage.getItem("cart");
+    // mixpanel.track("Video play", {
+    //   genre: "hip-hop",
+    //   "duration in seconds": 42,
+    // });
 
+    // mixpanel.identify(firebase.auth().currentUser.uid);
+    // var USER_SIGNUP_DATE = "2020-01-02T21:07:03Z";
+
+    // mixpanel.people.set({
+    //   $email: "jsmith@example.com", // only reserved properties need the $
+    //   "Sign up date": USER_SIGNUP_DATE, // Send dates in ISO timestamp format (e.g. "2020-01-02T21:07:03Z")
+    //   USER_ID: USER_ID, // use human-readable names
+    //   credits: 150, // ...or numbers
+    // });
+
+    var numCartItems = localStorage.getItem("cart");
     if (numCartItems && numCartItems != 0) {
       numCartItems = parseInt(numCartItems) + 1;
     } else {

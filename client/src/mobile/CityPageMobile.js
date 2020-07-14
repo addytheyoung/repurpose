@@ -6,7 +6,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import "../css/CityPageMobile.css";
 
 export default class CityPageMobile extends React.Component {
-  citiesList = ["Austin, TX", "Athens, TX"];
+  citiesList = ["Austin, TX"];
 
   constructor(props) {
     super(props);
