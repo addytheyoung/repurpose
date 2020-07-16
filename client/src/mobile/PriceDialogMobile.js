@@ -250,7 +250,7 @@ export default function SimpleDialogDemo(props) {
           fontWeight: 600,
           paddingRight: 25,
           borderColor: "#a1a1a1",
-          fontSize: 42,
+          fontSize: 24,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",

@@ -87,9 +87,9 @@ function SimpleDialog(props) {
         style={{
           alignSelf: "center",
           textAlign: "center",
-          marginTop: 30,
+          marginTop: 0,
           fontWeight: 700,
-          fontSize: 52,
+          fontSize: 28,
         }}
       >
         Categories
@@ -109,16 +109,18 @@ function SimpleDialog(props) {
             flexDirection: "row",
             marginLeft: 100,
             marginRight: 100,
+            justifyContent: "center",
           }}
         >
           <div
             style={{
               width: "50vw",
-              fontSize: 46,
-              fontWeight: 600,
+              fontSize: 24,
+              fontWeight: 500,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              textAlign: "center",
             }}
           >
             {"Art & Decoration"}
@@ -131,15 +133,22 @@ function SimpleDialog(props) {
             />
           </div>
         </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
           <div
             style={{
               width: "50vw",
-              fontSize: 46,
-              fontWeight: 600,
+              fontSize: 24,
+              fontWeight: 500,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              textAlign: "center",
             }}
           >
             {"Books"}
@@ -152,12 +161,18 @@ function SimpleDialog(props) {
             />
           </div>
         </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
           <div
             style={{
               width: "50vw",
-              fontSize: 46,
-              fontWeight: 600,
+              fontSize: 24,
+              fontWeight: 500,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -178,11 +193,12 @@ function SimpleDialog(props) {
           <div
             style={{
               width: "50vw",
-              fontSize: 46,
-              fontWeight: 600,
+              fontSize: 24,
+              fontWeight: 500,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              textAlign: "center",
             }}
           >
             {"Electronics"}
@@ -199,11 +215,12 @@ function SimpleDialog(props) {
           <div
             style={{
               width: "50vw",
-              fontSize: 46,
-              fontWeight: 600,
+              fontSize: 24,
+              fontWeight: 500,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              textAlign: "center",
             }}
           >
             {"Home"}
@@ -220,11 +237,12 @@ function SimpleDialog(props) {
           <div
             style={{
               width: "50vw",
-              fontSize: 46,
-              fontWeight: 600,
+              fontSize: 24,
+              fontWeight: 500,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              textAlign: "center",
             }}
           >
             {"Garden"}
@@ -242,10 +260,11 @@ function SimpleDialog(props) {
             style={{
               display: "flex",
               width: "50vw",
-              fontSize: 46,
-              fontWeight: 600,
+              fontSize: 24,
+              fontWeight: 500,
               justifyContent: "center",
               alignItems: "center",
+              textAlign: "center",
             }}
           >
             {"Pet Supplies"}
@@ -263,10 +282,11 @@ function SimpleDialog(props) {
             style={{
               display: "flex",
               width: "50vw",
-              fontSize: 46,
-              fontWeight: 600,
+              fontSize: 24,
+              fontWeight: 500,
               justifyContent: "center",
               alignItems: "center",
+              textAlign: "center",
             }}
           >
             {"Sports & Hobbies"}
@@ -286,8 +306,9 @@ function SimpleDialog(props) {
               width: "50vw",
               justifyContent: "center",
               alignItems: "center",
-              fontSize: 46,
-              fontWeight: 600,
+              fontSize: 24,
+              fontWeight: 500,
+              textAlign: "center",
             }}
           >
             {"Toys & Games"}
@@ -311,7 +332,7 @@ function SimpleDialog(props) {
           height: "5vh",
           alignSelf: "center",
           textAlign: "center",
-          fontSize: 46,
+          fontSize: 24,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -336,11 +357,11 @@ function SimpleDialog(props) {
           height: "5vh",
           display: "flex",
           justifyContent: "center",
-          fontSize: 46,
+          fontSize: 24,
           textAlign: "center",
           alignItems: "center",
           borderRadius: 5,
-          marginTop: 50,
+          marginTop: 0,
           fontWeight: 600,
           marginBottom: 50,
         }}
@@ -403,7 +424,7 @@ export default function SimpleDialogDemo(props) {
           paddingLeft: 25,
           paddingRight: 25,
           borderColor: "#a1a1a1",
-          fontSize: 42,
+          fontSize: 24,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",

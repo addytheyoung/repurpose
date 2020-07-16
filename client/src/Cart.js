@@ -952,14 +952,16 @@ export default class Cart extends React.Component {
   }
 
   goToCheckout() {
-    if (firebase.auth().currentUser) {
-      window.location.href = "/checkout";
-    } else {
-      // Bring up sign up modal
-      this.setState({
-        profile: true,
-      });
-    }
+    window.location.href = "/checkout";
+
+    // if (firebase.auth().currentUser) {
+    //   window.location.href = "/checkout";
+    // } else {
+    //   // Bring up sign up modal
+    //   this.setState({
+    //     profile: true,
+    //   });
+    // }
   }
 
   setPickup(e) {

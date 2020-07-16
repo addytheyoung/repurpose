@@ -410,14 +410,17 @@ export default class CartMobile extends React.Component {
   }
 
   goToCheckout() {
-    if (firebase.auth().currentUser) {
-      window.location.href = "/checkout";
-    } else {
-      // Bring up sign up modal
-      this.setState({
-        profilePage: true,
-      });
-    }
+    window.location.href = "/checkout";
+
+    // if (firebase.auth().currentUser) {
+    //   window.location.href = "/checkout";
+
+    // } else {
+    //   // Bring up sign up modal
+    //   this.setState({
+    //     profilePage: true,
+    //   });
+    // }
   }
 
   setPickup(e) {

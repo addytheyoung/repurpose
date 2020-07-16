@@ -59,23 +59,14 @@ export default class CheckoutForm extends React.Component {
     };
 
     if (this.state.succeeded) {
-      const categoryList = [
-        "Art",
-        "Books",
-        "Collectibles",
-        "Decoration",
-        "Electronics",
-        "Fashion",
-        "Movies&Games",
-        "Other",
-      ];
+      const email = document.getElementById("email").value.trim().toLowerCase();
 
       var cart = this.state.myData.cart;
       var tempCart = JSON.parse(JSON.stringify(this.state.myData.cart));
       console.log(tempCart);
 
       api.sendEmail(
-        this.state.myData.email,
+        email,
         "Thank you for your purchase!\n\n You purchased: " +
           this.state.myData.cart.length +
           " items for $" +
@@ -382,7 +373,8 @@ export default class CheckoutForm extends React.Component {
                   placeholder="City"
                 ></Input>
                 <Select
-                  defaultValue={"State"}
+                  disabled
+                  defaultValue={"TX"}
                   placeholder={"State"}
                   style={{ margin: 10 }}
                   id="state"
@@ -441,6 +433,13 @@ export default class CheckoutForm extends React.Component {
                   <MenuItem value="WV">WV</MenuItem>
                   <MenuItem value="WY">WY</MenuItem>
                 </Select>
+                <Input
+                  id="email"
+                  defaultValue={
+                    this.state.myData.email ? this.state.myData.email : ""
+                  }
+                  placeholder="email"
+                ></Input>
               </div>
             )}
           </div>
@@ -559,6 +558,24 @@ export default class CheckoutForm extends React.Component {
     const zip = document.getElementById("zip").value.trim();
     const city = document.getElementById("city").value.trim();
     const state = document.getElementById("state").textContent;
+    const email = document.getElementById("email").value.trim().toLowerCase();
+
+    if (
+      first == "" ||
+      last == "" ||
+      address1 == "" ||
+      zip == "" ||
+      city == "" ||
+      state == "" ||
+      email == ""
+    ) {
+      alert("Please fill out all info");
+      window.location.href = "/checkout";
+      return;
+    } else if (!this.checkEmail(email)) {
+      alert("nigga");
+      window.location.reload();
+    }
 
     console.log(address1);
     console.log(zip);
@@ -850,6 +867,7 @@ export default class CheckoutForm extends React.Component {
     const zip = document.getElementById("zip").value.trim();
     const city = document.getElementById("city").value.trim();
     const state = document.getElementById("state").textContent;
+    const email = document.getElementById("email").value.trim().toLowerCase();
 
     // const url =
     //   "https://maps.googleapis.com/maps/api/geocode/json?address=" +
@@ -893,11 +911,17 @@ export default class CheckoutForm extends React.Component {
       });
       alert("Please enter your state");
       return;
+    } else if (!this.checkEmail(email)) {
+      this.setState({
+        loadingIcon: false,
+      });
+      return false;
     }
 
     localStorage.setItem("deliverAddress", address1);
     localStorage.setItem("deliverAddress2", address2);
     localStorage.setItem("deliverCity", city);
+    localStorage.setItem("email", email);
 
     this.setState({
       processing: true,
@@ -922,6 +946,7 @@ export default class CheckoutForm extends React.Component {
         error: `Payment failed: ${payload.error.message}`,
         processing: false,
       });
+      alert(payload.error.message);
 
       console.log("[error]", payload.error);
     } else {
@@ -1000,6 +1025,7 @@ export default class CheckoutForm extends React.Component {
   }
 
   async checkAddress(e) {
+    return true;
     console.log(e);
 
     console.log("address");
@@ -1049,5 +1075,17 @@ export default class CheckoutForm extends React.Component {
       .catch((e) => {
         console.log(e.message);
       });
+  }
+
+  checkEmail(email) {
+    if (!email) {
+      alert("Bad email");
+      return false;
+    }
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return true;
+    }
+    alert("Bad email");
+    return false;
   }
 }

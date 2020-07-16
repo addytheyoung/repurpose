@@ -30,7 +30,7 @@ export default class CheckOutFormMobile extends React.Component {
       succeeded: false,
       processing: false,
       loaded: false,
-      myData: null,
+      myData: this.props.myData,
       finished: false,
       deliveryType: localStorage.getItem("deliveryType"),
       timesCalledStripe: 0,
@@ -59,23 +59,13 @@ export default class CheckOutFormMobile extends React.Component {
     };
 
     if (this.state.succeeded) {
-      const categoryList = [
-        "Art",
-        "Books",
-        "Collectibles",
-        "Decoration",
-        "Electronics",
-        "Fashion",
-        "Movies&Games",
-        "Other",
-      ];
-
       var cart = this.state.myData.cart;
       var tempCart = JSON.parse(JSON.stringify(this.state.myData.cart));
       console.log(tempCart);
+      const email = document.getElementById("email").value.trim().toLowerCase();
 
       api.sendEmail(
-        this.state.myData.email,
+        email,
         "Thank you for your purchase!\n\n You purchased: " +
           this.state.myData.cart.length +
           " items for $" +
@@ -121,9 +111,6 @@ export default class CheckOutFormMobile extends React.Component {
       // Update my own cart and remove everything
 
       var newOrders = orders.concat(tempCart);
-
-      console.log(newOrders);
-
       var myUid = null;
 
       if (firebase.auth().currentUser) {
@@ -151,15 +138,10 @@ export default class CheckOutFormMobile extends React.Component {
           orders: newOrders,
         })
         .then(() => {
-          console.log("1*");
           var a_index = 0;
           for (var i = 0; i < cart.length; i++) {
             const item = cart[i];
-
             // Deleted all items from database
-            console.log(item.category);
-            console.log(item.uid);
-            console.log("********(*****");
             firebase
               .firestore()
               .collection("Categories")
@@ -169,9 +151,6 @@ export default class CheckOutFormMobile extends React.Component {
               // .update({})
               .update({ deleting_now: true })
               .then((f) => {
-                console.log("2*");
-
-                console.log(f);
                 firebase
                   .firestore()
                   .collection("Categories")
@@ -180,8 +159,6 @@ export default class CheckOutFormMobile extends React.Component {
                   .doc(item.uid)
                   .delete()
                   .then(() => {
-                    console.log("3*");
-
                     a_index++;
                     if (a_index === cart.length) {
                       firebase
@@ -190,8 +167,6 @@ export default class CheckOutFormMobile extends React.Component {
                         .where("cart", "array-contains-any", cart)
                         .get()
                         .then((user) => {
-                          console.log("4*");
-
                           const userDocs = user.docs;
                           console.log(userDocs.length);
                           if (userDocs.length === 0) {
@@ -231,8 +206,6 @@ export default class CheckOutFormMobile extends React.Component {
                                 cart: newCart,
                               })
                               .then(() => {
-                                console.log("5*");
-
                                 b_index++;
                                 if (b_index === userDocs.length) {
                                   localStorage.setItem("cart", "0");
@@ -367,106 +340,112 @@ export default class CheckOutFormMobile extends React.Component {
               style={{ margin: 10 }}
               placeholder="Last Name"
             ></Input>
-            {this.props.deliveryType === "delivery" && (
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <Input
-                  defaultValue={
-                    localStorage.getItem("address1")
-                      ? localStorage.getItem("address1")
-                      : ""
-                  }
-                  id="address1"
-                  style={{ margin: 10 }}
-                  placeholder="Address Line 1"
-                ></Input>
-                <Input
-                  defaultValue={
-                    localStorage.getItem("address2")
-                      ? localStorage.getItem("address2")
-                      : ""
-                  }
-                  id="address2"
-                  style={{ margin: 10 }}
-                  placeholder="Address Line 2 (optional)"
-                ></Input>
-                <Input
-                  defaultValue={
-                    localStorage.getItem("zip")
-                      ? localStorage.getItem("zip")
-                      : ""
-                  }
-                  id="zip"
-                  style={{ margin: 10 }}
-                  placeholder="Zip Code"
-                ></Input>
-                <Input
-                  id="city"
-                  defaultValue={"Austin"}
-                  style={{ margin: 10 }}
-                  placeholder="City"
-                ></Input>
-                <Select
-                  defaultValue={"TX"}
-                  placeholder={"State"}
-                  style={{ margin: 10 }}
-                  id="state"
-                >
-                  <MenuItem value="State">
-                    <div style={{ color: "#a1a1a1" }}>State</div>
-                  </MenuItem>
-                  <MenuItem value="AK">AK</MenuItem>
-                  <MenuItem value="AL">AL</MenuItem>
-                  <MenuItem value="AR">AR</MenuItem>
-                  <MenuItem value="AZ">AZ</MenuItem>
-                  <MenuItem value="CA">CA</MenuItem>
-                  <MenuItem value="CO">CO</MenuItem>
-                  <MenuItem value="CT">CT</MenuItem>
-                  <MenuItem value="DC">DC</MenuItem>
-                  <MenuItem value="DE">DE</MenuItem>
-                  <MenuItem value="FL">FL</MenuItem>
-                  <MenuItem value="GA">GA</MenuItem>
-                  <MenuItem value="IA">IA</MenuItem>
-                  <MenuItem value="ID">ID</MenuItem>
-                  <MenuItem value="IL">IL</MenuItem>
-                  <MenuItem value="IN">IN</MenuItem>
-                  <MenuItem value="KS">KS</MenuItem>
-                  <MenuItem value="KY">KY</MenuItem>
-                  <MenuItem value="LA">LA</MenuItem>
-                  <MenuItem value="MA">MA</MenuItem>
-                  <MenuItem value="MD">MD</MenuItem>
-                  <MenuItem value="ME">ME</MenuItem>
-                  <MenuItem value="MI">MI</MenuItem>
-                  <MenuItem value="MN">MN</MenuItem>
-                  <MenuItem value="MO">MO</MenuItem>
-                  <MenuItem value="MS">MS</MenuItem>
-                  <MenuItem value="MT">MT</MenuItem>
-                  <MenuItem value="NC">NC</MenuItem>
-                  <MenuItem value="ND">ND</MenuItem>
-                  <MenuItem value="NE">NE</MenuItem>
-                  <MenuItem value="NH">NH</MenuItem>
-                  <MenuItem value="NJ">NJ</MenuItem>
-                  <MenuItem value="NM">NM</MenuItem>
-                  <MenuItem value="NV">NV</MenuItem>
-                  <MenuItem value="NY">NY</MenuItem>
-                  <MenuItem value="OH">OH</MenuItem>
-                  <MenuItem value="OK">OK</MenuItem>
-                  <MenuItem value="OR">OR</MenuItem>
-                  <MenuItem value="PA">PA</MenuItem>
-                  <MenuItem value="RI">RI</MenuItem>
-                  <MenuItem value="SC">SC</MenuItem>
-                  <MenuItem value="SD">SD</MenuItem>
-                  <MenuItem value="TN">TN</MenuItem>
-                  <MenuItem value="TX">TX</MenuItem>
-                  <MenuItem value="UT">UT</MenuItem>
-                  <MenuItem value="VA">VA</MenuItem>
-                  <MenuItem value="VT">VT</MenuItem>
-                  <MenuItem value="WA">WA</MenuItem>
-                  <MenuItem value="WI">WI</MenuItem>
-                  <MenuItem value="WV">WV</MenuItem>
-                  <MenuItem value="WY">WY</MenuItem>
-                </Select>
-              </div>
-            )}
+
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <Input
+                defaultValue={
+                  localStorage.getItem("address1")
+                    ? localStorage.getItem("address1")
+                    : ""
+                }
+                id="address1"
+                style={{ margin: 10 }}
+                placeholder="Address Line 1"
+              ></Input>
+              <Input
+                defaultValue={
+                  localStorage.getItem("address2")
+                    ? localStorage.getItem("address2")
+                    : ""
+                }
+                id="address2"
+                style={{ margin: 10 }}
+                placeholder="Address Line 2 (optional)"
+              ></Input>
+              <Input
+                defaultValue={
+                  localStorage.getItem("zip") ? localStorage.getItem("zip") : ""
+                }
+                id="zip"
+                style={{ margin: 10 }}
+                placeholder="Zip Code"
+              ></Input>
+              <Input
+                id="city"
+                defaultValue={"Austin"}
+                style={{ margin: 10 }}
+                placeholder="City"
+              ></Input>
+              <Select
+                disabled
+                defaultValue={"TX"}
+                placeholder={"State"}
+                style={{ margin: 10 }}
+                id="state"
+              >
+                <MenuItem value="State">
+                  <div style={{ color: "#a1a1a1" }}>State</div>
+                </MenuItem>
+                <MenuItem value="AK">AK</MenuItem>
+                <MenuItem value="AL">AL</MenuItem>
+                <MenuItem value="AR">AR</MenuItem>
+                <MenuItem value="AZ">AZ</MenuItem>
+                <MenuItem value="CA">CA</MenuItem>
+                <MenuItem value="CO">CO</MenuItem>
+                <MenuItem value="CT">CT</MenuItem>
+                <MenuItem value="DC">DC</MenuItem>
+                <MenuItem value="DE">DE</MenuItem>
+                <MenuItem value="FL">FL</MenuItem>
+                <MenuItem value="GA">GA</MenuItem>
+                <MenuItem value="IA">IA</MenuItem>
+                <MenuItem value="ID">ID</MenuItem>
+                <MenuItem value="IL">IL</MenuItem>
+                <MenuItem value="IN">IN</MenuItem>
+                <MenuItem value="KS">KS</MenuItem>
+                <MenuItem value="KY">KY</MenuItem>
+                <MenuItem value="LA">LA</MenuItem>
+                <MenuItem value="MA">MA</MenuItem>
+                <MenuItem value="MD">MD</MenuItem>
+                <MenuItem value="ME">ME</MenuItem>
+                <MenuItem value="MI">MI</MenuItem>
+                <MenuItem value="MN">MN</MenuItem>
+                <MenuItem value="MO">MO</MenuItem>
+                <MenuItem value="MS">MS</MenuItem>
+                <MenuItem value="MT">MT</MenuItem>
+                <MenuItem value="NC">NC</MenuItem>
+                <MenuItem value="ND">ND</MenuItem>
+                <MenuItem value="NE">NE</MenuItem>
+                <MenuItem value="NH">NH</MenuItem>
+                <MenuItem value="NJ">NJ</MenuItem>
+                <MenuItem value="NM">NM</MenuItem>
+                <MenuItem value="NV">NV</MenuItem>
+                <MenuItem value="NY">NY</MenuItem>
+                <MenuItem value="OH">OH</MenuItem>
+                <MenuItem value="OK">OK</MenuItem>
+                <MenuItem value="OR">OR</MenuItem>
+                <MenuItem value="PA">PA</MenuItem>
+                <MenuItem value="RI">RI</MenuItem>
+                <MenuItem value="SC">SC</MenuItem>
+                <MenuItem value="SD">SD</MenuItem>
+                <MenuItem value="TN">TN</MenuItem>
+                <MenuItem value="TX">TX</MenuItem>
+                <MenuItem value="UT">UT</MenuItem>
+                <MenuItem value="VA">VA</MenuItem>
+                <MenuItem value="VT">VT</MenuItem>
+                <MenuItem value="WA">WA</MenuItem>
+                <MenuItem value="WI">WI</MenuItem>
+                <MenuItem value="WV">WV</MenuItem>
+                <MenuItem value="WY">WY</MenuItem>
+              </Select>
+              <Input
+                id="email"
+                defaultValue={
+                  this.state.myData.email ? this.state.myData.email : ""
+                }
+                style={{ margin: 10 }}
+                placeholder="email"
+              ></Input>
+            </div>
           </div>
 
           {/* <div
@@ -495,7 +474,9 @@ export default class CheckOutFormMobile extends React.Component {
 
           <div id="test1">
             <PayPalButton
-              style={{ height: 55 }}
+              style={{
+                height: 55,
+              }}
               shippingPreference="NO_SHIPPING"
               amount={this.props.total}
               onCancel={(e) => this.cancelPaypal()}
@@ -600,6 +581,23 @@ export default class CheckOutFormMobile extends React.Component {
     const zip = document.getElementById("zip").value.trim();
     const city = document.getElementById("city").value.trim();
     const state = document.getElementById("state").textContent;
+    const email = document.getElementById("email").value.trim().toLowerCase();
+
+    if (
+      first == "" ||
+      last == "" ||
+      address1 == "" ||
+      zip == "" ||
+      city == "" ||
+      state == "" ||
+      email == ""
+    ) {
+      alert("Please fill out all info");
+      window.location.href = "/checkout";
+      return;
+    } else if (!this.checkEmail(email)) {
+      window.location.href = "/checkout";
+    }
 
     console.log(address1);
     console.log(zip);
@@ -609,6 +607,7 @@ export default class CheckOutFormMobile extends React.Component {
     localStorage.setItem("address1", address1);
     localStorage.setItem("address2", address2);
     localStorage.setItem("zip", zip);
+    localStorage.setItem("email", email);
 
     // const url =
     //   "https://maps.googleapis.com/maps/api/geocode/json?address=" +
@@ -892,6 +891,7 @@ export default class CheckOutFormMobile extends React.Component {
     const zip = document.getElementById("zip").value.trim();
     const city = document.getElementById("city").value.trim();
     const state = document.getElementById("state").textContent;
+    const email = document.getElementById("email").value.trim().toLowerCase();
 
     // const url =
     //   "https://maps.googleapis.com/maps/api/geocode/json?address=" +
@@ -935,17 +935,30 @@ export default class CheckOutFormMobile extends React.Component {
       });
       alert("Please enter your state");
       return;
+    } else if (email === "") {
+      this.setState({
+        loadingIcon: false,
+      });
+      alert("Please enter your email");
+      return;
+    } else if (!this.checkEmail(email)) {
+      this.setState({
+        loadingIcon: false,
+      });
+      return false;
     }
 
     localStorage.setItem("deliverAddress", address1);
     localStorage.setItem("deliverAddress2", address2);
     localStorage.setItem("deliverCity", city);
+    localStorage.setItem("email", email);
 
     this.setState({
       processing: true,
     });
     // Step 3: Use clientSecret from PaymentIntent and the CardElement
     // to confirm payment with stripe.confirmCardPayment()
+    console.log("pre confirm");
     const payload = await this.props.stripe.confirmCardPayment(
       this.state.clientSecret,
       {
@@ -957,16 +970,19 @@ export default class CheckOutFormMobile extends React.Component {
         },
       }
     );
+    console.log("post conf");
 
     if (payload.error) {
+      console.log(payload.error);
       this.setState({
         loadingIcon: false,
         error: `Payment failed: ${payload.error.message}`,
         processing: false,
       });
 
-      console.log("[error]", payload.error);
+      alert(payload.error.message);
     } else {
+      console.log("success");
       this.setState({
         error: null,
         succeeded: true,
@@ -1042,6 +1058,7 @@ export default class CheckOutFormMobile extends React.Component {
   }
 
   async checkAddress(e) {
+    return true;
     console.log(e);
 
     console.log("address");
@@ -1077,8 +1094,8 @@ export default class CheckOutFormMobile extends React.Component {
               Math.pow((longitude2 - longitude) * this.lngPerMile, 2);
             const milesBetween = Math.sqrt(x);
             console.log(milesBetween);
-
-            if (milesBetween >= 30) {
+            alert(milesBetween);
+            if (milesBetween >= 40) {
               return false;
             } else {
               return true;
@@ -1091,5 +1108,17 @@ export default class CheckOutFormMobile extends React.Component {
       .catch((e) => {
         console.log(e.message);
       });
+  }
+
+  checkEmail(email) {
+    if (!email) {
+      alert("Bad email");
+      return false;
+    }
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return true;
+    }
+    alert("Bad email");
+    return false;
   }
 }

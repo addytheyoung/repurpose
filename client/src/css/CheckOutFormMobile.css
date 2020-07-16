@@ -4,7 +4,8 @@
 #address2,
 #zip,
 #city,
-#state {
+#state,
+#email {
   margin: 10px;
   font-size: 16px;
   height: 5vh;
@@ -12,5 +13,5 @@
 }
 
 #test1 div {
-  width: 80vw;
+  min-width: 80vw;
 }
