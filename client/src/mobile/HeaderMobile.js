@@ -46,9 +46,9 @@ export default class HeaderBar extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div style={{ zIndex: 219 }}>
         {this.state.filterPage && (
-          <div>
+          <div style={{ zIndex: 220 }}>
             <FilterPageMobile
               updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
               minPrice={this.state.minPrice}
@@ -60,7 +60,7 @@ export default class HeaderBar extends React.Component {
           </div>
         )}
         {this.state.cityPage && (
-          <div>
+          <div style={{ zIndex: 220 }}>
             <CityPageMobile closePage={() => this.closePage()} />
           </div>
         )}

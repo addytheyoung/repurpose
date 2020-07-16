@@ -19,30 +19,22 @@ export default class FilterPageMobile extends React.Component {
         style={{
           display: "flex",
           justifyContent: "center",
+          zIndex: 220,
+          minHeight: "100vh",
+          width: "100vw",
+          overflowY: "hidden",
+
           // alignItems: "center"
         }}
       >
         <div
-          onClick={(e) => this.closeModal(e)}
-          style={{
-            backgroundColor: "#000000",
-            opacity: 0.5,
-            zIndex: 99,
-            width: "100vw",
-            height: "100vh",
-            position: "fixed",
-          }}
-        ></div>
-        <div
           style={{
             width: "100vw",
             borderRadius: 5,
-            position: "fixed",
-            height: "100vh",
+            minHeight: "100vh",
             top: 0,
             backgroundColor: "#f5f5f5",
-            // position: "absolute",
-            zIndex: 100,
+            zIndex: 220,
             opacity: 1,
           }}
         >

@@ -65,7 +65,7 @@ export default class BuyMobile extends React.Component {
     }
 
     return (
-      <div style={{ overflowX: "hidden" }}>
+      <div style={{ overflowX: "hidden", width: "100vw" }}>
         {!this.state.loaded && (
           <div
             style={{
@@ -269,7 +269,7 @@ export default class BuyMobile extends React.Component {
               </div>
             </div>
           )}
-          <div style={{ position: "fixed", top: 0 }}>
+          <div style={{ position: "fixed", top: 0, zIndex: 300 }}>
             <HeaderMobile
               updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
               setPriceFilter={(a, b) => this.updateFilter(a, b)}
@@ -280,9 +280,14 @@ export default class BuyMobile extends React.Component {
           </div>
 
           <div
+            id="buy-mobile-main"
             style={{
               marginTop: "12vh",
+              zIndex: 99,
               overflowX: "hidden",
+              width: "100vw",
+              overflowY: "scroll",
+              height: "88vh",
             }}
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -411,6 +416,7 @@ export default class BuyMobile extends React.Component {
                   }}
                 >
                   <InfiniteScroll
+                    scrollableTarget={"buy-mobile-main"}
                     children={this.state.items}
                     dataLength={this.state.items.length} //This is important field to render the next data
                     next={() => this.next()}

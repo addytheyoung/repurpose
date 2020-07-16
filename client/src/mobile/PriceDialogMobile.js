@@ -76,7 +76,7 @@ function SimpleDialog(props) {
           alignSelf: "center",
           textAlign: "center",
           marginTop: 30,
-          fontSize: 46,
+          fontSize: 26,
           fontWeight: 600,
         }}
       >
@@ -87,7 +87,7 @@ function SimpleDialog(props) {
           display: "flex",
           flexDirection: "row",
           marginTop: 30,
-          fontSize: 46,
+          fontSize: 26,
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -99,7 +99,7 @@ function SimpleDialog(props) {
           onChange={(e) => checkKey(e)}
           style={{
             width: "20vw",
-            fontSize: 46,
+            fontSize: 26,
             marginRight: "2vw",
             height: "5vh",
           }}
@@ -113,7 +113,7 @@ function SimpleDialog(props) {
           style={{
             width: "20vw",
             marginLeft: "2vw",
-            fontSize: 46,
+            fontSize: 26,
             height: "5vh",
           }}
         />
@@ -128,7 +128,7 @@ function SimpleDialog(props) {
           height: "5vh",
           alignSelf: "center",
           textAlign: "center",
-          fontSize: 46,
+          fontSize: 26,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -153,7 +153,7 @@ function SimpleDialog(props) {
           height: "5vh",
           display: "flex",
           justifyContent: "center",
-          fontSize: 46,
+          fontSize: 26,
           textAlign: "center",
           alignItems: "center",
           borderRadius: 5,
@@ -241,7 +241,7 @@ export default function SimpleDialogDemo(props) {
           borderWidth: 3,
           borderRadius: 20,
           borderStyle: "solid",
-
+          zIndex: 500,
           paddingTop: 10,
           paddingBottom: 10,
           minWidth: "50vw",
