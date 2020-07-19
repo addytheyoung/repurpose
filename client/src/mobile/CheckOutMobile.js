@@ -116,7 +116,7 @@ export default class CheckOutMobile extends Component {
       );
     }
     return (
-      <div>
+      <div style={{ height: "91.2vh", overflowY: "scroll" }}>
         {this.state.modal && (
           <div
             style={{

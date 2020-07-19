@@ -130,7 +130,7 @@ export default class CheckOut extends React.Component {
       );
     }
     return (
-      <div>
+      <div style={{ overflowY: "scroll", height: "90vh" }}>
         {this.state.modal && (
           <div
             style={{

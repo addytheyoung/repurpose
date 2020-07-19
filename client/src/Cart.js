@@ -633,6 +633,8 @@ export default class Cart extends React.Component {
             flexDirection: "row",
             marginLeft: "5vw",
             marginRight: "5vw",
+            overflowY: "scroll",
+            height: "90vh",
           }}
         >
           <div

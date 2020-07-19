@@ -135,7 +135,7 @@ export default class CartMobile extends React.Component {
       ) / 100;
 
     return (
-      <div>
+      <div style={{}}>
         {/* <div style={{ position: "fixed", top: 0 }}>
           <HeaderMobile
             updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
@@ -154,8 +154,8 @@ export default class CartMobile extends React.Component {
               textDecoration: "none",
               color: "white",
               width: "98vw",
-              paddingTop: 10,
-              paddingBottom: 10,
+              paddingTop: "1vh",
+              paddingBottom: "1vh",
               height: "4vh",
               bottom: "9vh",
               left: "1vw",
@@ -186,6 +186,9 @@ export default class CartMobile extends React.Component {
               flexDirection: "column",
               width: "100vw",
               alignItems: "center",
+              overflowY: "scroll",
+              overflowX: "hidden",
+              height: "70vh",
             }}
           >
             <div
@@ -298,9 +301,10 @@ export default class CartMobile extends React.Component {
                 backgroundColor: "#fafafa",
                 position: "fixed",
                 bottom: "15vh",
+                height: "13vh",
                 marginTop: "3vh",
-                paddingBottom: 10,
-                paddingTop: 10,
+                paddingBottom: "1vh",
+                paddingTop: "1vh",
               }}
             >
               <div
