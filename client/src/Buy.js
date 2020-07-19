@@ -275,10 +275,13 @@ export default class Buy extends React.Component {
           </div>
 
           <div
+            id="buy-desktop-main"
             style={{
               marginLeft: "15vw",
               marginRight: "15vw",
               marginTop: 130,
+              overflowY: "scroll",
+              height: "90vh",
             }}
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -305,7 +308,7 @@ export default class Buy extends React.Component {
                     marginBottom: 15,
                   }}
                 >
-                  Items in Austin, TX
+                  Items near you
                 </div>
 
                 <div
@@ -436,6 +439,7 @@ export default class Buy extends React.Component {
                   }}
                 >
                   <InfiniteScroll
+                    scrollableTarget={"buy-desktop-main"}
                     children={this.state.items}
                     dataLength={this.state.items.length} //This is important field to render the next data
                     next={() => this.next()}

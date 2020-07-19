@@ -622,7 +622,7 @@ export default class HomeMobile extends React.Component {
             marginTop: 20,
           }}
         >
-          (Some) Items in Austin, TX
+          (Some) Items near you
         </div>
         <div
           style={{

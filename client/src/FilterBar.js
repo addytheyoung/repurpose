@@ -13,7 +13,7 @@ export default class FilterBar extends React.Component {
           style={{
             display: "flex",
             flexDirection: "column",
-            marginLeft: "7vw",
+            marginLeft: "3vw",
             maxWidth: 150,
             paddingTop: 10,
             paddingBottom: 10,

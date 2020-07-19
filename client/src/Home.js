@@ -622,7 +622,7 @@ export default class Home extends React.Component {
             marginTop: 20,
           }}
         >
-          (Some) Items in Austin, TX
+          (Some) Items in your area
         </div>
         <div
           style={{
