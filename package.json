@@ -31,6 +31,7 @@
     "react-infinite-scroll-component": "^5.0.4",
     "react-mixpanel": "^1.0.5",
     "react-paypal-button-v2": "^2.6.2",
+    "react-places-autocomplete": "^7.3.0",
     "react-rainbow-components": "^1.15.0",
     "recompose": "^0.30.0",
     "stripe": "^7.1.0"

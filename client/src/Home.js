@@ -1,6 +1,7 @@
 import React from "react";
 import HeaderBar from "./HeaderBar";
 import { Input } from "@material-ui/core";
+import PlacesAutocomplete from "./PlacesAutocomplete";
 import "./css/Home.css";
 import * as firebase from "firebase";
 import TextField from "@material-ui/core/TextField";
@@ -25,83 +26,83 @@ export default class Home extends React.Component {
       addingToCart: false,
     };
 
-    localStorage.setItem("city", "Austin, TX");
-    window.location.reload();
-    return;
-    const categoryList = [
-      "Art & Decoration",
-      "Toys & Hobbies",
-      "Books",
-      "Clothing, Shoes, & Accessories",
-      "Electronics",
-      "Home",
-      "Toys & Games",
-      "Garden",
-      "Sports & Hobbies",
-      "Everything Else",
-    ];
+    // localStorage.setItem("city", "Austin, TX");
+    // window.location.reload();
+    // return;
+    // const categoryList = [
+    //   "Art & Decoration",
+    //   "Toys & Hobbies",
+    //   "Books",
+    //   "Clothing, Shoes, & Accessories",
+    //   "Electronics",
+    //   "Home",
+    //   "Toys & Games",
+    //   "Garden",
+    //   "Sports & Hobbies",
+    //   "Everything Else",
+    // ];
 
-    const firebaseCats = firebase.firestore().collection("Categories");
-    var i_index = 0;
-    var itemArr = [];
-    for (var i = 0; i < categoryList.length; i++) {
-      firebaseCats
-        .doc(categoryList[i])
-        .collection("All")
-        .where("location", "==", "Austin, TX")
-        .limit(20)
-        .get()
-        .then((allItems) => {
-          i_index++;
-          const allItemsDocs = allItems.docs;
+    // const firebaseCats = firebase.firestore().collection("Categories");
+    // var i_index = 0;
+    // var itemArr = [];
+    // for (var i = 0; i < categoryList.length; i++) {
+    //   firebaseCats
+    //     .doc(categoryList[i])
+    //     .collection("All")
+    //     .where("location", "==", "Austin, TX")
+    //     .limit(20)
+    //     .get()
+    //     .then((allItems) => {
+    //       i_index++;
+    //       const allItemsDocs = allItems.docs;
 
-          if (allItems.empty) {
-            this.setState({
-              items: itemArr,
-              loaded: true,
-              modal: null,
-            });
-          }
-          for (var j = 0; j < allItemsDocs.length; j++) {
-            const itemData = allItemsDocs[j].data();
-            // See if the search matches
-            itemArr.push(itemData);
-            // Find a way to render all the items here
+    //       if (allItems.empty) {
+    //         this.setState({
+    //           items: itemArr,
+    //           loaded: true,
+    //           modal: null,
+    //         });
+    //       }
+    //       for (var j = 0; j < allItemsDocs.length; j++) {
+    //         const itemData = allItemsDocs[j].data();
+    //         // See if the search matches
+    //         itemArr.push(itemData);
+    //         // Find a way to render all the items here
 
-            if (
-              j === allItemsDocs.length - 1 &&
-              i_index === categoryList.length - 1
-            ) {
-              // itemArr = randomizeArray(itemArr);
-              this.setState({
-                items: itemArr,
-                loaded: true,
-                modal: null,
-              });
-            }
-          }
-        });
-    }
+    //         if (
+    //           j === allItemsDocs.length - 1 &&
+    //           i_index === categoryList.length - 1
+    //         ) {
+    //           // itemArr = randomizeArray(itemArr);
+    //           this.setState({
+    //             items: itemArr,
+    //             loaded: true,
+    //             modal: null,
+    //           });
+    //         }
+    //       }
+    //     });
+    // }
   }
 
   render() {
-    if (!this.state.loaded) {
-      return (
-        <div
-          style={{
-            position: "absolute",
-            left: "45vw",
-            top: 200,
-          }}
-        >
-          <ClipLoader
-            size={150}
-            color={"#123abc"}
-            loading={this.state.loading}
-          />
-        </div>
-      );
-    }
+    // if (!this.state.loaded) {
+    //   return (
+    //     <div
+    //       style={{
+    //         position: "absolute",
+    //         left: "45vw",
+    //         top: 200,
+    //       }}
+    //     >
+    //       <ClipLoader
+    //         size={150}
+    //         color={"#123abc"}
+    //         loading={this.state.loading}
+    //       />
+    //     </div>
+    //   );
+    // }
     return (
       <div>
         {this.state.profile && (
@@ -473,14 +474,14 @@ export default class Home extends React.Component {
         </div>
         <div
           style={{
-            height: "40vh",
+            height: "60vh",
             width: "100vw",
-            backgroundColor: "#fafafa",
+            backgroundColor: "#ffffff",
             paddingTop: 20,
             paddingBottom: 20,
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
+            // justifyContent: "center",
             alignItems: "center",
           }}
         >
@@ -490,13 +491,28 @@ export default class Home extends React.Component {
               fontSize: 28,
               fontWeight: 600,
               letterSpacing: 0.1,
+              marginTop: "2vh",
+              textAlign: "center",
             }}
           >
-            Buy or sell anything, easily
+            Cheap items, delieverd to your doorstep
           </div>
-          <div style={{ height: 30 }}></div>
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <Autocomplete
+          <div style={{ marginTop: "2vh", fontSize: 16, textAlign: "center" }}>
+            As many items as you want, delivered to you in less than 24 hours
+            for a flat $2 order fee.
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              marginTop: "5vh",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <PlacesAutocomplete />
+            {/* <Autocomplete
               id="combo-box-demo"
               options={this.citiesList}
               getOptionLabel={(option) => option}
@@ -520,109 +536,19 @@ export default class Home extends React.Component {
               )}
               freeSolo={true}
               style={{ width: "300px" }}
-            />
-
-            <div
-              onClick={() => this.search()}
-              id="start"
-              style={{
-                marginLeft: 10,
-                width: 140,
-                padding: 5,
-                borderRadius: 6,
-                backgroundColor: "#426CB4",
-                fontWeight: 700,
-                fontSize: 20,
-                color: "white",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                textAlign: "center",
-              }}
-            >
-              GET STARTED
-            </div>
-          </div>
-          <div
-            style={{
-              marginTop: 50,
-              marginBottom: 20,
-              display: "flex",
-              flexDirection: "row",
-            }}
-          >
-            <div
-              style={{
-                marginRight: 20,
-                fontWeight: 500,
-                fontSize: 21,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              SELL
-            </div>
-            <div
-              style={{
-                width: 200,
-                fontSize: 18,
-                marginLeft: 10,
-                marginRight: 10,
-                textAlign: "center",
-              }}
-            >
-              We pick up and buy all your clutter
-            </div>
-          </div>
-          <div
-            style={{
-              marginTop: 5,
-              marginBottom: 5,
-              marginLeft: 50,
-              fontWeight: 600,
-              fontSize: 14,
-            }}
-          >
-            OR
-          </div>
-          <div style={{ marginTop: 30, display: "flex", flexDirection: "row" }}>
-            <div
-              style={{
-                marginRight: 21,
-                fontWeight: 500,
-                fontSize: 20,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              BUY
-            </div>
-
-            <div
-              style={{
-                width: 200,
-                fontSize: 18,
-                marginLeft: 10,
-                marginRight: 10,
-                textAlign: "center",
-              }}
-            >
-              Items are delivered quickly to your doorstep
-            </div>
+            /> */}
           </div>
         </div>
 
         <div
           style={{
-            fontSize: 24,
+            fontSize: 26,
             fontWeight: 500,
             marginLeft: 50,
             marginTop: 20,
           }}
         >
-          (Some) Items in your area
+          Items Near You
         </div>
         <div
           style={{
@@ -765,15 +691,7 @@ export default class Home extends React.Component {
     });
   }
 
-  search() {
-    const city = document.getElementById("combo-box-demo").value.trim();
-    if (city === "" || !this.citiesList.includes(city)) {
-      alert("Invalid city");
-      return;
-    }
-    window.localStorage.setItem("city", city);
-    window.location.href = "/";
-  }
+  search() {}
 
   itemPage(item) {
     this.setState({
