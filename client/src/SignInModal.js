@@ -90,7 +90,7 @@ export default class SignInModal extends React.Component {
                 <Input
                   id="email"
                   placeholder="Enter your email"
-                  style={{ width: 300, marginTop: 20 }}
+                  style={{ maxWidth: "25vw", marginTop: "1vh" }}
                 />
                 <div
                   onClick={() => this.startShopping()}
@@ -100,11 +100,11 @@ export default class SignInModal extends React.Component {
                     borderRadius: 5,
                     padding: 10,
                     height: 30,
-                    width: 300,
+                    maxWidth: "90%",
                     color: "white",
                     fontWeight: 600,
-                    marginTop: 10,
-                    marginBottom: 10,
+                    marginTop: "5vh",
+                    marginBottom: "1vh",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
@@ -133,11 +133,11 @@ export default class SignInModal extends React.Component {
                     borderRadius: 5,
                     padding: 10,
                     height: 30,
-                    width: 300,
+                    maxWidth: "90%",
                     color: "white",
                     fontWeight: 600,
-                    marginTop: 10,
-                    marginBottom: 10,
+                    marginTop: "5vh",
+                    marginBottom: "1vh",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
@@ -168,11 +168,11 @@ export default class SignInModal extends React.Component {
                       borderRadius: 5,
                       padding: 10,
                       height: 30,
-                      width: 300,
+                      maxWidth: "90%",
                       color: "white",
                       fontWeight: 600,
-                      marginTop: 10,
-                      marginBottom: 10,
+                      marginTop: "5vh",
+                      marginBottom: "1vh",
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
@@ -555,6 +555,7 @@ export default class SignInModal extends React.Component {
   }
 
   closeModal(e) {
+    console.log(this.props);
     this.props.closeModal();
   }
 

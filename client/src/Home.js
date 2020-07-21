@@ -11,6 +11,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Art from "./images/art.jpeg";
 import Close from "./images/close.png";
 import randomizeArray from "./global_methods/randomizeArray";
+import SignInOnlyModal from "./SignInOnlyModal";
 
 export default class Home extends React.Component {
   citiesList = ["Austin, TX"];
@@ -19,16 +20,20 @@ export default class Home extends React.Component {
     this.state = {
       loaded: false,
       items: [],
-      category: "Art",
-      minPrice: null,
-      maxPrice: null,
       modal: null,
       addingToCart: false,
+      addressModal: false,
     };
 
-    // localStorage.setItem("city", "Austin, TX");
-    // window.location.reload();
-    // return;
+    // If we're signed in, sign us out.
+    if (firebase.auth().currentUser) {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          window.location.reload();
+        });
+    }
     // const categoryList = [
     //   "Art & Decoration",
     //   "Toys & Hobbies",
@@ -103,14 +108,20 @@ export default class Home extends React.Component {
     //     </div>
     //   );
     // }
+
     return (
       <div>
         {this.state.profile && (
+          <SignInOnlyModal
+            redirectUrl={"/"}
+            closeModal={(e) => this.closeModal(e)}
+          />
+        )}
+        {this.state.addressModal && (
           <div
             style={{
               display: "flex",
               justifyContent: "center",
-
               // alignItems: "center"
             }}
           >
@@ -127,9 +138,9 @@ export default class Home extends React.Component {
             ></div>
             <div
               style={{
-                width: "30vw",
+                width: "60vw",
                 borderRadius: 5,
-                height: "40vh",
+                height: "80vh",
                 top: 30,
                 backgroundColor: "#f5f5f5",
                 position: "fixed",
@@ -137,13 +148,7 @@ export default class Home extends React.Component {
                 opacity: 1,
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
+              <div style={{ display: "flex", flexDirection: "column" }}>
                 <div
                   style={{
                     width: "100%",
@@ -164,48 +169,8 @@ export default class Home extends React.Component {
                     }}
                   />
                 </div>
-
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <div style={{ fontSize: 20, fontWeight: 600 }}>Log in</div>
-                  <Input
-                    id="email"
-                    placeholder="Email"
-                    style={{ width: 300, marginTop: 20 }}
-                  />
-                  <Input
-                    id="pass"
-                    type="password"
-                    placeholder="Password"
-                    style={{ width: 300, marginTop: 30 }}
-                  />
-                  <div
-                    onClick={() => this.startShopping()}
-                    id="start-shopping"
-                    style={{
-                      backgroundColor: "#426CB4",
-                      borderRadius: 5,
-                      padding: 10,
-                      height: 30,
-                      width: 300,
-                      color: "white",
-                      fontWeight: 600,
-                      marginTop: 10,
-                      marginBottom: 10,
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    START SHOPPING
-                  </div>
-                </div>
+                <div>Enter your address to check availality</div>
+                <PlacesAutocomplete activeButton={false} />
               </div>
             </div>
           </div>
@@ -405,7 +370,10 @@ export default class Home extends React.Component {
             width: "100vw",
           }}
         >
-          <div style={{ display: "flex", flexDirection: "row", width: 180 }}>
+          <div
+            id="bar"
+            style={{ display: "flex", flexDirection: "row", width: 180 }}
+          >
             <div
               style={{
                 fontWeight: 600,
@@ -439,6 +407,26 @@ export default class Home extends React.Component {
           <div style={{ width: "100%" }}></div>
           <div
             id="become-collector"
+            onClick={() =>
+              this.setState({
+                profile: true,
+              })
+            }
+            style={{
+              minWidth: 100,
+              fontWeight: 500,
+              height: 80,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: 16,
+              textAlign: "center",
+            }}
+          >
+            Sign in
+          </div>
+          <div
+            id="become-collector"
             onClick={() => (window.location.href = "/help/?header=fdc")}
             style={{
               minWidth: 100,
@@ -454,27 +442,10 @@ export default class Home extends React.Component {
           >
             About
           </div>
-          {/* <div
-            id="become-collector"
-            onClick={() => (window.location.href = "/become_collector")}
-            style={{
-              minWidth: 100,
-              fontWeight: 500,
-              height: 80,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: 16,
-              textAlign: "center",
-              marginRight: 100,
-            }}
-          >
-            Become a Collector
-          </div> */}
         </div>
         <div
           style={{
-            height: "60vh",
+            height: "50vh",
             width: "100vw",
             backgroundColor: "#ffffff",
             paddingTop: 20,
@@ -495,7 +466,7 @@ export default class Home extends React.Component {
               textAlign: "center",
             }}
           >
-            Cheap items, delieverd to your doorstep
+            Cheap items, delivered to your doorstep
           </div>
           <div style={{ marginTop: "2vh", fontSize: 16, textAlign: "center" }}>
             As many items as you want, delivered to you in less than 24 hours
@@ -511,32 +482,7 @@ export default class Home extends React.Component {
               alignItems: "center",
             }}
           >
-            <PlacesAutocomplete />
-            {/* <Autocomplete
-              id="combo-box-demo"
-              options={this.citiesList}
-              getOptionLabel={(option) => option}
-              style={{ width: 300 }}
-              renderOption={(option) => (
-                <div
-                  onClick={() => this.updateCity(option)}
-                  style={{ width: "100%", height: "1005" }}
-                >
-                  {option}
-                </div>
-              )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  placeholder="We add more cities every day!"
-                  label="What city are you in?"
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-              freeSolo={true}
-              style={{ width: "300px" }}
-            /> */}
+            <PlacesAutocomplete activeButton={true} />
           </div>
         </div>
 
@@ -545,10 +491,9 @@ export default class Home extends React.Component {
             fontSize: 26,
             fontWeight: 500,
             marginLeft: 50,
-            marginTop: 20,
           }}
         >
-          Items Near You
+          (Some) Items Near You
         </div>
         <div
           style={{
@@ -572,14 +517,6 @@ export default class Home extends React.Component {
             }}
           >
             {this.state.items.map((item, index) => {
-              if (
-                (this.state.minPrice &&
-                  item.original_price < this.state.minPrice) ||
-                (this.state.maxPrice &&
-                  item.original_price > this.state.maxPrice)
-              ) {
-                return null;
-              }
               return (
                 <div
                   onClick={() => this.itemPage(item)}
@@ -617,51 +554,39 @@ export default class Home extends React.Component {
     );
   }
 
+  closeModal() {
+    this.setState({
+      profile: false,
+      logout: false,
+      email: false,
+      newUser: false,
+      retUser: false,
+    });
+  }
+
   addToCart(modal) {
-    if (firebase.auth().currentUser) {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          console.log(modal);
-          const uid = this.randomNumber(20);
-          localStorage.setItem("tempUid", uid);
-          firebase
-            .firestore()
-            .collection("Users")
-            .doc(uid)
-            .set({
-              cart: [modal],
-              orders: [],
-              sales: [],
-              temporary: true,
-            })
-            .then(() => {
-              localStorage.setItem("cart", 1);
-              localStorage.setItem("city", "Austin, TX");
-              window.location.href = "/";
-            });
-        });
-    } else {
-      console.log(modal);
-      const uid = this.randomNumber(20);
-      localStorage.setItem("tempUid", uid);
-      firebase
-        .firestore()
-        .collection("Users")
-        .doc(uid)
-        .set({
-          cart: [modal],
-          orders: [],
-          sales: [],
-          temporary: true,
-        })
-        .then(() => {
-          localStorage.setItem("cart", 1);
-          localStorage.setItem("city", "Austin, TX");
-          window.location.href = "/";
-        });
-    }
+    // We have to make sure they are close enough for delivery first. Make them put in their address with a modal.
+    this.setState({
+      addressModal: true,
+    });
+
+    const uid = this.randomNumber(20);
+    localStorage.setItem("tempUid", uid);
+    firebase
+      .firestore()
+      .collection("Users")
+      .doc(uid)
+      .set({
+        cart: [modal],
+        orders: [],
+        sales: [],
+        temporary: true,
+      })
+      .then(() => {
+        localStorage.setItem("cart", 1);
+        localStorage.setItem("city", "Austin, TX");
+        window.location.href = "/";
+      });
   }
 
   randomNumber(length) {
@@ -696,13 +621,6 @@ export default class Home extends React.Component {
   itemPage(item) {
     this.setState({
       modal: item,
-    });
-  }
-
-  closeModal(e) {
-    // e.stopPropagation();
-    this.setState({
-      modal: null,
     });
   }
 

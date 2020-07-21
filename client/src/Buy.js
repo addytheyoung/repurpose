@@ -55,9 +55,52 @@ export default class Buy extends React.Component {
     }
     const q = window.location.search;
     const urlParams = new URLSearchParams(q);
-    const category = urlParams.get("city");
-    if (category) {
-      localStorage.setItem("city", category);
+    var itemCategory = urlParams.get("itemcategory");
+    if (itemCategory && itemCategory.trim() == "Art") {
+      itemCategory = "Art & Decoration";
+    }
+    console.log(itemCategory);
+    const city = urlParams.get("city");
+    var item = urlParams.get("item");
+    console.log(item);
+    if (item && !this.state.modal) {
+      // We need to pull the item from the database.
+      firebase
+        .firestore()
+        .collection("Categories")
+        .doc(itemCategory)
+        .collection("All")
+        .doc(item)
+        .get()
+        .then((itemData) => {
+          if (!itemData || !itemData.data()) {
+            console.log(itemData.data());
+            item = null;
+          } else {
+            console.log(itemData.data());
+            this.setState({
+              modal: itemData.data(),
+            });
+          }
+        });
+      return (
+        <div
+          style={{
+            position: "absolute",
+            left: "45vw",
+            top: 200,
+          }}
+        >
+          <ClipLoader
+            size={150}
+            color={"#123abc"}
+            loading={this.state.loading}
+          />
+        </div>
+      );
+    }
+    if (city) {
+      localStorage.setItem("city", city);
     }
     var foundItem = false;
 
@@ -79,7 +122,7 @@ export default class Buy extends React.Component {
           </div>
         )}
         <div style={{ display: !this.state.loaded ? "none" : "block" }}>
-          {this.state.modal && (
+          {item && (
             <div
               style={{
                 display: "flex",
@@ -620,13 +663,19 @@ export default class Buy extends React.Component {
   }
 
   itemPage(item) {
+    // Add modal id as a string to the URL
+    window.history.replaceState(
+      null,
+      null,
+      "/?item=" + item.uid + "&itemcategory=" + item.category
+    );
     this.setState({
       modal: item,
     });
   }
 
   closeModal(e) {
-    // e.stopPropagation();
+    window.history.replaceState(null, null, "/");
     this.setState({
       modal: null,
     });

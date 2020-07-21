@@ -9,6 +9,8 @@ import "./css/PlacesAutocomplete.css";
 export default class LocationSearchInput extends React.Component {
   lngPerMile = 57;
   latPerMile = 69;
+  lat = -1;
+  lng = -1;
 
   constructor(props) {
     super(props);
@@ -20,22 +22,25 @@ export default class LocationSearchInput extends React.Component {
   };
 
   handleSelect = (address) => {
+    console.log("handle");
     geocodeByAddress(address)
       .then((results) => getLatLng(results[0]))
       .then((latLng) => this.checkAddress(address, latLng))
-      .catch((e) => {
-        alert(e.message);
-      })
       .then((res) => {
         if (res) {
           localStorage.setItem("city", "Austin, TX");
+          localStorage.setItem("deliveryLatitude", this.lat);
+          localStorage.setItem("deliveryLongitude", this.lng);
+
           window.location.reload();
         } else {
           // Too far.
           alert("Sorry, we're not in your city yet. We will be soon!");
         }
       })
-      .catch((error) => console.error("Error", error));
+      .catch((e) => {
+        alert(e.message);
+      });
   };
 
   render() {
@@ -78,11 +83,7 @@ export default class LocationSearchInput extends React.Component {
                     return null;
                   }
                   return (
-                    <div
-                      onClick={() =>
-                        this.enteredAddress(suggestion.description, true)
-                      }
-                    >
+                    <div>
                       <div
                         className="dropdown-delivery"
                         {...getSuggestionItemProps(suggestion, {})}
@@ -96,43 +97,38 @@ export default class LocationSearchInput extends React.Component {
             </div>
           )}
         </PlacesAutocomplete>
-        <div
-          onClick={() => this.handleSelect(this.state.address)}
-          id="start"
-          style={{
-            marginLeft: 10,
-            width: 140,
-            padding: "1vh",
-            height: "4vh",
-            borderRadius: 6,
-            backgroundColor: "#426CB4",
-            fontWeight: 700,
-            fontSize: 18,
-            color: "white",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            textAlign: "center",
-          }}
-        >
-          GET STARTED
-        </div>
+        {this.props.activeButton && (
+          <div
+            onClick={() => this.handleSelect(this.state.address)}
+            id="start"
+            style={{
+              marginLeft: 10,
+              width: 140,
+              padding: "1vh",
+              height: "4vh",
+              borderRadius: 6,
+              backgroundColor: "#426CB4",
+              fontWeight: 700,
+              fontSize: 18,
+              color: "white",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+            }}
+          >
+            GET STARTED
+          </div>
+        )}
       </div>
     );
-  }
-
-  enteredAddress(address, fullAddress) {
-    this.setState({
-      address: address,
-    });
-    if (fullAddress) {
-    } else {
-    }
   }
 
   async checkAddress(address, latLngObj) {
     const lat = latLngObj.lat;
     const lng = latLngObj.lng;
+    this.lat = lat;
+    this.lng = lng;
 
     // Check that they are within delivery range
     return api
