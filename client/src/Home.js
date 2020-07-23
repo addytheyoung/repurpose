@@ -34,80 +34,80 @@ export default class Home extends React.Component {
           window.location.reload();
         });
     }
-    // const categoryList = [
-    //   "Art & Decoration",
-    //   "Toys & Hobbies",
-    //   "Books",
-    //   "Clothing, Shoes, & Accessories",
-    //   "Electronics",
-    //   "Home",
-    //   "Toys & Games",
-    //   "Garden",
-    //   "Sports & Hobbies",
-    //   "Everything Else",
-    // ];
+    const categoryList = [
+      "Art & Decoration",
+      "Toys & Hobbies",
+      "Books",
+      "Clothing, Shoes, & Accessories",
+      "Electronics",
+      "Home",
+      "Toys & Games",
+      "Garden",
+      "Sports & Hobbies",
+      "Everything Else",
+    ];
 
-    // const firebaseCats = firebase.firestore().collection("Categories");
-    // var i_index = 0;
-    // var itemArr = [];
-    // for (var i = 0; i < categoryList.length; i++) {
-    //   firebaseCats
-    //     .doc(categoryList[i])
-    //     .collection("All")
-    //     .where("location", "==", "Austin, TX")
-    //     .limit(20)
-    //     .get()
-    //     .then((allItems) => {
-    //       i_index++;
-    //       const allItemsDocs = allItems.docs;
+    const firebaseCats = firebase.firestore().collection("Categories");
+    var i_index = 0;
+    var itemArr = [];
+    for (var i = 0; i < categoryList.length; i++) {
+      firebaseCats
+        .doc(categoryList[i])
+        .collection("All")
+        .where("location", "==", "Austin, TX")
+        .limit(20)
+        .get()
+        .then((allItems) => {
+          i_index++;
+          const allItemsDocs = allItems.docs;
 
-    //       if (allItems.empty) {
-    //         this.setState({
-    //           items: itemArr,
-    //           loaded: true,
-    //           modal: null,
-    //         });
-    //       }
-    //       for (var j = 0; j < allItemsDocs.length; j++) {
-    //         const itemData = allItemsDocs[j].data();
-    //         // See if the search matches
-    //         itemArr.push(itemData);
-    //         // Find a way to render all the items here
+          if (allItems.empty) {
+            this.setState({
+              items: itemArr,
+              loaded: true,
+              modal: null,
+            });
+          }
+          for (var j = 0; j < allItemsDocs.length; j++) {
+            const itemData = allItemsDocs[j].data();
+            // See if the search matches
+            itemArr.push(itemData);
+            // Find a way to render all the items here
 
-    //         if (
-    //           j === allItemsDocs.length - 1 &&
-    //           i_index === categoryList.length - 1
-    //         ) {
-    //           // itemArr = randomizeArray(itemArr);
-    //           this.setState({
-    //             items: itemArr,
-    //             loaded: true,
-    //             modal: null,
-    //           });
-    //         }
-    //       }
-    //     });
-    // }
+            if (
+              j === allItemsDocs.length - 1 &&
+              i_index === categoryList.length - 1
+            ) {
+              // itemArr = randomizeArray(itemArr);
+              this.setState({
+                items: itemArr,
+                loaded: true,
+                modal: null,
+              });
+            }
+          }
+        });
+    }
   }
 
   render() {
-    // if (!this.state.loaded) {
-    //   return (
-    //     <div
-    //       style={{
-    //         position: "absolute",
-    //         left: "45vw",
-    //         top: 200,
-    //       }}
-    //     >
-    //       <ClipLoader
-    //         size={150}
-    //         color={"#123abc"}
-    //         loading={this.state.loading}
-    //       />
-    //     </div>
-    //   );
-    // }
+    if (!this.state.loaded) {
+      return (
+        <div
+          style={{
+            position: "absolute",
+            left: "45vw",
+            top: 200,
+          }}
+        >
+          <ClipLoader
+            size={150}
+            color={"#123abc"}
+            loading={this.state.loading}
+          />
+        </div>
+      );
+    }
 
     return (
       <div>
@@ -169,8 +169,19 @@ export default class Home extends React.Component {
                     }}
                   />
                 </div>
-                <div>Enter your address to check availality</div>
-                <PlacesAutocomplete activeButton={false} />
+                <div
+                  style={{
+                    textAlign: "center",
+                    marginTop: "5vh",
+                    marginBottom: "5vh",
+                  }}
+                >
+                  Enter your delivery address to check availality
+                </div>
+                <PlacesAutocomplete
+                  activeButton={false}
+                  modal={this.state.tempModal}
+                />
               </div>
             </div>
           </div>
@@ -482,7 +493,7 @@ export default class Home extends React.Component {
               alignItems: "center",
             }}
           >
-            <PlacesAutocomplete activeButton={true} />
+            <PlacesAutocomplete activeButton={true} modal={null} />
           </div>
         </div>
 
@@ -557,10 +568,13 @@ export default class Home extends React.Component {
   closeModal() {
     this.setState({
       profile: false,
+      modal: false,
       logout: false,
       email: false,
       newUser: false,
       retUser: false,
+      addressModal: false,
+      tempModal: null,
     });
   }
 
@@ -568,25 +582,9 @@ export default class Home extends React.Component {
     // We have to make sure they are close enough for delivery first. Make them put in their address with a modal.
     this.setState({
       addressModal: true,
+      modal: false,
+      tempModal: modal,
     });
-
-    const uid = this.randomNumber(20);
-    localStorage.setItem("tempUid", uid);
-    firebase
-      .firestore()
-      .collection("Users")
-      .doc(uid)
-      .set({
-        cart: [modal],
-        orders: [],
-        sales: [],
-        temporary: true,
-      })
-      .then(() => {
-        localStorage.setItem("cart", 1);
-        localStorage.setItem("city", "Austin, TX");
-        window.location.href = "/";
-      });
   }
 
   randomNumber(length) {

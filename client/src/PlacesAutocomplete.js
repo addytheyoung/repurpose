@@ -5,6 +5,7 @@ import PlacesAutocomplete, {
   getLatLng,
 } from "react-places-autocomplete";
 import "./css/PlacesAutocomplete.css";
+import * as firebase from "firebase";
 
 export default class LocationSearchInput extends React.Component {
   lngPerMile = 57;
@@ -22,17 +23,32 @@ export default class LocationSearchInput extends React.Component {
   };
 
   handleSelect = (address) => {
-    console.log("handle");
     geocodeByAddress(address)
       .then((results) => getLatLng(results[0]))
       .then((latLng) => this.checkAddress(address, latLng))
       .then((res) => {
         if (res) {
-          localStorage.setItem("city", "Austin, TX");
-          localStorage.setItem("deliveryLatitude", this.lat);
-          localStorage.setItem("deliveryLongitude", this.lng);
-
-          window.location.reload();
+          // Make a tmep accoutn and add the item if there is one
+          const uid = "AAAAAAAAA";
+          firebase
+            .firestore()
+            .collection("Users")
+            .doc(uid)
+            .set({
+              cart: this.props.modal ? [this.props.modal] : [],
+              orders: [],
+              sales: [],
+              temporary: true,
+              address: address,
+              lat: this.lat,
+              lng: this.lng,
+            })
+            .then(() => {
+              localStorage.setItem("cart", 1);
+              localStorage.setItem("city", "Austin, TX");
+              localStorage.setItem("tempUid", uid);
+              window.location.reload();
+            });
         } else {
           // Too far.
           alert("Sorry, we're not in your city yet. We will be soon!");
@@ -83,7 +99,7 @@ export default class LocationSearchInput extends React.Component {
                     return null;
                   }
                   return (
-                    <div>
+                    <div key={i}>
                       <div
                         className="dropdown-delivery"
                         {...getSuggestionItemProps(suggestion, {})}

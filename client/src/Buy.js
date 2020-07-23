@@ -56,13 +56,18 @@ export default class Buy extends React.Component {
     const q = window.location.search;
     const urlParams = new URLSearchParams(q);
     var itemCategory = urlParams.get("itemcategory");
+    console.log(itemCategory);
     if (itemCategory && itemCategory.trim() == "Art") {
       itemCategory = "Art & Decoration";
+    } else if (itemCategory && itemCategory.trim() == "Clothing, Shoes,") {
+      itemCategory = "Clothing, Shoes, & Accessories";
+    } else if (itemCategory && itemCategory.trim() == "Sports") {
+      itemCategory = "Sports & Hobbies";
+    } else if (itemCategory && itemCategory.trim() == "Toys") {
+      itemCategory = "Toys & Games";
     }
-    console.log(itemCategory);
     const city = urlParams.get("city");
     var item = urlParams.get("item");
-    console.log(item);
     if (item && !this.state.modal) {
       // We need to pull the item from the database.
       firebase
@@ -74,10 +79,8 @@ export default class Buy extends React.Component {
         .get()
         .then((itemData) => {
           if (!itemData || !itemData.data()) {
-            console.log(itemData.data());
             item = null;
           } else {
-            console.log(itemData.data());
             this.setState({
               modal: itemData.data(),
             });
@@ -102,7 +105,6 @@ export default class Buy extends React.Component {
     if (city) {
       localStorage.setItem("city", city);
     }
-    var foundItem = false;
 
     return (
       <div>
@@ -324,22 +326,11 @@ export default class Buy extends React.Component {
               marginRight: "15vw",
               marginTop: 130,
               overflowY: "scroll",
+              overflowX: "hidden",
               height: "90vh",
             }}
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
-              {/* {firebase.auth().currentUser &&
-                firebase.auth().currentUser.uid ==
-                  "q2SYPrnJwNhaC3PcMhE3LTZ1AIv1" && (
-                  <div style={{ height: 50 }}>
-                    <div
-                      id="orders"
-                      onClick={() => (window.location.href = "/andreworders")}
-                    >
-                      Orders
-                    </div>
-                  </div>
-                )} */}
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <div
                   style={{
@@ -510,6 +501,9 @@ export default class Buy extends React.Component {
                       }}
                     >
                       {this.state.items.map((item, index) => {
+                        if (!item) {
+                          return null;
+                        }
                         if (
                           (this.state.minPrice &&
                             item.original_price < this.state.minPrice) ||
@@ -647,7 +641,6 @@ export default class Buy extends React.Component {
   }
 
   updateMoreFilter(a, b) {
-    console.log(a, b);
     const type = a;
     const gender = b;
     this.setState({
@@ -918,17 +911,12 @@ export default class Buy extends React.Component {
         }
       }
       if (!found) {
-        console.log(categories);
-        console.log(currentCategoryIndex);
         this.setState({
           finishedLoading: true,
         });
         return;
       }
     } else if (!itemArr.includes(currentCategory)) {
-      if (currentCategory == "Clothing, Shoes, & Accessories") {
-        console.log("here2");
-      }
       itemArr.push(currentCategory);
     }
 
@@ -1107,8 +1095,6 @@ export default class Buy extends React.Component {
       modal: null,
       finalDoc: 0,
     });
-    console.log("cleared");
-    console.log(this.state.finishedLoading);
     this.pullItemsFromDatabase(categories, true);
   }
 
@@ -1153,7 +1139,6 @@ export default class Buy extends React.Component {
       currentTime = 0,
       increment = 20;
 
-    console.log(start);
     const t = this;
     var animateScroll = function () {
       currentTime += increment;
