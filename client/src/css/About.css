@@ -7,11 +7,11 @@
 
 .about-main-2 div {
   font-size: 16px;
-  padding-left: 5vw;
-  padding-right: 5vw;
+  /* padding-left: 5vw;
+  padding-right: 5vw; */
+  width: 40vw;
   margin-top: 1vh;
   margin-bottom: 1vh;
-  text-align: center;
 }
 
 .about-main-3 {

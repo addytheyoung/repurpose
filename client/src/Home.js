@@ -4,25 +4,32 @@ import { Input } from "@material-ui/core";
 import PlacesAutocomplete from "./PlacesAutocomplete";
 import "./css/Home.css";
 import * as firebase from "firebase";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import Shop from "./Shop";
+
 import ClipLoader from "react-spinners/ClipLoader";
 import Art from "./images/art.jpeg";
 import Close from "./images/close.png";
 import randomizeArray from "./global_methods/randomizeArray";
 import SignInOnlyModal from "./SignInOnlyModal";
+import Back from "./images/back.png";
+import Front from "./images/arrow.png";
+import Money from "./images/money.svg";
+import MoneyMagnet from "./images/money_magnet.svg";
+import Shop from "./images/shop.svg";
 
 export default class Home extends React.Component {
   citiesList = ["Austin, TX"];
   constructor(props) {
     super(props);
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+
     this.state = {
       loaded: false,
       items: [],
       modal: null,
       addingToCart: false,
       addressModal: false,
+      width: 0,
+      height: 0,
     };
 
     // If we're signed in, sign us out.
@@ -36,15 +43,12 @@ export default class Home extends React.Component {
     }
     const categoryList = [
       "Art & Decoration",
-      "Toys & Hobbies",
-      "Books",
-      "Clothing, Shoes, & Accessories",
-      "Electronics",
       "Home",
+      "Books",
+      "Electronics",
       "Toys & Games",
       "Garden",
       "Sports & Hobbies",
-      "Everything Else",
     ];
 
     const firebaseCats = firebase.firestore().collection("Categories");
@@ -55,11 +59,12 @@ export default class Home extends React.Component {
         .doc(categoryList[i])
         .collection("All")
         .where("location", "==", "Austin, TX")
-        .limit(20)
+        .limit(5)
         .get()
         .then((allItems) => {
           i_index++;
-          const allItemsDocs = allItems.docs;
+          var allItemsDocs = allItems.docs;
+          randomizeArray(allItemsDocs);
 
           if (allItems.empty) {
             this.setState({
@@ -110,7 +115,13 @@ export default class Home extends React.Component {
     }
 
     return (
-      <div>
+      <div
+        style={{
+          overflowY: "scroll",
+          overflowX: "hidden",
+          height: "100vh",
+        }}
+      >
         {this.state.profile && (
           <SignInOnlyModal
             redirectUrl={"/"}
@@ -456,10 +467,10 @@ export default class Home extends React.Component {
         </div>
         <div
           style={{
-            height: "50vh",
+            height: "32vh",
             width: "100vw",
             backgroundColor: "#ffffff",
-            paddingTop: 20,
+            paddingTop: 10,
             paddingBottom: 20,
             display: "flex",
             flexDirection: "column",
@@ -499,68 +510,150 @@ export default class Home extends React.Component {
 
         <div
           style={{
-            fontSize: 26,
-            fontWeight: 500,
-            marginLeft: 50,
-          }}
-        >
-          (Some) Items Near You
-        </div>
-        <div
-          style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            flexDirection: "column",
+            marginTop: "1vh",
           }}
         >
           <div
             style={{
               display: "flex",
               flexDirection: "row",
-              // width: "90vw",
-              // flexWrap: "wrap",
-              overflowX: "scroll",
-              // justifyContent: "center",
-              // alignItems: "center",
-              marginTop: 20,
-              marginLeft: 50,
-              marginRight: 50,
+              width: this.state.width > 960 ? 960 : 720,
+              justifyContent: "flex-end",
             }}
           >
-            {this.state.items.map((item, index) => {
-              return (
-                <div
-                  onClick={() => this.itemPage(item)}
-                  id="box"
-                  style={{
-                    width: 220,
-                    marginLeft: 10,
-                    marginRight: 10,
-                    height: 300,
-                  }}
-                >
-                  <img
-                    src={item.pictures[0]}
+            <div
+              style={{
+                fontSize: 26,
+                fontWeight: 500,
+                textAlign: "center",
+              }}
+            >
+              Items Near Austin
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                width: this.state.width > 960 ? 960 / 2 - 100 : 720 / 2 - 100,
+              }}
+            >
+              <div
+                id="prev-item"
+                onClick={() =>
+                  this.scrollLeft(document.getElementById("scroll"), -300, 100)
+                }
+              >
+                Prev
+              </div>
+              <div
+                id="next-item"
+                onClick={() =>
+                  this.scrollLeft(document.getElementById("scroll"), 300, 100)
+                }
+              >
+                Next
+              </div>
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              id="scroll"
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                maxWidth: this.state.width > 960 ? 960 : 720,
+                overflowX: "scroll",
+                overflowY: "hidden",
+                marginTop: 20,
+                marginLeft: 20,
+                marginRight: 30,
+              }}
+            >
+              {this.state.items.map((item, index) => {
+                return (
+                  <div
+                    onClick={() => this.itemPage(item)}
+                    id="box"
                     style={{
                       width: 220,
-                      height: 200,
-                      borderRadius: 5,
-                      overflow: "hidden",
+                      marginLeft: 10,
+                      marginRight: 10,
+                      height: 280,
                     }}
-                  ></img>
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div style={{ fontSize: 18, fontWeight: 400 }}>
-                      {item.title}
-                    </div>
-                    <div style={{ marginTop: 5, fontWeight: 600 }}>
-                      {"$" + item.original_price}
+                  >
+                    <img
+                      src={item.pictures[0]}
+                      style={{
+                        width: 220,
+                        height: 200,
+                        borderRadius: 5,
+                        overflow: "hidden",
+                      }}
+                    ></img>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <div style={{ fontSize: 18, fontWeight: 400 }}>
+                        {item.title}
+                      </div>
+                      <div style={{ marginTop: 5, fontWeight: 600 }}>
+                        {"$" + item.original_price}
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "70vw",
+            marginLeft: "15vw",
+            marginTop: "7vh",
+          }}
+        >
+          <div className="home1">
+            <img src={Money} style={{ width: 60, height: 60 }}></img>
+            <div className="home2">Price Drops</div>
+            <div className="home3">
+              We drop the prices of items every week, up to 90%. Get it quick!
+            </div>
+          </div>
+
+          <div className="home1">
+            <img src={Shop} style={{ width: 60, height: 60 }}></img>
+
+            <div className="home2">New Items</div>
+            <div className="home3">
+              We add new items daily. Check back often to find them.
+            </div>
+          </div>
+          <div className="home1">
+            <img src={MoneyMagnet} style={{ width: 60, height: 60 }}></img>
+
+            <div className="home2">Rediculous deals</div>
+            <div className="home3">
+              Cheaper than all other marketplaces, and you never have to leave
+              your house.
+            </div>
+          </div>
+        </div>
+        <div style={{ height: "10vh" }}></div>
       </div>
     );
   }
@@ -674,5 +767,56 @@ export default class Home extends React.Component {
       .catch((e) => {
         alert(e.message);
       });
+  }
+
+  easeInOutQuad(t, b, c, d) {
+    t /= d / 2;
+    if (t < 1) return (c / 2) * t * t + b;
+    t--;
+    return (-c / 2) * (t * (t - 2) - 1) + b;
+  }
+
+  scrollLeft(element, change, duration) {
+    var start = element.scrollLeft,
+      currentTime = 0,
+      increment = 20;
+
+    const t = this;
+    const st = this.state;
+    var animateScroll = function () {
+      currentTime += increment;
+      var val = t.easeInOutQuad(currentTime, start, change, duration);
+
+      if (change > 0) {
+        if (st.width > 960) {
+          element.scrollLeft = element.scrollLeft + 960 / 5;
+        } else {
+          element.scrollLeft = element.scrollLeft + 720 / 5;
+        }
+      } else {
+        if (st.width > 960) {
+          element.scrollLeft = element.scrollLeft - 960 / 5;
+        } else {
+          element.scrollLeft = element.scrollLeft - 720 / 5;
+        }
+      }
+      if (currentTime < duration) {
+        setTimeout(animateScroll, increment);
+      }
+    };
+    animateScroll();
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
 }

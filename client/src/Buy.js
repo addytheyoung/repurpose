@@ -400,6 +400,7 @@ export default class Buy extends React.Component {
                             flexDirection: "row",
                             width: "50vw",
                             overflowX: "scroll",
+                            overflowY: "hidden",
                             marginTop: 20,
                             marginLeft: 50,
                             marginRight: 50,

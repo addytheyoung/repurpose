@@ -29,7 +29,8 @@ export default class LocationSearchInput extends React.Component {
       .then((res) => {
         if (res) {
           // Make a tmep accoutn and add the item if there is one
-          const uid = "AAAAAAAAA";
+          // const uid = this.randomNumber(20);
+          const uid = "AAA";
           firebase
             .firestore()
             .collection("Users")
@@ -39,11 +40,12 @@ export default class LocationSearchInput extends React.Component {
               orders: [],
               sales: [],
               temporary: true,
-              address: address,
+              main_address: address,
               lat: this.lat,
               lng: this.lng,
             })
             .then(() => {
+              localStorage.setItem("address", address);
               localStorage.setItem("cart", 1);
               localStorage.setItem("city", "Austin, TX");
               localStorage.setItem("tempUid", uid);
@@ -138,6 +140,17 @@ export default class LocationSearchInput extends React.Component {
         )}
       </div>
     );
+  }
+
+  randomNumber(length) {
+    var result = "";
+    var characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   }
 
   async checkAddress(address, latLngObj) {
