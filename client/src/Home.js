@@ -15,6 +15,7 @@ import Front from "./images/arrow.png";
 import Money from "./images/money.svg";
 import MoneyMagnet from "./images/money_magnet.svg";
 import Shop from "./images/shop.svg";
+import Delivery from "./images/delivery.svg";
 
 export default class Home extends React.Component {
   citiesList = ["Austin, TX"];
@@ -317,7 +318,11 @@ export default class Home extends React.Component {
                           textAlign: "center",
                         }}
                       >
-                        {"$" + this.state.modal.original_price}
+                        {"$" +
+                          (
+                            Math.round(this.state.modal.original_price * 10) /
+                            10
+                          ).toFixed(1)}
                       </div>
                       <div
                         style={{
@@ -427,26 +432,28 @@ export default class Home extends React.Component {
             </div>
           </div>
           <div style={{ width: "100%" }}></div>
-          <div
-            id="become-collector"
-            onClick={() =>
-              this.setState({
-                profile: true,
-              })
-            }
-            style={{
-              minWidth: 100,
-              fontWeight: 500,
-              height: 80,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: 16,
-              textAlign: "center",
-            }}
-          >
-            Sign in
-          </div>
+          {firebase.auth().currentUser && (
+            <div
+              id="become-collector"
+              onClick={() =>
+                this.setState({
+                  profile: true,
+                })
+              }
+              style={{
+                minWidth: 100,
+                fontWeight: 500,
+                height: 80,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontSize: 16,
+                textAlign: "center",
+              }}
+            >
+              Sign in
+            </div>
+          )}
           <div
             id="become-collector"
             onClick={() => (window.location.href = "/help/?header=fdc")}
@@ -467,7 +474,7 @@ export default class Home extends React.Component {
         </div>
         <div
           style={{
-            height: "32vh",
+            height: "30vh",
             width: "100vw",
             backgroundColor: "#ffffff",
             paddingTop: 10,
@@ -484,15 +491,15 @@ export default class Home extends React.Component {
               fontSize: 28,
               fontWeight: 600,
               letterSpacing: 0.1,
-              marginTop: "2vh",
+              marginTop: "0.5vh",
               textAlign: "center",
             }}
           >
-            Cheap items, delivered to your doorstep
+            Cheap items, at your doorstep
           </div>
           <div style={{ marginTop: "2vh", fontSize: 16, textAlign: "center" }}>
-            As many items as you want, delivered to you in less than 24 hours
-            for a flat $2 order fee.
+            As many items as you want, delivered to you the next morning for a
+            flat $2 order fee.
           </div>
 
           <div
@@ -607,8 +614,13 @@ export default class Home extends React.Component {
                       <div style={{ fontSize: 18, fontWeight: 400 }}>
                         {item.title}
                       </div>
-                      <div style={{ marginTop: 5, fontWeight: 600 }}>
-                        {"$" + item.original_price}
+                      <div
+                        style={{ marginTop: 5, fontWeight: 600, fontSize: 20 }}
+                      >
+                        {"$" +
+                          (Math.round(item.original_price * 10) / 10).toFixed(
+                            1
+                          )}
                       </div>
                     </div>
                   </div>
@@ -631,7 +643,8 @@ export default class Home extends React.Component {
             <img src={Money} style={{ width: 60, height: 60 }}></img>
             <div className="home2">Price Drops</div>
             <div className="home3">
-              We drop the prices of items every week, up to 90%. Get it quick!
+              We drop the prices of items every week, up to 90%. We're stupid
+              cheap.
             </div>
           </div>
 
@@ -644,12 +657,12 @@ export default class Home extends React.Component {
             </div>
           </div>
           <div className="home1">
-            <img src={MoneyMagnet} style={{ width: 60, height: 60 }}></img>
+            <img src={Delivery} style={{ width: 60, height: 60 }}></img>
 
-            <div className="home2">Rediculous deals</div>
+            <div className="home2">Lightning Delivery</div>
             <div className="home3">
-              Cheaper than all other marketplaces, and you never have to leave
-              your house.
+              Your entire order, delivered to your doorstep the next morning for
+              a $2 order fee.
             </div>
           </div>
         </div>

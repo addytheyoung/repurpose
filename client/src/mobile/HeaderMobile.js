@@ -696,6 +696,8 @@ export default class HeaderBar extends React.Component {
       .then(() => {
         localStorage.setItem("cart", "0");
         localStorage.setItem("tempUid", "");
+        localStorage.setItem("city", "");
+
         this.state.logout = false;
         this.state.email = false;
         this.state.newUser = false;

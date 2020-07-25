@@ -220,6 +220,7 @@ export default class SignInOnlyModal extends React.Component {
       .auth()
       .signInWithEmailAndPassword(email, pass)
       .then((r) => {
+        localStorage.setItem("city", "Austin, TX");
         this.state.logout = false;
         this.state.email = false;
         this.state.newUser = false;

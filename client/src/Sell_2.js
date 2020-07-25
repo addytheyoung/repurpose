@@ -41,7 +41,9 @@ export default class Sell_2 extends React.Component {
   render() {
     localStorage.setItem("city", "Austin, TX");
     return (
-      <div>
+      <div
+        style={{ overflowY: "scroll", height: "100vh", overflowX: "hidden" }}
+      >
         {this.state.profile && (
           <SignInModal
             redirectUrl={"/sell-info"}
@@ -225,7 +227,7 @@ export default class Sell_2 extends React.Component {
                 See how much you'll make from your items here
               </div>
               <div style={{ fontSize: 13, marginTop: 10 }}>
-                Our sellers have made over $9,000 already!
+                Our sellers have made over $10,000 already!
               </div>
 
               {/* <div
@@ -313,7 +315,7 @@ export default class Sell_2 extends React.Component {
                     marginLeft: 15,
                     marginRight: 15,
                     textAlign: "center",
-                    fontSize: 20,
+                    fontSize: 18,
                   }}
                 >
                   "Super easy. They came and took away all my old clothes and
@@ -329,7 +331,7 @@ export default class Sell_2 extends React.Component {
                     fontWeight: 500,
                   }}
                 >
-                  Christy - Austin, TX
+                  Christy - Round Rock, TX
                 </div>
                 <div
                   style={{
@@ -337,13 +339,12 @@ export default class Sell_2 extends React.Component {
                     marginLeft: 15,
                     marginRight: 15,
                     textAlign: "center",
-                    fontSize: 20,
+                    fontSize: 18,
                   }}
                 >
                   "We were moving, and I was going to just take all our stuff to
                   Goodwill one car at a time, but they came and actually took it
-                  all away, and paid me for it! We'll be using Collection again
-                  for sure."
+                  all away, and paid me for it! Super easy.
                 </div>
               </div>
             </div>

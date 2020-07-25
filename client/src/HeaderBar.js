@@ -15,9 +15,10 @@ import Shop from "./Shop";
 import Close from "./images/close.png";
 import city from "./images/architectonic.png";
 import FilterBar from "./FilterBar";
+import Pin from "./images/gps.svg";
 
 export default class HeaderBar extends React.Component {
-  citiesList = ["Austin, TX"];
+  citiesList = ["Central Texas"];
   constructor(props) {
     super(props);
     this.state = {
@@ -28,6 +29,7 @@ export default class HeaderBar extends React.Component {
       email: "",
       searching: false,
       currentCity: localStorage.getItem("city"),
+      currentLocation: "Central Texas",
     };
   }
   render() {
@@ -623,10 +625,10 @@ export default class HeaderBar extends React.Component {
               >
                 {!this.state.city && (
                   <img
-                    src={city}
+                    src={Pin}
                     style={{
-                      width: 20,
-                      height: 20,
+                      width: 22,
+                      height: 22,
                       marginRight: 5,
                     }}
                   />
@@ -640,7 +642,7 @@ export default class HeaderBar extends React.Component {
                       whiteSpace: "nowrap",
                     }}
                   >
-                    {this.state.currentCity}
+                    {this.state.currentLocation}
                   </div>
                 )}
               </div>
@@ -663,7 +665,7 @@ export default class HeaderBar extends React.Component {
                     }}
                   >
                     <Autocomplete
-                      value={this.state.currentCity}
+                      value={this.state.currentLocation}
                       id="city"
                       options={this.citiesList}
                       getOptionLabel={(option) => option}
@@ -671,7 +673,7 @@ export default class HeaderBar extends React.Component {
                       renderOption={(option) => (
                         <div
                           onClick={() => this.updateCity(option)}
-                          style={{ width: "100%", height: "1005" }}
+                          style={{ width: "100%", height: "80%" }}
                         >
                           {option}
                         </div>
@@ -680,8 +682,8 @@ export default class HeaderBar extends React.Component {
                         <div>
                           <TextField
                             {...params}
-                            placeholder="We add more cities every day!"
-                            label="City"
+                            placeholder="We addding more areas soon!"
+                            label="Location"
                             variant="outlined"
                             fullWidth
                           />
@@ -895,26 +897,26 @@ export default class HeaderBar extends React.Component {
   }
 
   updateCity(city) {
-    var myUid = null;
-    if (firebase.auth().currentUser) {
-      myUid = firebase.auth().currentUser.uid;
-    } else if (localStorage.getItem("tempUid")) {
-      myUid = localStorage.getItem("tempUid");
-    }
-    if (myUid) {
-      firebase
-        .firestore()
-        .collection("Users")
-        .doc(myUid)
-        .update({
-          city: city,
-        })
-        .then(() => {
-          this.setState({
-            currentCity: city,
-          });
-        });
-    }
+    // var myUid = null;
+    // if (firebase.auth().currentUser) {
+    //   myUid = firebase.auth().currentUser.uid;
+    // } else if (localStorage.getItem("tempUid")) {
+    //   myUid = localStorage.getItem("tempUid");
+    // }
+    // if (myUid) {
+    //   firebase
+    //     .firestore()
+    //     .collection("Users")
+    //     .doc(myUid)
+    //     .update({
+    //       city: city,
+    //     })
+    //     .then(() => {
+    //       this.setState({
+    //         currentCity: city,
+    //       });
+    //     });
+    // }
   }
 
   setPassword() {
@@ -1049,6 +1051,7 @@ export default class HeaderBar extends React.Component {
       .then(() => {
         localStorage.setItem("cart", "0");
         localStorage.setItem("tempUid", "");
+        localStorage.setItem("city", "");
         this.state.logout = false;
         this.state.email = false;
         this.state.newUser = false;

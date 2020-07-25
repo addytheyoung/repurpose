@@ -14,6 +14,8 @@ import { MixpanelProvider, MixpanelConsumer } from "react-mixpanel";
 export default class Buy extends React.Component {
   constructor(props) {
     super(props);
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+
     this.state = {
       loaded: false,
       currentIndex: 0,
@@ -30,6 +32,8 @@ export default class Buy extends React.Component {
       finishedPullingItems: true,
       newItems: [],
       foundNewItems: false,
+      width: 0,
+      height: 0,
     };
     this.state.finishedPullingItems = false;
     this.pullItemsFromDatabase(this.state.activeCategories, null, true);
@@ -56,7 +60,6 @@ export default class Buy extends React.Component {
     const q = window.location.search;
     const urlParams = new URLSearchParams(q);
     var itemCategory = urlParams.get("itemcategory");
-    console.log(itemCategory);
     if (itemCategory && itemCategory.trim() == "Art") {
       itemCategory = "Art & Decoration";
     } else if (itemCategory && itemCategory.trim() == "Clothing, Shoes,") {
@@ -107,7 +110,10 @@ export default class Buy extends React.Component {
     }
 
     return (
-      <div>
+      <div
+        id="buy-desktop-main"
+        style={{ overflowY: "scroll", overflowX: "hidden", height: "100vh" }}
+      >
         {!this.state.loaded && (
           <div
             style={{
@@ -239,7 +245,11 @@ export default class Buy extends React.Component {
                             textAlign: "center",
                           }}
                         >
-                          {"$" + this.state.modal.original_price}
+                          {"$" +
+                            (
+                              Math.round(this.state.modal.original_price * 10) /
+                              10
+                            ).toFixed(1)}
                         </div>
                         <div
                           style={{
@@ -320,13 +330,11 @@ export default class Buy extends React.Component {
           </div>
 
           <div
-            id="buy-desktop-main"
             style={{
               marginLeft: "15vw",
               marginRight: "15vw",
               marginTop: 130,
-              overflowY: "scroll",
-              overflowX: "hidden",
+
               height: "90vh",
             }}
           >
@@ -338,7 +346,7 @@ export default class Buy extends React.Component {
                     justifyContent: "center",
                     alignItems: "center",
                     fontSize: 32,
-                    fontWeight: 700,
+                    fontWeight: 600,
                     marginBottom: 15,
                   }}
                 >
@@ -369,10 +377,70 @@ export default class Buy extends React.Component {
                       }}
                     >
                       <div
-                        style={{ fontSize: 26, fontWeight: 600, marginTop: 50 }}
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          flexDirection: "column",
+                          marginTop: "4vh",
+                        }}
                       >
-                        Items just added
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            width: this.state.width > 960 ? 960 : 720,
+                            justifyContent: "flex-end",
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontSize: 26,
+                              fontWeight: 500,
+                              textAlign: "center",
+                            }}
+                          >
+                            Items just added
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              justifyContent: "flex-end",
+                              width:
+                                this.state.width > 960
+                                  ? 960 / 2 - 100
+                                  : 720 / 2 - 100,
+                            }}
+                          >
+                            <div
+                              id="prev-item"
+                              onClick={() =>
+                                this.scrollLeft(
+                                  document.getElementById("scroll"),
+                                  -300,
+                                  100
+                                )
+                              }
+                            >
+                              Prev
+                            </div>
+                            <div
+                              id="next-item"
+                              onClick={() =>
+                                this.scrollLeft(
+                                  document.getElementById("scroll"),
+                                  300,
+                                  100
+                                )
+                              }
+                            >
+                              Next
+                            </div>
+                          </div>
+                        </div>
                       </div>
+
                       <div
                         style={{
                           display: "flex",
@@ -381,88 +449,69 @@ export default class Buy extends React.Component {
                           justifyContent: "center",
                         }}
                       >
-                        <img
-                          id="direction-left"
-                          src={Back}
-                          style={{ width: 50, height: 50 }}
-                          onClick={() =>
-                            this.scrollLeft(
-                              document.getElementById("scroll"),
-                              -300,
-                              100
-                            )
-                          }
-                        ></img>
                         <div
                           id="scroll"
                           style={{
                             display: "flex",
                             flexDirection: "row",
-                            width: "50vw",
+                            width: this.state.width > 960 ? 960 : 720,
                             overflowX: "scroll",
                             overflowY: "hidden",
                             marginTop: 20,
-                            marginLeft: 50,
-                            marginRight: 50,
+                            marginLeft: 20,
+                            marginRight: 30,
                           }}
                         >
                           {this.state.newItems.map((item, index) => {
                             return (
-                              <div>
-                                <div
-                                  key={index}
-                                  onClick={() => this.itemPage(item)}
-                                  id="box"
+                              <div
+                                onClick={() => this.itemPage(item)}
+                                id="box"
+                                style={{
+                                  width: 220,
+                                  marginLeft: 10,
+                                  marginRight: 10,
+                                  height: 300,
+                                }}
+                              >
+                                <img
+                                  src={item.pictures[0]}
                                   style={{
                                     width: 220,
-                                    marginLeft: 10,
-                                    marginRight: 10,
-                                    height: 300,
+                                    height: 200,
+                                    borderRadius: 5,
+                                    overflow: "hidden",
+                                  }}
+                                ></img>
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "column",
                                   }}
                                 >
-                                  <img
-                                    src={item.pictures[0]}
-                                    style={{
-                                      width: 220,
-                                      height: 200,
-                                      borderRadius: 5,
-                                      overflow: "hidden",
-                                    }}
-                                  ></img>
+                                  <div
+                                    style={{ fontSize: 18, fontWeight: 400 }}
+                                  >
+                                    {item.title}
+                                  </div>
                                   <div
                                     style={{
-                                      display: "flex",
-                                      flexDirection: "column",
+                                      marginTop: 5,
+                                      fontWeight: 600,
+                                      fontSize: 20,
                                     }}
                                   >
-                                    <div
-                                      style={{ fontSize: 18, fontWeight: 400 }}
-                                    >
-                                      {item.title}
-                                    </div>
-                                    <div
-                                      style={{ marginTop: 5, fontWeight: 600 }}
-                                    >
-                                      {"$" + item.original_price}
-                                    </div>
+                                    {"$" +
+                                      (
+                                        Math.round(item.original_price * 10) /
+                                        10
+                                      ).toFixed(1)}
                                   </div>
                                 </div>
                               </div>
                             );
                           })}
                         </div>
-                        <img
-                          src={Front}
-                          style={{ width: 50, height: 50 }}
-                          id="direction-right"
-                          onClick={() =>
-                            this.scrollLeft(
-                              document.getElementById("scroll"),
-                              300,
-                              100
-                            )
-                          }
-                        ></img>
                       </div>
                     </div>
                   )}
@@ -479,7 +528,7 @@ export default class Buy extends React.Component {
                     dataLength={this.state.items.length} //This is important field to render the next data
                     next={() => this.next()}
                     hasMore={!this.state.finishedLoading}
-                    scrollThreshold={0.95}
+                    scrollThreshold={0.8}
                     loader={<h4></h4>}
                     endMessage={
                       <p style={{ textAlign: "center" }}>
@@ -596,8 +645,17 @@ export default class Buy extends React.Component {
                                 <div style={{ fontSize: 18, fontWeight: 400 }}>
                                   {item.title}
                                 </div>
-                                <div style={{ marginTop: 5, fontWeight: 600 }}>
-                                  {"$" + item.original_price}
+                                <div
+                                  style={{
+                                    marginTop: 5,
+                                    fontWeight: 600,
+                                    fontSize: 20,
+                                  }}
+                                >
+                                  {"$" +
+                                    (
+                                      Math.round(item.original_price * 10) / 10
+                                    ).toFixed(1)}
                                 </div>
                               </div>
                             </div>
@@ -1141,14 +1199,41 @@ export default class Buy extends React.Component {
       increment = 20;
 
     const t = this;
+    const st = this.state;
     var animateScroll = function () {
       currentTime += increment;
       var val = t.easeInOutQuad(currentTime, start, change, duration);
-      element.scrollLeft = val;
+
+      if (change > 0) {
+        if (st.width > 960) {
+          element.scrollLeft = element.scrollLeft + 960 / 5;
+        } else {
+          element.scrollLeft = element.scrollLeft + 720 / 5;
+        }
+      } else {
+        if (st.width > 960) {
+          element.scrollLeft = element.scrollLeft - 960 / 5;
+        } else {
+          element.scrollLeft = element.scrollLeft - 720 / 5;
+        }
+      }
       if (currentTime < duration) {
         setTimeout(animateScroll, increment);
       }
     };
     animateScroll();
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
 }

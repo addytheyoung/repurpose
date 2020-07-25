@@ -29,8 +29,7 @@ export default class LocationSearchInput extends React.Component {
       .then((res) => {
         if (res) {
           // Make a tmep accoutn and add the item if there is one
-          // const uid = this.randomNumber(20);
-          const uid = "AAA";
+          const uid = this.randomNumber(20);
           firebase
             .firestore()
             .collection("Users")
@@ -46,7 +45,11 @@ export default class LocationSearchInput extends React.Component {
             })
             .then(() => {
               localStorage.setItem("address", address);
-              localStorage.setItem("cart", 1);
+              if (this.props.modal) {
+                localStorage.setItem("cart", 1);
+              } else {
+                localStorage.setItem("cart", 0);
+              }
               localStorage.setItem("city", "Austin, TX");
               localStorage.setItem("tempUid", uid);
               window.location.reload();
@@ -87,7 +90,7 @@ export default class LocationSearchInput extends React.Component {
                 id="delivery-address-input"
                 style={{ width: "40vw", height: "5vh", fontSize: 16 }}
                 {...getInputProps({
-                  placeholder: "Enter your delivery address",
+                  placeholder: "Enter your city or zip code",
                   className: "location-search-input",
                 })}
               />
@@ -97,7 +100,7 @@ export default class LocationSearchInput extends React.Component {
               >
                 {loading && <div>Loading...</div>}
                 {suggestions.map((suggestion, i) => {
-                  if (i >= 4) {
+                  if (i >= 3) {
                     return null;
                   }
                   return (
@@ -135,7 +138,7 @@ export default class LocationSearchInput extends React.Component {
               textAlign: "center",
             }}
           >
-            GET STARTED
+            SEE ITEMS
           </div>
         )}
       </div>

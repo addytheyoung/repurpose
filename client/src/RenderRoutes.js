@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import * as firebase from "firebase";
 import Buy from "./Buy";
 import FooterMobile from "./mobile/FooterMobile";
-import Sell from "./Sell";
 import GetTotal from "./scripts/GetTotal";
 import OrderKit from "./OrderKit";
 import Shop from "./Shop";
@@ -175,7 +174,6 @@ export default class RenderRoutes extends React.Component {
             <Route path="/search" exact={false} render={() => <SearchPage />} />
             <Route path="/help" exact={true} render={() => <Help />} />
 
-            {/* <Route path="/sell" exact={true} render={() => <Sell />} /> */}
             <Route path="/sell" exact={true} render={() => <Sell_2 />} />
             <Route path="/sell/kit" exact={true} render={() => <OrderKit />} />
             <Route path="/shop" exact={false} render={() => <Shop />} />
