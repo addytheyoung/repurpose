@@ -39,7 +39,6 @@ function SimpleDialog(props) {
     true,
     true,
     true,
-    true,
   ]);
 
   const handleChange = (index) => {
@@ -58,12 +57,8 @@ function SimpleDialog(props) {
     onClose(selectedValue);
   };
 
-  const handleListItemClick = (value) => {
-    onClose(value);
-  };
-
   const clear = () => {
-    setChecked([true, true, true, true, true, true, true, true, true, true]);
+    setChecked([true, true, true, true, true, true, true, true, true]);
   };
 
   return (
@@ -81,8 +76,8 @@ function SimpleDialog(props) {
           marginRight: 20,
         }}
       >
-        Percentage off original posted price. <br /> Items drop 10% in price
-        every week.
+        <b>Percentage off original posted price.</b> <br />
+        Items drop 10% in price every week.
       </div>
       <div
         style={{
@@ -199,6 +194,7 @@ function SimpleDialog(props) {
             {"30%"}
           </div>
           <Checkbox
+            disabled
             checked={checked[3]}
             onChange={() => handleChange(3)}
             inputProps={{ "aria-label": "primary checkbox" }}
@@ -224,6 +220,7 @@ function SimpleDialog(props) {
             {"40%"}
           </div>
           <Checkbox
+            disabled
             checked={checked[4]}
             onChange={() => handleChange(4)}
             inputProps={{ "aria-label": "primary checkbox" }}
@@ -249,6 +246,7 @@ function SimpleDialog(props) {
             {"50%"}
           </div>
           <Checkbox
+            disabled
             checked={checked[5]}
             onChange={() => handleChange(5)}
             inputProps={{ "aria-label": "primary checkbox" }}
@@ -274,6 +272,7 @@ function SimpleDialog(props) {
             {"60%"}
           </div>
           <Checkbox
+            disabled
             checked={checked[6]}
             onChange={() => handleChange(6)}
             inputProps={{ "aria-label": "primary checkbox" }}
@@ -299,6 +298,7 @@ function SimpleDialog(props) {
             {"70%"}
           </div>
           <Checkbox
+            disabled
             checked={checked[7]}
             onChange={() => handleChange(7)}
             inputProps={{ "aria-label": "primary checkbox" }}
@@ -326,6 +326,7 @@ function SimpleDialog(props) {
             {"80%"}
           </div>
           <Checkbox
+            disabled
             checked={checked[8]}
             onChange={() => handleChange(8)}
             inputProps={{ "aria-label": "primary checkbox" }}
@@ -344,7 +345,6 @@ function SimpleDialog(props) {
           borderRadius: 5,
           fontWeight: 600,
           marginTop: 50,
-          marginBottom: 50,
         }}
         onClick={() => clearContent(props, handleClose, clear)}
       >
@@ -390,7 +390,7 @@ function clearContent(props, handleClose, clear) {
 function saveContent(props, saved, handleClose) {
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-  props.changeCategory(saved);
+  props.changeSale(saved);
   handleClose();
 }
 
@@ -429,11 +429,11 @@ export default function SimpleDialogDemo(props) {
           justifyContent: "center",
         }}
       >
-        Price Drop
+        Sale
       </div>
       <SimpleDialog
         clearContent={props.clearContent}
-        changeCategory={props.changeCategory}
+        changeSale={props.changeSale}
         selectedValue={selectedValue}
         open={open}
         onClose={handleClose}

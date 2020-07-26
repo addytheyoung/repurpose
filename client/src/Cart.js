@@ -92,8 +92,6 @@ export default class Cart extends React.Component {
                 });
               });
           } else {
-            console.log(me);
-            console.log(me.data());
             const myData = me.data();
             var numItems = 0;
             if (myData.cart) {
@@ -140,6 +138,15 @@ export default class Cart extends React.Component {
           parseInt(tax * 100) +
           parseInt(shipping * 100)
       ) / 100;
+
+    var itemDiscount = -1;
+    var itemCurrentPrice = -1;
+    if (this.state.modal) {
+      itemDiscount = 1 - this.state.modal.current_price;
+      itemCurrentPrice =
+        this.state.modal.original_price -
+        this.state.modal.original_price * itemDiscount;
+    }
 
     return (
       <div>
@@ -562,15 +569,60 @@ export default class Cart extends React.Component {
                     <div
                       style={{
                         display: "flex",
-
                         flexDirection: "column",
                       }}
                     >
                       <div
-                        style={{ fontSize: 22, fontWeight: 500, marginTop: 30 }}
+                        style={{
+                          fontSize: 22,
+                          fontWeight: 500,
+                          marginTop: 30,
+                          textAlign: "center",
+                          padding: 10,
+                        }}
                       >
                         {this.state.modal.title}
                       </div>
+
+                      {Math.round(itemDiscount * 100).toFixed(0) != 0 && (
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <div
+                            style={{
+                              marginTop: 10,
+                              fontWeight: 500,
+                              fontSize: 22,
+                              textAlign: "center",
+                              textDecoration: "line-through",
+                            }}
+                          >
+                            {"$" +
+                              (
+                                Math.round(
+                                  this.state.modal.original_price * 10
+                                ) / 10
+                              ).toFixed(1)}
+                          </div>
+                          <div
+                            style={{
+                              fontWeight: 400,
+                              fontSize: 16,
+                              marginLeft: 10,
+                              color: "#cc0000",
+                              textAlign: "center",
+                              marginTop: 10,
+                            }}
+                          >
+                            {Math.round(itemDiscount * 100).toFixed(0) +
+                              "% off"}
+                          </div>
+                        </div>
+                      )}
 
                       <div
                         style={{
@@ -580,8 +632,10 @@ export default class Cart extends React.Component {
                           textAlign: "center",
                         }}
                       >
-                        {"$" + this.state.modal.original_price}
+                        {"$" +
+                          (Math.round(itemCurrentPrice * 10) / 10).toFixed(1)}
                       </div>
+
                       <div
                         style={{
                           display: "flex",
@@ -688,6 +742,12 @@ export default class Cart extends React.Component {
               </div>
             )}
             {this.state.myData.cart.map((item, index) => {
+              // Show discounts, if any.
+              const discount = 1 - item.current_price;
+              const currentPrice =
+                item.original_price - item.original_price * discount;
+              const f = Math.round(discount * 100).toFixed(0);
+
               return (
                 <div
                   key={index}
@@ -719,10 +779,29 @@ export default class Cart extends React.Component {
                       paddingLeft: 10,
                     }}
                   >
-                    {" "}
                     <div style={{ fontSize: 18 }}>{item.title}</div>
-                    <div style={{ fontSize: 18, fontWeight: 500 }}>
-                      {"$" + item.original_price}
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        marginTop: 5,
+                      }}
+                    >
+                      <div style={{ fontSize: 20, fontWeight: 600 }}>
+                        {"$" + (Math.round(currentPrice * 10) / 10).toFixed(1)}
+                      </div>
+                      <div
+                        style={{
+                          fontWeight: 400,
+                          fontSize: 16,
+                          marginLeft: 10,
+                          color: "#cc0000",
+                          opacity: discount == 0 ? 0 : discount * 15 * 0.25,
+                        }}
+                      >
+                        {f + "%"}
+                      </div>
                     </div>
                   </div>
                   <div
@@ -882,7 +961,7 @@ export default class Cart extends React.Component {
                   href={"/checkout"}
                   id="checkout"
                   style={{
-                    backgroundColor: "#a1a1a1",
+                    backgroundColor: "rgb(66, 108, 180)",
                     textDecoration: "none",
                     color: "white",
                     width: 120,
@@ -905,7 +984,8 @@ export default class Cart extends React.Component {
                     fontSize: 20,
                   }}
                 >
-                  Item doesn't work? We can refund you!
+                  Don't like your purchase? <br />
+                  We'll refund you!
                 </div>
               </div>
             </div>
@@ -989,13 +1069,6 @@ export default class Cart extends React.Component {
     });
   }
 
-  closeModal(e) {
-    // e.stopPropagation();
-    this.setState({
-      modal: null,
-    });
-  }
-
   removeFromCart(item, myData) {
     var numCartItems = localStorage.getItem("cart");
     if (numCartItems) {
@@ -1042,7 +1115,9 @@ export default class Cart extends React.Component {
   getSubtotal(cart) {
     var totalPrice = 0;
     for (var i = 0; i < cart.length; i++) {
-      const price = parseInt(cart[i].original_price);
+      const price =
+        parseInt(cart[i].original_price) -
+        parseInt(cart[i].original_price) * (1 - cart[i].current_price);
       totalPrice += price;
     }
     return ((totalPrice / 100) * 100).toFixed(2);
@@ -1054,7 +1129,7 @@ export default class Cart extends React.Component {
 
   getShipping(price) {
     if (this.state.deliveryType === "delivery") {
-      return ((1.5 / 100) * 100).toFixed(2);
+      return ((2.0 / 100) * 100).toFixed(2);
     } else {
       return ((0.0 / 100) * 100).toFixed(2);
     }
@@ -1228,6 +1303,7 @@ export default class Cart extends React.Component {
       email: false,
       newUser: false,
       retUser: false,
+      modal: false,
     });
   }
 

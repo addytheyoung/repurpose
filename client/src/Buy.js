@@ -29,11 +29,12 @@ export default class Buy extends React.Component {
       finishedLoading: false,
       appended: false,
       activeCategories: [true, true, true, true, true, true, true, true, true],
-      finishedPullingItems: true,
+      finishedPullingItems: false,
       newItems: [],
       foundNewItems: true,
       width: 0,
       height: 0,
+      activeSales: [true, true, true, true, true, true, true, true, true],
     };
     this.state.finishedPullingItems = false;
     this.pullItemsFromDatabase(this.state.activeCategories, null, true);
@@ -118,6 +119,8 @@ export default class Buy extends React.Component {
         this.state.modal.original_price * itemDiscount;
     }
 
+    var numItemsFound = 0;
+
     return (
       <div
         id="buy-desktop-main"
@@ -135,7 +138,7 @@ export default class Buy extends React.Component {
           <FilterBar
             updateFilter={(a, b) => this.updateFilter(a, b)}
             updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
-            updateMoreFilter={(a, b) => this.updateMoreFilter(a, b)}
+            updateSaleFilter={(a, b) => this.updateSaleFilter(a, b)}
           />
         </div>
         {!this.state.loaded && (
@@ -553,6 +556,9 @@ export default class Buy extends React.Component {
                                       marginTop: 5,
                                       fontWeight: 600,
                                       fontSize: 20,
+                                      display: "flex",
+                                      flexDirection: "row",
+                                      alignItems: "center",
                                     }}
                                   >
                                     <div
@@ -575,7 +581,7 @@ export default class Buy extends React.Component {
                                         opacity:
                                           discount == 0
                                             ? 0
-                                            : discount * 15 * 0.2,
+                                            : discount * 15 * 0.25,
                                       }}
                                     >
                                       {Math.round(discount * 100).toFixed(0) +
@@ -629,21 +635,20 @@ export default class Buy extends React.Component {
                         if (!item) {
                           return null;
                         }
-                        if (
-                          (this.state.minPrice &&
-                            item.original_price < this.state.minPrice) ||
-                          (this.state.maxPrice &&
-                            item.original_price > this.state.maxPrice)
-                        ) {
-                          return null;
-                        }
-                        var prevItemCat =
-                          index == 0
-                            ? ""
-                            : this.state.items[index - 1].category;
+
+                        // If it's a category, render that title
                         if (typeof item == "string") {
+                          // if (numItemsFound == 0) {
+                          //   const title = document.getElementById(
+                          //     "category-title"
+                          //   );
+                          //   if (title) {
+                          //     title.style.opacity = 0;
+                          //   }
+                          // }
                           return (
                             <div
+                              id="category-title"
                               style={{
                                 marginTop: 20,
 
@@ -658,23 +663,38 @@ export default class Buy extends React.Component {
                             </div>
                           );
                         }
-                        if (item.category == "Clothing, Shoes, & Accessories") {
-                          if (this.state.activeClothingGender != "all") {
-                            if (
-                              item.gender != this.state.activeClothingGender
-                            ) {
-                              return null;
-                            }
-                          }
-                          if (this.state.activeClothingType != "all") {
-                            if (item.type != this.state.activeClothingType) {
-                              return null;
-                            }
-                          }
+
+                        // Check price filter
+                        if (
+                          (this.state.minPrice &&
+                            item.original_price < this.state.minPrice) ||
+                          (this.state.maxPrice &&
+                            item.original_price > this.state.maxPrice)
+                        ) {
+                          return null;
                         }
+
+                        // Show discounts, if any.
                         const discount = 1 - item.current_price;
                         const currentPrice =
                           item.original_price - item.original_price * discount;
+                        const f = Math.round(discount * 100).toFixed(0);
+
+                        // Check the discount filter
+                        const activeSales = this.state.activeSales;
+
+                        if (f == 0 && !activeSales[0]) {
+                          return null;
+                        } else if (f == 10 && !activeSales[1]) {
+                          return null;
+                        } else if (f == 20 && !activeSales[2]) {
+                          return null;
+                        } else if (f == 30 && !activeSales[2]) {
+                          return null;
+                        }
+
+                        numItemsFound++;
+
                         return (
                           <div>
                             <div
@@ -686,10 +706,6 @@ export default class Buy extends React.Component {
                                 marginLeft: 10,
                                 marginRight: 10,
                                 height: 300,
-                                // borderStyle: "solid",
-                                // borderWidth: 2,
-                                // borderColor: "rgb(66, 108, 180)",
-                                // borderRadius: 5,
                               }}
                             >
                               <img
@@ -741,11 +757,12 @@ export default class Buy extends React.Component {
                                       marginLeft: 10,
                                       color: "#cc0000",
                                       opacity:
-                                        discount == 0 ? 0 : discount * 15 * 0.2,
+                                        discount == 0
+                                          ? 0
+                                          : discount * 15 * 0.25,
                                     }}
                                   >
-                                    {Math.round(discount * 100).toFixed(0) +
-                                      "%"}
+                                    {f + "%"}
                                   </div>
                                 </div>
                               </div>
@@ -753,6 +770,15 @@ export default class Buy extends React.Component {
                           </div>
                         );
                       })}
+
+                      {
+                        // numItemsFound == 0 &&
+                        //   !this.state.databaseEmpty &&
+                        //   this.pullItemsFromDatabase(
+                        //     this.state.activeCategories
+                        //   )
+                        // No items were found. Keep pulling from the database until we find a match.
+                      }
                     </div>
                   </InfiniteScroll>
                 </div>
@@ -883,6 +909,8 @@ export default class Buy extends React.Component {
         })
         .then(() => {
           localStorage.setItem("cart", 1);
+          window.history.replaceState(null, null, "/");
+
           this.setState({
             modal: null,
             addingToCart: false,
@@ -918,11 +946,14 @@ export default class Buy extends React.Component {
                     for (var i = 0; i < myCart.length; i++) {
                       if (myCart[i].uid == item.uid) {
                         alert("Item already in your cart!");
+                        window.history.replaceState(null, null, "/");
+
                         this.setState({
                           modal: null,
                           addingToCart: false,
                           numCartItems: numCartItems,
                         });
+
                         return;
                       }
                     }
@@ -937,6 +968,7 @@ export default class Buy extends React.Component {
                       })
                       .then(() => {
                         localStorage.setItem("cart", numCartItems);
+                        window.history.replaceState(null, null, "/");
                         this.setState({
                           modal: null,
                           addingToCart: false,
@@ -950,6 +982,7 @@ export default class Buy extends React.Component {
             for (var i = 0; i < myCart.length; i++) {
               if (myCart[i].uid == item.uid) {
                 alert("Item already in your cart!");
+                window.history.replaceState(null, null, "/");
                 this.setState({
                   modal: null,
                   addingToCart: false,
@@ -969,6 +1002,7 @@ export default class Buy extends React.Component {
               })
               .then(() => {
                 localStorage.setItem("cart", numCartItems);
+                window.history.replaceState(null, null, "/");
                 this.setState({
                   modal: null,
                   addingToCart: false,
@@ -1095,9 +1129,9 @@ export default class Buy extends React.Component {
 
         if (allItems.empty) {
           if (this.state.currentCategoryIndex == categoryList.length - 1) {
-            alert("2");
             this.setState({
               finishedLoading: true,
+              databaseEmpty: true,
             });
           } else {
             if (this.state.currentCategoryIndex != categoryList.length - 1) {
@@ -1182,7 +1216,6 @@ export default class Buy extends React.Component {
   }
 
   pullNewItemsFromDatabase() {
-    return;
     const categoryList = [
       "Art & Decoration",
       "Books",
@@ -1238,6 +1271,12 @@ export default class Buy extends React.Component {
           }
         });
     }
+  }
+
+  updateSaleFilter(sales) {
+    this.setState({
+      activeSales: sales,
+    });
   }
 
   updateCategoryFilter(categories) {

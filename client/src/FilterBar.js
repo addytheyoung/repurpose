@@ -20,10 +20,10 @@ export default class FilterBar extends React.Component {
             paddingBottom: 10,
           }}
         >
-          <DialogPrice
+          {/* <DialogPrice
             clearContent={() => this.changePrice("$0", "$999999")}
             changePrice={(min, max) => this.changePrice(min, max)}
-          />
+          /> */}
           <DialogCategory
             clearContent={() =>
               this.changeCategory([
@@ -41,12 +41,28 @@ export default class FilterBar extends React.Component {
             changeCategory={(categories) => this.changeCategory(categories)}
           />
           <DialogSale
-            clearContent={() => this.clearContent()}
-            changeContent={(clothing) => this.changeContent(clothing)}
+            clearContent={() =>
+              this.changeSale([
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+              ])
+            }
+            changeSale={(sales) => this.changeSale(sales)}
           />
         </div>
       </div>
     );
+  }
+
+  changeSale(sales) {
+    this.props.updateSaleFilter(sales);
   }
 
   changeCategory(categories) {
