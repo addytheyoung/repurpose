@@ -3,6 +3,10 @@
   transition-duration: 0.8s;
 }
 
+#headerbar-main div {
+  /* z-index: 999; */
+}
+
 #close:hover,
 #search:hover {
   cursor: pointer;

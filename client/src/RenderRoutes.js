@@ -40,6 +40,7 @@ import AndrewTest from "./AndrewTest";
 import HomeMobile from "./mobile/HomeMobile";
 import BuyMobile from "./mobile/BuyMobile";
 import CartMobile from "./mobile/CartMobile";
+import NewItemVariable from "./scripts/NewItemVariable";
 import {
   BrowserView,
   MobileView,
@@ -164,6 +165,11 @@ export default class RenderRoutes extends React.Component {
               path="/andrewscripts4506"
               exact={true}
               render={() => <MoveToOrders />}
+            />
+            <Route
+              path="/andrewscripts4951"
+              exact={true}
+              render={() => <NewItemVariable />}
             />
             <Route
               path="/become_collector"

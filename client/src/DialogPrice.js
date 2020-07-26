@@ -98,7 +98,8 @@ function SimpleDialog(props) {
       <div
         id="save"
         style={{
-          backgroundColor: "#d1d1d1",
+          backgroundColor: "rgb(66, 108, 180)",
+          color: "white",
           padding: 10,
           width: 100,
           alignSelf: "center",
@@ -186,16 +187,17 @@ export default function SimpleDialogDemo(props) {
         id="price"
         style={{
           borderWidth: 1,
-          borderRadius: 20,
+          borderRadius: 5,
           borderStyle: "solid",
           paddingTop: 10,
           paddingBottom: 10,
+          minWidth: "5vw",
 
-          paddingLeft: 25,
-          paddingRight: 25,
+          paddingLeft: 5,
+          paddingRight: 5,
           borderColor: "#a1a1a1",
           marginTop: 10,
-          fontSize: 20,
+          fontSize: 17,
           display: "flex",
           justifyContent: "center",
         }}

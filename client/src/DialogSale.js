@@ -72,8 +72,17 @@ function SimpleDialog(props) {
       aria-labelledby="simple-dialog-title"
       open={open}
     >
-      <div style={{ alignSelf: "center", textAlign: "center", marginTop: 30 }}>
-        Category
+      <div
+        style={{
+          alignSelf: "center",
+          textAlign: "center",
+          marginTop: 30,
+          marginLeft: 20,
+          marginRight: 20,
+        }}
+      >
+        Percentage off original posted price. <br /> Items drop 10% in price
+        every week.
       </div>
       <div
         style={{
@@ -94,14 +103,25 @@ function SimpleDialog(props) {
         >
           <div
             style={{
-              width: 150,
               display: "flex",
+              width: 50,
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            {"Art & Decoration"}
+            (New)
           </div>
+          <div
+            style={{
+              display: "flex",
+              width: 100,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {"0%"}
+          </div>
+
           <Checkbox
             checked={checked[0]}
             onChange={() => handleChange(0)}
@@ -111,13 +131,21 @@ function SimpleDialog(props) {
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div
             style={{
-              width: 150,
+              display: "flex",
+              width: 50,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          ></div>
+          <div
+            style={{
+              width: 100,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            {"Books"}
+            {"10%"}
           </div>
           <Checkbox
             checked={checked[1]}
@@ -128,14 +156,22 @@ function SimpleDialog(props) {
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div
             style={{
-              width: 150,
+              display: "flex",
+              width: 50,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          ></div>
+          <div
+            style={{
+              width: 100,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               textAlign: "center",
             }}
           >
-            {"Clothing, Shoes, & Accessories"}
+            {"20%"}
           </div>
           <Checkbox
             checked={checked[2]}
@@ -146,13 +182,21 @@ function SimpleDialog(props) {
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div
             style={{
-              width: 150,
+              display: "flex",
+              width: 50,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          ></div>
+          <div
+            style={{
+              width: 100,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            {"Electronics"}
+            {"30%"}
           </div>
           <Checkbox
             checked={checked[3]}
@@ -163,13 +207,21 @@ function SimpleDialog(props) {
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div
             style={{
-              width: 150,
+              display: "flex",
+              width: 50,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          ></div>
+          <div
+            style={{
+              width: 100,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            {"Home"}
+            {"40%"}
           </div>
           <Checkbox
             checked={checked[4]}
@@ -180,13 +232,21 @@ function SimpleDialog(props) {
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div
             style={{
-              width: 150,
+              display: "flex",
+              width: 50,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          ></div>
+          <div
+            style={{
+              width: 100,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            {"Garden"}
+            {"50%"}
           </div>
           <Checkbox
             checked={checked[5]}
@@ -198,12 +258,20 @@ function SimpleDialog(props) {
           <div
             style={{
               display: "flex",
-              width: 150,
+              width: 50,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          ></div>
+          <div
+            style={{
+              display: "flex",
+              width: 100,
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            {"Pet Supplies"}
+            {"60%"}
           </div>
           <Checkbox
             checked={checked[6]}
@@ -215,12 +283,20 @@ function SimpleDialog(props) {
           <div
             style={{
               display: "flex",
-              width: 150,
+              width: 50,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          ></div>
+          <div
+            style={{
+              display: "flex",
+              width: 100,
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            {"Sports & Hobbies"}
+            {"70%"}
           </div>
           <Checkbox
             checked={checked[7]}
@@ -232,12 +308,22 @@ function SimpleDialog(props) {
           <div
             style={{
               display: "flex",
-              width: 150,
+              width: 50,
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            {"Toys & Games"}
+            (Final)
+          </div>
+          <div
+            style={{
+              display: "flex",
+              width: 100,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {"80%"}
           </div>
           <Checkbox
             checked={checked[8]}
@@ -343,7 +429,7 @@ export default function SimpleDialogDemo(props) {
           justifyContent: "center",
         }}
       >
-        Categories
+        Price Drop
       </div>
       <SimpleDialog
         clearContent={props.clearContent}

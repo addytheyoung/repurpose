@@ -31,7 +31,7 @@ export default class Buy extends React.Component {
       activeCategories: [true, true, true, true, true, true, true, true, true],
       finishedPullingItems: true,
       newItems: [],
-      foundNewItems: false,
+      foundNewItems: true,
       width: 0,
       height: 0,
     };
@@ -109,11 +109,35 @@ export default class Buy extends React.Component {
       localStorage.setItem("city", city);
     }
 
+    var itemDiscount = -1;
+    var itemCurrentPrice = -1;
+    if (item) {
+      itemDiscount = 1 - this.state.modal.current_price;
+      itemCurrentPrice =
+        this.state.modal.original_price -
+        this.state.modal.original_price * itemDiscount;
+    }
+
     return (
       <div
         id="buy-desktop-main"
         style={{ overflowY: "scroll", overflowX: "hidden", height: "100vh" }}
       >
+        <div
+          style={{
+            position: "fixed",
+            height: "90vh",
+            top: "10vh",
+            width: "15vw",
+            backgroundColor: "#fafafa",
+          }}
+        >
+          <FilterBar
+            updateFilter={(a, b) => this.updateFilter(a, b)}
+            updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
+            updateMoreFilter={(a, b) => this.updateMoreFilter(a, b)}
+          />
+        </div>
         {!this.state.loaded && (
           <div
             style={{
@@ -237,20 +261,58 @@ export default class Buy extends React.Component {
                           {this.state.modal.title}
                         </div>
 
+                        {Math.round(itemDiscount * 100).toFixed(0) != 0 && (
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <div
+                              style={{
+                                marginTop: 10,
+                                fontWeight: 500,
+                                fontSize: 22,
+                                textAlign: "center",
+                                textDecoration: "line-through",
+                              }}
+                            >
+                              {"$" +
+                                (
+                                  Math.round(
+                                    this.state.modal.original_price * 10
+                                  ) / 10
+                                ).toFixed(1)}
+                            </div>
+                            <div
+                              style={{
+                                fontWeight: 400,
+                                fontSize: 16,
+                                marginLeft: 10,
+                                color: "#cc0000",
+                                textAlign: "center",
+                                marginTop: 10,
+                              }}
+                            >
+                              {Math.round(itemDiscount * 100).toFixed(0) +
+                                "% off"}
+                            </div>
+                          </div>
+                        )}
+
                         <div
                           style={{
-                            marginTop: 100,
+                            marginTop: 30,
                             fontWeight: 700,
                             fontSize: 24,
                             textAlign: "center",
                           }}
                         >
                           {"$" +
-                            (
-                              Math.round(this.state.modal.original_price * 10) /
-                              10
-                            ).toFixed(1)}
+                            (Math.round(itemCurrentPrice * 10) / 10).toFixed(1)}
                         </div>
+
                         <div
                           style={{
                             display: "flex",
@@ -318,23 +380,11 @@ export default class Buy extends React.Component {
               </div>
             </div>
           )}
-          <div style={{ position: "fixed", top: 0 }}>
-            <HeaderBar updateFilter={(a, b) => this.updateFilter(a, b)} />
-          </div>
-          <div style={{ position: "fixed", top: 200 }}>
-            <FilterBar
-              updateFilter={(a, b) => this.updateFilter(a, b)}
-              updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
-              updateMoreFilter={(a, b) => this.updateMoreFilter(a, b)}
-            />
-          </div>
 
           <div
             style={{
               marginLeft: "15vw",
-              marginRight: "15vw",
               marginTop: 130,
-
               height: "90vh",
             }}
           >
@@ -463,6 +513,10 @@ export default class Buy extends React.Component {
                           }}
                         >
                           {this.state.newItems.map((item, index) => {
+                            const discount = 1 - item.current_price;
+                            const currentPrice =
+                              item.original_price -
+                              item.original_price * discount;
                             return (
                               <div
                                 onClick={() => this.itemPage(item)}
@@ -501,11 +555,32 @@ export default class Buy extends React.Component {
                                       fontSize: 20,
                                     }}
                                   >
-                                    {"$" +
-                                      (
-                                        Math.round(item.original_price * 10) /
-                                        10
-                                      ).toFixed(1)}
+                                    <div
+                                      style={{
+                                        fontWeight: 600,
+                                        fontSize: 20,
+                                      }}
+                                    >
+                                      {"$" +
+                                        (
+                                          Math.round(currentPrice * 10) / 10
+                                        ).toFixed(1)}
+                                    </div>
+                                    <div
+                                      style={{
+                                        fontWeight: 400,
+                                        fontSize: 16,
+                                        marginLeft: 10,
+                                        color: "#cc0000",
+                                        opacity:
+                                          discount == 0
+                                            ? 0
+                                            : discount * 15 * 0.2,
+                                      }}
+                                    >
+                                      {Math.round(discount * 100).toFixed(0) +
+                                        "%"}
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -597,25 +672,11 @@ export default class Buy extends React.Component {
                             }
                           }
                         }
+                        const discount = 1 - item.current_price;
+                        const currentPrice =
+                          item.original_price - item.original_price * discount;
                         return (
                           <div>
-                            {/* {this.state.activeCategories[
-                              this.state.currentCategoryIndex
-                            ] &&
-                              item.category != prevItemCat && (
-                                <div
-                                  style={{
-                                    marginTop: 20,
-                                    paddingLeft: 20,
-                                    marginBottom: 10,
-                                    // width: "70vw",
-                                    fontWeight: 500,
-                                    fontSize: 20,
-                                  }}
-                                >
-                                  {item.category}
-                                </div>
-                              )} */}
                             <div
                               key={index}
                               onClick={() => this.itemPage(item)}
@@ -625,11 +686,20 @@ export default class Buy extends React.Component {
                                 marginLeft: 10,
                                 marginRight: 10,
                                 height: 300,
+                                // borderStyle: "solid",
+                                // borderWidth: 2,
+                                // borderColor: "rgb(66, 108, 180)",
+                                // borderRadius: 5,
                               }}
                             >
                               <img
                                 src={item.pictures[0]}
                                 style={{
+                                  borderStyle: "solid",
+                                  borderWidth: 3,
+
+                                  borderColor:
+                                    discount == 0.8 ? " #cc0000" : "#ffffff",
                                   width: 220,
                                   height: 200,
                                   borderRadius: 5,
@@ -647,15 +717,36 @@ export default class Buy extends React.Component {
                                 </div>
                                 <div
                                   style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
                                     marginTop: 5,
-                                    fontWeight: 600,
-                                    fontSize: 20,
                                   }}
                                 >
-                                  {"$" +
-                                    (
-                                      Math.round(item.original_price * 10) / 10
-                                    ).toFixed(1)}
+                                  <div
+                                    style={{
+                                      fontWeight: 600,
+                                      fontSize: 20,
+                                    }}
+                                  >
+                                    {"$" +
+                                      (
+                                        Math.round(currentPrice * 10) / 10
+                                      ).toFixed(1)}
+                                  </div>
+                                  <div
+                                    style={{
+                                      fontWeight: 400,
+                                      fontSize: 16,
+                                      marginLeft: 10,
+                                      color: "#cc0000",
+                                      opacity:
+                                        discount == 0 ? 0 : discount * 15 * 0.2,
+                                    }}
+                                  >
+                                    {Math.round(discount * 100).toFixed(0) +
+                                      "%"}
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -678,6 +769,9 @@ export default class Buy extends React.Component {
               ></div>
             </div>
           </div>
+        </div>
+        <div style={{ position: "fixed", top: 0 }}>
+          <HeaderBar updateFilter={(a, b) => this.updateFilter(a, b)} />
         </div>
         <div
           style={{
@@ -1088,6 +1182,7 @@ export default class Buy extends React.Component {
   }
 
   pullNewItemsFromDatabase() {
+    return;
     const categoryList = [
       "Art & Decoration",
       "Books",

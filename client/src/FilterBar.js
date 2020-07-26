@@ -2,7 +2,7 @@ import React from "react";
 import "./css/FilterBar.css";
 import DialogPrice from "./DialogPrice";
 import DialogCategory from "./DialogCategory";
-import DialogElse from "./DialogElse";
+import DialogSale from "./DialogSale";
 
 export default class FilterBar extends React.Component {
   render() {
@@ -13,7 +13,8 @@ export default class FilterBar extends React.Component {
           style={{
             display: "flex",
             flexDirection: "column",
-            marginLeft: "3vw",
+            marginLeft: "2vw",
+            marginRight: "2vw",
             maxWidth: 150,
             paddingTop: 10,
             paddingBottom: 10,
@@ -39,10 +40,10 @@ export default class FilterBar extends React.Component {
             }
             changeCategory={(categories) => this.changeCategory(categories)}
           />
-          {/* <DialogElse
+          <DialogSale
             clearContent={() => this.clearContent()}
             changeContent={(clothing) => this.changeContent(clothing)}
-          /> */}
+          />
         </div>
       </div>
     );

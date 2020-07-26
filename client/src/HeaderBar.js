@@ -37,7 +37,7 @@ export default class HeaderBar extends React.Component {
     const signedModal = !singedin && !this.state.newUser && !this.state.retUser;
     const path = window.location.pathname;
     return (
-      <div>
+      <div id="headerbar-main">
         {this.state.profile && (
           <div
             style={{
