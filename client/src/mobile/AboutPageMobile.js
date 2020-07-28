@@ -1,6 +1,7 @@
 import React from "react";
 import Close from "../images/close.png";
 import "../css/AboutPageMobile.css";
+import Div100vh from "react-div-100vh";
 
 export default class AboutPageMobile extends React.Component {
   constructor(props) {
@@ -14,17 +15,17 @@ export default class AboutPageMobile extends React.Component {
         style={{
           display: "flex",
           justifyContent: "center",
-          zIndex: 1,
+          zIndex: 220,
           overflowY: "scroll",
-          height: "91.2vh",
           backgroundColor: "#f5f5f5",
           top: 0,
+          height: "90vh",
         }}
       >
         <div
           style={{
             width: "100vw",
-            zIndex: 1,
+            zIndex: 220,
             borderRadius: 5,
             opacity: 1,
           }}
@@ -48,8 +49,8 @@ export default class AboutPageMobile extends React.Component {
                 fontSize: 22,
                 fontWeight: 700,
                 color: "#426CB4",
-                marginTop: "2vh",
-                marginBottom: "2vh",
+                marginTop: "1vh",
+                // marginBottom: "2vh",
               }}
             >
               Collection

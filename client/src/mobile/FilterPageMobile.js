@@ -5,6 +5,7 @@ import DialogCategory from "../DialogCategory";
 import DialogElse from "../DialogElse";
 import PriceDialogMobile from "./PriceDialogMobile";
 import CategoryDialogMobile from "./CategoryDialogMobile";
+import SaleDialogMobile from "./SaleDialogMobile";
 
 export default class FilterPageMobile extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ export default class FilterPageMobile extends React.Component {
           display: "flex",
           justifyContent: "center",
           zIndex: 220,
-          minHeight: "100vh",
+          height: "90vh",
           width: "100vw",
           overflowY: "hidden",
 
@@ -79,9 +80,7 @@ export default class FilterPageMobile extends React.Component {
           >
             Filters
           </div> */}
-              <PriceDialogMobile
-                minPrice={this.props.minPrice}
-                maxPrice={this.props.maxPrice}
+              <SaleDialogMobile
                 clearContent={() => this.changePrice("$", "$")}
                 changePrice={(min, max) => this.changePrice(min, max)}
               />

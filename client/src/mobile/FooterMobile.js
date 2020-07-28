@@ -58,7 +58,7 @@ export default class FooterMobile extends React.Component {
     return (
       <div>
         {this.state.aboutPage && (
-          <div style={{ zIndex: 1 }}>
+          <div style={{ top: 0, height: "90vh" }}>
             <AboutPageMobile closePage={() => this.closePage()} />
           </div>
         )}
@@ -88,7 +88,7 @@ export default class FooterMobile extends React.Component {
               width: "17vw",
               display: "flex",
               justifyContent: "center",
-              marginTop: "1vh",
+              paddingTop: "1vh",
               // alignItems: "center",
             }}
           >

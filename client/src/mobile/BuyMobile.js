@@ -1,5 +1,6 @@
 import React from "react";
 import "../css/Buy.css";
+import "../css/BuyMobile.css";
 import ClipLoader from "react-spinners/ClipLoader";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Close from "../images/close.png";
@@ -13,10 +14,13 @@ import HeaderMobile from "./HeaderMobile";
 import FooterMobile from "./FooterMobile";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import SearchPageMobile from "./SearchPageMobile";
+import Div100vh from "react-div-100vh";
 
 export default class BuyMobile extends React.Component {
   constructor(props) {
     super(props);
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+
     this.state = {
       loaded: false,
       currentIndex: 0,
@@ -33,6 +37,7 @@ export default class BuyMobile extends React.Component {
       finishedPullingItems: false,
       newItems: [],
       foundNewItems: false,
+      activeSales: [true, true, true, true, true, true, true, true, true],
     };
     this.state.finishedPullingItems = false;
     this.pullItemsFromDatabase(this.state.activeCategories, null, true);
@@ -59,13 +64,76 @@ export default class BuyMobile extends React.Component {
     }
     const q = window.location.search;
     const urlParams = new URLSearchParams(q);
-    const category = urlParams.get("city");
-    if (category) {
-      localStorage.setItem("city", category);
+    var itemCategory = urlParams.get("itemcategory");
+    if (itemCategory && itemCategory.trim() == "Art") {
+      itemCategory = "Art & Decoration";
+    } else if (itemCategory && itemCategory.trim() == "Clothing, Shoes,") {
+      itemCategory = "Clothing, Shoes, & Accessories";
+    } else if (itemCategory && itemCategory.trim() == "Sports") {
+      itemCategory = "Sports & Hobbies";
+    } else if (itemCategory && itemCategory.trim() == "Toys") {
+      itemCategory = "Toys & Games";
+    }
+    const city = urlParams.get("city");
+    var item = urlParams.get("item");
+    if (item && !this.state.modal) {
+      // We need to pull the item from the database.
+      firebase
+        .firestore()
+        .collection("Categories")
+        .doc(itemCategory)
+        .collection("All")
+        .doc(item)
+        .get()
+        .then((itemData) => {
+          if (!itemData || !itemData.data()) {
+            item = null;
+          } else {
+            this.setState({
+              modal: itemData.data(),
+            });
+          }
+        });
+      return (
+        <div
+          style={{
+            position: "absolute",
+            left: "45vw",
+            top: 200,
+          }}
+        >
+          <ClipLoader
+            size={150}
+            color={"#123abc"}
+            loading={this.state.loading}
+          />
+        </div>
+      );
+    }
+    if (city) {
+      localStorage.setItem("city", city);
+    }
+
+    var itemDiscount = -1;
+    var itemCurrentPrice = -1;
+    if (item) {
+      itemDiscount = 1 - this.state.modal.current_price;
+      itemCurrentPrice =
+        this.state.modal.original_price -
+        this.state.modal.original_price * itemDiscount;
     }
 
     return (
       <div style={{ overflowX: "hidden", width: "100vw" }}>
+        <div style={{ position: "fixed", top: 0, zIndex: 100 }}>
+          <HeaderMobile
+            updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
+            setPriceFilter={(a, b) => this.updateFilter(a, b)}
+          />
+        </div>
+        <div style={{ position: "fixed", bottom: 0, zIndex: 101 }}>
+          <FooterMobile updateFilter={(a, b) => this.updateFilter(a, b)} />
+        </div>
         {!this.state.loaded && (
           <div
             style={{
@@ -87,7 +155,7 @@ export default class BuyMobile extends React.Component {
             overflowX: "hidden",
           }}
         >
-          {this.state.modal && (
+          {item && (
             <div
               style={{
                 display: "flex",
@@ -95,23 +163,11 @@ export default class BuyMobile extends React.Component {
                 // alignItems: "center"
               }}
             >
-              <div
-                onClick={(e) => this.closeModal(e)}
-                style={{
-                  backgroundColor: "#000000",
-                  opacity: 0.5,
-                  zIndex: 99,
-                  width: "100vw",
-                  height: "100vh",
-                  position: "fixed",
-                }}
-              ></div>
-              <div
+              <Div100vh
                 style={{
                   width: "100vw",
                   borderRadius: 5,
                   position: "fixed",
-                  height: "91.2vh",
                   overflowY: "scroll",
                   top: 0,
                   backgroundColor: "#f5f5f5",
@@ -203,6 +259,46 @@ export default class BuyMobile extends React.Component {
                           {this.state.modal.title}
                         </div>
 
+                        {Math.round(itemDiscount * 100).toFixed(0) != 0 && (
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <div
+                              style={{
+                                marginTop: 10,
+                                fontWeight: 500,
+                                fontSize: 22,
+                                textAlign: "center",
+                                textDecoration: "line-through",
+                              }}
+                            >
+                              {"$" +
+                                (
+                                  Math.round(
+                                    this.state.modal.original_price * 10
+                                  ) / 10
+                                ).toFixed(1)}
+                            </div>
+                            <div
+                              style={{
+                                fontWeight: 400,
+                                fontSize: 16,
+                                marginLeft: 10,
+                                color: "#cc0000",
+                                textAlign: "center",
+                                marginTop: 10,
+                              }}
+                            >
+                              {Math.round(itemDiscount * 100).toFixed(0) +
+                                "% off"}
+                            </div>
+                          </div>
+                        )}
+
                         <div
                           style={{
                             marginTop: 30,
@@ -211,7 +307,8 @@ export default class BuyMobile extends React.Component {
                             textAlign: "center",
                           }}
                         >
-                          {"$" + this.state.modal.original_price}
+                          {"$" +
+                            (Math.round(itemCurrentPrice * 10) / 10).toFixed(1)}
                         </div>
 
                         <div
@@ -266,23 +363,14 @@ export default class BuyMobile extends React.Component {
                     <div style={{ height: "8vh" }}></div>
                   </div>
                 </div>
-              </div>
+              </Div100vh>
             </div>
           )}
-          <div style={{ position: "fixed", top: 0, zIndex: 300 }}>
-            <HeaderMobile
-              updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
-              setPriceFilter={(a, b) => this.updateFilter(a, b)}
-            />
-          </div>
-          <div style={{ position: "fixed", bottom: 0, zIndex: 105 }}>
-            <FooterMobile updateFilter={(a, b) => this.updateFilter(a, b)} />
-          </div>
 
           <div
             id="buy-mobile-main"
             style={{
-              marginTop: "12vh",
+              marginTop: "8vh",
               zIndex: 99,
               overflowX: "hidden",
               width: "100vw",
@@ -300,9 +388,10 @@ export default class BuyMobile extends React.Component {
                     fontSize: 24,
                     fontWeight: 700,
                     marginBottom: 15,
+                    marginTop: "5vh",
                   }}
                 >
-                  Collection, Austin, TX
+                  Collection - Central TX
                 </div>
                 <div
                   style={{
@@ -338,6 +427,39 @@ export default class BuyMobile extends React.Component {
                         style={{
                           display: "flex",
                           flexDirection: "row",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <div
+                          id="prev-item"
+                          onClick={() =>
+                            this.scrollLeft(
+                              document.getElementById("scroll"),
+                              -300,
+                              100
+                            )
+                          }
+                        >
+                          Prev
+                        </div>
+                        <div
+                          id="next-item"
+                          onClick={() =>
+                            this.scrollLeft(
+                              document.getElementById("scroll"),
+                              300,
+                              100
+                            )
+                          }
+                        >
+                          Next
+                        </div>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
                           alignItems: "center",
                           justifyContent: "center",
                         }}
@@ -355,6 +477,10 @@ export default class BuyMobile extends React.Component {
                           }}
                         >
                           {this.state.newItems.map((item, index) => {
+                            const discount = 1 - item.current_price;
+                            const currentPrice =
+                              item.original_price -
+                              item.original_price * discount;
                             return (
                               <div>
                                 <div
@@ -362,15 +488,17 @@ export default class BuyMobile extends React.Component {
                                   onClick={() => this.itemPage(item)}
                                   id="box"
                                   style={{
-                                    marginLeft: 10,
-                                    marginRight: 10,
+                                    width: "49vw",
+                                    marginLeft: "0.3vw",
+                                    marginRight: "0.3vw",
+                                    marginBottom: "1vh",
                                   }}
                                 >
                                   <img
                                     src={item.pictures[0]}
                                     style={{
-                                      width: "40vw",
-                                      height: "40vw",
+                                      width: "49vw",
+                                      height: "49vw",
                                       borderRadius: 5,
                                       overflow: "hidden",
                                     }}
@@ -385,7 +513,6 @@ export default class BuyMobile extends React.Component {
                                       style={{
                                         fontSize: 18,
                                         fontWeight: 400,
-                                        fontSize: 14,
                                       }}
                                     >
                                       {item.title}
@@ -394,10 +521,38 @@ export default class BuyMobile extends React.Component {
                                       style={{
                                         marginTop: 5,
                                         fontWeight: 600,
-                                        fontSize: 14,
+                                        fontSize: 20,
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        alignItems: "center",
                                       }}
                                     >
-                                      {"$" + item.original_price}
+                                      <div
+                                        style={{
+                                          fontWeight: 600,
+                                          fontSize: 20,
+                                        }}
+                                      >
+                                        {"$" +
+                                          (
+                                            Math.round(currentPrice * 10) / 10
+                                          ).toFixed(1)}
+                                      </div>
+                                      <div
+                                        style={{
+                                          fontWeight: 400,
+                                          fontSize: 16,
+                                          marginLeft: 10,
+                                          color: "#cc0000",
+                                          opacity:
+                                            discount == 0
+                                              ? 0
+                                              : discount * 15 * 0.25,
+                                        }}
+                                      >
+                                        {Math.round(discount * 100).toFixed(0) +
+                                          "%"}
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
@@ -443,6 +598,9 @@ export default class BuyMobile extends React.Component {
                       }}
                     >
                       {this.state.items.map((item, index) => {
+                        if (!item) {
+                          return null;
+                        }
                         if (
                           (this.state.minPrice &&
                             item.original_price < this.state.minPrice) ||
@@ -472,20 +630,40 @@ export default class BuyMobile extends React.Component {
                             </div>
                           );
                         }
-                        if (item.category == "Clothing, Shoes, & Accessories") {
-                          if (this.state.activeClothingGender != "all") {
-                            if (
-                              item.gender != this.state.activeClothingGender
-                            ) {
-                              return null;
-                            }
-                          }
-                          if (this.state.activeClothingType != "all") {
-                            if (item.type != this.state.activeClothingType) {
-                              return null;
-                            }
-                          }
+                        // if (item.category == "Clothing, Shoes, & Accessories") {
+                        //   if (this.state.activeClothingGender != "all") {
+                        //     if (
+                        //       item.gender != this.state.activeClothingGender
+                        //     ) {
+                        //       return null;
+                        //     }
+                        //   }
+                        //   if (this.state.activeClothingType != "all") {
+                        //     if (item.type != this.state.activeClothingType) {
+                        //       return null;
+                        //     }
+                        //   }
+                        // }
+
+                        // Show discounts, if any.
+                        const discount = 1 - item.current_price;
+                        const currentPrice =
+                          item.original_price - item.original_price * discount;
+                        const f = Math.round(discount * 100).toFixed(0);
+
+                        // Check the discount filter
+                        const activeSales = this.state.activeSales;
+
+                        if (f == 0 && !activeSales[0]) {
+                          return null;
+                        } else if (f == 10 && !activeSales[1]) {
+                          return null;
+                        } else if (f == 20 && !activeSales[2]) {
+                          return null;
+                        } else if (f == 30 && !activeSales[2]) {
+                          return null;
                         }
+
                         return (
                           <div
                             key={index}
@@ -520,17 +698,42 @@ export default class BuyMobile extends React.Component {
                                   display: "block",
                                 }}
                               >
-                                <div style={{ fontSize: 14, fontWeight: 400 }}>
+                                <div style={{ fontSize: 18, fontWeight: 400 }}>
                                   {item.title}
                                 </div>
                                 <div
                                   style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
                                     marginTop: 5,
-                                    fontSize: 14,
-                                    fontWeight: 600,
                                   }}
                                 >
-                                  {"$" + item.original_price}
+                                  <div
+                                    style={{
+                                      fontWeight: 600,
+                                      fontSize: 20,
+                                    }}
+                                  >
+                                    {"$" +
+                                      (
+                                        Math.round(currentPrice * 10) / 10
+                                      ).toFixed(1)}
+                                  </div>
+                                  <div
+                                    style={{
+                                      fontWeight: 400,
+                                      fontSize: 16,
+                                      marginLeft: 10,
+                                      color: "#cc0000",
+                                      opacity:
+                                        discount == 0
+                                          ? 0
+                                          : discount * 15 * 0.25,
+                                    }}
+                                  >
+                                    {f + "%"}
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -555,6 +758,7 @@ export default class BuyMobile extends React.Component {
             </div>
           </div>
         </div>
+
         <div
           style={{
             textAlign: "center",
@@ -579,20 +783,25 @@ export default class BuyMobile extends React.Component {
   }
 
   next() {
-    console.log("next");
     if (this.state.finishedPullingItems) {
       this.pullItemsFromDatabase(this.state.activeCategories);
     }
   }
 
   itemPage(item) {
+    // Add modal id as a string to the URL
+    window.history.replaceState(
+      null,
+      null,
+      "/?item=" + item.uid + "&itemcategory=" + item.category
+    );
     this.setState({
       modal: item,
     });
   }
 
   closeModal(e) {
-    // e.stopPropagation();
+    window.history.replaceState(null, null, "/");
     this.setState({
       modal: null,
     });
@@ -1001,6 +1210,12 @@ export default class BuyMobile extends React.Component {
     }
   }
 
+  updateSaleFilter(sales) {
+    this.setState({
+      activeSales: sales,
+    });
+  }
+
   updateCategoryFilter(categories) {
     this.setState({
       activeCategories: categories,
@@ -1042,28 +1257,40 @@ export default class BuyMobile extends React.Component {
     }
   }
 
-  easeInOutQuad(t, b, c, d) {
-    t /= d / 2;
-    if (t < 1) return (c / 2) * t * t + b;
-    t--;
-    return (-c / 2) * (t * (t - 2) - 1) + b;
-  }
-
   scrollLeft(element, change, duration) {
     var start = element.scrollLeft,
       currentTime = 0,
       increment = 20;
 
-    console.log(start);
     const t = this;
+    const st = this.state;
     var animateScroll = function () {
       currentTime += increment;
-      var val = t.easeInOutQuad(currentTime, start, change, duration);
-      element.scrollLeft = val;
+      if (change > 0) {
+        element.scrollLeft = element.scrollLeft + window.innerWidth / 5;
+      } else {
+        element.scrollLeft = element.scrollLeft - window.innerWidth / 5;
+      }
       if (currentTime < duration) {
         setTimeout(animateScroll, increment);
       }
     };
     animateScroll();
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+    this.setState({
+      width: window.innerWidth - window.innerWidth * (15 / 100),
+      height: window.innerHeight,
+    });
   }
 }

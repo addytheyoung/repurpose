@@ -1,0 +1,28 @@
+#prev-item,
+#next-item {
+  background-color: rgb(66, 108, 180);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 5px;
+  color: white;
+  font-size: 22px;
+  margin-top: 3vh;
+  font-weight: 500;
+}
+
+#prev-item {
+  margin-right: 5px;
+}
+
+#next-item {
+  margin-left: 5px;
+  margin-right: 0px;
+}
+
+_::-webkit-full-page-media,
+_:future,
+:root .safari_only {
+  padding-bottom: 65px;
+}

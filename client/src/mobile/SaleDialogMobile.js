@@ -30,7 +30,17 @@ function SimpleDialog(props) {
   const classes = useStyles();
   const { onClose, selectedValue, open, categories } = props;
 
-  const [checked, setChecked] = React.useState(categories);
+  const [checked, setChecked] = React.useState([
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+  ]);
 
   const handleChange = (index) => {
     var temp = [];
@@ -53,7 +63,7 @@ function SimpleDialog(props) {
   };
 
   const clear = () => {
-    setChecked([true, true, true, true, true, true, true, true, true, true]);
+    setChecked([true, true, true, true, true, true, true, true, true]);
   };
 
   return (
@@ -87,12 +97,14 @@ function SimpleDialog(props) {
         style={{
           alignSelf: "center",
           textAlign: "center",
-          marginTop: 0,
-          fontWeight: 700,
-          fontSize: 28,
+          marginTop: 30,
+          marginLeft: 20,
+          marginRight: 20,
+          fontSize: 18,
         }}
       >
-        Categories
+        <b>% Off our original posted price</b> <br />
+        Items drop 10% in price every week
       </div>
       <div
         style={{
@@ -114,16 +126,15 @@ function SimpleDialog(props) {
         >
           <div
             style={{
-              width: "50vw",
+              display: "flex",
+              width: 100,
               fontSize: 24,
               fontWeight: 500,
-              display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              textAlign: "center",
             }}
           >
-            {"Art & Decoration"}
+            {"0%"}
           </div>
           <div id="check">
             <Checkbox
@@ -143,16 +154,15 @@ function SimpleDialog(props) {
         >
           <div
             style={{
-              width: "50vw",
+              display: "flex",
+              width: 100,
               fontSize: 24,
               fontWeight: 500,
-              display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              textAlign: "center",
             }}
           >
-            {"Books"}
+            {"10%"}
           </div>
           <div id="check">
             <Checkbox
@@ -172,16 +182,15 @@ function SimpleDialog(props) {
         >
           <div
             style={{
-              width: "50vw",
+              display: "flex",
+              width: 100,
               fontSize: 24,
               fontWeight: 500,
-              display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              textAlign: "center",
             }}
           >
-            {"Clothing, Shoes, & Accessories"}
+            {"20%"}
           </div>
           <div id="check">
             <Checkbox
@@ -195,69 +204,66 @@ function SimpleDialog(props) {
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div
             style={{
-              width: "50vw",
+              display: "flex",
+              width: 100,
               fontSize: 24,
               fontWeight: 500,
-              display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              textAlign: "center",
             }}
           >
-            {"Electronics"}
+            {"30%"}
           </div>
           <div id="check">
             <Checkbox
+              disabled
               checked={checked[3]}
               onChange={() => handleChange(3)}
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
+              inputProps={{ "aria-label": "primary checkbox" }}
             />
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div
             style={{
-              width: "50vw",
+              display: "flex",
+              width: 100,
               fontSize: 24,
               fontWeight: 500,
-              display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              textAlign: "center",
             }}
           >
-            {"Home"}
+            {"40%"}
           </div>
           <div id="check">
             <Checkbox
+              disabled
               checked={checked[4]}
               onChange={() => handleChange(4)}
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
+              inputProps={{ "aria-label": "primary checkbox" }}
             />
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div
             style={{
-              width: "50vw",
+              display: "flex",
+              width: 100,
               fontSize: 24,
               fontWeight: 500,
-              display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              textAlign: "center",
             }}
           >
-            {"Garden"}
+            {"50%"}
           </div>
           <div id="check">
             <Checkbox
+              disabled
               checked={checked[5]}
               onChange={() => handleChange(5)}
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
+              inputProps={{ "aria-label": "primary checkbox" }}
             />
           </div>
         </div>
@@ -265,22 +271,21 @@ function SimpleDialog(props) {
           <div
             style={{
               display: "flex",
-              width: "50vw",
+              width: 100,
               fontSize: 24,
               fontWeight: 500,
               justifyContent: "center",
               alignItems: "center",
-              textAlign: "center",
             }}
           >
-            {"Pet Supplies"}
+            {"60%"}
           </div>
           <div id="check">
             <Checkbox
+              disabled
               checked={checked[6]}
               onChange={() => handleChange(6)}
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
+              inputProps={{ "aria-label": "primary checkbox" }}
             />
           </div>
         </div>
@@ -288,22 +293,21 @@ function SimpleDialog(props) {
           <div
             style={{
               display: "flex",
-              width: "50vw",
+              width: 100,
               fontSize: 24,
               fontWeight: 500,
               justifyContent: "center",
               alignItems: "center",
-              textAlign: "center",
             }}
           >
-            {"Sports & Hobbies"}
+            {"70%"}
           </div>
           <div id="check">
             <Checkbox
+              disabled
               checked={checked[7]}
               onChange={() => handleChange(7)}
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
+              inputProps={{ "aria-label": "primary checkbox" }}
             />
           </div>
         </div>
@@ -311,22 +315,21 @@ function SimpleDialog(props) {
           <div
             style={{
               display: "flex",
-              width: "50vw",
-              justifyContent: "center",
-              alignItems: "center",
+              width: 100,
               fontSize: 24,
               fontWeight: 500,
-              textAlign: "center",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            {"Toys & Games"}
+            {"80%"}
           </div>
           <div id="check">
             <Checkbox
+              disabled
               checked={checked[8]}
               onChange={() => handleChange(8)}
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
+              inputProps={{ "aria-label": "primary checkbox" }}
             />
           </div>
         </div>
@@ -447,7 +450,7 @@ export default function SimpleDialogDemo(props) {
           alignItems: "center",
         }}
       >
-        Category
+        Sale
       </div>
       <SimpleDialog
         categories={props.categories}

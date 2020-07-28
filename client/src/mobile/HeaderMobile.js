@@ -64,16 +64,7 @@ export default class HeaderBar extends React.Component {
             <CityPageMobile closePage={() => this.closePage()} />
           </div>
         )}
-        {/* {this.state.buySellPage && (
-          <div>
-            <BuySellPageMobile closePage={() => this.closePage()} />
-          </div>
-        )}
-        {this.state.profile && (
-          <div>
-            <SignInModal />
-          </div>
-        )} */}
+
         <div>
           <div
             style={{

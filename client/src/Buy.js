@@ -398,15 +398,15 @@ export default class Buy extends React.Component {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    fontSize: 32,
-                    fontWeight: 600,
+                    fontSize: 20,
+                    fontWeight: 400,
                     marginBottom: 15,
                   }}
                 >
-                  Items near you
+                  Items near you, delivered to your doorstep every morning.
                 </div>
 
-                <div
+                {/* <div
                   style={{
                     display: "flex",
                     justifyContent: "center",
@@ -417,7 +417,7 @@ export default class Buy extends React.Component {
                   }}
                 >
                   Delivered to your doorstep in less than 24 hours.
-                </div>
+                </div> */}
                 {this.state.newItems &&
                   this.state.activeCategories &&
                   !this.state.activeCategories.includes(false) && (
@@ -522,6 +522,7 @@ export default class Buy extends React.Component {
                               item.original_price * discount;
                             return (
                               <div
+                                key={index}
                                 onClick={() => this.itemPage(item)}
                                 id="box"
                                 style={{
@@ -1320,13 +1321,6 @@ export default class Buy extends React.Component {
     }
   }
 
-  easeInOutQuad(t, b, c, d) {
-    t /= d / 2;
-    if (t < 1) return (c / 2) * t * t + b;
-    t--;
-    return (-c / 2) * (t * (t - 2) - 1) + b;
-  }
-
   scrollLeft(element, change, duration) {
     var start = element.scrollLeft,
       currentTime = 0,
@@ -1336,7 +1330,6 @@ export default class Buy extends React.Component {
     const st = this.state;
     var animateScroll = function () {
       currentTime += increment;
-      var val = t.easeInOutQuad(currentTime, start, change, duration);
 
       if (change > 0) {
         if (st.width > 960) {
@@ -1368,6 +1361,9 @@ export default class Buy extends React.Component {
   }
 
   updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    this.setState({
+      width: window.innerWidth - window.innerWidth * (15 / 100),
+      height: window.innerHeight,
+    });
   }
 }
