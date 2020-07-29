@@ -7,9 +7,6 @@ import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import FilterListOutlinedIcon from "@material-ui/icons/FilterListOutlined";
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
-import SearchPageMobile from "./SearchPageMobile";
-import AboutPageMobile from "./AboutPageMobile";
-import ProfilePageMobile from "./ProfilePageMobile";
 
 export default class FooterMobile extends React.Component {
   constructor(props) {
@@ -57,12 +54,7 @@ export default class FooterMobile extends React.Component {
     }
     return (
       <div>
-        {this.state.aboutPage && (
-          <div style={{ top: 0, height: "90vh" }}>
-            <AboutPageMobile closePage={() => this.closePage()} />
-          </div>
-        )}
-        {this.state.searchPage && (
+        {/* {this.state.searchPage && (
           <SearchPageMobile closePage={() => this.closePage()} />
         )}
         {this.state.profilePage && (
@@ -70,7 +62,7 @@ export default class FooterMobile extends React.Component {
             redirectToCheckout={this.state.redirectToCheckout}
             closePage={() => this.closePage()}
           />
-        )}
+        )} */}
         <div
           style={{
             height: "9vh",
@@ -82,7 +74,7 @@ export default class FooterMobile extends React.Component {
           }}
         >
           <div
-            onClick={() => this.takeMeHome()}
+            onClick={() => this.openPage("homePage")}
             style={{
               height: "100%",
               width: "17vw",
@@ -121,16 +113,7 @@ export default class FooterMobile extends React.Component {
             </div>
           </div>
           <div
-            onClick={() =>
-              this.setState({
-                homePage: false,
-                aboutPage: true,
-                searchPage: false,
-                profilePage: false,
-                mainSearchPage: false,
-                cartPage: false,
-              })
-            }
+            onClick={() => this.openPage("aboutPage")}
             style={{
               height: "100%",
               width: "17vw",
@@ -170,16 +153,7 @@ export default class FooterMobile extends React.Component {
           </div>
 
           <div
-            onClick={() =>
-              this.setState({
-                homePage: false,
-                aboutPage: false,
-                searchPage: true,
-                profilePage: false,
-                mainSearchPage: false,
-                cartPage: false,
-              })
-            }
+            onClick={() => this.openPage("searchPage")}
             style={{
               height: "100%",
               width: "17vw",
@@ -225,16 +199,7 @@ export default class FooterMobile extends React.Component {
           </div>
 
           <div
-            onClick={() =>
-              this.setState({
-                homePage: false,
-                aboutPage: false,
-                searchPage: false,
-                profilePage: true,
-                mainSearchPage: false,
-                cartPage: false,
-              })
-            }
+            onClick={() => this.openPage("profilePage")}
             style={{
               height: "100%",
               width: "17vw",
@@ -337,6 +302,64 @@ export default class FooterMobile extends React.Component {
         </div>
       </div>
     );
+  }
+
+  openPage(page) {
+    if (page == "homePage") {
+      if (window.location.pathname != "/") {
+        this.setState({
+          homePage: true,
+          aboutPage: false,
+          searchPage: false,
+          profilePage: false,
+          mainSearchPage: false,
+          cartPage: false,
+        });
+        window.location.href = "/";
+      } else {
+        this.setState({
+          homePage: true,
+          aboutPage: false,
+          searchPage: false,
+          profilePage: false,
+          mainSearchPage: false,
+          cartPage: false,
+        });
+        this.props.openPage(page);
+      }
+    } else if (page == "aboutPage") {
+      this.setState({
+        homePage: false,
+        aboutPage: true,
+        searchPage: false,
+        profilePage: false,
+        mainSearchPage: false,
+        cartPage: false,
+      });
+      this.props.openPage(page);
+      return;
+    } else if (page == "searchPage") {
+      this.setState({
+        homePage: false,
+        aboutPage: false,
+        searchPage: true,
+        profilePage: false,
+        mainSearchPage: false,
+        cartPage: false,
+      });
+      this.props.openPage(page);
+    } else if (page == "profilePage") {
+      this.setState({
+        homePage: false,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: true,
+        mainSearchPage: false,
+        cartPage: false,
+      });
+      this.props.openPage(page);
+    } else {
+    }
   }
 
   goCart() {

@@ -15,17 +15,17 @@ export default class AboutPageMobile extends React.Component {
         style={{
           display: "flex",
           justifyContent: "center",
-          zIndex: 220,
+          zIndex: 100,
           overflowY: "scroll",
           backgroundColor: "#f5f5f5",
           top: 0,
-          height: "90vh",
+          height: "91.2vh",
         }}
       >
         <div
           style={{
             width: "100vw",
-            zIndex: 220,
+            zIndex: 100,
             borderRadius: 5,
             opacity: 1,
           }}
@@ -94,6 +94,7 @@ export default class AboutPageMobile extends React.Component {
                 flexDirection: "column",
                 alignItems: "center",
                 marginTop: "2vh",
+                zIndex: 50,
               }}
             >
               <div className="about-3">Sellers: How we work</div>

@@ -13,6 +13,7 @@
   padding-right: 5vw;
   margin-top: 1vh;
   margin-bottom: 1vh;
+  z-index: 50;
 }
 
 .about-3 {
@@ -37,4 +38,5 @@
   justify-content: center;
   color: "#ffffff";
   font-weight: 600;
+  z-index: 50;
 }

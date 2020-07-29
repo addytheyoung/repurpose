@@ -15,6 +15,8 @@ import FooterMobile from "./FooterMobile";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import SearchPageMobile from "./SearchPageMobile";
 import Div100vh from "react-div-100vh";
+import AboutPageMobile from "./AboutPageMobile";
+import ProfilePageMobile from "./ProfilePageMobile";
 
 export default class BuyMobile extends React.Component {
   constructor(props) {
@@ -38,6 +40,10 @@ export default class BuyMobile extends React.Component {
       newItems: [],
       foundNewItems: false,
       activeSales: [true, true, true, true, true, true, true, true, true],
+      homePage: true,
+      aboutPage: false,
+      searchPage: false,
+      profilePage: false,
     };
     this.state.finishedPullingItems = false;
     this.pullItemsFromDatabase(this.state.activeCategories, null, true);
@@ -125,15 +131,35 @@ export default class BuyMobile extends React.Component {
 
     return (
       <div style={{ overflowX: "hidden", width: "100vw" }}>
-        <div style={{ position: "fixed", top: 0, zIndex: 100 }}>
-          <HeaderMobile
-            updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
-            setPriceFilter={(a, b) => this.updateFilter(a, b)}
+        {!this.state.aboutPage && (
+          <div style={{ position: "fixed", top: 0, zIndex: 100 }}>
+            <HeaderMobile
+              updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
+              setPriceFilter={(a, b) => this.updateFilter(a, b)}
+            />
+          </div>
+        )}
+        <div style={{ position: "fixed", bottom: 0, zIndex: 102 }}>
+          <FooterMobile
+            closePage={(page) => this.closePage(page)}
+            openPage={(page) => this.openPage(page)}
+            updateFilter={(a, b) => this.updateFilter(a, b)}
           />
         </div>
-        <div style={{ position: "fixed", bottom: 0, zIndex: 101 }}>
-          <FooterMobile updateFilter={(a, b) => this.updateFilter(a, b)} />
-        </div>
+        {this.state.aboutPage && (
+          <div style={{ top: 0, height: "90vh", zIndex: 100 }}>
+            <AboutPageMobile closePage={() => this.closePage()} />
+          </div>
+        )}
+        {this.state.searchPage && (
+          <SearchPageMobile closePage={() => this.closePage()} />
+        )}
+        {this.state.profilePage && (
+          <ProfilePageMobile
+            redirectToCheckout={this.state.redirectToCheckout}
+            closePage={() => this.closePage()}
+          />
+        )}
         {!this.state.loaded && (
           <div
             style={{
@@ -168,7 +194,7 @@ export default class BuyMobile extends React.Component {
                   width: "100vw",
                   borderRadius: 5,
                   position: "fixed",
-                  overflowY: "scroll",
+                  overflowY: this.state.aboutPage ? "hidden" : "scroll",
                   top: 0,
                   backgroundColor: "#f5f5f5",
                   // position: "absolute",
@@ -374,8 +400,8 @@ export default class BuyMobile extends React.Component {
               zIndex: 99,
               overflowX: "hidden",
               width: "100vw",
-              overflowY: "scroll",
-              height: "88vh",
+              overflowY: this.state.homePage ? "scroll" : "hidden",
+              height: this.state.homePage ? "88vh" : 0,
             }}
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -419,7 +445,11 @@ export default class BuyMobile extends React.Component {
                       }}
                     >
                       <div
-                        style={{ fontSize: 24, fontWeight: 600, marginTop: 50 }}
+                        style={{
+                          fontSize: 24,
+                          fontWeight: 600,
+                          marginTop: 50,
+                        }}
                       >
                         Items just added
                       </div>
@@ -770,6 +800,70 @@ export default class BuyMobile extends React.Component {
         ></div>
       </div>
     );
+  }
+
+  closePage(page) {
+    if (page == "homePage") {
+      this.setState({
+        homePage: false,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: false,
+      });
+    } else if (page == "aboutPage") {
+      this.setState({
+        homePage: false,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: false,
+      });
+    } else if (page == "searchPage") {
+      this.setState({
+        homePage: false,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: false,
+      });
+    } else if (page == "profilePage") {
+      this.setState({
+        homePage: false,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: false,
+      });
+    }
+  }
+
+  openPage(page) {
+    if (page == "homePage") {
+      this.setState({
+        homePage: true,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: false,
+      });
+    } else if (page == "aboutPage") {
+      this.setState({
+        homePage: false,
+        aboutPage: true,
+        searchPage: false,
+        profilePage: false,
+      });
+    } else if (page == "searchPage") {
+      this.setState({
+        homePage: false,
+        aboutPage: false,
+        searchPage: true,
+        profilePage: false,
+      });
+    } else if (page == "profilePage") {
+      this.setState({
+        homePage: false,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: true,
+      });
+    }
   }
 
   updateMoreFilter(a, b) {
