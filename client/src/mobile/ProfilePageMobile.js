@@ -18,7 +18,7 @@ export default class ProfilePageMobile extends React.Component {
         style={{
           display: "flex",
           justifyContent: "center",
-          zIndex: 1,
+          zIndex: 101,
         }}
       >
         <div
@@ -26,7 +26,7 @@ export default class ProfilePageMobile extends React.Component {
             width: "100vw",
             overflowY: "scroll",
             height: "91.2vh",
-            zIndex: 1,
+            zIndex: 101,
             borderRadius: 5,
 
             top: 0,

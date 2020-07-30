@@ -18,6 +18,7 @@ export default class SearchPageMobile extends React.Component {
           justifyContent: "center",
           zIndex: 1,
           alignItems: "center",
+          zIndex: 101,
         }}
       >
         <div
@@ -27,6 +28,7 @@ export default class SearchPageMobile extends React.Component {
             height: "91.2vh",
             zIndex: 1,
             borderRadius: 5,
+            zIndex: 101,
 
             top: 0,
             backgroundColor: "#f5f5f5",
@@ -34,7 +36,9 @@ export default class SearchPageMobile extends React.Component {
             opacity: 1,
           }}
         >
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", zIndex: 101 }}
+          >
             <div
               style={{
                 display: "flex",

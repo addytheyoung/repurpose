@@ -6,7 +6,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import "../css/CityPageMobile.css";
 
 export default class CityPageMobile extends React.Component {
-  citiesList = ["Austin, TX"];
+  citiesList = ["Central TX"];
 
   constructor(props) {
     super(props);
@@ -76,31 +76,32 @@ export default class CityPageMobile extends React.Component {
               flexDirection: "row",
               justifyContent: "center",
               alignItems: "center",
+              fontSize: 20,
             }}
           >
             <Autocomplete
               id="combo-box-demo-mobile"
-              defaultValue={localStorage.getItem("city")}
+              defaultValue={"Central TX"}
               options={this.citiesList}
               getOptionLabel={(option) => option}
               renderOption={(option) => (
                 <div
                   onClick={() => this.updateCity(option)}
-                  style={{ width: "100%", height: "5vh", fontSize: 42 }}
+                  style={{ width: "100%", height: "5vh", fontSize: 20 }}
                 >
                   {option}
                 </div>
               )}
               renderInput={(params) => (
                 <TextField
-                  style={{ fontSize: 42, height: "5vh" }}
+                  style={{ fontSize: 20, height: "5vh" }}
                   {...params}
                   variant="outlined"
                   fullWidth
                 />
               )}
               freeSolo={true}
-              style={{ width: "60vw", fontSize: 42, height: "5vh" }}
+              style={{ width: "60vw", fontSize: 20, height: "5vh" }}
             />
           </div>
         </div>

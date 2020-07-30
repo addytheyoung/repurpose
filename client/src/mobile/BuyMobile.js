@@ -153,7 +153,9 @@ export default class BuyMobile extends React.Component {
           </div>
         )}
         {this.state.searchPage && (
-          <SearchPageMobile closePage={() => this.closePage()} />
+          <div style={{ height: "90vh", zIndex: 100 }}>
+            <SearchPageMobile closePage={() => this.closePage()} />
+          </div>
         )}
         {this.state.profilePage && (
           <ProfilePageMobile
