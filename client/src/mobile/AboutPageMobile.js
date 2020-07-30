@@ -25,7 +25,7 @@ export default class AboutPageMobile extends React.Component {
         <div
           style={{
             width: "100vw",
-            zIndex: 100,
+            zIndex: 101,
             borderRadius: 5,
             opacity: 1,
           }}

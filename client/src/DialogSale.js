@@ -424,7 +424,6 @@ export default function SimpleDialogDemo(props) {
           marginTop: 10,
           fontSize: 17,
           minWidth: "5vw",
-
           display: "flex",
           justifyContent: "center",
         }}

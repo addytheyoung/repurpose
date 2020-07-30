@@ -186,6 +186,7 @@ export default class ProfilePageMobile extends React.Component {
               {singedin && !this.state.logout && (
                 <div
                   style={{
+                    marginTop: "20vh",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
@@ -201,29 +202,31 @@ export default class ProfilePageMobile extends React.Component {
                   >
                     Profile
                   </div>
-                  <div
-                    onClick={() => (window.location.href = "/orders")}
-                    id="my-orders"
-                    style={{
-                      backgroundColor: "#426CB4",
-                      fontSize: 16,
-                      borderRadius: 5,
-                      padding: 10,
-                      height: "5vh",
-                      width: "20vw",
-                      color: "white",
-                      fontWeight: 600,
-                      marginTop: 10,
-                      marginBottom: 10,
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      textAlign: "center",
-                    }}
-                  >
-                    MY ORDERS
-                  </div>
-                  {/* <div
+
+                  <div style={{ display: "flex", flexDirection: "row" }}>
+                    <div
+                      onClick={() => (window.location.href = "/orders")}
+                      id="my-orders"
+                      style={{
+                        backgroundColor: "#426CB4",
+                        fontSize: 16,
+                        borderRadius: 5,
+                        padding: 10,
+                        height: "5vh",
+                        width: "20vw",
+                        color: "white",
+                        fontWeight: 600,
+                        marginTop: 10,
+                        marginRight: 10,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textAlign: "center",
+                      }}
+                    >
+                      MY ORDERS
+                    </div>
+                    {/* <div
                     onClick={() => (window.location.href = "/mysales")}
                     id="my-sales"
                     style={{
@@ -243,31 +246,32 @@ export default class ProfilePageMobile extends React.Component {
                   >
                     MY SALES
                   </div> */}
-                  <div
-                    onClick={() =>
-                      this.setState({
-                        logout: true,
-                      })
-                    }
-                    id="logout"
-                    style={{
-                      backgroundColor: "#426CB4",
-                      fontSize: 16,
-                      borderRadius: 5,
-                      padding: 10,
-                      height: "5vh",
-                      width: "20vw",
-                      color: "white",
-                      fontWeight: 600,
-                      marginTop: 10,
-                      marginBottom: 10,
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      textAlign: "center",
-                    }}
-                  >
-                    LOG OUT
+                    <div
+                      onClick={() =>
+                        this.setState({
+                          logout: true,
+                        })
+                      }
+                      id="logout"
+                      style={{
+                        backgroundColor: "#426CB4",
+                        fontSize: 16,
+                        borderRadius: 5,
+                        padding: 10,
+                        height: "5vh",
+                        width: "20vw",
+                        color: "white",
+                        fontWeight: 600,
+                        marginTop: 10,
+                        marginLeft: 10,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textAlign: "center",
+                      }}
+                    >
+                      LOG OUT
+                    </div>
                   </div>
                 </div>
               )}
@@ -275,6 +279,8 @@ export default class ProfilePageMobile extends React.Component {
                 <div
                   style={{
                     display: "flex",
+                    marginTop: "20vh",
+
                     justifyContent: "center",
                     alignItems: "center",
                     flexDirection: "column",
@@ -312,28 +318,6 @@ export default class ProfilePageMobile extends React.Component {
                     >
                       YES
                     </div>
-                    <div
-                      id="logout-no"
-                      onClick={() => this.closeModal()}
-                      style={{
-                        marginLeft: 10,
-                        backgroundColor: "#426CB4",
-                        borderRadius: 5,
-                        padding: 10,
-                        height: "5vh",
-                        width: "20vw",
-                        fontSize: 16,
-                        color: "white",
-                        fontWeight: 600,
-                        marginTop: 10,
-                        marginBottom: 10,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      CANCEL
-                    </div>
                   </div>
                 </div>
               )}
@@ -342,10 +326,6 @@ export default class ProfilePageMobile extends React.Component {
         </div>
       </div>
     );
-  }
-
-  closeModal(e) {
-    this.props.closePage();
   }
 
   startShopping() {

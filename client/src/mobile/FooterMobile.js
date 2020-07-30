@@ -54,15 +54,6 @@ export default class FooterMobile extends React.Component {
     }
     return (
       <div>
-        {/* {this.state.searchPage && (
-          <SearchPageMobile closePage={() => this.closePage()} />
-        )}
-        {this.state.profilePage && (
-          <ProfilePageMobile
-            redirectToCheckout={this.state.redirectToCheckout}
-            closePage={() => this.closePage()}
-          />
-        )} */}
         <div
           style={{
             height: "9vh",
@@ -239,7 +230,7 @@ export default class FooterMobile extends React.Component {
           </div>
 
           <div
-            onClick={() => this.goCart()}
+            onClick={() => this.openPage("cartPage")}
             style={{
               height: "100%",
               width: "17vw",
@@ -358,53 +349,28 @@ export default class FooterMobile extends React.Component {
         cartPage: false,
       });
       this.props.openPage(page);
-    } else {
-    }
-  }
-
-  goCart() {
-    if (window.location.pathname == "/cart") {
-      this.setState({
-        homePage: false,
-        aboutPage: false,
-        searchPage: false,
-        profilePage: false,
-        mainSearchPage: false,
-        cartPage: false,
-      });
-    } else {
-      this.setState({
-        homePage: false,
-        aboutPage: false,
-        searchPage: false,
-        profilePage: false,
-        mainSearchPage: false,
-        cartPage: true,
-      });
-      window.location.href = "/cart";
-    }
-  }
-
-  takeMeHome() {
-    if (window.location.pathname != "/") {
-      this.setState({
-        homePage: true,
-        aboutPage: false,
-        searchPage: false,
-        profilePage: false,
-        mainSearchPage: false,
-        cartPage: false,
-      });
-      window.location.href = "/";
-    } else {
-      this.setState({
-        homePage: true,
-        aboutPage: false,
-        searchPage: false,
-        profilePage: false,
-        mainSearchPage: false,
-        cartPage: false,
-      });
+    } else if (page == "cartPage") {
+      if (window.location.pathname == "/cart") {
+        this.setState({
+          homePage: false,
+          aboutPage: false,
+          searchPage: false,
+          profilePage: false,
+          mainSearchPage: false,
+          cartPage: true,
+        });
+        this.props.openPage(page);
+      } else {
+        this.setState({
+          homePage: false,
+          aboutPage: false,
+          searchPage: false,
+          profilePage: false,
+          mainSearchPage: false,
+          cartPage: true,
+        });
+        window.location.href = "/cart";
+      }
     }
   }
 

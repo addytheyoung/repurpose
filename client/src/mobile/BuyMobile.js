@@ -342,7 +342,7 @@ export default class BuyMobile extends React.Component {
                           id="add-to-cart"
                           style={{
                             backgroundColor: "#426CB4",
-                            marginTop: 50,
+                            marginTop: 20,
                             borderRadius: 5,
                             padding: 10,
                             width: 300,
@@ -353,7 +353,7 @@ export default class BuyMobile extends React.Component {
                             justifyContent: "center",
                             color: "#ffffff",
                             fontWeight: 600,
-                            fontSize: 14,
+                            fontSize: 18,
                           }}
                         >
                           {!this.state.addingToCart && "ADD TO CART"}

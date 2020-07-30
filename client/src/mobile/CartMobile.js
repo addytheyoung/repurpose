@@ -4,7 +4,9 @@ import FooterMobile from "./FooterMobile";
 import Bin from "../images/bin.png";
 import ClipLoader from "react-spinners/ClipLoader";
 import "../css/CartMobile.css";
-
+import AboutPageMobile from "./AboutPageMobile";
+import ProfilePageMobile from "./ProfilePageMobile";
+import SearchPageMobile from "./SearchPageMobile";
 import * as firebase from "firebase";
 
 export default class CartMobile extends React.Component {
@@ -20,6 +22,7 @@ export default class CartMobile extends React.Component {
       delivery: true,
       signInModal: false,
       profilePage: false,
+      cartPage: true,
     };
 
     var myUid = null;
@@ -134,241 +137,313 @@ export default class CartMobile extends React.Component {
           parseInt(shipping * 100)
       ) / 100;
 
+    if (!this.state.cartPage) {
+      return (
+        <div>
+          <div style={{ position: "fixed", bottom: 0, zIndex: 105 }}>
+            <FooterMobile
+              openPage={(page) => this.openPage(page)}
+              profilePage={this.state.profilePage}
+              cartPage={true}
+            />
+          </div>
+          {this.state.aboutPage && (
+            <div style={{ top: 0, height: "90vh", zIndex: 104 }}>
+              <AboutPageMobile closePage={() => this.closePage()} />
+            </div>
+          )}
+          {this.state.searchPage && (
+            <SearchPageMobile closePage={() => this.closePage()} />
+          )}
+          {this.state.profilePage && (
+            <ProfilePageMobile
+              redirectToCheckout={this.state.redirectToCheckout}
+              closePage={() => this.closePage()}
+            />
+          )}
+        </div>
+      );
+    }
+
     return (
       <div style={{}}>
-        {/* <div style={{ position: "fixed", top: 0 }}>
-          <HeaderMobile
-            updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
-            setPriceFilter={(a, b) => this.updateFilter(a, b)}
-          />
-        </div> */}
         <div style={{ position: "fixed", bottom: 0, zIndex: 105 }}>
-          <FooterMobile profilePage={this.state.profilePage} cartPage={true} />
+          <FooterMobile
+            openPage={(page) => this.openPage(page)}
+            profilePage={this.state.profilePage}
+            cartPage={true}
+          />
         </div>
-        {this.state.myData.cart.length !== 0 && (
-          <div
-            onClick={() => this.goToCheckout()}
-            id="checkout-mobile"
-            style={{
-              backgroundColor: "#426CB4",
-              textDecoration: "none",
-              color: "white",
-              width: "98vw",
-              paddingTop: "1vh",
-              paddingBottom: "1vh",
-              height: "4vh",
-              bottom: "9vh",
-              left: "1vw",
-              // right: "1vw",
-              position: "fixed",
-              fontSize: 20,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: 5,
-              // padding: 10,
-              fontWeight: 700,
-            }}
-          >
-            CHECK OUT
+        {this.state.aboutPage && (
+          <div style={{ top: 0, height: "90vh", zIndex: 104 }}>
+            <AboutPageMobile closePage={() => this.closePage()} />
           </div>
         )}
+        {this.state.searchPage && (
+          <SearchPageMobile closePage={() => this.closePage()} />
+        )}
+        {this.state.profilePage && (
+          <ProfilePageMobile
+            redirectToCheckout={this.state.redirectToCheckout}
+            closePage={() => this.closePage()}
+          />
+        )}
+        <div>
+          {this.state.myData.cart.length !== 0 && (
+            <div
+              onClick={() => this.goToCheckout()}
+              id="checkout-mobile"
+              style={{
+                backgroundColor: "#426CB4",
+                textDecoration: "none",
+                color: "white",
+                width: "98vw",
+                paddingTop: "1vh",
+                paddingBottom: "1vh",
+                height: "4vh",
+                bottom: "9vh",
+                left: "1vw",
+                // right: "1vw",
+                position: "fixed",
+                fontSize: 20,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 5,
+                // padding: 10,
+                fontWeight: 700,
+                zIndex: 100,
+              }}
+            >
+              CHECK OUT
+            </div>
+          )}
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              width: "100vw",
-              alignItems: "center",
-              overflowY: "scroll",
-              overflowX: "hidden",
-              height: "70vh",
             }}
           >
             <div
               style={{
-                borderBottomColor: "#a1a1a1",
-                borderBottomStyle: "solid",
-                borderBottomWidth: 1,
-                paddingBottom: 10,
+                display: "flex",
+                flexDirection: "column",
                 width: "100vw",
-                textAlign: "center",
-                marginBottom: 10,
-                fontSize: 20,
-                fontWeight: 600,
-                marginTop: 30,
+                alignItems: "center",
+                overflowY: "scroll",
+                overflowX: "hidden",
+                height: "70vh",
               }}
             >
-              Cart
+              <div
+                style={{
+                  borderBottomColor: "#a1a1a1",
+                  borderBottomStyle: "solid",
+                  borderBottomWidth: 1,
+                  paddingBottom: 10,
+                  width: "100vw",
+                  textAlign: "center",
+                  marginBottom: 10,
+                  fontSize: 20,
+                  fontWeight: 600,
+                  marginTop: 30,
+                }}
+              >
+                Cart
+              </div>
+              {this.state.myData.cart.length === 0 && (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <div style={{ fontSize: 16, fontWeight: 600, marginTop: 50 }}>
+                    Cart is empty!
+                  </div>
+                  <a
+                    href="/"
+                    id="shop"
+                    style={{
+                      backgroundColor: "#426CB4",
+                      textDecoration: "none",
+                      color: "white",
+                      width: 120,
+                      marginTop: 30,
+                      height: 30,
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: 5,
+                      padding: 10,
+                      fontWeight: 500,
+                    }}
+                  >
+                    SHOP NOW
+                  </a>
+                </div>
+              )}
+              {this.state.myData.cart.map((item, index) => {
+                // Show discounts, if any.
+                const discount = 1 - item.current_price;
+                const currentPrice =
+                  item.original_price - item.original_price * discount;
+                const f = Math.round(discount * 100).toFixed(0);
+
+                return (
+                  <div
+                    key={index}
+                    style={{
+                      marginTop: 10,
+                      width: "80vw",
+                      marginBottom: 10,
+                      display: "flex",
+                      flexDirection: "row",
+                    }}
+                  >
+                    <div onClick={() => this.itemModal(item)}>
+                      <img
+                        id="box"
+                        style={{
+                          width: "40vw",
+                          height: "40vw",
+                          borderRadius: 5,
+                          overflow: "hidden",
+                        }}
+                        src={item.pictures[0]}
+                      ></img>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        paddingLeft: 10,
+                        width: "26vw",
+                      }}
+                    >
+                      <div style={{ fontSize: 16 }}>{item.title}</div>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          marginTop: 5,
+                        }}
+                      >
+                        <div style={{ fontSize: 20, fontWeight: 600 }}>
+                          {"$" +
+                            (Math.round(currentPrice * 10) / 10).toFixed(1)}
+                        </div>
+                        <div
+                          style={{
+                            fontWeight: 400,
+                            fontSize: 16,
+                            marginLeft: 10,
+                            color: "#cc0000",
+                            opacity: discount == 0 ? 0 : discount * 15 * 0.25,
+                          }}
+                        >
+                          {f + "%"}
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      onClick={() =>
+                        this.removeFromCart(item, this.state.myData)
+                      }
+                      id="bin"
+                      style={{ marginLeft: "5vw", width: 35, height: 35 }}
+                    >
+                      <img
+                        src={Bin}
+                        style={{ width: "5vw", height: "5vw" }}
+                      ></img>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-            {this.state.myData.cart.length === 0 && (
+            {this.state.myData.cart.length !== 0 && (
               <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
+                  width: "100vw",
+                  backgroundColor: "#fafafa",
+                  position: "fixed",
+                  bottom: "15vh",
+                  height: "13vh",
+                  marginTop: "3vh",
+                  paddingBottom: "1vh",
+                  paddingTop: "1vh",
                 }}
               >
-                <div style={{ fontSize: 16, fontWeight: 600, marginTop: 50 }}>
-                  Cart is empty!
-                </div>
-                <a
-                  href="/"
-                  id="shop"
-                  style={{
-                    backgroundColor: "#426CB4",
-                    textDecoration: "none",
-                    color: "white",
-                    width: 120,
-                    marginTop: 30,
-                    height: 30,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: 5,
-                    padding: 10,
-                    fontWeight: 500,
-                  }}
-                >
-                  SHOP NOW
-                </a>
-              </div>
-            )}
-            {this.state.myData.cart.map((item, index) => {
-              return (
                 <div
-                  key={index}
                   style={{
-                    marginTop: 10,
-                    width: "80vw",
-                    marginBottom: 10,
                     display: "flex",
                     flexDirection: "row",
+                    fontSize: 18,
+                    fontSize: 16,
+                    fontWeight: 500,
+                    alignItems: "center",
+                    width: "96vw",
+                    justifyContent: "space-between",
                   }}
                 >
-                  <div onClick={() => this.itemModal(item)}>
-                    <img
-                      id="box"
-                      style={{
-                        width: "40vw",
-                        height: "40vw",
-                        borderRadius: 5,
-                        overflow: "hidden",
-                      }}
-                      src={item.pictures[0]}
-                    ></img>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      paddingLeft: 10,
-                      width: "26vw",
-                    }}
-                  >
-                    <div style={{ fontSize: 16 }}>{item.title}</div>
-                    <div style={{ fontSize: 16, fontWeight: 500 }}>
-                      {"$" + item.original_price}
-                    </div>
-                  </div>
-                  <div
-                    onClick={() => this.removeFromCart(item, this.state.myData)}
-                    id="bin"
-                    style={{ marginLeft: "5vw", width: 35, height: 35 }}
-                  >
-                    <img
-                      src={Bin}
-                      style={{ width: "5vw", height: "5vw" }}
-                    ></img>
-                  </div>
+                  <div>Subtotal</div>
+                  <div>{"$" + subTotal}</div>
                 </div>
-              );
-            })}
-          </div>
-          {this.state.myData.cart.length !== 0 && (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                width: "100vw",
-                backgroundColor: "#fafafa",
-                position: "fixed",
-                bottom: "15vh",
-                height: "13vh",
-                marginTop: "3vh",
-                paddingBottom: "1vh",
-                paddingTop: "1vh",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  fontSize: 18,
-                  fontSize: 16,
-                  fontWeight: 500,
-                  alignItems: "center",
-                  width: "96vw",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div>Subtotal</div>
-                <div>{"$" + subTotal}</div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  fontSize: 16,
-                  fontWeight: 500,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  width: "96vw",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div>Tax</div>
-                <div>{"$" + tax}</div>
-              </div>
+                <div
+                  style={{
+                    display: "flex",
+                    fontSize: 16,
+                    fontWeight: 500,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    width: "96vw",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div>Tax</div>
+                  <div>{"$" + tax}</div>
+                </div>
 
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  fontSize: 16,
-                  fontWeight: 500,
-                  alignItems: "center",
-                  width: "96vw",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div>Delivery</div>
-                <div>{"$" + shipping}</div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    fontSize: 16,
+                    fontWeight: 500,
+                    alignItems: "center",
+                    width: "96vw",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div>Delivery</div>
+                  <div>{"$" + shipping}</div>
+                </div>
+                <div
+                  style={{
+                    marginTop: 20,
+                    display: "flex",
+                    flexDirection: "row",
+                    fontSize: 16,
+                    fontWeight: 600,
+                    alignItems: "center",
+                    width: "96vw",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div>Total</div>
+                  <div>{"$" + total}</div>
+                </div>
               </div>
-              <div
-                style={{
-                  marginTop: 20,
-                  display: "flex",
-                  flexDirection: "row",
-                  fontSize: 16,
-                  fontWeight: 600,
-                  alignItems: "center",
-                  width: "96vw",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div>Total</div>
-                <div>{"$" + total}</div>
-              </div>
-            </div>
-          )}
-          <div style={{ height: "30vh" }}></div>
+            )}
+            <div style={{ height: "30vh" }}></div>
+          </div>
         </div>
       </div>
     );
@@ -425,6 +500,50 @@ export default class CartMobile extends React.Component {
     //     profilePage: true,
     //   });
     // }
+  }
+
+  openPage(page) {
+    if (page == "homePage") {
+      this.setState({
+        homePage: true,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: false,
+        cartPage: false,
+      });
+    } else if (page == "aboutPage") {
+      this.setState({
+        homePage: false,
+        aboutPage: true,
+        searchPage: false,
+        profilePage: false,
+        cartPage: false,
+      });
+    } else if (page == "searchPage") {
+      this.setState({
+        homePage: false,
+        aboutPage: false,
+        searchPage: true,
+        profilePage: false,
+        cartPage: false,
+      });
+    } else if (page == "profilePage") {
+      this.setState({
+        homePage: false,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: true,
+        cartPage: false,
+      });
+    } else if (page == "cartPage") {
+      this.setState({
+        homePage: false,
+        aboutPage: false,
+        searchPage: false,
+        profilePage: false,
+        cartPage: true,
+      });
+    }
   }
 
   setPickup(e) {
@@ -501,13 +620,13 @@ export default class CartMobile extends React.Component {
   }
 
   getSubtotal(cart) {
-    console.log(cart);
     var totalPrice = 0;
     for (var i = 0; i < cart.length; i++) {
-      const price = parseInt(cart[i].original_price);
+      const price =
+        parseInt(cart[i].original_price) -
+        parseInt(cart[i].original_price) * (1 - cart[i].current_price);
       totalPrice += price;
     }
-
     return ((totalPrice / 100) * 100).toFixed(2);
   }
 
@@ -516,11 +635,7 @@ export default class CartMobile extends React.Component {
   }
 
   getShipping(price) {
-    if (this.state.deliveryType === "delivery") {
-      return ((1.5 / 100) * 100).toFixed(2);
-    } else {
-      return ((0.0 / 100) * 100).toFixed(2);
-    }
+    return ((2.0 / 100) * 100).toFixed(2);
   }
 
   randomNumber(length) {
