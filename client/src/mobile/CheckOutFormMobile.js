@@ -319,7 +319,6 @@ export default class CheckOutFormMobile extends React.Component {
             >
               Delivery Info
             </div>
-            <div style={{ textAlign: "center" }}>(Central Texas only)</div>
             <Input
               defaultValue={
                 localStorage.getItem("fname")
@@ -350,7 +349,7 @@ export default class CheckOutFormMobile extends React.Component {
                 }
                 id="address1"
                 style={{ margin: 10 }}
-                placeholder="Address Line 1"
+                placeholder="Address"
               ></Input>
               <Input
                 defaultValue={
@@ -360,7 +359,7 @@ export default class CheckOutFormMobile extends React.Component {
                 }
                 id="address2"
                 style={{ margin: 10 }}
-                placeholder="Address Line 2 (optional)"
+                placeholder="Apt, Suite, or Floor"
               ></Input>
               <Input
                 defaultValue={
@@ -372,7 +371,6 @@ export default class CheckOutFormMobile extends React.Component {
               ></Input>
               <Input
                 id="city"
-                defaultValue={"Austin"}
                 style={{ margin: 10 }}
                 placeholder="City"
               ></Input>
@@ -443,7 +441,7 @@ export default class CheckOutFormMobile extends React.Component {
                   this.state.myData.email ? this.state.myData.email : ""
                 }
                 style={{ margin: 10 }}
-                placeholder="email"
+                placeholder="Email"
               ></Input>
             </div>
           </div>

@@ -28,19 +28,9 @@ const useStyles = makeStyles({
 
 function SimpleDialog(props) {
   const classes = useStyles();
-  const { onClose, selectedValue, open, categories } = props;
+  const { onClose, selectedValue, open, sales } = props;
 
-  const [checked, setChecked] = React.useState([
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-  ]);
+  const [checked, setChecked] = React.useState(sales);
 
   const handleChange = (index) => {
     var temp = [];
@@ -370,6 +360,10 @@ function SimpleDialog(props) {
           id="save"
           style={{
             backgroundColor: "rgb(66, 108, 180)",
+            opacity:
+              checked[0] == false && checked[1] == false && checked[2] == false
+                ? 0.2
+                : 1,
             padding: 10,
             width: 100,
             alignSelf: "center",
@@ -408,9 +402,12 @@ function clearContent(props, handleClose, clear) {
 }
 
 function saveContent(props, saved, handleClose) {
+  if (saved[0] == false && saved[1] == false && saved[2] == false) {
+    return;
+  }
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-  props.changeCategory(saved);
+  props.changeSales(saved);
   handleClose();
 }
 
@@ -453,9 +450,9 @@ export default function SimpleDialogDemo(props) {
         Sale
       </div>
       <SimpleDialog
-        categories={props.categories}
+        sales={props.sales}
         clearContent={props.clearContent}
-        changeCategory={props.changeCategory}
+        changeSales={props.changeSales}
         selectedValue={selectedValue}
         open={open}
         onClose={handleClose}

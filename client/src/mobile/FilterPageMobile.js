@@ -24,8 +24,6 @@ export default class FilterPageMobile extends React.Component {
           height: "90vh",
           width: "100vw",
           overflowY: "hidden",
-
-          // alignItems: "center"
         }}
       >
         <div
@@ -71,18 +69,22 @@ export default class FilterPageMobile extends React.Component {
                 paddingBottom: 10,
               }}
             >
-              {/* <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            Filters
-          </div> */}
               <SaleDialogMobile
-                clearContent={() => this.changePrice("$", "$")}
-                changePrice={(min, max) => this.changePrice(min, max)}
+                sales={this.props.sales}
+                clearContent={() =>
+                  this.changeSales([
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true,
+                  ])
+                }
+                changeSales={(min, max) => this.changeSales(min, max)}
               />
               <CategoryDialogMobile
                 categories={this.props.categories}
@@ -106,6 +108,10 @@ export default class FilterPageMobile extends React.Component {
         </div>
       </div>
     );
+  }
+
+  changeSales(sales) {
+    this.props.updateSaleFilter(sales);
   }
 
   changeCategory(categories) {

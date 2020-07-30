@@ -467,7 +467,9 @@ export default class CheckOutMobile extends Component {
   getSubtotal(cart) {
     var totalPrice = 0;
     for (var i = 0; i < cart.length; i++) {
-      const price = parseInt(cart[i].original_price);
+      const price =
+        parseInt(cart[i].original_price) -
+        parseInt(cart[i].original_price) * (1 - cart[i].current_price);
       totalPrice += price;
     }
     return ((totalPrice / 100) * 100).toFixed(2);
@@ -478,7 +480,7 @@ export default class CheckOutMobile extends Component {
   }
 
   getShipping(price) {
-    return ((1.5 / 100) * 100).toFixed(2);
+    return ((2.0 / 100) * 100).toFixed(2);
     if (localStorage.getItem("deliveryType") === "delivery") {
       return ((1.0 / 100) * 100).toFixed(2);
     } else {

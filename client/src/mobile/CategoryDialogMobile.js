@@ -367,6 +367,7 @@ function SimpleDialog(props) {
           id="save"
           style={{
             backgroundColor: "rgb(66, 108, 180)",
+            opacity: !checked.includes(true) ? 0.2 : 1,
             padding: 10,
             width: 100,
             alignSelf: "center",
@@ -405,6 +406,9 @@ function clearContent(props, handleClose, clear) {
 }
 
 function saveContent(props, saved, handleClose) {
+  if (!saved.includes(true)) {
+    return;
+  }
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   props.changeCategory(saved);

@@ -42,6 +42,7 @@ export default class HeaderBar extends React.Component {
       minPrice: "",
       maxPrice: "",
       categories: [true, true, true, true, true, true, true, true, true],
+      sales: [true, true, true, true, true, true, true, true, true],
     };
   }
   render() {
@@ -50,9 +51,11 @@ export default class HeaderBar extends React.Component {
         {this.state.filterPage && (
           <div style={{ zIndex: 220 }}>
             <FilterPageMobile
+              updateSaleFilter={(sales) => this.updateSalesFilter(sales)}
               updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
               minPrice={this.state.minPrice}
               maxPrice={this.state.maxPrice}
+              sales={this.state.sales}
               categories={this.state.categories}
               updateFilter={(a, b) => this.updateFilter(a, b)}
               closePage={() => this.closePage()}
@@ -397,6 +400,13 @@ export default class HeaderBar extends React.Component {
         </div>
       </div>
     );
+  }
+
+  updateSalesFilter(sales) {
+    this.setState({
+      sales: sales,
+    });
+    this.props.updateSalesFilter(sales);
   }
 
   updateCategoryFilter(categories) {

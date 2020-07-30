@@ -345,7 +345,7 @@ export default class CheckoutForm extends React.Component {
                   }
                   id="address1"
                   style={{ margin: 10 }}
-                  placeholder="Address Line 1"
+                  placeholder="Address"
                 ></Input>
                 <Input
                   defaultValue={
@@ -355,7 +355,7 @@ export default class CheckoutForm extends React.Component {
                   }
                   id="address2"
                   style={{ margin: 10 }}
-                  placeholder="Address Line 2 (optional)"
+                  placeholder="Apt, Suite, or Floor"
                 ></Input>
                 <Input
                   defaultValue={

@@ -134,6 +134,7 @@ export default class BuyMobile extends React.Component {
         {!this.state.aboutPage && (
           <div style={{ position: "fixed", top: 0, zIndex: 100 }}>
             <HeaderMobile
+              updateSalesFilter={(sales) => this.updateSalesFilter(sales)}
               updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
               setPriceFilter={(a, b) => this.updateFilter(a, b)}
             />
@@ -186,6 +187,7 @@ export default class BuyMobile extends React.Component {
               style={{
                 display: "flex",
                 justifyContent: "center",
+                zIndex: 200,
                 // alignItems: "center"
               }}
             >
@@ -194,11 +196,12 @@ export default class BuyMobile extends React.Component {
                   width: "100vw",
                   borderRadius: 5,
                   position: "fixed",
-                  overflowY: this.state.aboutPage ? "hidden" : "scroll",
+                  overflowY: "scroll",
+                  height: "100vh",
                   top: 0,
                   backgroundColor: "#f5f5f5",
                   // position: "absolute",
-                  zIndex: 100,
+                  zIndex: 200,
                   opacity: 1,
                 }}
               >
@@ -208,9 +211,22 @@ export default class BuyMobile extends React.Component {
                       width: "100%",
                       display: "flex",
                       flexDirection: "row",
-                      justifyContent: "flex-end",
+                      justifyContent: "center",
                     }}
                   >
+                    <div
+                      style={{
+                        fontSize: 24,
+                        fontWeight: 500,
+                        marginTop: 20,
+                        textAlign: "center",
+                        padding: 10,
+                        width: "65vw",
+                        minHeight: 20,
+                      }}
+                    >
+                      {this.state.modal.title}
+                    </div>
                     <img
                       id="close"
                       onClick={() => this.closeModal()}
@@ -218,8 +234,9 @@ export default class BuyMobile extends React.Component {
                       style={{
                         width: "10vw",
                         height: "10vw",
-                        marginTop: 40,
-                        marginRight: 40,
+                        top: 30,
+                        right: 30,
+                        position: "fixed",
                       }}
                     />
                   </div>
@@ -242,8 +259,8 @@ export default class BuyMobile extends React.Component {
                           src={this.state.modal.pictures[0]}
                           style={{
                             borderRadius: 3,
-                            width: "70vw",
-                            height: "70vw",
+                            width: "80vw",
+                            height: "72vw",
                             marginTop: 20,
                           }}
                         ></img>
@@ -273,17 +290,17 @@ export default class BuyMobile extends React.Component {
                           alignItems: "center",
                         }}
                       >
-                        <div
+                        {/* <div
                           style={{
                             fontSize: 24,
                             fontWeight: 500,
-                            marginTop: 30,
+                            marginTop: 10,
                             textAlign: "center",
                             padding: 10,
                           }}
                         >
                           {this.state.modal.title}
-                        </div>
+                        </div> */}
 
                         {Math.round(itemDiscount * 100).toFixed(0) != 0 && (
                           <div
@@ -353,7 +370,7 @@ export default class BuyMobile extends React.Component {
                             justifyContent: "center",
                             color: "#ffffff",
                             fontWeight: 600,
-                            fontSize: 18,
+                            fontSize: 22,
                           }}
                         >
                           {!this.state.addingToCart && "ADD TO CART"}
@@ -386,7 +403,7 @@ export default class BuyMobile extends React.Component {
                     <div style={{ marginTop: 5 }}>
                       {this.state.modal.description}
                     </div>
-                    <div style={{ height: "8vh" }}></div>
+                    <div style={{ height: "20vh" }}></div>
                   </div>
                 </div>
               </Div100vh>
@@ -401,7 +418,7 @@ export default class BuyMobile extends React.Component {
               overflowX: "hidden",
               width: "100vw",
               overflowY: this.state.homePage ? "scroll" : "hidden",
-              height: this.state.homePage ? "88vh" : 0,
+              height: this.state.homePage && !this.state.modal ? "88vh" : 0,
             }}
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -528,7 +545,7 @@ export default class BuyMobile extends React.Component {
                                     src={item.pictures[0]}
                                     style={{
                                       width: "49vw",
-                                      height: "49vw",
+                                      height: "44.5vw",
                                       borderRadius: 5,
                                       overflow: "hidden",
                                     }}
@@ -537,12 +554,14 @@ export default class BuyMobile extends React.Component {
                                     style={{
                                       display: "flex",
                                       flexDirection: "column",
+                                      paddingLeft: "1vw",
                                     }}
                                   >
                                     <div
                                       style={{
                                         fontSize: 18,
                                         fontWeight: 400,
+                                        maxWidth: "48vw",
                                       }}
                                     >
                                       {item.title}
@@ -715,7 +734,7 @@ export default class BuyMobile extends React.Component {
                                 src={item.pictures[0]}
                                 style={{
                                   width: "49vw",
-                                  height: "49vw",
+                                  height: "44.5vw",
                                   borderRadius: 5,
                                   overflow: "hidden",
                                 }}
@@ -726,9 +745,16 @@ export default class BuyMobile extends React.Component {
                                   flexDirection: "column",
                                   minHeight: 50,
                                   display: "block",
+                                  paddingLeft: "1vw",
                                 }}
                               >
-                                <div style={{ fontSize: 18, fontWeight: 400 }}>
+                                <div
+                                  style={{
+                                    fontSize: 18,
+                                    fontWeight: 400,
+                                    maxWidth: "48vw",
+                                  }}
+                                >
                                   {item.title}
                                 </div>
                                 <div
@@ -1304,7 +1330,7 @@ export default class BuyMobile extends React.Component {
     }
   }
 
-  updateSaleFilter(sales) {
+  updateSalesFilter(sales) {
     this.setState({
       activeSales: sales,
     });
