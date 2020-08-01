@@ -41,6 +41,7 @@ import HomeMobile from "./mobile/HomeMobile";
 import BuyMobile from "./mobile/BuyMobile";
 import CartMobile from "./mobile/CartMobile";
 import NewItemVariable from "./scripts/NewItemVariable";
+import SellMobile from "./mobile/SellMobile";
 import {
   BrowserView,
   MobileView,
@@ -76,6 +77,7 @@ export default class RenderRoutes extends React.Component {
               {citiesList.includes(window.localStorage.getItem("city")) && (
                 <Route path="/" exact={true} render={() => <BuyMobile />} />
               )}
+              <Route path="/sell" exact={true} render={() => <SellMobile />} />
               <Route
                 path="/what-have-i-sold"
                 exact={true}
@@ -242,6 +244,8 @@ export default class RenderRoutes extends React.Component {
               {citiesList.includes(window.localStorage.getItem("city")) && (
                 <Route path="/" exact={true} render={() => <BuyMobile />} />
               )}
+              <Route path="/sell" exact={true} render={() => <SellMobile />} />
+
               <Route
                 path="/what-have-i-sold"
                 exact={true}

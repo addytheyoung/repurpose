@@ -100,7 +100,7 @@ export default class AboutPageMobile extends React.Component {
               <div className="about-3">Sellers: How we work</div>
               <div>
                 We come and pick up all the items you don't want, and pay you
-                commission when they sell
+                40% commission when they sell
               </div>
               <div>
                 If you have a lot of stuff you want to sell, we can make this
