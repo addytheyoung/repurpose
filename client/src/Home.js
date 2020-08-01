@@ -530,6 +530,7 @@ export default class Home extends React.Component {
               flexDirection: "row",
               width: this.state.width > 960 ? 960 : 720,
               justifyContent: "flex-end",
+              alignItems: "center",
             }}
           >
             <div
@@ -643,7 +644,7 @@ export default class Home extends React.Component {
             <img src={Money} style={{ width: 60, height: 60 }}></img>
             <div className="home2">Price Drops</div>
             <div className="home3">
-              We drop the prices of items every week, up to 90%. We're stupid
+              We drop the prices of items every week, up to 80%. We're stupid
               cheap.
             </div>
           </div>

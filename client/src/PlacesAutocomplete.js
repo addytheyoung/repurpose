@@ -65,11 +65,12 @@ export default class LocationSearchInput extends React.Component {
   };
 
   render() {
+    const mobile = this.props.mobile;
     return (
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
+          flexDirection: mobile ? "column" : "row",
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -88,7 +89,11 @@ export default class LocationSearchInput extends React.Component {
             <div>
               <input
                 id="delivery-address-input"
-                style={{ width: "40vw", height: "5vh", fontSize: 16 }}
+                style={{
+                  width: mobile ? "80vw" : "40vw",
+                  height: "5vh",
+                  fontSize: 16,
+                }}
                 {...getInputProps({
                   placeholder: "Enter your city or zip code",
                   className: "location-search-input",
@@ -123,7 +128,7 @@ export default class LocationSearchInput extends React.Component {
             onClick={() => this.handleSelect(this.state.address)}
             id="start"
             style={{
-              marginLeft: 10,
+              marginLeft: mobile ? 0 : 10,
               width: 140,
               padding: "1vh",
               height: "4vh",
@@ -136,6 +141,7 @@ export default class LocationSearchInput extends React.Component {
               justifyContent: "center",
               alignItems: "center",
               textAlign: "center",
+              marginTop: mobile ? "2vh" : 0,
             }}
           >
             SEE ITEMS

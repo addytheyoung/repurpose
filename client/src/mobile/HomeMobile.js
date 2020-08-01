@@ -1,45 +1,49 @@
 import React from "react";
-import HeaderBar from "../HeaderBar";
-import { Input } from "@material-ui/core";
-import "../css/Home.css";
+import PlacesAutocomplete from "../PlacesAutocomplete";
+import "../css/HomeMobile.css";
 import * as firebase from "firebase";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import Shop from "../Shop";
 import ClipLoader from "react-spinners/ClipLoader";
-import Art from "../images/art.jpeg";
 import Close from "../images/close.png";
 import randomizeArray from "../global_methods/randomizeArray";
+import SignInOnlyModal from "../SignInOnlyModal";
+import Money from "../images/money.svg";
+import Shop from "../images/shop.svg";
+import Delivery from "../images/delivery.svg";
 
 export default class HomeMobile extends React.Component {
   citiesList = ["Austin, TX"];
   constructor(props) {
     super(props);
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+
     this.state = {
       loaded: false,
       items: [],
-      category: "Art",
-      minPrice: null,
-      maxPrice: null,
       modal: null,
       addingToCart: false,
+      addressModal: false,
+      width: 0,
+      height: 0,
     };
+
+    // If we're signed in, sign us out.
+    if (firebase.auth().currentUser) {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          window.location.reload();
+        });
+    }
     const categoryList = [
       "Art & Decoration",
-      "Toys & Hobbies",
-      "Books",
-      "Clothing, Shoes, & Accessories",
-      "Electronics",
       "Home",
+      "Books",
+      "Electronics",
       "Toys & Games",
       "Garden",
       "Sports & Hobbies",
-      "Everything Else",
     ];
-
-    localStorage.setItem("city", "Austin, TX");
-    window.location.reload();
-    return;
 
     const firebaseCats = firebase.firestore().collection("Categories");
     var i_index = 0;
@@ -49,11 +53,12 @@ export default class HomeMobile extends React.Component {
         .doc(categoryList[i])
         .collection("All")
         .where("location", "==", "Austin, TX")
-        .limit(20)
+        .limit(5)
         .get()
         .then((allItems) => {
           i_index++;
-          const allItemsDocs = allItems.docs;
+          var allItemsDocs = allItems.docs;
+          randomizeArray(allItemsDocs);
 
           if (allItems.empty) {
             this.setState({
@@ -102,14 +107,26 @@ export default class HomeMobile extends React.Component {
         </div>
       );
     }
+
     return (
-      <div>
+      <div
+        style={{
+          overflowY: "scroll",
+          overflowX: "hidden",
+          height: "100vh",
+        }}
+      >
         {this.state.profile && (
+          <SignInOnlyModal
+            redirectUrl={"/"}
+            closeModal={(e) => this.closeModal(e)}
+          />
+        )}
+        {this.state.addressModal && (
           <div
             style={{
               display: "flex",
               justifyContent: "center",
-
               // alignItems: "center"
             }}
           >
@@ -126,9 +143,9 @@ export default class HomeMobile extends React.Component {
             ></div>
             <div
               style={{
-                width: "30vw",
+                width: "60vw",
                 borderRadius: 5,
-                height: "40vh",
+                height: "80vh",
                 top: 30,
                 backgroundColor: "#f5f5f5",
                 position: "fixed",
@@ -136,13 +153,7 @@ export default class HomeMobile extends React.Component {
                 opacity: 1,
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
+              <div style={{ display: "flex", flexDirection: "column" }}>
                 <div
                   style={{
                     width: "100%",
@@ -163,48 +174,20 @@ export default class HomeMobile extends React.Component {
                     }}
                   />
                 </div>
-
                 <div
                   style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    textAlign: "center",
+                    marginTop: "5vh",
+                    marginBottom: "5vh",
                   }}
                 >
-                  <div style={{ fontSize: 20, fontWeight: 600 }}>Log in</div>
-                  <Input
-                    id="email"
-                    placeholder="Email"
-                    style={{ width: 300, marginTop: 20 }}
-                  />
-                  <Input
-                    id="pass"
-                    type="password"
-                    placeholder="Password"
-                    style={{ width: 300, marginTop: 30 }}
-                  />
-                  <div
-                    onClick={() => this.startShopping()}
-                    id="start-shopping"
-                    style={{
-                      backgroundColor: "#426CB4",
-                      borderRadius: 5,
-                      padding: 10,
-                      height: 30,
-                      width: 300,
-                      color: "white",
-                      fontWeight: 600,
-                      marginTop: 10,
-                      marginBottom: 10,
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    START SHOPPING
-                  </div>
+                  Enter your delivery address to check availality
                 </div>
+                <PlacesAutocomplete
+                  mobile={true}
+                  activeButton={false}
+                  modal={this.state.tempModal}
+                />
               </div>
             </div>
           </div>
@@ -329,7 +312,11 @@ export default class HomeMobile extends React.Component {
                           textAlign: "center",
                         }}
                       >
-                        {"$" + this.state.modal.original_price}
+                        {"$" +
+                          (
+                            Math.round(this.state.modal.original_price * 10) /
+                            10
+                          ).toFixed(1)}
                       </div>
                       <div
                         style={{
@@ -404,12 +391,14 @@ export default class HomeMobile extends React.Component {
             width: "100vw",
           }}
         >
-          <div style={{ display: "flex", flexDirection: "row", width: 180 }}>
+          <div
+            id="bar"
+            style={{ display: "flex", flexDirection: "row", width: 180 }}
+          >
             <div
               style={{
-                fontWeight: 600,
+                fontWeight: 800,
                 height: 80,
-                fontFamily: "Pridi",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -422,9 +411,8 @@ export default class HomeMobile extends React.Component {
             </div>
             <div
               style={{
-                fontWeight: 600,
+                fontWeight: 800,
                 height: 80,
-                fontFamily: "Pridi",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -436,6 +424,28 @@ export default class HomeMobile extends React.Component {
             </div>
           </div>
           <div style={{ width: "100%" }}></div>
+          {firebase.auth().currentUser && (
+            <div
+              id="become-collector"
+              onClick={() =>
+                this.setState({
+                  profile: true,
+                })
+              }
+              style={{
+                minWidth: 100,
+                fontWeight: 500,
+                height: 80,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontSize: 16,
+                textAlign: "center",
+              }}
+            >
+              Sign in
+            </div>
+          )}
           <div
             id="become-collector"
             onClick={() => (window.location.href = "/help/?header=fdc")}
@@ -453,34 +463,17 @@ export default class HomeMobile extends React.Component {
           >
             About
           </div>
-          {/* <div
-            id="become-collector"
-            onClick={() => (window.location.href = "/become_collector")}
-            style={{
-              minWidth: 100,
-              fontWeight: 500,
-              height: 80,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: 16,
-              textAlign: "center",
-              marginRight: 100,
-            }}
-          >
-            Become a Collector
-          </div> */}
         </div>
         <div
           style={{
-            height: "40vh",
+            height: "30vh",
             width: "100vw",
-            backgroundColor: "#fafafa",
-            paddingTop: 20,
+            backgroundColor: "#ffffff",
+            paddingTop: 10,
             paddingBottom: 20,
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
+            // justifyContent: "center",
             alignItems: "center",
           }}
         >
@@ -490,252 +483,257 @@ export default class HomeMobile extends React.Component {
               fontSize: 28,
               fontWeight: 600,
               letterSpacing: 0.1,
+              marginTop: "1vh",
+              textAlign: "center",
             }}
           >
-            Buy or sell anything, easily
-          </div>
-          <div style={{ height: 30 }}></div>
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <Autocomplete
-              id="combo-box-demo"
-              options={this.citiesList}
-              getOptionLabel={(option) => option}
-              style={{ width: 300 }}
-              renderOption={(option) => (
-                <div
-                  onClick={() => this.updateCity(option)}
-                  style={{ width: "100%", height: "1005" }}
-                >
-                  {option}
-                </div>
-              )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  placeholder="We add more cities every day!"
-                  label="What city are you in?"
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-              freeSolo={true}
-              style={{ width: "300px" }}
-            />
-
-            <div
-              onClick={() => this.search()}
-              id="start"
-              style={{
-                marginLeft: 10,
-                width: 140,
-                padding: 5,
-                borderRadius: 6,
-                backgroundColor: "#426CB4",
-                fontWeight: 700,
-                fontSize: 20,
-                color: "white",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                textAlign: "center",
-              }}
-            >
-              GET STARTED
-            </div>
+            Cheap items, at your doorstep
           </div>
           <div
             style={{
-              marginTop: 50,
-              marginBottom: 20,
+              marginTop: "2vh",
+              fontSize: 16,
+              textAlign: "center",
+              paddingLeft: "5vw",
+              paddingRight: "5vw",
+            }}
+          >
+            As many items as you want, delivered to you the next morning for a
+            flat $2 order fee.
+          </div>
+
+          <div
+            style={{
               display: "flex",
               flexDirection: "row",
+              marginTop: "5vh",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <div
-              style={{
-                marginRight: 20,
-                fontWeight: 500,
-                fontSize: 21,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              SELL
-            </div>
-            <div
-              style={{
-                width: 200,
-                fontSize: 18,
-                marginLeft: 10,
-                marginRight: 10,
-                textAlign: "center",
-              }}
-            >
-              We pick up and buy all your clutter
-            </div>
-          </div>
-          <div
-            style={{
-              marginTop: 5,
-              marginBottom: 5,
-              marginLeft: 50,
-              fontWeight: 600,
-              fontSize: 14,
-            }}
-          >
-            OR
-          </div>
-          <div style={{ marginTop: 30, display: "flex", flexDirection: "row" }}>
-            <div
-              style={{
-                marginRight: 21,
-                fontWeight: 500,
-                fontSize: 20,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              BUY
-            </div>
-
-            <div
-              style={{
-                width: 200,
-                fontSize: 18,
-                marginLeft: 10,
-                marginRight: 10,
-                textAlign: "center",
-              }}
-            >
-              Items are delivered quickly to your doorstep
-            </div>
+            <PlacesAutocomplete
+              activeButton={true}
+              modal={null}
+              mobile={true}
+            />
           </div>
         </div>
 
-        <div
-          style={{
-            fontSize: 24,
-            fontWeight: 500,
-            marginLeft: 50,
-            marginTop: 20,
-          }}
-        >
-          (Some) Items near you
-        </div>
         <div
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            flexDirection: "column",
+            marginTop: "1vh",
           }}
         >
           <div
             style={{
               display: "flex",
-              flexDirection: "row",
-              // width: "90vw",
-              // flexWrap: "wrap",
-              overflowX: "scroll",
-              // justifyContent: "center",
-              // alignItems: "center",
-              marginTop: 20,
-              marginLeft: 50,
-              marginRight: 50,
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
             }}
           >
-            {this.state.items.map((item, index) => {
-              if (
-                (this.state.minPrice &&
-                  item.original_price < this.state.minPrice) ||
-                (this.state.maxPrice &&
-                  item.original_price > this.state.maxPrice)
-              ) {
-                return null;
-              }
-              return (
-                <div
-                  onClick={() => this.itemPage(item)}
-                  id="box"
-                  style={{
-                    width: 220,
-                    marginLeft: 10,
-                    marginRight: 10,
-                    height: 300,
-                  }}
-                >
-                  <img
-                    src={item.pictures[0]}
+            <div
+              style={{
+                fontSize: 26,
+                fontWeight: 500,
+                textAlign: "center",
+                marginTop: "5vh",
+              }}
+            >
+              1000+ Items Near Austin
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div
+                id="prev-item"
+                onClick={() =>
+                  this.scrollLeft(document.getElementById("scroll"), -300, 100)
+                }
+              >
+                Prev
+              </div>
+              <div
+                id="mobile-next-item"
+                onClick={() =>
+                  this.scrollLeft(document.getElementById("scroll"), 300, 100)
+                }
+              >
+                Next
+              </div>
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              id="scroll"
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                width: "98vw",
+                marginLeft: "1vw",
+                marginRight: "1vw",
+                overflowX: "scroll",
+                marginTop: 20,
+              }}
+            >
+              {this.state.items.map((item, index) => {
+                const discount = 1 - item.current_price;
+                const currentPrice =
+                  item.original_price - item.original_price * discount;
+                return (
+                  <div
+                    key={index}
+                    onClick={() => this.itemPage(item)}
+                    id="box"
                     style={{
-                      width: 220,
-                      height: 200,
-                      borderRadius: 5,
-                      overflow: "hidden",
+                      width: "49vw",
+                      marginLeft: "0.3vw",
+                      marginRight: "0.3vw",
+                      marginBottom: "1vh",
                     }}
-                  ></img>
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div style={{ fontSize: 18, fontWeight: 400 }}>
-                      {item.title}
-                    </div>
-                    <div style={{ marginTop: 5, fontWeight: 600 }}>
-                      {"$" + item.original_price}
+                  >
+                    <img
+                      src={item.pictures[0]}
+                      style={{
+                        width: "49vw",
+                        height: "44.5vw",
+                        borderRadius: 5,
+                        overflow: "hidden",
+                      }}
+                    ></img>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        paddingLeft: "1vw",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: 18,
+                          fontWeight: 400,
+                          maxWidth: "48vw",
+                        }}
+                      >
+                        {item.title}
+                      </div>
+                      <div
+                        style={{
+                          marginTop: 5,
+                          fontWeight: 600,
+                          fontSize: 20,
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                        }}
+                      >
+                        <div
+                          style={{
+                            fontWeight: 600,
+                            fontSize: 20,
+                          }}
+                        >
+                          {"$" +
+                            (Math.round(currentPrice * 10) / 10).toFixed(1)}
+                        </div>
+                        <div
+                          style={{
+                            fontWeight: 400,
+                            fontSize: 16,
+                            marginLeft: 10,
+                            color: "#cc0000",
+                            opacity: discount == 0 ? 0 : discount * 15 * 0.25,
+                          }}
+                        >
+                          {Math.round(discount * 100).toFixed(0) + "%"}
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100vw",
+            marginTop: "3vh",
+          }}
+        >
+          <div className="mobile-home1">
+            <img src={Money} style={{ width: 60, height: 60 }}></img>
+            <div className="mobile-home2">Price Drops</div>
+            <div className="mobile-home3">
+              We drop the prices of items every week, up to 80%. We're stupid
+              cheap.
+            </div>
+          </div>
+
+          <div className="mobile-home1">
+            <img src={Shop} style={{ width: 60, height: 60 }}></img>
+
+            <div className="mobile-home2">New Items</div>
+            <div className="mobile-home3">
+              We add new items daily. Check back often to find them.
+            </div>
+          </div>
+          <div className="mobile-home1">
+            <img src={Delivery} style={{ width: 60, height: 60 }}></img>
+
+            <div className="mobile-home2">Lightning Delivery</div>
+            <div className="mobile-home3">
+              Your entire order, delivered to your doorstep the next morning for
+              a $2 order fee.
+            </div>
+          </div>
+        </div>
+        <div style={{ height: "10vh" }}></div>
       </div>
     );
   }
 
+  closeModal() {
+    this.setState({
+      profile: false,
+      modal: false,
+      logout: false,
+      email: false,
+      newUser: false,
+      retUser: false,
+      addressModal: false,
+      tempModal: null,
+    });
+  }
+
   addToCart(modal) {
-    if (firebase.auth().currentUser) {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          console.log(modal);
-          const uid = this.randomNumber(20);
-          localStorage.setItem("tempUid", uid);
-          firebase
-            .firestore()
-            .collection("Users")
-            .doc(uid)
-            .set({
-              cart: [modal],
-              orders: [],
-              sales: [],
-              temporary: true,
-            })
-            .then(() => {
-              localStorage.setItem("cart", 1);
-              localStorage.setItem("city", "Austin, TX");
-              window.location.href = "/";
-            });
-        });
-    } else {
-      console.log(modal);
-      const uid = this.randomNumber(20);
-      localStorage.setItem("tempUid", uid);
-      firebase
-        .firestore()
-        .collection("Users")
-        .doc(uid)
-        .set({
-          cart: [modal],
-          orders: [],
-          sales: [],
-          temporary: true,
-        })
-        .then(() => {
-          localStorage.setItem("cart", 1);
-          localStorage.setItem("city", "Austin, TX");
-          window.location.href = "/";
-        });
-    }
+    // We have to make sure they are close enough for delivery first. Make them put in their address with a modal.
+    this.setState({
+      addressModal: true,
+      modal: false,
+      tempModal: modal,
+    });
   }
 
   randomNumber(length) {
@@ -765,26 +763,11 @@ export default class HomeMobile extends React.Component {
     });
   }
 
-  search() {
-    const city = document.getElementById("combo-box-demo").value.trim();
-    if (city === "" || !this.citiesList.includes(city)) {
-      alert("Invalid city");
-      return;
-    }
-    window.localStorage.setItem("city", city);
-    window.location.href = "/";
-  }
+  search() {}
 
   itemPage(item) {
     this.setState({
       modal: item,
-    });
-  }
-
-  closeModal(e) {
-    // e.stopPropagation();
-    this.setState({
-      modal: null,
     });
   }
 
@@ -840,5 +823,46 @@ export default class HomeMobile extends React.Component {
       .catch((e) => {
         alert(e.message);
       });
+  }
+
+  easeInOutQuad(t, b, c, d) {
+    t /= d / 2;
+    if (t < 1) return (c / 2) * t * t + b;
+    t--;
+    return (-c / 2) * (t * (t - 2) - 1) + b;
+  }
+
+  scrollLeft(element, change, duration) {
+    var start = element.scrollLeft,
+      currentTime = 0,
+      increment = 20;
+
+    const t = this;
+    const st = this.state;
+    var animateScroll = function () {
+      currentTime += increment;
+      if (change > 0) {
+        element.scrollLeft = element.scrollLeft + window.innerWidth / 5;
+      } else {
+        element.scrollLeft = element.scrollLeft - window.innerWidth / 5;
+      }
+      if (currentTime < duration) {
+        setTimeout(animateScroll, increment);
+      }
+    };
+    animateScroll();
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
 }
