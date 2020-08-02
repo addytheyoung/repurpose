@@ -279,6 +279,12 @@ export default class RenderRoutes extends React.Component {
             )}
 
             <Route
+              path="/what-have-i-sold"
+              exact={true}
+              render={() => <WhatHaveISoldPage />}
+            />
+
+            <Route
               path="/facebooklink"
               exact={true}
               render={() => <BuyOrSell />}

@@ -1,10 +1,15 @@
 import React from "react";
 import HeaderBar from "./HeaderBar";
 import * as firebase from "firebase";
+import SignInModal from "./SignInModal";
 
 export default class WhatHaveISoldPage extends React.Component {
   constructor(props) {
     super(props);
+
+    if (!firebase.auth().currentUser) {
+      return;
+    }
 
     const mySellerId = firebase.auth().currentUser.uid;
     console.log(firebase.auth().currentUser.uid);
@@ -42,9 +47,20 @@ export default class WhatHaveISoldPage extends React.Component {
   }
 
   render() {
+    if (!firebase.auth().currentUser) {
+      return (
+        <div>
+          <SignInModal
+            redirectUrl={"/what-have-i-sold"}
+            closeModal={() => console.log("nothing")}
+          />
+        </div>
+      );
+    }
     if (!this.state.loaded) {
       return null;
     }
+
     const allItemSold = this.state.allItemSold;
     var totalPay = 0;
     allItemSold.forEach((item) => {

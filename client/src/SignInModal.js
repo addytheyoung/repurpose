@@ -555,7 +555,6 @@ export default class SignInModal extends React.Component {
   }
 
   closeModal(e) {
-    console.log(this.props);
     this.props.closeModal();
   }
 
