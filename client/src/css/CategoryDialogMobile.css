@@ -1,0 +1,12 @@
+.category-mobile-link {
+  width: 100vw;
+  font-size: 24px;
+  font-weight: 500;
+  padding-left: 10vw;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  padding-right: 10vw;
+  border-bottom-style: solid;
+  border-bottom-width: 2;
+  border-bottom-color: lightgray;
+}

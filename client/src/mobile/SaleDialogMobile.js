@@ -64,324 +64,331 @@ function SimpleDialog(props) {
       open={open}
     >
       <div
-        style={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-end",
-        }}
-      >
-        <img
-          id="close"
-          onClick={handleClose}
-          src={Close}
-          style={{
-            width: "10vw",
-            height: "10vw",
-            marginTop: 40,
-            marginRight: 40,
-          }}
-        />
-      </div>
-      <div
-        style={{
-          alignSelf: "center",
-          textAlign: "center",
-          marginTop: 30,
-          marginLeft: 20,
-          marginRight: 20,
-          fontSize: 18,
-        }}
-      >
-        <b>% Off our original posted price</b> <br />
-        Items drop 10% in price every week
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          marginTop: 30,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+        style={{ height: "100vh", overflowY: "scroll", overflowX: "hidden" }}
       >
         <div
           style={{
+            width: "100%",
             display: "flex",
             flexDirection: "row",
-            marginLeft: 100,
-            marginRight: 100,
-            justifyContent: "center",
+            justifyContent: "flex-end",
           }}
         >
-          <div
+          <img
+            id="close"
+            onClick={handleClose}
+            src={Close}
             style={{
-              display: "flex",
-              width: 100,
-              fontSize: 24,
-              fontWeight: 500,
-              justifyContent: "center",
-              alignItems: "center",
+              width: "10vw",
+              height: "10vw",
+              marginTop: 40,
+              marginRight: 40,
             }}
-          >
-            {"0%"}
-          </div>
-          <div id="check">
-            <Checkbox
-              checked={checked[0]}
-              onChange={() => handleChange(0)}
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
-            />
-          </div>
+          />
         </div>
         <div
           style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              width: 100,
-              fontSize: 24,
-              fontWeight: 500,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {"10%"}
-          </div>
-          <div id="check">
-            <Checkbox
-              checked={checked[1]}
-              onChange={() => handleChange(1)}
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
-            />
-          </div>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              width: 100,
-              fontSize: 24,
-              fontWeight: 500,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {"20%"}
-          </div>
-          <div id="check">
-            <Checkbox
-              checked={checked[2]}
-              onChange={() => handleChange(2)}
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
-            />
-          </div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <div
-            style={{
-              display: "flex",
-              width: 100,
-              fontSize: 24,
-              fontWeight: 500,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {"30%"}
-          </div>
-          <div id="check">
-            <Checkbox
-              disabled
-              checked={checked[3]}
-              onChange={() => handleChange(3)}
-              inputProps={{ "aria-label": "primary checkbox" }}
-            />
-          </div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <div
-            style={{
-              display: "flex",
-              width: 100,
-              fontSize: 24,
-              fontWeight: 500,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {"40%"}
-          </div>
-          <div id="check">
-            <Checkbox
-              disabled
-              checked={checked[4]}
-              onChange={() => handleChange(4)}
-              inputProps={{ "aria-label": "primary checkbox" }}
-            />
-          </div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <div
-            style={{
-              display: "flex",
-              width: 100,
-              fontSize: 24,
-              fontWeight: 500,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {"50%"}
-          </div>
-          <div id="check">
-            <Checkbox
-              disabled
-              checked={checked[5]}
-              onChange={() => handleChange(5)}
-              inputProps={{ "aria-label": "primary checkbox" }}
-            />
-          </div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <div
-            style={{
-              display: "flex",
-              width: 100,
-              fontSize: 24,
-              fontWeight: 500,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {"60%"}
-          </div>
-          <div id="check">
-            <Checkbox
-              disabled
-              checked={checked[6]}
-              onChange={() => handleChange(6)}
-              inputProps={{ "aria-label": "primary checkbox" }}
-            />
-          </div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <div
-            style={{
-              display: "flex",
-              width: 100,
-              fontSize: 24,
-              fontWeight: 500,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {"70%"}
-          </div>
-          <div id="check">
-            <Checkbox
-              disabled
-              checked={checked[7]}
-              onChange={() => handleChange(7)}
-              inputProps={{ "aria-label": "primary checkbox" }}
-            />
-          </div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <div
-            style={{
-              display: "flex",
-              width: 100,
-              fontSize: 24,
-              fontWeight: 500,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {"80%"}
-          </div>
-          <div id="check">
-            <Checkbox
-              disabled
-              checked={checked[8]}
-              onChange={() => handleChange(8)}
-              inputProps={{ "aria-label": "primary checkbox" }}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "2vh",
-        }}
-      >
-        <div
-          id="clear"
-          style={{
-            backgroundColor: "#dae2f1",
-            padding: 10,
-            width: "25vw",
-            height: "5vh",
             alignSelf: "center",
             textAlign: "center",
-            fontSize: 24,
+            marginTop: 30,
+            marginLeft: 20,
+            marginRight: 20,
+            fontSize: 18,
+          }}
+        >
+          <b>% Off our original posted price</b> <br />
+          Items drop 10% in price every week
+        </div>
+        <div
+          style={{
             display: "flex",
+            flexDirection: "column",
+            marginTop: 30,
             justifyContent: "center",
             alignItems: "center",
-            borderRadius: 5,
-            fontWeight: 600,
           }}
-          onClick={() => clearContent(props, handleClose, clear)}
         >
-          CLEAR
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              marginLeft: 100,
+              marginRight: 100,
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                width: 100,
+                fontSize: 24,
+                fontWeight: 500,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {"0%"}
+            </div>
+            <div id="check">
+              <Checkbox
+                checked={checked[0]}
+                onChange={() => handleChange(0)}
+                color="primary"
+                inputProps={{ "aria-label": "secondary checkbox" }}
+              />
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                width: 100,
+                fontSize: 24,
+                fontWeight: 500,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {"10%"}
+            </div>
+            <div id="check">
+              <Checkbox
+                checked={checked[1]}
+                onChange={() => handleChange(1)}
+                color="primary"
+                inputProps={{ "aria-label": "secondary checkbox" }}
+              />
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                width: 100,
+                fontSize: 24,
+                fontWeight: 500,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {"20%"}
+            </div>
+            <div id="check">
+              <Checkbox
+                checked={checked[2]}
+                onChange={() => handleChange(2)}
+                color="primary"
+                inputProps={{ "aria-label": "secondary checkbox" }}
+              />
+            </div>
+          </div>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <div
+              style={{
+                display: "flex",
+                width: 100,
+                fontSize: 24,
+                fontWeight: 500,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {"30%"}
+            </div>
+            <div id="check">
+              <Checkbox
+                disabled
+                checked={checked[3]}
+                onChange={() => handleChange(3)}
+                inputProps={{ "aria-label": "primary checkbox" }}
+              />
+            </div>
+          </div>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <div
+              style={{
+                display: "flex",
+                width: 100,
+                fontSize: 24,
+                fontWeight: 500,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {"40%"}
+            </div>
+            <div id="check">
+              <Checkbox
+                disabled
+                checked={checked[4]}
+                onChange={() => handleChange(4)}
+                inputProps={{ "aria-label": "primary checkbox" }}
+              />
+            </div>
+          </div>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <div
+              style={{
+                display: "flex",
+                width: 100,
+                fontSize: 24,
+                fontWeight: 500,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {"50%"}
+            </div>
+            <div id="check">
+              <Checkbox
+                disabled
+                checked={checked[5]}
+                onChange={() => handleChange(5)}
+                inputProps={{ "aria-label": "primary checkbox" }}
+              />
+            </div>
+          </div>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <div
+              style={{
+                display: "flex",
+                width: 100,
+                fontSize: 24,
+                fontWeight: 500,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {"60%"}
+            </div>
+            <div id="check">
+              <Checkbox
+                disabled
+                checked={checked[6]}
+                onChange={() => handleChange(6)}
+                inputProps={{ "aria-label": "primary checkbox" }}
+              />
+            </div>
+          </div>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <div
+              style={{
+                display: "flex",
+                width: 100,
+                fontSize: 24,
+                fontWeight: 500,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {"70%"}
+            </div>
+            <div id="check">
+              <Checkbox
+                disabled
+                checked={checked[7]}
+                onChange={() => handleChange(7)}
+                inputProps={{ "aria-label": "primary checkbox" }}
+              />
+            </div>
+          </div>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <div
+              style={{
+                display: "flex",
+                width: 100,
+                fontSize: 24,
+                fontWeight: 500,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {"80%"}
+            </div>
+            <div id="check">
+              <Checkbox
+                disabled
+                checked={checked[8]}
+                onChange={() => handleChange(8)}
+                inputProps={{ "aria-label": "primary checkbox" }}
+              />
+            </div>
+          </div>
         </div>
-        <div style={{ width: "10vw" }}></div>
 
         <div
-          id="save"
           style={{
-            backgroundColor: "rgb(66, 108, 180)",
-            opacity:
-              checked[0] == false && checked[1] == false && checked[2] == false
-                ? 0.2
-                : 1,
-            padding: 10,
-            width: 100,
-            alignSelf: "center",
-            width: "25vw",
-            height: "5vh",
             display: "flex",
+            flexDirection: "row",
             justifyContent: "center",
-            fontSize: 24,
-            textAlign: "center",
             alignItems: "center",
-            borderRadius: 5,
-            color: "white",
-            fontWeight: 600,
+            marginTop: "2vh",
           }}
-          onClick={() => saveContent(props, checked, handleClose)}
         >
-          SAVE
+          <div
+            id="clear"
+            style={{
+              backgroundColor: "#dae2f1",
+              padding: 10,
+              width: "25vw",
+              height: "5vh",
+              alignSelf: "center",
+              textAlign: "center",
+              fontSize: 24,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: 5,
+              fontWeight: 600,
+            }}
+            onClick={() => clearContent(props, handleClose, clear)}
+          >
+            CLEAR
+          </div>
+          <div style={{ width: "10vw" }}></div>
+
+          <div
+            id="save"
+            style={{
+              backgroundColor: "rgb(66, 108, 180)",
+              opacity:
+                checked[0] == false &&
+                checked[1] == false &&
+                checked[2] == false
+                  ? 0.2
+                  : 1,
+              padding: 10,
+              width: 100,
+              alignSelf: "center",
+              width: "25vw",
+              height: "5vh",
+              display: "flex",
+              justifyContent: "center",
+              fontSize: 24,
+              textAlign: "center",
+              alignItems: "center",
+              borderRadius: 5,
+              color: "white",
+              fontWeight: 600,
+            }}
+            onClick={() => saveContent(props, checked, handleClose)}
+          >
+            SAVE
+          </div>
         </div>
+        <div style={{ height: "20vh" }}></div>
       </div>
     </Dialog>
   );

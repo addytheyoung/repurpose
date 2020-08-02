@@ -52,118 +52,123 @@ function SimpleDialog(props) {
       open={open}
     >
       <div
-        style={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-end",
-        }}
+        style={{ overflowY: "scroll", overflowX: "hidden", height: "100vh" }}
       >
-        <img
-          id="close"
-          onClick={handleClose}
-          src={Close}
+        <div
           style={{
-            width: "10vw",
-            height: "10vw",
-            marginTop: 40,
-            marginRight: 40,
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
           }}
-        />
-      </div>
-      <div
-        style={{
-          alignSelf: "center",
-          textAlign: "center",
-          marginTop: 30,
-          fontSize: 26,
-          fontWeight: 600,
-        }}
-      >
-        Price
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          marginTop: 30,
-          fontSize: 26,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Input
-          value={min}
-          placeholder="Min price $"
-          type="text"
-          onChange={(e) => checkKey(e)}
+        >
+          <img
+            id="close"
+            onClick={handleClose}
+            src={Close}
+            style={{
+              width: "10vw",
+              height: "10vw",
+              marginTop: 40,
+              marginRight: 40,
+            }}
+          />
+        </div>
+        <div
           style={{
-            width: "20vw",
+            alignSelf: "center",
+            textAlign: "center",
+            marginTop: 30,
             fontSize: 26,
-            marginRight: "2vw",
-            height: "5vh",
+            fontWeight: 600,
           }}
-        />
-        {"-"}
-        <Input
-          value={max}
-          placeholder="Max price $"
-          type="text"
-          onChange={(e) => checkKey(e, true)}
+        >
+          Price
+        </div>
+        <div
           style={{
-            width: "20vw",
-            marginLeft: "2vw",
+            display: "flex",
+            flexDirection: "row",
+            marginTop: 30,
             fontSize: 26,
-            height: "5vh",
+            justifyContent: "center",
+            alignItems: "center",
           }}
-        />
-      </div>
+        >
+          <Input
+            value={min}
+            placeholder="Min price $"
+            type="text"
+            onChange={(e) => checkKey(e)}
+            style={{
+              width: "20vw",
+              fontSize: 26,
+              marginRight: "2vw",
+              height: "5vh",
+            }}
+          />
+          {"-"}
+          <Input
+            value={max}
+            placeholder="Max price $"
+            type="text"
+            onChange={(e) => checkKey(e, true)}
+            style={{
+              width: "20vw",
+              marginLeft: "2vw",
+              fontSize: 26,
+              height: "5vh",
+            }}
+          />
+        </div>
 
-      <div
-        id="clear"
-        style={{
-          backgroundColor: "#dae2f1",
-          padding: 10,
-          width: "25vw",
-          height: "5vh",
-          alignSelf: "center",
-          textAlign: "center",
-          fontSize: 26,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: 5,
-          marginTop: 50,
-          fontWeight: 600,
-          marginBottom: 50,
-        }}
-        onClick={() => clearContent(props, handleClose, clear)}
-      >
-        CLEAR
-      </div>
+        <div
+          id="clear"
+          style={{
+            backgroundColor: "#dae2f1",
+            padding: 10,
+            width: "25vw",
+            height: "5vh",
+            alignSelf: "center",
+            textAlign: "center",
+            fontSize: 26,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: 5,
+            marginTop: 50,
+            fontWeight: 600,
+            marginBottom: 50,
+          }}
+          onClick={() => clearContent(props, handleClose, clear)}
+        >
+          CLEAR
+        </div>
 
-      <div
-        id="save"
-        style={{
-          backgroundColor: "#dae2f1",
-          padding: 10,
-          width: 100,
-          alignSelf: "center",
-          width: "25vw",
-          height: "5vh",
-          display: "flex",
-          justifyContent: "center",
-          fontSize: 26,
-          textAlign: "center",
-          alignItems: "center",
-          borderRadius: 5,
-          marginTop: 50,
-          fontWeight: 600,
-          marginBottom: 50,
-        }}
-        onClick={() => saveContent(props, min, max, handleClose)}
-      >
-        SAVE
+        <div
+          id="save"
+          style={{
+            backgroundColor: "#dae2f1",
+            padding: 10,
+            width: 100,
+            alignSelf: "center",
+            width: "25vw",
+            height: "5vh",
+            display: "flex",
+            justifyContent: "center",
+            fontSize: 26,
+            textAlign: "center",
+            alignItems: "center",
+            borderRadius: 5,
+            marginTop: 50,
+            fontWeight: 600,
+            marginBottom: 50,
+          }}
+          onClick={() => saveContent(props, min, max, handleClose)}
+        >
+          SAVE
+        </div>
+        <div style={{ height: "20vh" }}></div>
       </div>
     </Dialog>
   );

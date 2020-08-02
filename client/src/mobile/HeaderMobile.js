@@ -52,7 +52,9 @@ export default class HeaderBar extends React.Component {
           <div style={{ zIndex: 220 }}>
             <FilterPageMobile
               updateSaleFilter={(sales) => this.updateSalesFilter(sales)}
-              updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
+              updateCategoryFilter={(category) =>
+                this.updateCategoryFilter(category)
+              }
               minPrice={this.state.minPrice}
               maxPrice={this.state.maxPrice}
               sales={this.state.sales}
@@ -117,7 +119,13 @@ export default class HeaderBar extends React.Component {
                   }}
                 ></FilterListOutlinedIcon>
                 <div
-                  style={{ fontWeight: 600, fontSize: 12, color: "#375995" }}
+                  style={{
+                    fontWeight: 600,
+                    fontSize: 15,
+                    color: "#375995",
+                    paddingRight: 5,
+                    paddingLeft: 5,
+                  }}
                 >
                   Filters
                 </div>
@@ -163,7 +171,13 @@ export default class HeaderBar extends React.Component {
                   }}
                 ></LocationCityOutlinedIcon>
                 <div
-                  style={{ fontWeight: 600, fontSize: 14, color: "#375995" }}
+                  style={{
+                    fontWeight: 600,
+                    fontSize: 15,
+                    color: "#375995",
+                    paddingRight: 5,
+                    paddingLeft: 5,
+                  }}
                 >
                   {"Central TX"}
                 </div>
@@ -178,15 +192,26 @@ export default class HeaderBar extends React.Component {
   updateSalesFilter(sales) {
     this.setState({
       sales: sales,
+      filterPage: false,
     });
     this.props.updateSalesFilter(sales);
   }
 
-  updateCategoryFilter(categories) {
+  updateCategoryFilter(category) {
+    const newCategories = [];
+
+    for (var i = 0; i < this.state.categories.length; i++) {
+      if (i == category || category == -1) {
+        newCategories.push(true);
+      } else {
+        newCategories.push(false);
+      }
+    }
     this.setState({
-      categories: categories,
+      categories: newCategories,
+      filterPage: false,
     });
-    this.props.updateCategoryFilter(categories);
+    this.props.updateCategoryFilter(newCategories);
   }
 
   updateFilter(min, max) {
@@ -195,6 +220,7 @@ export default class HeaderBar extends React.Component {
     this.setState({
       minPrice: min,
       maxPrice: max,
+      filterPage: false,
     });
 
     this.props.setPriceFilter(min, max);

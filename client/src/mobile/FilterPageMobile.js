@@ -88,20 +88,7 @@ export default class FilterPageMobile extends React.Component {
               />
               <CategoryDialogMobile
                 categories={this.props.categories}
-                clearContent={() =>
-                  this.changeCategory([
-                    true,
-                    true,
-                    true,
-                    true,
-                    true,
-                    true,
-                    true,
-                    true,
-                    true,
-                  ])
-                }
-                changeCategory={(categories) => this.changeCategory(categories)}
+                changeCategory={(category) => this.changeCategory(category)}
               />
             </div>
           </div>
@@ -114,8 +101,8 @@ export default class FilterPageMobile extends React.Component {
     this.props.updateSaleFilter(sales);
   }
 
-  changeCategory(categories) {
-    this.props.updateCategoryFilter(categories);
+  changeCategory(category) {
+    this.props.updateCategoryFilter(category);
   }
 
   changePrice(min, max) {

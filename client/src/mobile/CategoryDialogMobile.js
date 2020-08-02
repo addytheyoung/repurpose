@@ -17,6 +17,7 @@ import Typography from "@material-ui/core/Typography";
 import { blue } from "@material-ui/core/colors";
 import "../css/Dialog.css";
 import Close from "../images/close.png";
+import "../css/CategoryDialogMobile.css";
 
 const emails = ["username@gmail.com", "user02@gmail.com"];
 const useStyles = makeStyles({
@@ -64,328 +65,165 @@ function SimpleDialog(props) {
       open={open}
     >
       <div
-        style={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-end",
-        }}
-      >
-        <img
-          id="close"
-          onClick={handleClose}
-          src={Close}
-          style={{
-            width: "10vw",
-            height: "10vw",
-            marginTop: 40,
-            marginRight: 40,
-          }}
-        />
-      </div>
-      <div
-        style={{
-          alignSelf: "center",
-          textAlign: "center",
-          marginTop: 0,
-          fontWeight: 700,
-          fontSize: 28,
-        }}
-      >
-        Categories
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          marginTop: 30,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+        style={{ height: "100vh", overflowY: "scroll", overflowX: "hidden" }}
       >
         <div
           style={{
+            width: "100%",
             display: "flex",
             flexDirection: "row",
-            marginLeft: 100,
-            marginRight: 100,
-            justifyContent: "center",
+            justifyContent: "flex-end",
           }}
         >
-          <div
+          <img
+            id="close"
+            onClick={handleClose}
+            src={Close}
             style={{
-              width: "50vw",
-              fontSize: 24,
-              fontWeight: 500,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              textAlign: "center",
+              width: "10vw",
+              height: "10vw",
+              marginTop: 40,
+              marginRight: 40,
             }}
-          >
-            {"Art & Decoration"}
-          </div>
-          <div id="check">
-            <Checkbox
-              checked={checked[0]}
-              onChange={() => handleChange(0)}
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
-            />
-          </div>
+          />
         </div>
         <div
           style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
-          <div
-            style={{
-              width: "50vw",
-              fontSize: 24,
-              fontWeight: 500,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              textAlign: "center",
-            }}
-          >
-            {"Books"}
-          </div>
-          <div id="check">
-            <Checkbox
-              checked={checked[1]}
-              onChange={() => handleChange(1)}
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
-            />
-          </div>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
-          <div
-            style={{
-              width: "50vw",
-              fontSize: 24,
-              fontWeight: 500,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              textAlign: "center",
-            }}
-          >
-            {"Clothing, Shoes, & Accessories"}
-          </div>
-          <div id="check">
-            <Checkbox
-              checked={checked[2]}
-              onChange={() => handleChange(2)}
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
-            />
-          </div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <div
-            style={{
-              width: "50vw",
-              fontSize: 24,
-              fontWeight: 500,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              textAlign: "center",
-            }}
-          >
-            {"Electronics"}
-          </div>
-          <div id="check">
-            <Checkbox
-              checked={checked[3]}
-              onChange={() => handleChange(3)}
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
-            />
-          </div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <div
-            style={{
-              width: "50vw",
-              fontSize: 24,
-              fontWeight: 500,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              textAlign: "center",
-            }}
-          >
-            {"Home"}
-          </div>
-          <div id="check">
-            <Checkbox
-              checked={checked[4]}
-              onChange={() => handleChange(4)}
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
-            />
-          </div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <div
-            style={{
-              width: "50vw",
-              fontSize: 24,
-              fontWeight: 500,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              textAlign: "center",
-            }}
-          >
-            {"Garden"}
-          </div>
-          <div id="check">
-            <Checkbox
-              checked={checked[5]}
-              onChange={() => handleChange(5)}
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
-            />
-          </div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <div
-            style={{
-              display: "flex",
-              width: "50vw",
-              fontSize: 24,
-              fontWeight: 500,
-              justifyContent: "center",
-              alignItems: "center",
-              textAlign: "center",
-            }}
-          >
-            {"Pet Supplies"}
-          </div>
-          <div id="check">
-            <Checkbox
-              checked={checked[6]}
-              onChange={() => handleChange(6)}
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
-            />
-          </div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <div
-            style={{
-              display: "flex",
-              width: "50vw",
-              fontSize: 24,
-              fontWeight: 500,
-              justifyContent: "center",
-              alignItems: "center",
-              textAlign: "center",
-            }}
-          >
-            {"Sports & Hobbies"}
-          </div>
-          <div id="check">
-            <Checkbox
-              checked={checked[7]}
-              onChange={() => handleChange(7)}
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
-            />
-          </div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <div
-            style={{
-              display: "flex",
-              width: "50vw",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: 24,
-              fontWeight: 500,
-              textAlign: "center",
-            }}
-          >
-            {"Toys & Games"}
-          </div>
-          <div id="check">
-            <Checkbox
-              checked={checked[8]}
-              onChange={() => handleChange(8)}
-              color="primary"
-              inputProps={{ "aria-label": "secondary checkbox" }}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "2vh",
-        }}
-      >
-        <div
-          id="clear"
-          style={{
-            backgroundColor: "#dae2f1",
-            padding: 10,
-            width: "25vw",
-            height: "5vh",
             alignSelf: "center",
             textAlign: "center",
-            fontSize: 24,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: 5,
-            fontWeight: 600,
+            marginTop: 0,
+            fontWeight: 700,
+            fontSize: 28,
           }}
-          onClick={() => clearContent(props, handleClose, clear)}
         >
-          CLEAR
+          Categories
         </div>
-        <div style={{ width: "10vw" }}></div>
+        <div style={{ height: "4vh" }}></div>
+        <div
+          onClick={() => saveContent(props, -1, handleClose)}
+          className="category-mobile-link"
+        >
+          {"All"}
+        </div>
 
         <div
-          id="save"
+          onClick={() => saveContent(props, 0, handleClose)}
+          className="category-mobile-link"
           style={{
-            backgroundColor: "rgb(66, 108, 180)",
-            opacity: !checked.includes(true) ? 0.2 : 1,
-            padding: 10,
-            width: 100,
-            alignSelf: "center",
-            width: "25vw",
-            height: "5vh",
-            display: "flex",
-            justifyContent: "center",
-            fontSize: 24,
-            textAlign: "center",
-            alignItems: "center",
-            borderRadius: 5,
-            color: "white",
-            fontWeight: 600,
+            backgroundColor:
+              categories[0] && categories.includes(false)
+                ? "rgb(218, 226, 241)"
+                : "#ffffff",
           }}
-          onClick={() => saveContent(props, checked, handleClose)}
         >
-          SAVE
+          {"Art & Decoration"}
         </div>
+
+        <div
+          onClick={() => saveContent(props, 1, handleClose)}
+          className="category-mobile-link"
+          style={{
+            backgroundColor:
+              categories[1] && categories.includes(false)
+                ? "rgb(218, 226, 241)"
+                : "#ffffff",
+          }}
+        >
+          {"Books"}
+        </div>
+
+        <div
+          onClick={() => saveContent(props, 2, handleClose)}
+          className="category-mobile-link"
+          style={{
+            backgroundColor:
+              categories[2] && categories.includes(false)
+                ? "rgb(218, 226, 241)"
+                : "#ffffff",
+          }}
+        >
+          {"Clothing, Shoes, & Accessories"}
+        </div>
+
+        <div
+          onClick={() => saveContent(props, 3, handleClose)}
+          className="category-mobile-link"
+          style={{
+            backgroundColor:
+              categories[3] && categories.includes(false)
+                ? "rgb(218, 226, 241)"
+                : "#ffffff",
+          }}
+        >
+          {"Electronics"}
+        </div>
+
+        <div
+          onClick={() => saveContent(props, 4, handleClose)}
+          className="category-mobile-link"
+          style={{
+            backgroundColor:
+              categories[4] && categories.includes(false)
+                ? "rgb(218, 226, 241)"
+                : "#ffffff",
+          }}
+        >
+          {"Home"}
+        </div>
+
+        <div
+          onClick={() => saveContent(props, 5, handleClose)}
+          className="category-mobile-link"
+          style={{
+            backgroundColor:
+              categories[5] && categories.includes(false)
+                ? "rgb(218, 226, 241)"
+                : "#ffffff",
+          }}
+        >
+          {"Garden"}
+        </div>
+
+        <div
+          onClick={() => saveContent(props, 6, handleClose)}
+          className="category-mobile-link"
+          style={{
+            backgroundColor:
+              categories[5] && categories.includes(false)
+                ? "rgb(218, 226, 241)"
+                : "#ffffff",
+          }}
+        >
+          {"Pet Supplies"}
+        </div>
+
+        <div
+          onClick={() => saveContent(props, 7, handleClose)}
+          className="category-mobile-link"
+          style={{
+            backgroundColor:
+              categories[6] && categories.includes(false)
+                ? "rgb(218, 226, 241)"
+                : "#ffffff",
+          }}
+        >
+          {"Sports & Hobbies"}
+        </div>
+
+        <div
+          onClick={() => saveContent(props, 8, handleClose)}
+          className="category-mobile-link"
+          style={{
+            backgroundColor:
+              categories[7] && categories.includes(false)
+                ? "rgb(218, 226, 241)"
+                : "#ffffff",
+          }}
+        >
+          {"Toys & Games"}
+        </div>
+
+        <div style={{ height: "20vh" }}></div>
       </div>
     </Dialog>
   );
@@ -405,13 +243,10 @@ function clearContent(props, handleClose, clear) {
   handleClose();
 }
 
-function saveContent(props, saved, handleClose) {
-  if (!saved.includes(true)) {
-    return;
-  }
+function saveContent(props, category, handleClose) {
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-  props.changeCategory(saved);
+  props.changeCategory(category);
   handleClose();
 }
 
