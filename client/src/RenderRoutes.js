@@ -74,6 +74,7 @@ export default class RenderRoutes extends React.Component {
               {!citiesList.includes(window.localStorage.getItem("city")) && (
                 <Route path="/" exact={true} render={() => <HomeMobile />} />
               )}
+              <Route path="/help" exact={true} render={() => <Help />} />
 
               {citiesList.includes(window.localStorage.getItem("city")) && (
                 <Route path="/" exact={true} render={() => <BuyMobile />} />
@@ -257,6 +258,8 @@ export default class RenderRoutes extends React.Component {
                 exact={true}
                 render={() => <SearchPageMobileMain />}
               />
+              <Route path="/help" exact={true} render={() => <Help />} />
+
               <Route path="/cart" exact={true} render={() => <CartMobile />} />
               <Route
                 path="/checkout"

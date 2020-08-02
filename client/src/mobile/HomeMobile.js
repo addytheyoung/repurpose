@@ -628,7 +628,7 @@ export default class HomeMobile extends React.Component {
               }}
             >
               <div
-                id="prev-item"
+                id="mobile-prev-item"
                 onClick={() =>
                   this.scrollLeft(document.getElementById("scroll"), -300, 100)
                 }

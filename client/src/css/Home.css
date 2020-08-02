@@ -78,3 +78,25 @@
   font-weight: 500;
   margin-left: 3px;
 }
+
+#mobile-prev-item {
+  background-color: rgb(66, 108, 180);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 5px;
+  color: white;
+  font-weight: 500;
+  background-color: rgb(66, 108, 180);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 5px;
+  color: white;
+  font-size: 22px;
+  margin-top: 3vh;
+  font-weight: 500;
+  margin-right: 3px;
+}
