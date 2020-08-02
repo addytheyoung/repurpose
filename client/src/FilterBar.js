@@ -40,22 +40,7 @@ export default class FilterBar extends React.Component {
             }
             changeCategory={(categories) => this.changeCategory(categories)}
           />
-          <DialogSale
-            clearContent={() =>
-              this.changeSale([
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-              ])
-            }
-            changeSale={(sales) => this.changeSale(sales)}
-          />
+          <DialogSale changeSale={(sales) => this.changeSale(sales)} />
         </div>
       </div>
     );
@@ -65,8 +50,8 @@ export default class FilterBar extends React.Component {
     this.props.updateSaleFilter(sales);
   }
 
-  changeCategory(categories) {
-    this.props.updateCategoryFilter(categories);
+  changeCategory(category) {
+    this.props.updateCategoryFilter(category);
   }
 
   changeContent(clothing) {

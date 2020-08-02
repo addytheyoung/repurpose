@@ -137,7 +137,9 @@ export default class Buy extends React.Component {
         >
           <FilterBar
             updateFilter={(a, b) => this.updateFilter(a, b)}
-            updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
+            updateCategoryFilter={(category) =>
+              this.updateCategoryFilter(category)
+            }
             updateSaleFilter={(a, b) => this.updateSaleFilter(a, b)}
           />
         </div>
@@ -1280,16 +1282,24 @@ export default class Buy extends React.Component {
     });
   }
 
-  updateCategoryFilter(categories) {
+  updateCategoryFilter(category) {
+    const newCategories = [];
+    for (var i = 0; i < this.state.activeCategories.length; i++) {
+      if (i == category || category == -1) {
+        newCategories.push(true);
+      } else {
+        newCategories.push(false);
+      }
+    }
     this.setState({
-      activeCategories: categories,
+      activeCategories: newCategories,
       currentCategoryIndex: 0,
       finishedLoading: false,
       items: [],
       modal: null,
       finalDoc: 0,
     });
-    this.pullItemsFromDatabase(categories, true);
+    this.pullItemsFromDatabase(newCategories, true);
   }
 
   updateFilter(min, max) {

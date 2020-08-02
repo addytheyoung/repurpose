@@ -60,7 +60,7 @@ export default class Home extends React.Component {
         .doc(categoryList[i])
         .collection("All")
         .where("location", "==", "Austin, TX")
-        .limit(5)
+        .limit(30)
         .get()
         .then((allItems) => {
           i_index++;

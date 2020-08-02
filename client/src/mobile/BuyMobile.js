@@ -1356,8 +1356,7 @@ export default class BuyMobile extends React.Component {
       modal: null,
       finalDoc: 0,
     });
-    console.log("cleared");
-    console.log(this.state.finishedLoading);
+
     this.pullItemsFromDatabase(categories, true);
   }
 
