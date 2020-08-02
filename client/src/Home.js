@@ -591,8 +591,17 @@ export default class Home extends React.Component {
               }}
             >
               {this.state.items.map((item, index) => {
+                const discount = 1 - item.current_price;
+                const currentPrice =
+                  item.original_price - item.original_price * discount;
+                var showDecimals = true;
+                if (currentPrice % 1 == 0) {
+                  // It's a while number. Don't show decimals.
+                  showDecimals = false;
+                }
                 return (
                   <div
+                    key={index}
                     onClick={() => this.itemPage(item)}
                     id="box"
                     style={{
@@ -616,12 +625,39 @@ export default class Home extends React.Component {
                         {item.title}
                       </div>
                       <div
-                        style={{ marginTop: 5, fontWeight: 600, fontSize: 20 }}
+                        style={{
+                          marginTop: 5,
+                          fontWeight: 600,
+                          fontSize: 20,
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                        }}
                       >
-                        {"$" +
-                          (Math.round(item.original_price * 10) / 10).toFixed(
-                            1
-                          )}
+                        <div
+                          style={{
+                            fontWeight: 600,
+                            fontSize: 20,
+                          }}
+                        >
+                          {!showDecimals &&
+                            "$" +
+                              (Math.round(currentPrice * 100) / 100).toFixed(0)}
+                          {showDecimals &&
+                            "$" +
+                              (Math.round(currentPrice * 100) / 100).toFixed(2)}
+                        </div>
+                        <div
+                          style={{
+                            fontWeight: 400,
+                            fontSize: 16,
+                            marginLeft: 10,
+                            color: "#cc0000",
+                            opacity: discount == 0 ? 0 : discount * 15 * 0.25,
+                          }}
+                        >
+                          {Math.round(discount * 100).toFixed(0) + "%"}
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -670,6 +670,12 @@ export default class HomeMobile extends React.Component {
                 const discount = 1 - item.current_price;
                 const currentPrice =
                   item.original_price - item.original_price * discount;
+                var showDecimals = true;
+                if (currentPrice % 1 == 0) {
+                  // It's a while number. Don't show decimals.
+                  showDecimals = false;
+                }
+
                 return (
                   <div
                     key={index}
@@ -723,8 +729,12 @@ export default class HomeMobile extends React.Component {
                             fontSize: 20,
                           }}
                         >
-                          {"$" +
-                            (Math.round(currentPrice * 10) / 10).toFixed(1)}
+                          {!showDecimals &&
+                            "$" +
+                              (Math.round(currentPrice * 100) / 100).toFixed(0)}
+                          {showDecimals &&
+                            "$" +
+                              (Math.round(currentPrice * 100) / 100).toFixed(2)}
                         </div>
                         <div
                           style={{
