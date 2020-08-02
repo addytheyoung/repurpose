@@ -530,6 +530,12 @@ export default class BuyMobile extends React.Component {
                             const currentPrice =
                               item.original_price -
                               item.original_price * discount;
+                            var showDecimals = true;
+                            if (currentPrice % 1 == 0) {
+                              // It's a while number. Don't show decimals.
+                              showDecimals = false;
+                            }
+
                             return (
                               <div>
                                 <div
@@ -584,10 +590,18 @@ export default class BuyMobile extends React.Component {
                                           fontSize: 20,
                                         }}
                                       >
-                                        {"$" +
-                                          (
-                                            Math.round(currentPrice * 10) / 10
-                                          ).toFixed(1)}
+                                        {!showDecimals &&
+                                          "$" +
+                                            (
+                                              Math.round(currentPrice * 100) /
+                                              100
+                                            ).toFixed(0)}
+                                        {showDecimals &&
+                                          "$" +
+                                            (
+                                              Math.round(currentPrice * 100) /
+                                              100
+                                            ).toFixed(2)}
                                       </div>
                                       <div
                                         style={{
@@ -645,7 +659,6 @@ export default class BuyMobile extends React.Component {
                         flexWrap: "wrap",
                         justifyContent: "center",
                         alignItems: "flex-start",
-                        marginTop: 20,
                       }}
                     >
                       {this.state.items.map((item, index) => {
@@ -681,25 +694,16 @@ export default class BuyMobile extends React.Component {
                             </div>
                           );
                         }
-                        // if (item.category == "Clothing, Shoes, & Accessories") {
-                        //   if (this.state.activeClothingGender != "all") {
-                        //     if (
-                        //       item.gender != this.state.activeClothingGender
-                        //     ) {
-                        //       return null;
-                        //     }
-                        //   }
-                        //   if (this.state.activeClothingType != "all") {
-                        //     if (item.type != this.state.activeClothingType) {
-                        //       return null;
-                        //     }
-                        //   }
-                        // }
 
                         // Show discounts, if any.
                         const discount = 1 - item.current_price;
                         const currentPrice =
                           item.original_price - item.original_price * discount;
+                        var showDecimals = true;
+                        if (currentPrice % 1 == 0) {
+                          // It's a while number. Don't show decimals.
+                          showDecimals = false;
+                        }
                         const f = Math.round(discount * 100).toFixed(0);
 
                         // Check the discount filter
@@ -773,10 +777,16 @@ export default class BuyMobile extends React.Component {
                                       fontSize: 20,
                                     }}
                                   >
-                                    {"$" +
-                                      (
-                                        Math.round(currentPrice * 10) / 10
-                                      ).toFixed(1)}
+                                    {!showDecimals &&
+                                      "$" +
+                                        (
+                                          Math.round(currentPrice * 100) / 100
+                                        ).toFixed(0)}
+                                    {showDecimals &&
+                                      "$" +
+                                        (
+                                          Math.round(currentPrice * 100) / 100
+                                        ).toFixed(2)}
                                   </div>
                                   <div
                                     style={{
