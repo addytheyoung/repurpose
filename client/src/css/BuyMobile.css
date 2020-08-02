@@ -1,5 +1,5 @@
-#prev-item,
-#next-item {
+#prev-item-mobile,
+#next-item-mobile {
   background-color: rgb(66, 108, 180);
   padding-left: 10px;
   padding-right: 10px;
@@ -12,11 +12,12 @@
   font-weight: 500;
 }
 
-#prev-item {
+#prev-item-mobile {
   margin-right: 5px;
+  margin-left: 0px;
 }
 
-#next-item {
+#next-item-mobile {
   margin-left: 5px;
   margin-right: 0px;
 }

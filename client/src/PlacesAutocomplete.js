@@ -30,7 +30,7 @@ export default class LocationSearchInput extends React.Component {
         if (res) {
           // Make a tmep accoutn and add the item if there is one
           // const uid = this.randomNumber(20);
-          const uid = "BBB";
+          const uid = this.randomNumber(20);
           firebase
             .firestore()
             .collection("Users")

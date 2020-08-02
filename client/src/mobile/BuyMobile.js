@@ -481,7 +481,7 @@ export default class BuyMobile extends React.Component {
                         }}
                       >
                         <div
-                          id="prev-item"
+                          id="prev-item-mobile"
                           onClick={() =>
                             this.scrollLeft(
                               document.getElementById("scroll"),
@@ -493,7 +493,7 @@ export default class BuyMobile extends React.Component {
                           Prev
                         </div>
                         <div
-                          id="next-item"
+                          id="next-item-mobile"
                           onClick={() =>
                             this.scrollLeft(
                               document.getElementById("scroll"),
