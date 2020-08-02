@@ -188,7 +188,7 @@ export default class Home extends React.Component {
                     marginBottom: "5vh",
                   }}
                 >
-                  Enter your delivery address to check availality
+                  Enter your delivery address to check availability
                 </div>
                 <PlacesAutocomplete
                   activeButton={false}

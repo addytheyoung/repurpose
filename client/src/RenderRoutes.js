@@ -64,8 +64,6 @@ export default class RenderRoutes extends React.Component {
     if (category) {
       localStorage.setItem("city", category);
     }
-    // TEMP
-    localStorage.setItem("city", "");
 
     if (firebase.auth().currentUser) {
       // Mobile?

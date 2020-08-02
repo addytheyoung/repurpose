@@ -9,6 +9,7 @@ import SignInOnlyModal from "../SignInOnlyModal";
 import Money from "../images/money.svg";
 import Shop from "../images/shop.svg";
 import Delivery from "../images/delivery.svg";
+import Div100vh from "react-div-100vh";
 
 export default class HomeMobile extends React.Component {
   citiesList = ["Austin, TX"];
@@ -108,6 +109,15 @@ export default class HomeMobile extends React.Component {
       );
     }
 
+    var itemDiscount = -1;
+    var itemCurrentPrice = -1;
+    if (this.state.modal) {
+      itemDiscount = 1 - this.state.modal.current_price;
+      itemCurrentPrice =
+        this.state.modal.original_price -
+        this.state.modal.original_price * itemDiscount;
+    }
+
     return (
       <div
         style={{
@@ -127,6 +137,7 @@ export default class HomeMobile extends React.Component {
             style={{
               display: "flex",
               justifyContent: "center",
+
               // alignItems: "center"
             }}
           >
@@ -143,14 +154,16 @@ export default class HomeMobile extends React.Component {
             ></div>
             <div
               style={{
-                width: "60vw",
+                // width: "60vw",
                 borderRadius: 5,
-                height: "80vh",
-                top: 30,
-                backgroundColor: "#f5f5f5",
+                // height: "80vh",
+                top: 0,
+                backgroundColor: "#ffffff",
                 position: "fixed",
                 zIndex: 100,
                 opacity: 1,
+                width: "100vw",
+                height: "100vh",
               }}
             >
               <div style={{ display: "flex", flexDirection: "column" }}>
@@ -167,21 +180,23 @@ export default class HomeMobile extends React.Component {
                     onClick={() => this.closeModal()}
                     src={Close}
                     style={{
-                      width: 30,
-                      height: 30,
-                      marginTop: 20,
-                      marginRight: 20,
+                      width: "10vw",
+                      height: "10vw",
+                      top: 30,
+                      right: 30,
+                      position: "fixed",
                     }}
                   />
                 </div>
                 <div
                   style={{
                     textAlign: "center",
-                    marginTop: "5vh",
+                    marginTop: "12vh",
                     marginBottom: "5vh",
+                    fontSize: 20,
                   }}
                 >
-                  Enter your delivery address to check availality
+                  Enter your city or zip to make sure we can deliver to you!
                 </div>
                 <PlacesAutocomplete
                   mobile={true}
@@ -197,29 +212,21 @@ export default class HomeMobile extends React.Component {
             style={{
               display: "flex",
               justifyContent: "center",
+              zIndex: 200,
               // alignItems: "center"
             }}
           >
-            <div
-              onClick={(e) => this.closeModal(e)}
+            <Div100vh
               style={{
-                backgroundColor: "#000000",
-                opacity: 0.5,
-                zIndex: 99,
                 width: "100vw",
-                height: "100vh",
-                position: "fixed",
-              }}
-            ></div>
-            <div
-              style={{
-                width: "60vw",
                 borderRadius: 5,
-                height: "80vh",
-                top: 30,
-                backgroundColor: "#f5f5f5",
                 position: "fixed",
-                zIndex: 100,
+                overflowY: "scroll",
+                height: "100vh",
+                top: 0,
+                backgroundColor: "#f5f5f5",
+                // position: "absolute",
+                zIndex: 200,
                 opacity: 1,
               }}
             >
@@ -229,28 +236,58 @@ export default class HomeMobile extends React.Component {
                     width: "100%",
                     display: "flex",
                     flexDirection: "row",
-                    justifyContent: "flex-end",
+                    justifyContent: "center",
                   }}
                 >
+                  <div
+                    style={{
+                      fontSize: 24,
+                      fontWeight: 500,
+                      marginTop: 20,
+                      textAlign: "center",
+                      padding: 10,
+                      width: "65vw",
+                      minHeight: 20,
+                    }}
+                  >
+                    {this.state.modal.title}
+                  </div>
                   <img
                     id="close"
                     onClick={() => this.closeModal()}
                     src={Close}
                     style={{
-                      width: 30,
-                      height: 30,
-                      marginTop: 20,
-                      marginRight: 20,
+                      width: "10vw",
+                      height: "10vw",
+                      top: 30,
+                      right: 30,
+                      position: "fixed",
                     }}
                   />
                 </div>
 
-                <div style={{ display: "flex", flexDirection: "row" }}>
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div style={{ marginLeft: 20 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div style={{}}>
                       <img
                         src={this.state.modal.pictures[0]}
-                        style={{ width: 400, height: 400 }}
+                        style={{
+                          borderRadius: 3,
+                          width: "80vw",
+                          height: "72vw",
+                          marginTop: 20,
+                        }}
                       ></img>
                     </div>
                     <div
@@ -260,94 +297,109 @@ export default class HomeMobile extends React.Component {
                         marginLeft: 20,
                         marginTop: 10,
                       }}
-                    >
-                      {this.state.modal.pictures.map((pic, index) => {
-                        return (
-                          <div>
-                            <img
-                              src={pic}
-                              style={{
-                                width: 80,
-                                height: 80,
-                                marginLeft: 5,
-                                marginRight: 5,
-                              }}
-                            ></img>
-                          </div>
-                        );
-                      })}
-                    </div>
+                    ></div>
                   </div>
                   <div
                     style={{
                       width: "100%",
                       display: "flex",
                       justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
                     <div
                       style={{
                         display: "flex",
                         flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
                       }}
                     >
+                      {/* <div
+                          style={{
+                            fontSize: 24,
+                            fontWeight: 500,
+                            marginTop: 10,
+                            textAlign: "center",
+                            padding: 10,
+                          }}
+                        >
+                          {this.state.modal.title}
+                        </div> */}
+
+                      {Math.round(itemDiscount * 100).toFixed(0) != 0 && (
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <div
+                            style={{
+                              marginTop: 10,
+                              fontWeight: 500,
+                              fontSize: 22,
+                              textAlign: "center",
+                              textDecoration: "line-through",
+                            }}
+                          >
+                            {"$" +
+                              (
+                                Math.round(
+                                  this.state.modal.original_price * 10
+                                ) / 10
+                              ).toFixed(1)}
+                          </div>
+                          <div
+                            style={{
+                              fontWeight: 400,
+                              fontSize: 16,
+                              marginLeft: 10,
+                              color: "#cc0000",
+                              textAlign: "center",
+                              marginTop: 10,
+                            }}
+                          >
+                            {Math.round(itemDiscount * 100).toFixed(0) +
+                              "% off"}
+                          </div>
+                        </div>
+                      )}
+
                       <div
                         style={{
-                          fontSize: 22,
-                          fontWeight: 500,
                           marginTop: 30,
-                          textAlign: "center",
-
-                          padding: 10,
-                        }}
-                      >
-                        {this.state.modal.title}
-                      </div>
-
-                      <div
-                        style={{
-                          marginTop: 100,
                           fontWeight: 700,
                           fontSize: 24,
                           textAlign: "center",
                         }}
                       >
                         {"$" +
-                          (
-                            Math.round(this.state.modal.original_price * 10) /
-                            10
-                          ).toFixed(1)}
+                          (Math.round(itemCurrentPrice * 10) / 10).toFixed(1)}
                       </div>
+
                       <div
+                        onClick={() => this.addToCart(this.state.modal)}
+                        id="add-to-cart"
                         style={{
+                          backgroundColor: "#426CB4",
+                          marginTop: 20,
+                          borderRadius: 5,
+                          padding: 10,
+                          width: 300,
+
+                          height: "7vh",
                           display: "flex",
+                          alignItems: "center",
                           justifyContent: "center",
-                          // alignItems: "center",
-                          width: "100%",
-                          height: "100%",
+                          color: "#ffffff",
+                          fontWeight: 600,
+                          fontSize: 22,
                         }}
                       >
-                        <div
-                          onClick={() => this.addToCart(this.state.modal)}
-                          id="add-to-cart"
-                          style={{
-                            backgroundColor: "#426CB4",
-                            marginTop: 30,
-                            borderRadius: 5,
-                            marginLeft: 20,
-                            padding: 10,
-                            width: 150,
-                            height: 40,
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            color: "#ffffff",
-                            fontWeight: 500,
-                          }}
-                        >
-                          {!this.state.addingToCart && "ADD TO CART"}
-                          {this.state.addingToCart && "Adding..."}
-                        </div>
+                        {!this.state.addingToCart && "ADD TO CART"}
+                        {this.state.addingToCart && "Adding..."}
                       </div>
                     </div>
                   </div>
@@ -355,7 +407,7 @@ export default class HomeMobile extends React.Component {
                 <div
                   style={{
                     marginLeft: 20,
-                    fontSize: 20,
+                    fontSize: 14,
                     marginTop: 20,
                     fontWeight: 600,
                   }}
@@ -365,6 +417,7 @@ export default class HomeMobile extends React.Component {
                 <div
                   style={{
                     marginTop: 10,
+                    fontSize: 14,
                     marginLeft: 20,
                     marginRight: 20,
                     borderTopColor: "#a1a1a1",
@@ -375,9 +428,10 @@ export default class HomeMobile extends React.Component {
                   <div style={{ marginTop: 5 }}>
                     {this.state.modal.description}
                   </div>
+                  <div style={{ height: "20vh" }}></div>
                 </div>
               </div>
-            </div>
+            </Div100vh>
           </div>
         )}
         <div
@@ -536,16 +590,35 @@ export default class HomeMobile extends React.Component {
               flexDirection: "column",
             }}
           >
-            <div
-              style={{
-                fontSize: 26,
-                fontWeight: 500,
-                textAlign: "center",
-                marginTop: "5vh",
-              }}
-            >
-              1000+ Items Near Austin
+            <div style={{ display: "flex", width: "100vw", marginTop: "5vh" }}>
+              <div
+                style={{
+                  display: "flex",
+                  fontSize: 26,
+                  fontWeight: 500,
+                  textAlign: "center",
+                  marginLeft: "20vw",
+                  width: "60vw",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                Items Near Austin
+              </div>
+              <div
+                style={{
+                  opacity: 0.6,
+                  fontSize: 17,
+                  textAlign: "center",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                (1,000+)
+              </div>
             </div>
+
             <div
               style={{
                 display: "flex",

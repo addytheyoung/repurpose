@@ -29,7 +29,8 @@ export default class LocationSearchInput extends React.Component {
       .then((res) => {
         if (res) {
           // Make a tmep accoutn and add the item if there is one
-          const uid = this.randomNumber(20);
+          // const uid = this.randomNumber(20);
+          const uid = "BBB";
           firebase
             .firestore()
             .collection("Users")
@@ -92,7 +93,7 @@ export default class LocationSearchInput extends React.Component {
                 style={{
                   width: mobile ? "80vw" : "40vw",
                   height: "5vh",
-                  fontSize: 16,
+                  fontSize: 18,
                 }}
                 {...getInputProps({
                   placeholder: "Enter your city or zip code",
@@ -101,7 +102,7 @@ export default class LocationSearchInput extends React.Component {
               />
               <div
                 className="autocomplete-dropdown-container"
-                style={{ height: "30vh", position: "fixed" }}
+                style={{ minHeight: "30vh", position: "fixed" }}
               >
                 {loading && <div>Loading...</div>}
                 {suggestions.map((suggestion, i) => {
@@ -109,9 +110,28 @@ export default class LocationSearchInput extends React.Component {
                     return null;
                   }
                   return (
-                    <div key={i}>
+                    <div
+                      key={i}
+                      style={{
+                        minHeight: mobile ? "10vh" : "10vh",
+                        borderBottomWidth: 1,
+                        borderBottomStyle: "solid",
+                        borderBottomColor: "grey",
+                        backgroundColor: "#ffffff",
+                      }}
+                    >
                       <div
-                        className="dropdown-delivery"
+                        style={{
+                          minHeight: mobile ? "10vh" : "10vh",
+                          zIndex: 999,
+
+                          maxWidth: "50vw",
+                          fontSize: 18,
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          padding: 10,
+                        }}
                         {...getSuggestionItemProps(suggestion, {})}
                       >
                         <span>{suggestion.description}</span>

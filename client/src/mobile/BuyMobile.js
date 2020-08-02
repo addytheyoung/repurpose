@@ -971,6 +971,7 @@ export default class BuyMobile extends React.Component {
         })
         .then(() => {
           localStorage.setItem("cart", 1);
+          window.history.replaceState(null, null, "/");
           this.setState({
             modal: null,
             addingToCart: false,
@@ -1006,6 +1007,8 @@ export default class BuyMobile extends React.Component {
                     for (var i = 0; i < myCart.length; i++) {
                       if (myCart[i].uid == item.uid) {
                         alert("Item already in your cart!");
+                        window.history.replaceState(null, null, "/");
+
                         this.setState({
                           modal: null,
                           addingToCart: false,
@@ -1025,6 +1028,8 @@ export default class BuyMobile extends React.Component {
                       })
                       .then(() => {
                         localStorage.setItem("cart", numCartItems);
+                        window.history.replaceState(null, null, "/");
+
                         this.setState({
                           modal: null,
                           addingToCart: false,
@@ -1038,6 +1043,8 @@ export default class BuyMobile extends React.Component {
             for (var i = 0; i < myCart.length; i++) {
               if (myCart[i].uid == item.uid) {
                 alert("Item already in your cart!");
+                window.history.replaceState(null, null, "/");
+
                 this.setState({
                   modal: null,
                   addingToCart: false,
@@ -1057,6 +1064,8 @@ export default class BuyMobile extends React.Component {
               })
               .then(() => {
                 localStorage.setItem("cart", numCartItems);
+                window.history.replaceState(null, null, "/");
+
                 this.setState({
                   modal: null,
                   addingToCart: false,
