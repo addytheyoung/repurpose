@@ -30,7 +30,7 @@ export default class AndrewItemPage extends React.Component {
       total += parseInt(this.state.activeItems[i].original_price);
     }
     return (
-      <div>
+      <div style={{ height: "100vh", overflowY: "scroll" }}>
         {this.state.activeModal && (
           <div
             style={{
@@ -130,12 +130,22 @@ export default class AndrewItemPage extends React.Component {
                     <div>
                       <Button
                         onClick={() => {
+                          this.changeSale();
+                        }}
+                      >
+                        % Off
+                      </Button>
+                    </div>
+                    <div>
+                      <Button
+                        onClick={() => {
                           this.changeDescription();
                         }}
                       >
                         Description
                       </Button>
                     </div>
+
                     <div style={{ marginTop: 20 }}>
                       <Button
                         onClick={() => {
@@ -279,6 +289,13 @@ export default class AndrewItemPage extends React.Component {
                     </div>
                     <div>
                       <Input
+                        defaultValue={this.state.activeModal.current_price}
+                        id="sale-change"
+                        placeholder="Current Price"
+                      ></Input>
+                    </div>
+                    <div>
+                      <Input
                         multiline={true}
                         defaultValue={this.state.activeModal.description}
                         id="description-change"
@@ -412,6 +429,10 @@ export default class AndrewItemPage extends React.Component {
             }}
           >
             {this.state.activeItems.map((item, index) => {
+              const discount = 1 - item.current_price;
+              const currentPrice =
+                item.original_price - item.original_price * discount;
+
               return (
                 <div
                   key={index}
@@ -442,8 +463,31 @@ export default class AndrewItemPage extends React.Component {
                     <div style={{ fontSize: 18, fontWeight: 400 }}>
                       {item.title}
                     </div>
-                    <div style={{ marginTop: 5, fontWeight: 600 }}>
-                      {"$" + item.original_price}
+                    <div
+                      style={{
+                        marginTop: 5,
+                        fontWeight: 600,
+                        fontSize: 20,
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <div style={{ marginTop: 5, fontWeight: 600 }}>
+                        {"$" +
+                          (Math.round(currentPrice * 100) / 100).toFixed(2)}
+                      </div>
+                      <div
+                        style={{
+                          fontWeight: 400,
+                          fontSize: 16,
+                          marginLeft: 10,
+                          color: "#cc0000",
+                          opacity: discount == 0 ? 0 : discount * 15 * 0.25,
+                        }}
+                      >
+                        {Math.round(discount * 100).toFixed(0) + "%"}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -578,6 +622,30 @@ export default class AndrewItemPage extends React.Component {
     });
   }
 
+  changeSale() {
+    var item = this.state.activeModal;
+    const currentPrice = parseFloat(
+      document.getElementById("sale-change").value
+    );
+    if (!currentPrice) {
+      return;
+    }
+    firebase
+      .firestore()
+      .collection("Categories")
+      .doc(item.category)
+      .collection("All")
+      .doc(item.uid)
+      .update({
+        current_price: currentPrice,
+      })
+      .then(() => {
+        this.setState({
+          activeModal: null,
+        });
+      });
+  }
+
   changeCategory() {
     var item = this.state.activeModal;
     const oldCategory = item.category;
@@ -662,7 +730,7 @@ export default class AndrewItemPage extends React.Component {
 
   changePrice() {
     const item = this.state.activeModal;
-    const price = document.getElementById("price-change").value;
+    const price = parseInt(document.getElementById("price-change").value);
     if (!price) {
       return;
     }

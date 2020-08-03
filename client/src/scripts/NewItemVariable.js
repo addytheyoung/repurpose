@@ -32,12 +32,12 @@ export default class NewItemVariable extends Component {
           for (var j = 0; j < collectionData.docs.length; j++) {
             const ran = Math.random();
             var finalPrice = 1.0;
-            if (ran < 0.3) {
+            if (ran < 0.55) {
               finalPrice = 0.9;
-            } else if (ran >= 0.3 && ran < 0.5) {
+            } else if (ran >= 0.5 && ran < 0.8) {
               finalPrice = 0.8;
             } else {
-              finalPrice = 1.0;
+              finalPrice = 0.7;
             }
             const item = collectionData.docs[j];
             const category = collectionData.docs[j].data().category;

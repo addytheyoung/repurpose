@@ -1263,7 +1263,7 @@ export default class Buy extends React.Component {
         .collection("Categories")
         .doc(category)
         .collection("All")
-        .where("new_item", "==", true)
+        .where("current_price", "==", 1)
         .get()
         .then((allDocs) => {
           i_index++;
