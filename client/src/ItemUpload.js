@@ -112,7 +112,7 @@ export default class ItemUpload extends React.Component {
       return <div>Wrong user</div>;
     }
     return (
-      <div style={{ overflowX: "hidden" }}>
+      <div style={{ overflowX: "hidden", height: "100vh", overfowY: "scroll" }}>
         <div
           id="item-upload"
           style={{
