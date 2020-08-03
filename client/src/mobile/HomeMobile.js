@@ -109,13 +109,24 @@ export default class HomeMobile extends React.Component {
       );
     }
 
+    // Set the modal variables
     var itemDiscount = -1;
     var itemCurrentPrice = -1;
+    var showDecimalsOriginal = true;
+    var showDecimalsCurrent = true;
     if (this.state.modal) {
       itemDiscount = 1 - this.state.modal.current_price;
       itemCurrentPrice =
         this.state.modal.original_price -
         this.state.modal.original_price * itemDiscount;
+      // See if we need decimals for the original price
+      if (this.state.modal.original_price % 1 == 0) {
+        showDecimalsOriginal = false;
+      }
+      // See if ywe need decimals for the current price
+      if (itemCurrentPrice % 1 == 0) {
+        showDecimalsCurrent = false;
+      }
     }
 
     return (
@@ -344,12 +355,20 @@ export default class HomeMobile extends React.Component {
                               textDecoration: "line-through",
                             }}
                           >
-                            {"$" +
-                              (
-                                Math.round(
-                                  this.state.modal.original_price * 10
-                                ) / 10
-                              ).toFixed(1)}
+                            {!showDecimalsOriginal &&
+                              "$" +
+                                (
+                                  Math.round(
+                                    this.state.modal.original_price * 100
+                                  ) / 100
+                                ).toFixed(0)}
+                            {showDecimalsOriginal &&
+                              "$" +
+                                (
+                                  Math.round(
+                                    this.state.modal.original_price * 100
+                                  ) / 100
+                                ).toFixed(2)}
                           </div>
                           <div
                             style={{
@@ -375,8 +394,16 @@ export default class HomeMobile extends React.Component {
                           textAlign: "center",
                         }}
                       >
-                        {"$" +
-                          (Math.round(itemCurrentPrice * 10) / 10).toFixed(1)}
+                        {!showDecimalsCurrent &&
+                          "$" +
+                            (Math.round(itemCurrentPrice * 100) / 100).toFixed(
+                              0
+                            )}
+                        {showDecimalsCurrent &&
+                          "$" +
+                            (Math.round(itemCurrentPrice * 100) / 100).toFixed(
+                              2
+                            )}
                       </div>
 
                       <div

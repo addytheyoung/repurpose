@@ -115,6 +115,26 @@ export default class Home extends React.Component {
       );
     }
 
+    // Set the modal variables
+    var itemDiscount = -1;
+    var itemCurrentPrice = -1;
+    var showDecimalsOriginal = true;
+    var showDecimalsCurrent = true;
+    if (this.state.modal) {
+      itemDiscount = 1 - this.state.modal.current_price;
+      itemCurrentPrice =
+        this.state.modal.original_price -
+        this.state.modal.original_price * itemDiscount;
+      // See if we need decimals for the original price
+      if (this.state.modal.original_price % 1 == 0) {
+        showDecimalsOriginal = false;
+      }
+      // See if ywe need decimals for the current price
+      if (itemCurrentPrice % 1 == 0) {
+        showDecimalsCurrent = false;
+      }
+    }
+
     return (
       <div
         style={{
@@ -310,19 +330,71 @@ export default class Home extends React.Component {
                         {this.state.modal.title}
                       </div>
 
+                      {Math.round(itemDiscount * 100).toFixed(0) != 0 && (
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <div
+                            style={{
+                              marginTop: 10,
+                              fontWeight: 500,
+                              fontSize: 22,
+                              textAlign: "center",
+                              textDecoration: "line-through",
+                            }}
+                          >
+                            {!showDecimalsOriginal &&
+                              "$" +
+                                (
+                                  Math.round(
+                                    this.state.modal.original_price * 100
+                                  ) / 100
+                                ).toFixed(0)}
+                            {showDecimalsOriginal &&
+                              "$" +
+                                (
+                                  Math.round(
+                                    this.state.modal.original_price * 100
+                                  ) / 100
+                                ).toFixed(2)}
+                          </div>
+                          <div
+                            style={{
+                              fontWeight: 400,
+                              fontSize: 16,
+                              marginLeft: 10,
+                              color: "#cc0000",
+                              textAlign: "center",
+                              marginTop: 10,
+                            }}
+                          >
+                            {Math.round(itemDiscount * 100).toFixed(0) +
+                              "% off"}
+                          </div>
+                        </div>
+                      )}
                       <div
                         style={{
-                          marginTop: 100,
+                          marginTop: 30,
                           fontWeight: 700,
                           fontSize: 24,
                           textAlign: "center",
                         }}
                       >
-                        {"$" +
-                          (
-                            Math.round(this.state.modal.original_price * 10) /
-                            10
-                          ).toFixed(1)}
+                        {!showDecimalsCurrent &&
+                          "$" +
+                            (Math.round(itemCurrentPrice * 100) / 100).toFixed(
+                              0
+                            )}
+                        {showDecimalsCurrent &&
+                          "$" +
+                            (Math.round(itemCurrentPrice * 100) / 100).toFixed(
+                              2
+                            )}
                       </div>
                       <div
                         style={{
