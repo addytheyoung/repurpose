@@ -547,7 +547,8 @@ export default class HomeMobile extends React.Component {
         </div>
         <div
           style={{
-            height: "30vh",
+            minHeight: "30vh",
+            maxHeight: "40vh",
             width: "100vw",
             backgroundColor: "#ffffff",
             paddingTop: 10,
