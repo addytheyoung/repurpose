@@ -31,6 +31,7 @@ export default class Home extends React.Component {
       addressModal: false,
       width: 0,
       height: 0,
+      modalPictureIndex: 0,
     };
 
     // If we're signed in, sign us out.
@@ -42,15 +43,17 @@ export default class Home extends React.Component {
           window.location.reload();
         });
     }
-    const categoryList = [
-      "Art & Decoration",
-      "Home",
-      "Books",
-      "Electronics",
-      "Toys & Games",
-      "Garden",
-      "Sports & Hobbies",
-    ];
+    // const categoryList = [
+    //   "Art & Decoration",
+    //   "Home",
+    //   "Books",
+    //   "Electronics",
+    //   "Toys & Games",
+    //   "Garden",
+    //   "Sports & Hobbies",
+    // ];
+
+    const categoryList = ["Test", "Art & Decoration"];
 
     const firebaseCats = firebase.firestore().collection("Categories");
     var i_index = 0;
@@ -120,6 +123,7 @@ export default class Home extends React.Component {
     var itemCurrentPrice = -1;
     var showDecimalsOriginal = true;
     var showDecimalsCurrent = true;
+    var modalPicture = null;
     if (this.state.modal) {
       itemDiscount = 1 - this.state.modal.current_price;
       itemCurrentPrice =
@@ -133,6 +137,7 @@ export default class Home extends React.Component {
       if (itemCurrentPrice % 1 == 0) {
         showDecimalsCurrent = false;
       }
+      modalPicture = this.state.modal.pictures[this.state.modalPictureIndex];
     }
 
     return (
@@ -223,6 +228,7 @@ export default class Home extends React.Component {
             style={{
               display: "flex",
               justifyContent: "center",
+
               // alignItems: "center"
             }}
           >
@@ -239,14 +245,16 @@ export default class Home extends React.Component {
             ></div>
             <div
               style={{
-                width: "60vw",
+                width: "65vw",
                 borderRadius: 5,
-                height: "80vh",
+                height: "85vh",
                 top: 30,
                 backgroundColor: "#f5f5f5",
                 position: "fixed",
                 zIndex: 100,
                 opacity: 1,
+                overflowY: "scroll",
+                overflowX: "hidden",
               }}
             >
               <div style={{ display: "flex", flexDirection: "column" }}>
@@ -275,8 +283,13 @@ export default class Home extends React.Component {
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <div style={{ marginLeft: 20 }}>
                       <img
-                        src={this.state.modal.pictures[0]}
-                        style={{ width: 400, height: 400 }}
+                        src={modalPicture}
+                        style={{
+                          maxWidth: 440,
+                          maxHeight: 400,
+                          minWidth: 220,
+                          minHeight: 200,
+                        }}
                       ></img>
                     </div>
                     <div
@@ -289,12 +302,16 @@ export default class Home extends React.Component {
                     >
                       {this.state.modal.pictures.map((pic, index) => {
                         return (
-                          <div>
+                          <div
+                            id="picture-map"
+                            key={index}
+                            onClick={() => this.changeModalImg(index)}
+                          >
                             <img
                               src={pic}
                               style={{
                                 width: 80,
-                                height: 80,
+                                height: 80 * 0.9,
                                 marginLeft: 5,
                                 marginRight: 5,
                               }}
@@ -448,6 +465,7 @@ export default class Home extends React.Component {
                     borderTopColor: "#a1a1a1",
                     borderTopWidth: 1,
                     borderTopStyle: "solid",
+                    marginBottom: "10vh",
                   }}
                 >
                   <div style={{ marginTop: 5 }}>
@@ -778,6 +796,12 @@ export default class Home extends React.Component {
         <div style={{ height: "10vh" }}></div>
       </div>
     );
+  }
+
+  changeModalImg(pictureIndex) {
+    this.setState({
+      modalPictureIndex: pictureIndex,
+    });
   }
 
   closeModal() {

@@ -57,6 +57,10 @@
   margin-right: 15px !important;
 }
 
+#picture-map:hover {
+  cursor: pointer;
+}
+
 #mobile-next-item {
   background-color: rgb(66, 108, 180);
   padding-left: 10px;

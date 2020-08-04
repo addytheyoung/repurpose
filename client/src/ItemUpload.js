@@ -132,36 +132,56 @@ export default class ItemUpload extends React.Component {
           ></Camera>
         </div>
 
-        {this.state.pictureArray.length > 0 && (
-          <CropTest
-            setCroppedImg={(croppedImgUrl) => this.setCroppedImg(croppedImgUrl)}
-            picture={this.state.pictureArray[0]}
-          />
-        )}
-        {this.state.pictureArray.length > 1 && (
-          <CropTest
-            setCroppedImg={(croppedImgUrl) => this.setCroppedImg(croppedImgUrl)}
-            picture={this.state.pictureArray[1]}
-          />
-        )}
-        {this.state.pictureArray.length > 2 && (
-          <CropTest
-            setCroppedImg={(croppedImgUrl) => this.setCroppedImg(croppedImgUrl)}
-            picture={this.state.pictureArray[2]}
-          />
-        )}
-        {this.state.pictureArray.length > 3 && (
-          <CropTest
-            setCroppedImg={(croppedImgUrl) => this.setCroppedImg(croppedImgUrl)}
-            picture={this.state.pictureArray[3]}
-          />
-        )}
-        {this.state.pictureArray.length > 4 && (
-          <CropTest
-            setCroppedImg={(croppedImgUrl) => this.setCroppedImg(croppedImgUrl)}
-            picture={this.state.pictureArray[4]}
-          />
-        )}
+        <div
+          style={{
+            width: "100vw",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {this.state.pictureArray.length > 0 && (
+            <CropTest
+              setCroppedImg={(croppedImgUrl) =>
+                this.setCroppedImg(croppedImgUrl)
+              }
+              picture={this.state.pictureArray[0]}
+            />
+          )}
+          {this.state.pictureArray.length > 1 && (
+            <CropTest
+              setCroppedImg={(croppedImgUrl) =>
+                this.setCroppedImg(croppedImgUrl)
+              }
+              picture={this.state.pictureArray[1]}
+            />
+          )}
+          {this.state.pictureArray.length > 2 && (
+            <CropTest
+              setCroppedImg={(croppedImgUrl) =>
+                this.setCroppedImg(croppedImgUrl)
+              }
+              picture={this.state.pictureArray[2]}
+            />
+          )}
+          {this.state.pictureArray.length > 3 && (
+            <CropTest
+              setCroppedImg={(croppedImgUrl) =>
+                this.setCroppedImg(croppedImgUrl)
+              }
+              picture={this.state.pictureArray[3]}
+            />
+          )}
+          {this.state.pictureArray.length > 4 && (
+            <CropTest
+              setCroppedImg={(croppedImgUrl) =>
+                this.setCroppedImg(croppedImgUrl)
+              }
+              picture={this.state.pictureArray[4]}
+            />
+          )}
+        </div>
 
         <div style={{ marginTop: 20 }}>Upload an item</div>
         <div>
