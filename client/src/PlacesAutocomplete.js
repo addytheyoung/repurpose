@@ -6,6 +6,8 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 import "./css/PlacesAutocomplete.css";
 import * as firebase from "firebase";
+import { add } from "lodash";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default class LocationSearchInput extends React.Component {
   lngPerMile = 57;
@@ -23,12 +25,18 @@ export default class LocationSearchInput extends React.Component {
   };
 
   handleSelect = (address) => {
+    this.props.loading(false);
+
+    console.log(address);
+    this.setState({
+      loading: true,
+    });
     geocodeByAddress(address)
       .then((results) => getLatLng(results[0]))
       .then((latLng) => this.checkAddress(address, latLng))
       .then((res) => {
         if (res) {
-          // Make a tmep accoutn and add the item if there is one
+          // Make a tmep accoutn and add the item iaf there is one
           // const uid = this.randomNumber(20);
           const uid = this.randomNumber(20);
           firebase
@@ -45,6 +53,7 @@ export default class LocationSearchInput extends React.Component {
               lng: this.lng,
             })
             .then(() => {
+              this.props.loading(true);
               localStorage.setItem("address", address);
               if (this.props.modal) {
                 localStorage.setItem("cart", 1);
@@ -57,6 +66,7 @@ export default class LocationSearchInput extends React.Component {
             });
         } else {
           // Too far.
+          this.props.loading(true);
           alert("Sorry, we're not in your city yet. We will be soon!");
         }
       })
@@ -67,6 +77,7 @@ export default class LocationSearchInput extends React.Component {
 
   render() {
     const mobile = this.props.mobile;
+
     return (
       <div
         style={{
@@ -102,9 +113,17 @@ export default class LocationSearchInput extends React.Component {
               />
               <div
                 className="autocomplete-dropdown-container"
-                style={{ minHeight: "30vh", position: "fixed" }}
+                style={{
+                  // maxHeight: "30vh",
+                  minWidth: "80vw",
+                  zIndex: 999,
+                  borderWidth: suggestions.length > 0 ? 1 : 0,
+                  borderRadius: 3,
+                  borderColor: "grey",
+                  borderStyle: "solid",
+                  position: "absolute",
+                }}
               >
-                {loading && <div>Loading...</div>}
                 {suggestions.map((suggestion, i) => {
                   if (i >= 3) {
                     return null;
@@ -118,13 +137,13 @@ export default class LocationSearchInput extends React.Component {
                         borderBottomStyle: "solid",
                         borderBottomColor: "grey",
                         backgroundColor: "#ffffff",
+                        zIndex: 999,
                       }}
                     >
                       <div
                         style={{
                           minHeight: mobile ? "10vh" : "10vh",
                           zIndex: 999,
-
                           maxWidth: "50vw",
                           fontSize: 18,
                           display: "flex",
@@ -134,7 +153,9 @@ export default class LocationSearchInput extends React.Component {
                         }}
                         {...getSuggestionItemProps(suggestion, {})}
                       >
-                        <span>{suggestion.description}</span>
+                        <span style={{ fontWeight: 500, zIndex: 999 }}>
+                          {suggestion.description}
+                        </span>
                       </div>
                     </div>
                   );
@@ -143,6 +164,7 @@ export default class LocationSearchInput extends React.Component {
             </div>
           )}
         </PlacesAutocomplete>
+
         {this.props.activeButton && (
           <div
             onClick={() => this.handleSelect(this.state.address)}

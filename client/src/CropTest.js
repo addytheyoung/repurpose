@@ -7,13 +7,17 @@ export default class CropTest extends PureComponent {
   constructor(props) {
     super(props);
   }
+
   state = {
     src: null,
     crop: {
-      aspect: 220 / 200,
+      aspect: 660 / 600,
       width: 660,
       height: 600,
       unit: "px",
+
+      // x: (window.innerWidth - window.innerWidth) / 2,
+      // y: (window.innerWidth - window.innerWidth) / 2,
     },
   };
 
@@ -39,7 +43,7 @@ export default class CropTest extends PureComponent {
   onCropChange = (crop, percentCrop) => {
     // You could also use percentCrop:
     // this.setState({ crop: percentCrop });
-    // this.setState({ crop });
+    this.setState({ crop });
   };
 
   async makeClientCrop(crop) {
@@ -62,12 +66,17 @@ export default class CropTest extends PureComponent {
     canvas.height = crop.height;
     const ctx = canvas.getContext("2d");
 
+    console.log(image.naturalWidth);
+    console.log(image.width);
+
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
+    // alert(crop.height);
+    // alert(image.height);
     ctx.drawImage(
       image,
-      image.width - crop.width,
-      image.height - crop.height,
+      (image.width - crop.width) / 2,
+      (image.height - crop.height) / 2,
       crop.width * scaleX,
       crop.height * scaleY,
       0,
@@ -101,13 +110,7 @@ export default class CropTest extends PureComponent {
     return (
       <div className="App" style={{}}>
         <ReactCrop
-          style={{
-            opacity: 0,
-            height: 0,
-
-            // position: "absolute",
-            // top: 0,
-          }}
+          style={{ height: 0 }}
           locked={true}
           src={picture}
           crop={crop}

@@ -44,6 +44,7 @@ export default class BuyMobile extends React.Component {
       aboutPage: false,
       searchPage: false,
       profilePage: false,
+      modalPictureIndex: 0,
     };
     this.state.finishedPullingItems = false;
     this.pullItemsFromDatabase(this.state.activeCategories, null, true);
@@ -269,7 +270,11 @@ export default class BuyMobile extends React.Component {
                     >
                       <div style={{}}>
                         <img
-                          src={this.state.modal.pictures[0]}
+                          src={
+                            this.state.modal.pictures[
+                              this.state.modalPictureIndex
+                            ]
+                          }
                           style={{
                             borderRadius: 3,
                             width: "80vw",
@@ -285,7 +290,30 @@ export default class BuyMobile extends React.Component {
                           marginLeft: 20,
                           marginTop: 10,
                         }}
-                      ></div>
+                      >
+                        {this.state.modal.pictures.map((pic, index) => {
+                          if (this.state.modal.pictures.length == 1) {
+                            return;
+                          }
+                          return (
+                            <div
+                              id="picture-map"
+                              key={index}
+                              onClick={() => this.changeModalImg(index)}
+                            >
+                              <img
+                                src={pic}
+                                style={{
+                                  width: 80,
+                                  height: 80 * 0.9,
+                                  marginLeft: 5,
+                                  marginRight: 5,
+                                }}
+                              ></img>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
                     <div
                       style={{
@@ -867,6 +895,12 @@ export default class BuyMobile extends React.Component {
     );
   }
 
+  changeModalImg(pictureIndex) {
+    this.setState({
+      modalPictureIndex: pictureIndex,
+    });
+  }
+
   closePage(page) {
     if (page == "homePage") {
       this.setState({
@@ -963,6 +997,7 @@ export default class BuyMobile extends React.Component {
     window.history.replaceState(null, null, "/");
     this.setState({
       modal: null,
+      modalPictureIndex: 0,
     });
   }
 
@@ -1011,6 +1046,7 @@ export default class BuyMobile extends React.Component {
           window.history.replaceState(null, null, "/");
           this.setState({
             modal: null,
+            modalPictureIndex: 0,
             addingToCart: false,
             numCartItems: 1,
           });
@@ -1048,6 +1084,8 @@ export default class BuyMobile extends React.Component {
 
                         this.setState({
                           modal: null,
+                          modalPictureIndex: 0,
+
                           addingToCart: false,
                           numCartItems: numCartItems,
                         });
@@ -1069,6 +1107,7 @@ export default class BuyMobile extends React.Component {
 
                         this.setState({
                           modal: null,
+                          modalPictureIndex: 0,
                           addingToCart: false,
                           numCartItems: numCartItems,
                         });
@@ -1105,6 +1144,7 @@ export default class BuyMobile extends React.Component {
 
                 this.setState({
                   modal: null,
+                  modalPictureIndex: 0,
                   addingToCart: false,
                   numCartItems: numCartItems,
                 });
@@ -1275,6 +1315,7 @@ export default class BuyMobile extends React.Component {
                 items: itemArr,
                 loaded: true,
                 modal: null,
+                modalPictureIndex: 0,
                 finalDoc: 0,
                 currentCategoryIndex: currentCategoryIndex + 1,
                 newCategory: true,
@@ -1308,6 +1349,7 @@ export default class BuyMobile extends React.Component {
                 newCategory:
                   this.state.currentCategoryIndex == 0 ? true : false,
                 modal: null,
+                modalPictureIndex: 0,
                 finalDoc: finalDoc,
                 currentItemIndex: this.state.currentItemIndex + 20,
               });
@@ -1391,6 +1433,7 @@ export default class BuyMobile extends React.Component {
       finishedLoading: false,
       items: [],
       modal: null,
+      modalPictureIndex: 0,
       finalDoc: 0,
     });
 

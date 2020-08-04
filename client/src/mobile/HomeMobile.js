@@ -25,6 +25,7 @@ export default class HomeMobile extends React.Component {
       addressModal: false,
       width: 0,
       height: 0,
+      modalPictureIndex: 0,
     };
 
     // If we're signed in, sign us out.
@@ -66,6 +67,7 @@ export default class HomeMobile extends React.Component {
               items: itemArr,
               loaded: true,
               modal: null,
+              modalPictureIndex: 0,
             });
           }
           for (var j = 0; j < allItemsDocs.length; j++) {
@@ -83,6 +85,7 @@ export default class HomeMobile extends React.Component {
                 items: itemArr,
                 loaded: true,
                 modal: null,
+                modalPictureIndex: 0,
               });
             }
           }
@@ -95,16 +98,18 @@ export default class HomeMobile extends React.Component {
       return (
         <div
           style={{
-            position: "absolute",
-            left: "45vw",
-            top: 200,
+            height: "100vh",
           }}
         >
-          <ClipLoader
-            size={150}
-            color={"#123abc"}
-            loading={this.state.loading}
-          />
+          <div
+            style={{
+              position: "absolute",
+              left: window.innerWidth / 2 - 40,
+              top: "30vh",
+            }}
+          >
+            <ClipLoader size={80} color={"#123abc"} loading={true} />
+          </div>
         </div>
       );
     }
@@ -210,6 +215,7 @@ export default class HomeMobile extends React.Component {
                   Enter your city or zip to make sure we can deliver to you!
                 </div>
                 <PlacesAutocomplete
+                  loading={(loaded) => this.loading(loaded)}
                   mobile={true}
                   activeButton={false}
                   modal={this.state.tempModal}
@@ -292,7 +298,11 @@ export default class HomeMobile extends React.Component {
                   >
                     <div style={{}}>
                       <img
-                        src={this.state.modal.pictures[0]}
+                        src={
+                          this.state.modal.pictures[
+                            this.state.modalPictureIndex
+                          ]
+                        }
                         style={{
                           borderRadius: 3,
                           width: "80vw",
@@ -308,7 +318,30 @@ export default class HomeMobile extends React.Component {
                         marginLeft: 20,
                         marginTop: 10,
                       }}
-                    ></div>
+                    >
+                      {this.state.modal.pictures.map((pic, index) => {
+                        if (this.state.modal.pictures.length == 1) {
+                          return;
+                        }
+                        return (
+                          <div
+                            id="picture-map"
+                            key={index}
+                            onClick={() => this.changeModalImg(index)}
+                          >
+                            <img
+                              src={pic}
+                              style={{
+                                width: 80,
+                                height: 80 * 0.9,
+                                marginLeft: 5,
+                                marginRight: 5,
+                              }}
+                            ></img>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                   <div
                     style={{
@@ -594,6 +627,7 @@ export default class HomeMobile extends React.Component {
             }}
           >
             <PlacesAutocomplete
+              loading={(loaded) => this.loading(loaded)}
               activeButton={true}
               modal={null}
               mobile={true}
@@ -825,6 +859,18 @@ export default class HomeMobile extends React.Component {
     );
   }
 
+  loading(loaded) {
+    this.setState({
+      loaded: loaded,
+    });
+  }
+
+  changeModalImg(pictureIndex) {
+    this.setState({
+      modalPictureIndex: pictureIndex,
+    });
+  }
+
   closeModal() {
     this.setState({
       profile: false,
@@ -835,6 +881,7 @@ export default class HomeMobile extends React.Component {
       retUser: false,
       addressModal: false,
       tempModal: null,
+      modalPictureIndex: 0,
     });
   }
 
@@ -844,6 +891,7 @@ export default class HomeMobile extends React.Component {
       addressModal: true,
       modal: false,
       tempModal: modal,
+      modalPictureIndex: 0,
     });
   }
 

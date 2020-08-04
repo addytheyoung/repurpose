@@ -43,17 +43,17 @@ export default class Home extends React.Component {
           window.location.reload();
         });
     }
-    // const categoryList = [
-    //   "Art & Decoration",
-    //   "Home",
-    //   "Books",
-    //   "Electronics",
-    //   "Toys & Games",
-    //   "Garden",
-    //   "Sports & Hobbies",
-    // ];
+    const categoryList = [
+      "Art & Decoration",
+      "Home",
+      "Books",
+      "Electronics",
+      "Toys & Games",
+      "Garden",
+      "Sports & Hobbies",
+    ];
 
-    const categoryList = ["Test", "Art & Decoration"];
+    // const categoryList = ["Test", "Art & Decoration"];
 
     const firebaseCats = firebase.firestore().collection("Categories");
     var i_index = 0;
@@ -75,6 +75,7 @@ export default class Home extends React.Component {
               items: itemArr,
               loaded: true,
               modal: null,
+              modalPictureIndex: 0,
             });
           }
           for (var j = 0; j < allItemsDocs.length; j++) {
@@ -92,6 +93,7 @@ export default class Home extends React.Component {
                 items: itemArr,
                 loaded: true,
                 modal: null,
+                modalPictureIndex: 0,
               });
             }
           }
@@ -814,6 +816,7 @@ export default class Home extends React.Component {
       retUser: false,
       addressModal: false,
       tempModal: null,
+      modalPictureIndex: 0,
     });
   }
 
@@ -822,6 +825,7 @@ export default class Home extends React.Component {
     this.setState({
       addressModal: true,
       modal: false,
+      modalPictureIndex: 0,
       tempModal: modal,
     });
   }

@@ -35,6 +35,7 @@ export default class Buy extends React.Component {
       width: 0,
       height: 0,
       activeSales: [true, true, true, true, true, true, true, true, true],
+      modalPictureIndex: 0,
     };
     this.state.finishedPullingItems = false;
     this.pullItemsFromDatabase(this.state.activeCategories, null, true);
@@ -114,6 +115,7 @@ export default class Buy extends React.Component {
     var itemCurrentPrice = -1;
     var showDecimalsOriginal = true;
     var showDecimalsCurrent = true;
+
     if (item) {
       itemDiscount = 1 - this.state.modal.current_price;
       itemCurrentPrice =
@@ -232,16 +234,21 @@ export default class Buy extends React.Component {
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <div style={{ marginLeft: 20 }}>
                         <img
-                          src={this.state.modal.pictures[0]}
+                          src={
+                            this.state.modal.pictures[
+                              this.state.modalPictureIndex
+                            ]
+                          }
                           style={{
                             borderRadius: 3,
                             maxWidth: 400,
                             maxHeight: 400,
-                            minWidth: 200,
-                            minHeight: 200,
+                            minWidth: 300,
+                            minHeight: 300,
                           }}
                         ></img>
                       </div>
+
                       <div
                         style={{
                           display: "flex",
@@ -249,7 +256,28 @@ export default class Buy extends React.Component {
                           marginLeft: 20,
                           marginTop: 10,
                         }}
-                      ></div>
+                      >
+                        {" "}
+                        {this.state.modal.pictures.map((pic, index) => {
+                          return (
+                            <div
+                              id="picture-map"
+                              key={index}
+                              onClick={() => this.changeModalImg(index)}
+                            >
+                              <img
+                                src={pic}
+                                style={{
+                                  width: 80,
+                                  height: 80 * 0.9,
+                                  marginLeft: 5,
+                                  marginRight: 5,
+                                }}
+                              ></img>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
                     <div
                       style={{
@@ -677,14 +705,6 @@ export default class Buy extends React.Component {
 
                         // If it's a category, render that title
                         if (typeof item == "string") {
-                          // if (numItemsFound == 0) {
-                          //   const title = document.getElementById(
-                          //     "category-title"
-                          //   );
-                          //   if (title) {
-                          //     title.style.opacity = 0;
-                          //   }
-                          // }
                           return (
                             <div
                               id="category-title"
@@ -862,6 +882,12 @@ export default class Buy extends React.Component {
     );
   }
 
+  changeModalImg(pictureIndex) {
+    this.setState({
+      modalPictureIndex: pictureIndex,
+    });
+  }
+
   setMixpanel(mixpanel) {
     mixpanel.track("Video play", {
       genre: "hip-hop",
@@ -900,6 +926,7 @@ export default class Buy extends React.Component {
     window.history.replaceState(null, null, "/");
     this.setState({
       modal: null,
+      modalPictureIndex: 0,
     });
   }
 
@@ -963,6 +990,7 @@ export default class Buy extends React.Component {
 
           this.setState({
             modal: null,
+            modalPictureIndex: 0,
             addingToCart: false,
             numCartItems: 1,
           });
@@ -1000,6 +1028,7 @@ export default class Buy extends React.Component {
 
                         this.setState({
                           modal: null,
+                          modalPictureIndex: 0,
                           addingToCart: false,
                           numCartItems: numCartItems,
                         });
@@ -1021,6 +1050,7 @@ export default class Buy extends React.Component {
                         window.history.replaceState(null, null, "/");
                         this.setState({
                           modal: null,
+                          modalPictureIndex: 0,
                           addingToCart: false,
                           numCartItems: numCartItems,
                         });
@@ -1035,6 +1065,7 @@ export default class Buy extends React.Component {
                 window.history.replaceState(null, null, "/");
                 this.setState({
                   modal: null,
+                  modalPictureIndex: 0,
                   addingToCart: false,
                   numCartItems: numCartItems,
                 });
@@ -1055,6 +1086,7 @@ export default class Buy extends React.Component {
                 window.history.replaceState(null, null, "/");
                 this.setState({
                   modal: null,
+                  modalPictureIndex: 0,
                   addingToCart: false,
                   numCartItems: numCartItems,
                 });
@@ -1197,6 +1229,7 @@ export default class Buy extends React.Component {
               loaded: true,
               newCategory: true,
               modal: null,
+              modalPictureIndex: 0,
               finalDoc: 0,
             });
             this.state.finishedPullingItems = false;
@@ -1220,6 +1253,7 @@ export default class Buy extends React.Component {
                 items: itemArr,
                 loaded: true,
                 modal: null,
+                modalPictureIndex: 0,
                 finalDoc: 0,
                 currentCategoryIndex: currentCategoryIndex + 1,
                 newCategory: true,
@@ -1253,6 +1287,7 @@ export default class Buy extends React.Component {
                 newCategory:
                   this.state.currentCategoryIndex == 0 ? true : false,
                 modal: null,
+                modalPictureIndex: 0,
                 finalDoc: finalDoc,
                 currentItemIndex: this.state.currentItemIndex + 20,
               });
@@ -1344,6 +1379,7 @@ export default class Buy extends React.Component {
       finishedLoading: false,
       items: [],
       modal: null,
+      modalPictureIndex: 0,
       finalDoc: 0,
     });
     this.pullItemsFromDatabase(newCategories, true);

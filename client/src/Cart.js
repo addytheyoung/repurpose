@@ -26,6 +26,7 @@ export default class Cart extends React.Component {
       deliveryType: "delivery",
       delivery: true,
       signInModal: false,
+      modalPictureIndex: 0,
     };
 
     var myUid = null;
@@ -530,8 +531,18 @@ export default class Cart extends React.Component {
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <div style={{ marginLeft: 20 }}>
                       <img
-                        src={this.state.modal.pictures[0]}
-                        style={{ width: 400, height: 400 }}
+                        src={
+                          this.state.modal.pictures[
+                            this.state.modalPictureIndex
+                          ]
+                        }
+                        style={{
+                          borderRadius: 3,
+                          maxWidth: 400,
+                          maxHeight: 400,
+                          minWidth: 300,
+                          minHeight: 300,
+                        }}
                       ></img>
                     </div>
                     <div
@@ -544,12 +555,16 @@ export default class Cart extends React.Component {
                     >
                       {this.state.modal.pictures.map((pic, index) => {
                         return (
-                          <div key={index}>
+                          <div
+                            id="picture-map"
+                            key={index}
+                            onClick={() => this.changeModalImg(index)}
+                          >
                             <img
                               src={pic}
                               style={{
                                 width: 80,
-                                height: 80,
+                                height: 80 * 0.9,
                                 marginLeft: 5,
                                 marginRight: 5,
                               }}
@@ -687,7 +702,7 @@ export default class Cart extends React.Component {
             flexDirection: "row",
             marginLeft: "5vw",
             marginRight: "5vw",
-            // overflowY: "scroll",
+            overflowY: "scroll",
             height: "90vh",
           }}
         >
@@ -994,6 +1009,13 @@ export default class Cart extends React.Component {
       </div>
     );
   }
+
+  changeModalImg(pictureIndex) {
+    this.setState({
+      modalPictureIndex: pictureIndex,
+    });
+  }
+
   startShopping() {
     var email = document.getElementById("email").value;
     if (email) {
@@ -1304,6 +1326,7 @@ export default class Cart extends React.Component {
       newUser: false,
       retUser: false,
       modal: false,
+      modalPictureIndex: 0,
     });
   }
 
