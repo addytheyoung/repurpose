@@ -51,6 +51,7 @@ import {
 import SearchPageMobile from "./mobile/SearchPageMobile";
 import CheckOutMobile from "./mobile/CheckOutMobile";
 import SearchPageMobileMain from "./mobile/SearchPageMobileMain";
+import SignInModal from "./SignInModal";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -96,6 +97,11 @@ export default class RenderRoutes extends React.Component {
                 exact={true}
                 render={() => <CheckOutMobile />}
               />
+              <Route
+                path="/andrewitemupload"
+                exact={true}
+                render={() => <ItemUpload />}
+              />
             </Router>
           </Elements>
         );
@@ -131,7 +137,7 @@ export default class RenderRoutes extends React.Component {
               render={() => <AndrewOrders />}
             />
             <Route
-              path="/andrewitemupload4467"
+              path="/andrewitemupload"
               exact={true}
               render={() => <ItemUpload />}
             />

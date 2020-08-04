@@ -3,6 +3,10 @@
   width: 300px; */
 }
 
+#camera {
+  width: 100vw;
+}
+
 #camera video {
   width: 100vw !important;
 }
