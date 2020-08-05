@@ -38,9 +38,9 @@ export default class SignInModal extends React.Component {
         ></div>
         <div
           style={{
-            width: "30vw",
+            width: this.props.mobile ? "100vw" : "30vw",
             borderRadius: 5,
-            height: "40vh",
+            height: this.props.mobile ? "100vh" : "40vh",
             top: 30,
             backgroundColor: "#f5f5f5",
             position: "fixed",
@@ -90,7 +90,10 @@ export default class SignInModal extends React.Component {
                 <Input
                   id="email"
                   placeholder="Enter your email"
-                  style={{ maxWidth: "25vw", marginTop: "1vh" }}
+                  style={{
+                    maxWidth: this.props.mobile ? "75vw" : "25vw",
+                    marginTop: "1vh",
+                  }}
                 />
                 <div
                   onClick={() => this.startShopping()}

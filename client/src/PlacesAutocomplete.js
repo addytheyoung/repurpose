@@ -115,7 +115,7 @@ export default class LocationSearchInput extends React.Component {
                 className="autocomplete-dropdown-container"
                 style={{
                   // maxHeight: "30vh",
-                  minWidth: "80vw",
+                  minWidth: mobile ? "80vw" : "40vw",
                   zIndex: 999,
                   borderWidth: suggestions.length > 0 ? 1 : 0,
                   borderRadius: 3,

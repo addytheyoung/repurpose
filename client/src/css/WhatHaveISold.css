@@ -1,0 +1,43 @@
+#collection:hover {
+  cursor: pointer;
+}
+
+#category2 {
+  width: 30vw;
+  font-size: 16px;
+}
+
+#category2 div {
+  font-size: 16px;
+}
+
+#title-change {
+  width: 30vw;
+}
+
+#price-change {
+  width: 30vw;
+}
+
+#description-change {
+  width: 30vw;
+}
+
+#update-item-soldpage:hover {
+  cursor: pointer;
+}
+
+#update-item-soldpage {
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 5vh;
+  font-size: 22px;
+  font-weight: 500;
+  color: white;
+  background-color: rgb(66, 108, 180);
+}
+
+.sellpage-change-name {
+  width: 10vw;
+  margin-right: 2vw;
+}
