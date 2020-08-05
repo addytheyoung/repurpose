@@ -6,6 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Close from "../images/close.png";
 import HeaderMobile from "./HeaderMobile";
 import FooterMobile from "./FooterMobile";
+import Div100vh from "react-div-100vh";
 
 export default class SearchPageMobileMain extends React.Component {
   constructor(props) {
@@ -40,7 +41,6 @@ export default class SearchPageMobileMain extends React.Component {
           .doc(categoryList[i])
           .collection("All")
           .where("location", "==", city)
-          // .limit(30)
           .get()
           .then((allItems) => {
             i_index++;
@@ -52,8 +52,6 @@ export default class SearchPageMobileMain extends React.Component {
               if (this.searchMatchesItem(search, itemData)) {
                 itemArr.push(itemData);
               }
-              // Find a way to render all the items here
-
               if (
                 j === allItemsDocs.length - 1 &&
                 i_index === categoryList.length - 1
@@ -68,36 +66,7 @@ export default class SearchPageMobileMain extends React.Component {
           });
       }
     }
-    // else {
-    //   firebase
-    //     .firestore()
-    //     .collection("Categories")
-    //     .doc(category)
-    //     .collection("All")
-    //     .where("location", "==", city)
-    //     .get()
-    //     .then((allItems) => {
-    //       const docs = allItems.docs;
-    //       const itemArr = [];
 
-    //       // Filter here
-    //       for (var i = 0; i < docs.length; i++) {
-    //         const itemData = docs[i].data();
-    //         // See if the search matches
-    //         if (this.searchMatchesItem(search, itemData)) {
-    //           itemArr.push(itemData);
-    //         }
-    //         // Find a way to render all the items here
-    //         if (i === docs.length - 1) {
-    //           this.setState({
-    //             items: itemArr,
-    //             loaded: true,
-    //             modal: null,
-    //           });
-    //         }
-    //       }
-    //     });
-    // }
     window.localStorage.setItem("city", city);
     // window.location.href = "/";
 
@@ -111,6 +80,7 @@ export default class SearchPageMobileMain extends React.Component {
       modal: null,
       addingToCart: false,
       numCartItems: localStorage.getItem("cart"),
+      modalPictureIndex: 0,
     };
   }
 
@@ -132,8 +102,30 @@ export default class SearchPageMobileMain extends React.Component {
         </div>
       );
 
+    // Set the modal variables
+    var itemDiscount = -1;
+    var itemCurrentPrice = -1;
+    var showDecimalsOriginal = true;
+    var showDecimalsCurrent = true;
+    if (this.state.modal) {
+      itemDiscount = 1 - this.state.modal.current_price;
+      itemCurrentPrice =
+        this.state.modal.original_price -
+        this.state.modal.original_price * itemDiscount;
+      // See if we need decimals for the original price
+      if (this.state.modal.original_price % 1 == 0) {
+        showDecimalsOriginal = false;
+      }
+      // See if ywe need decimals for the current price
+      if (itemCurrentPrice % 1 == 0) {
+        showDecimalsCurrent = false;
+      }
+    }
+
     return (
-      <div style={{ overflowX: "hidden" }}>
+      <div
+        style={{ overflowX: "hidden", overflowY: "scroll", height: "100vh" }}
+      >
         {!this.state.loaded && (
           <div
             style={{
@@ -160,30 +152,21 @@ export default class SearchPageMobileMain extends React.Component {
               style={{
                 display: "flex",
                 justifyContent: "center",
+                zIndex: 200,
                 // alignItems: "center"
               }}
             >
-              <div
-                onClick={(e) => this.closeModal(e)}
-                style={{
-                  backgroundColor: "#000000",
-                  opacity: 0.5,
-                  zIndex: 99,
-                  width: "100vw",
-                  height: "100vh",
-                  position: "fixed",
-                }}
-              ></div>
-              <div
+              <Div100vh
                 style={{
                   width: "100vw",
                   borderRadius: 5,
                   position: "fixed",
+                  overflowY: "scroll",
                   height: "100vh",
                   top: 0,
                   backgroundColor: "#f5f5f5",
                   // position: "absolute",
-                  zIndex: 100,
+                  zIndex: 200,
                   opacity: 1,
                 }}
               >
@@ -193,9 +176,22 @@ export default class SearchPageMobileMain extends React.Component {
                       width: "100%",
                       display: "flex",
                       flexDirection: "row",
-                      justifyContent: "flex-end",
+                      justifyContent: "center",
                     }}
                   >
+                    <div
+                      style={{
+                        fontSize: 24,
+                        fontWeight: 500,
+                        marginTop: 20,
+                        textAlign: "center",
+                        padding: 10,
+                        width: "65vw",
+                        minHeight: 20,
+                      }}
+                    >
+                      {this.state.modal.title}
+                    </div>
                     <img
                       id="close"
                       onClick={() => this.closeModal()}
@@ -203,8 +199,9 @@ export default class SearchPageMobileMain extends React.Component {
                       style={{
                         width: "10vw",
                         height: "10vw",
-                        marginTop: 40,
-                        marginRight: 40,
+                        top: 30,
+                        right: 30,
+                        position: "fixed",
                       }}
                     />
                   </div>
@@ -224,11 +221,15 @@ export default class SearchPageMobileMain extends React.Component {
                     >
                       <div style={{}}>
                         <img
-                          src={this.state.modal.pictures[0]}
+                          src={
+                            this.state.modal.pictures[
+                              this.state.modalPictureIndex
+                            ]
+                          }
                           style={{
                             borderRadius: 3,
-                            width: "70vw",
-                            height: "70vw",
+                            width: "80vw",
+                            height: "72vw",
                             marginTop: 20,
                           }}
                         ></img>
@@ -240,13 +241,37 @@ export default class SearchPageMobileMain extends React.Component {
                           marginLeft: 20,
                           marginTop: 10,
                         }}
-                      ></div>
+                      >
+                        {this.state.modal.pictures.map((pic, index) => {
+                          if (this.state.modal.pictures.length == 1) {
+                            return;
+                          }
+                          return (
+                            <div
+                              id="picture-map"
+                              key={index}
+                              onClick={() => this.changeModalImg(index)}
+                            >
+                              <img
+                                src={pic}
+                                style={{
+                                  width: 80,
+                                  height: 80 * 0.9,
+                                  marginLeft: 5,
+                                  marginRight: 5,
+                                }}
+                              ></img>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
                     <div
                       style={{
                         width: "100%",
                         display: "flex",
                         justifyContent: "center",
+                        alignItems: "center",
                       }}
                     >
                       <div
@@ -254,30 +279,87 @@ export default class SearchPageMobileMain extends React.Component {
                           display: "flex",
                           flexDirection: "column",
                           justifyContent: "center",
-                          alignItems: "centers",
+                          alignItems: "center",
                         }}
                       >
-                        <div
-                          style={{
-                            fontSize: 40,
-                            fontWeight: 500,
-                            marginTop: 30,
-                            textAlign: "center",
-                            padding: 10,
-                          }}
-                        >
-                          {this.state.modal.title}
-                        </div>
+                        {/* <div
+                        style={{
+                          fontSize: 24,
+                          fontWeight: 500,
+                          marginTop: 10,
+                          textAlign: "center",
+                          padding: 10,
+                        }}
+                      >
+                        {this.state.modal.title}
+                      </div> */}
+
+                        {Math.round(itemDiscount * 100).toFixed(0) != 0 && (
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <div
+                              style={{
+                                marginTop: 10,
+                                fontWeight: 500,
+                                fontSize: 22,
+                                textAlign: "center",
+                                textDecoration: "line-through",
+                              }}
+                            >
+                              {!showDecimalsOriginal &&
+                                "$" +
+                                  (
+                                    Math.round(
+                                      this.state.modal.original_price * 100
+                                    ) / 100
+                                  ).toFixed(0)}
+                              {showDecimalsOriginal &&
+                                "$" +
+                                  (
+                                    Math.round(
+                                      this.state.modal.original_price * 100
+                                    ) / 100
+                                  ).toFixed(2)}
+                            </div>
+                            <div
+                              style={{
+                                fontWeight: 400,
+                                fontSize: 16,
+                                marginLeft: 10,
+                                color: "#cc0000",
+                                textAlign: "center",
+                                marginTop: 10,
+                              }}
+                            >
+                              {Math.round(itemDiscount * 100).toFixed(0) +
+                                "% off"}
+                            </div>
+                          </div>
+                        )}
 
                         <div
                           style={{
                             marginTop: 30,
                             fontWeight: 700,
-                            fontSize: 16,
+                            fontSize: 24,
                             textAlign: "center",
                           }}
                         >
-                          {"$" + this.state.modal.original_price}
+                          {!showDecimalsCurrent &&
+                            "$" +
+                              (
+                                Math.round(itemCurrentPrice * 100) / 100
+                              ).toFixed(0)}
+                          {showDecimalsCurrent &&
+                            "$" +
+                              (
+                                Math.round(itemCurrentPrice * 100) / 100
+                              ).toFixed(2)}
                         </div>
 
                         <div
@@ -285,7 +367,7 @@ export default class SearchPageMobileMain extends React.Component {
                           id="add-to-cart"
                           style={{
                             backgroundColor: "#426CB4",
-                            marginTop: 50,
+                            marginTop: 20,
                             borderRadius: 5,
                             padding: 10,
                             width: 300,
@@ -296,7 +378,7 @@ export default class SearchPageMobileMain extends React.Component {
                             justifyContent: "center",
                             color: "#ffffff",
                             fontWeight: 600,
-                            fontSize: 16,
+                            fontSize: 22,
                           }}
                         >
                           {!this.state.addingToCart && "ADD TO CART"}
@@ -308,7 +390,7 @@ export default class SearchPageMobileMain extends React.Component {
                   <div
                     style={{
                       marginLeft: 20,
-                      fontSize: 16,
+                      fontSize: 14,
                       marginTop: 20,
                       fontWeight: 600,
                     }}
@@ -329,9 +411,10 @@ export default class SearchPageMobileMain extends React.Component {
                     <div style={{ marginTop: 5 }}>
                       {this.state.modal.description}
                     </div>
+                    <div style={{ height: "20vh" }}></div>
                   </div>
                 </div>
-              </div>
+              </Div100vh>
             </div>
           )}
           {/* <div style={{ position: "fixed", top: 0 }}>
@@ -351,123 +434,29 @@ export default class SearchPageMobileMain extends React.Component {
             }}
           >
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    fontSize: 20,
-                    fontWeight: 700,
-                    marginBottom: 15,
-                  }}
-                >
-                  Collection, Austin, TX
-                </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
                 <div
                   style={{
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                     textAlign: "center",
-                    fontSize: 12,
-                    fontWeight: 400,
-                    marginBottom: 20,
+                    marginTop: "2vh",
+                    fontSize: 20,
+                    fontWeight: 500,
+                    marginBottom: 15,
+                    width: "80vw",
                   }}
                 >
-                  All purchases are delivered to your <br />
-                  doorstep in less than 24 hours!
+                  Items near you, delivered to your doorstep every morning.
                 </div>
-                {this.state.newItems &&
-                  this.state.activeCategories &&
-                  !this.state.activeCategories.includes(false) && (
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        flexDirection: "column",
-                      }}
-                    >
-                      <div
-                        style={{ fontSize: 16, fontWeight: 600, marginTop: 50 }}
-                      >
-                        Items just added
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <div
-                          id="scroll"
-                          style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            width: "98vw",
-                            marginLeft: "1vw",
-                            marginRight: "1vw",
-                            overflowX: "scroll",
-                            marginTop: 20,
-                          }}
-                        >
-                          {this.state.newItems.map((item, index) => {
-                            return (
-                              <div>
-                                <div
-                                  key={index}
-                                  onClick={() => this.itemPage(item)}
-                                  id="box"
-                                  style={{
-                                    marginLeft: 10,
-                                    marginRight: 10,
-                                  }}
-                                >
-                                  <img
-                                    src={item.pictures[0]}
-                                    style={{
-                                      width: "40vw",
-                                      height: "40vw",
-                                      borderRadius: 5,
-                                      overflow: "hidden",
-                                    }}
-                                  ></img>
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      flexDirection: "column",
-                                    }}
-                                  >
-                                    <div
-                                      style={{
-                                        fontSize: 18,
-                                        fontWeight: 400,
-                                        fontSize: 16,
-                                      }}
-                                    >
-                                      {item.title}
-                                    </div>
-                                    <div
-                                      style={{
-                                        marginTop: 5,
-                                        fontWeight: 600,
-                                        fontSize: 16,
-                                      }}
-                                    >
-                                      {"$" + item.original_price}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    </div>
-                  )}
+
                 <div
                   style={{
                     display: "flex",
@@ -490,45 +479,17 @@ export default class SearchPageMobileMain extends React.Component {
                     }}
                   >
                     {this.state.items.map((item, index) => {
-                      if (
-                        (this.state.minPrice &&
-                          item.original_price < this.state.minPrice) ||
-                        (this.state.maxPrice &&
-                          item.original_price > this.state.maxPrice)
-                      ) {
-                        return null;
+                      // Show discounts, if any.
+                      const discount = 1 - item.current_price;
+                      const currentPrice =
+                        item.original_price - item.original_price * discount;
+                      var showDecimals = true;
+                      if (currentPrice % 1 == 0) {
+                        // It's a while number. Don't show decimals.
+                        showDecimals = false;
                       }
-                      var prevItemCat =
-                        index == 0 ? "" : this.state.items[index - 1].category;
-                      if (typeof item == "string") {
-                        return (
-                          <div
-                            style={{
-                              marginTop: "4vh",
+                      const f = Math.round(discount * 100).toFixed(0);
 
-                              marginBottom: "2vh",
-                              width: "70vw",
-                              textAlign: "center",
-                              fontWeight: 600,
-                              fontSize: 20,
-                            }}
-                          >
-                            {item}
-                          </div>
-                        );
-                      }
-                      if (item.category == "Clothing, Shoes, & Accessories") {
-                        if (this.state.activeClothingGender != "all") {
-                          if (item.gender != this.state.activeClothingGender) {
-                            return null;
-                          }
-                        }
-                        if (this.state.activeClothingType != "all") {
-                          if (item.type != this.state.activeClothingType) {
-                            return null;
-                          }
-                        }
-                      }
                       return (
                         <div
                           key={index}
@@ -559,21 +520,57 @@ export default class SearchPageMobileMain extends React.Component {
                               style={{
                                 display: "flex",
                                 flexDirection: "column",
-                                height: 100,
+                                minHeight: 50,
                                 display: "block",
+                                paddingLeft: "1vw",
                               }}
                             >
-                              <div style={{ fontSize: 16, fontWeight: 400 }}>
+                              <div
+                                style={{
+                                  fontSize: 18,
+                                  fontWeight: 400,
+                                  maxWidth: "48vw",
+                                }}
+                              >
                                 {item.title}
                               </div>
                               <div
                                 style={{
+                                  display: "flex",
+                                  flexDirection: "row",
+                                  alignItems: "center",
                                   marginTop: 5,
-                                  fontSize: 16,
-                                  fontWeight: 600,
                                 }}
                               >
-                                {"$" + item.original_price}
+                                <div
+                                  style={{
+                                    fontWeight: 600,
+                                    fontSize: 20,
+                                  }}
+                                >
+                                  {!showDecimals &&
+                                    "$" +
+                                      (
+                                        Math.round(currentPrice * 100) / 100
+                                      ).toFixed(0)}
+                                  {showDecimals &&
+                                    "$" +
+                                      (
+                                        Math.round(currentPrice * 100) / 100
+                                      ).toFixed(2)}
+                                </div>
+                                <div
+                                  style={{
+                                    fontWeight: 400,
+                                    fontSize: 16,
+                                    marginLeft: 10,
+                                    color: "#cc0000",
+                                    opacity:
+                                      discount == 0 ? 0 : discount * 15 * 0.25,
+                                  }}
+                                >
+                                  {f + "%"}
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -588,9 +585,9 @@ export default class SearchPageMobileMain extends React.Component {
                 style={{
                   display: "flex",
                   flexDirection: "row",
-                  width: "1vw",
-                  height: "1vh",
-                  marginTop: "10vh",
+                  flexWrap: "wrap",
+                  width: "70vw",
+                  height: "15vh",
                   justifyContent: "center",
                 }}
               ></div>
@@ -608,6 +605,12 @@ export default class SearchPageMobileMain extends React.Component {
         ></div>
       </div>
     );
+  }
+
+  changeModalImg(pictureIndex) {
+    this.setState({
+      modalPictureIndex: pictureIndex,
+    });
   }
 
   randomNumber(length) {
@@ -631,22 +634,20 @@ export default class SearchPageMobileMain extends React.Component {
 
   searchMatchesItem(search, itemData) {
     const searchArr = search.split(" ");
-    if (!itemData || !itemData.title) {
-      return false;
-    }
+
     for (var t = 0; t < searchArr.length; t++) {
       const searchTerm = searchArr[t];
       if (
+        itemData.title &&
         // Title matches directly
         itemData.title.toString().toLowerCase().includes(searchTerm)
       ) {
         return true;
-      }
-      for (var i = 0; i < itemData.sub_categories.length; i++) {
-        const subCategory = itemData.sub_categories[i];
-        if (subCategory.includes(searchTerm)) {
-          return true;
-        }
+      } else if (
+        itemData.description &&
+        itemData.description.toString().toLowerCase().includes(searchTerm)
+      ) {
+        return true;
       }
     }
   }
@@ -660,6 +661,7 @@ export default class SearchPageMobileMain extends React.Component {
   closeModal(e) {
     // e.stopPropagation();
     this.setState({
+      modalPictureIndex: 0,
       modal: null,
     });
   }
@@ -707,6 +709,7 @@ export default class SearchPageMobileMain extends React.Component {
         .then(() => {
           localStorage.setItem("cart", 1);
           this.setState({
+            modalPictureIndex: 0,
             modal: null,
             addingToCart: false,
             numCartItems: 1,
@@ -742,6 +745,8 @@ export default class SearchPageMobileMain extends React.Component {
                       if (myCart[i].uid == item.uid) {
                         alert("Item already in your cart!");
                         this.setState({
+                          modalPictureIndex: 0,
+
                           modal: null,
                           addingToCart: false,
                           numCartItems: numCartItems,
@@ -761,6 +766,8 @@ export default class SearchPageMobileMain extends React.Component {
                       .then(() => {
                         localStorage.setItem("cart", numCartItems);
                         this.setState({
+                          modalPictureIndex: 0,
+
                           modal: null,
                           addingToCart: false,
                           numCartItems: numCartItems,
@@ -774,6 +781,8 @@ export default class SearchPageMobileMain extends React.Component {
               if (myCart[i].uid == item.uid) {
                 alert("Item already in your cart!");
                 this.setState({
+                  modalPictureIndex: 0,
+
                   modal: null,
                   addingToCart: false,
                   numCartItems: numCartItems,
@@ -793,6 +802,7 @@ export default class SearchPageMobileMain extends React.Component {
               .then(() => {
                 localStorage.setItem("cart", numCartItems);
                 this.setState({
+                  modalPictureIndex: 0,
                   modal: null,
                   addingToCart: false,
                   numCartItems: numCartItems,

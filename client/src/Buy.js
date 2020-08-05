@@ -860,6 +860,7 @@ export default class Buy extends React.Component {
                   flexDirection: "row",
                   flexWrap: "wrap",
                   width: "70vw",
+                  height: "20vh",
                   justifyContent: "center",
                 }}
               ></div>

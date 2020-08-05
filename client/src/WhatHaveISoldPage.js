@@ -61,8 +61,8 @@ export default class WhatHaveISoldPage extends React.Component {
       "Everything Else",
     ];
 
-    const activeSeller = "JsVK7C1mHeMQg61tnB4qgkyPOik2";
-    // const activeSeller = firebase.auth().currentUser.uid;
+    // const activeSeller = "JsVK7C1mHeMQg61tnB4qgkyPOik2";
+    const activeSeller = firebase.auth().currentUser.uid;
     const finalArr = [];
     var i_index = 0;
     for (var i = 0; i < categoryList.length; i++) {

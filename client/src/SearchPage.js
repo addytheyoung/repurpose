@@ -63,6 +63,7 @@ export default class SearchPage extends React.Component {
                   items: itemArr,
                   loaded: true,
                   modal: null,
+                  modalPictureIndex: 0,
                 });
               }
             }
@@ -93,13 +94,13 @@ export default class SearchPage extends React.Component {
                 items: itemArr,
                 loaded: true,
                 modal: null,
+                modalPictureIndex: 0,
               });
             }
           }
         });
     }
     window.localStorage.setItem("city", city);
-    // window.location.href = "/";
 
     this.state = {
       loaded: false,
@@ -111,9 +112,30 @@ export default class SearchPage extends React.Component {
       modal: null,
       addingToCart: false,
       numCartItems: localStorage.getItem("cart"),
+      modalPictureIndex: 0,
     };
   }
   render() {
+    // Set the modal variables
+    var itemDiscount = -1;
+    var itemCurrentPrice = -1;
+    var showDecimalsOriginal = true;
+    var showDecimalsCurrent = true;
+
+    if (this.state.modal) {
+      itemDiscount = 1 - this.state.modal.current_price;
+      itemCurrentPrice =
+        this.state.modal.original_price -
+        this.state.modal.original_price * itemDiscount;
+      // See if we need decimals for the original price
+      if (this.state.modal.original_price % 1 == 0) {
+        showDecimalsOriginal = false;
+      }
+      // See if ywe need decimals for the current price
+      if (itemCurrentPrice % 1 == 0) {
+        showDecimalsCurrent = false;
+      }
+    }
     return (
       <div>
         {!this.state.loaded && (
@@ -188,8 +210,18 @@ export default class SearchPage extends React.Component {
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <div style={{ marginLeft: 20 }}>
                       <img
-                        src={this.state.modal.pictures[0]}
-                        style={{ width: 400, height: 400 }}
+                        src={
+                          this.state.modal.pictures[
+                            this.state.modalPictureIndex
+                          ]
+                        }
+                        style={{
+                          borderRadius: 3,
+                          maxWidth: 400,
+                          maxHeight: 400,
+                          minWidth: 300,
+                          minHeight: 300,
+                        }}
                       ></img>
                     </div>
                     <div
@@ -202,12 +234,16 @@ export default class SearchPage extends React.Component {
                     >
                       {this.state.modal.pictures.map((pic, index) => {
                         return (
-                          <div>
+                          <div
+                            id="picture-map"
+                            key={index}
+                            onClick={() => this.changeModalImg(index)}
+                          >
                             <img
                               src={pic}
                               style={{
                                 width: 80,
-                                height: 80,
+                                height: 80 * 0.9,
                                 marginLeft: 5,
                                 marginRight: 5,
                               }}
@@ -242,15 +278,72 @@ export default class SearchPage extends React.Component {
                         {this.state.modal.title}
                       </div>
 
+                      {Math.round(itemDiscount * 100).toFixed(0) != 0 && (
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <div
+                            style={{
+                              marginTop: 10,
+                              fontWeight: 500,
+                              fontSize: 22,
+                              textAlign: "center",
+                              textDecoration: "line-through",
+                            }}
+                          >
+                            {!showDecimalsOriginal &&
+                              "$" +
+                                (
+                                  Math.round(
+                                    this.state.modal.original_price * 100
+                                  ) / 100
+                                ).toFixed(0)}
+                            {showDecimalsOriginal &&
+                              "$" +
+                                (
+                                  Math.round(
+                                    this.state.modal.original_price * 100
+                                  ) / 100
+                                ).toFixed(2)}
+                          </div>
+                          <div
+                            style={{
+                              fontWeight: 400,
+                              fontSize: 16,
+                              marginLeft: 10,
+                              color: "#cc0000",
+                              textAlign: "center",
+                              marginTop: 10,
+                            }}
+                          >
+                            {Math.round(itemDiscount * 100).toFixed(0) +
+                              "% off"}
+                          </div>
+                        </div>
+                      )}
+
                       <div
                         style={{
-                          marginTop: 100,
+                          marginTop: 30,
                           fontWeight: 700,
                           fontSize: 24,
                           textAlign: "center",
                         }}
                       >
-                        {"$" + this.state.modal.original_price}
+                        {!showDecimalsCurrent &&
+                          "$" +
+                            (Math.round(itemCurrentPrice * 100) / 100).toFixed(
+                              0
+                            )}
+                        {showDecimalsCurrent &&
+                          "$" +
+                            (Math.round(itemCurrentPrice * 100) / 100).toFixed(
+                              2
+                            )}
                       </div>
                       <div
                         style={{
@@ -315,7 +408,14 @@ export default class SearchPage extends React.Component {
           </div>
         )}
 
-        <div style={{ opacity: this.state.loaded ? 1 : 0 }}>
+        <div
+          style={{
+            opacity: this.state.loaded ? 1 : 0,
+            height: "100vh",
+            overflowX: "hidden",
+            overflowY: "scroll",
+          }}
+        >
           <div>
             <HeaderBar
               searchTerm={this.state.searchTerm}
@@ -329,11 +429,6 @@ export default class SearchPage extends React.Component {
               flexDirection: "column",
             }}
           >
-            <FilterBar
-              updateFilter={(a, b) => this.updateFilter(a, b)}
-              type={this.state.category}
-            />
-
             <div
               style={{
                 fontSize: 20,
@@ -344,6 +439,17 @@ export default class SearchPage extends React.Component {
               }}
             >
               {this.state.category}
+            </div>
+            <div
+              style={{
+                fontSize: 18,
+                fontWeight: 500,
+                marginTop: 50,
+                width: "100vw",
+                textAlign: "center",
+              }}
+            >
+              {'"' + this.state.searchTerm + '"'}
             </div>
             {!this.state.items ||
               (this.state.items.length === 0 && (
@@ -381,14 +487,22 @@ export default class SearchPage extends React.Component {
                 }}
               >
                 {this.state.items.map((item, index) => {
-                  if (
-                    (this.state.minPrice &&
-                      item.original_price < this.state.minPrice) ||
-                    (this.state.maxPrice &&
-                      item.original_price > this.state.maxPrice)
-                  ) {
+                  if (!item) {
                     return null;
                   }
+
+                  // Show discounts, if any.
+                  const discount = 1 - item.current_price;
+                  const currentPrice =
+                    item.original_price - item.original_price * discount;
+                  const f = Math.round(discount * 100).toFixed(0);
+
+                  var showDecimals = true;
+                  if (currentPrice % 1 == 0) {
+                    // It's a while number. Don't show decimals.
+                    showDecimals = false;
+                  }
+
                   return (
                     <div
                       onClick={() => this.itemPage(item)}
@@ -415,12 +529,51 @@ export default class SearchPage extends React.Component {
                           overflow: "hidden",
                         }}
                       ></img>
-                      <div style={{ display: "flex", flexDirection: "column" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                      >
                         <div style={{ fontSize: 18, fontWeight: 400 }}>
                           {item.title}
                         </div>
-                        <div style={{ marginTop: 5, fontWeight: 600 }}>
-                          {"$" + item.original_price}
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            marginTop: 5,
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontWeight: 600,
+                              fontSize: 20,
+                            }}
+                          >
+                            {!showDecimals &&
+                              "$" +
+                                (Math.round(currentPrice * 100) / 100).toFixed(
+                                  0
+                                )}
+                            {showDecimals &&
+                              "$" +
+                                (Math.round(currentPrice * 100) / 100).toFixed(
+                                  2
+                                )}
+                          </div>
+                          <div
+                            style={{
+                              fontWeight: 400,
+                              fontSize: 16,
+                              marginLeft: 10,
+                              color: "#cc0000",
+                              opacity: discount == 0 ? 0 : discount * 15 * 0.25,
+                            }}
+                          >
+                            {f + "%"}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -475,6 +628,12 @@ export default class SearchPage extends React.Component {
     }
   }
 
+  changeModalImg(pictureIndex) {
+    this.setState({
+      modalPictureIndex: pictureIndex,
+    });
+  }
+
   updateFilter(min, max) {
     min = min.substring(1, min.length);
     max = max.substring(1, max.length);
@@ -494,6 +653,7 @@ export default class SearchPage extends React.Component {
     // e.stopPropagation();
     this.setState({
       modal: null,
+      modalPictureIndex: 0,
     });
   }
 
@@ -541,6 +701,8 @@ export default class SearchPage extends React.Component {
           localStorage.setItem("cart", 1);
           this.setState({
             modal: null,
+            modalPictureIndex: 0,
+
             addingToCart: false,
             numCartItems: 1,
           });
@@ -576,6 +738,8 @@ export default class SearchPage extends React.Component {
                         alert("Item already in your cart!");
                         this.setState({
                           modal: null,
+                          modalPictureIndex: 0,
+
                           addingToCart: false,
                           numCartItems: numCartItems,
                         });
@@ -595,6 +759,8 @@ export default class SearchPage extends React.Component {
                         localStorage.setItem("cart", numCartItems);
                         this.setState({
                           modal: null,
+                          modalPictureIndex: 0,
+
                           addingToCart: false,
                           numCartItems: numCartItems,
                         });
@@ -608,6 +774,8 @@ export default class SearchPage extends React.Component {
                 alert("Item already in your cart!");
                 this.setState({
                   modal: null,
+                  modalPictureIndex: 0,
+
                   addingToCart: false,
                   numCartItems: numCartItems,
                 });
@@ -627,6 +795,8 @@ export default class SearchPage extends React.Component {
                 localStorage.setItem("cart", numCartItems);
                 this.setState({
                   modal: null,
+                  modalPictureIndex: 0,
+
                   addingToCart: false,
                   numCartItems: numCartItems,
                 });

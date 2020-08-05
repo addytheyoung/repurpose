@@ -478,34 +478,36 @@ export default class BuyMobile extends React.Component {
               height: this.state.homePage && !this.state.modal ? "88vh" : 0,
             }}
           >
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    fontSize: 24,
-                    fontWeight: 700,
-                    marginBottom: 15,
-                    marginTop: "5vh",
-                  }}
-                >
-                  Collection - Central TX
-                </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100vw",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
                 <div
                   style={{
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                     textAlign: "center",
+                    marginTop: "2vh",
                     fontSize: 20,
-                    fontWeight: 400,
-                    marginBottom: 20,
+                    fontWeight: 500,
+                    marginBottom: 15,
+                    width: "80vw",
                   }}
                 >
-                  All purchases are delivered to your <br />
-                  doorstep in less than 24 hours!
+                  Items near you, delivered to your doorstep every morning.
                 </div>
                 {this.state.newItems &&
                   this.state.activeCategories &&
@@ -522,7 +524,7 @@ export default class BuyMobile extends React.Component {
                         style={{
                           fontSize: 24,
                           fontWeight: 600,
-                          marginTop: 50,
+                          marginTop: 10,
                         }}
                       >
                         Items just added
@@ -737,7 +739,6 @@ export default class BuyMobile extends React.Component {
                             <div
                               style={{
                                 marginTop: "4vh",
-
                                 marginBottom: "2vh",
                                 width: "70vw",
                                 textAlign: "center",
