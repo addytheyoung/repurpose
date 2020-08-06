@@ -69,7 +69,7 @@ export default class CheckoutForm extends React.Component {
         email,
         "Thank you for your purchase!\n\n You purchased: " +
           this.state.myData.cart.length +
-          " items for $" +
+          "items for $" +
           this.props.total +
           ". " +
           "\n\nItems will be delivered to " +

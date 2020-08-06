@@ -331,7 +331,7 @@ export default class CheckOutFormMobile extends React.Component {
               style={{ margin: 10 }}
               placeholder="First Name"
             ></Input>
-            <Input
+            {/* <Input
               defaultValue={
                 localStorage.getItem("lname")
                   ? localStorage.getItem("lname")
@@ -340,7 +340,7 @@ export default class CheckOutFormMobile extends React.Component {
               id="last"
               style={{ margin: 10 }}
               placeholder="Last Name"
-            ></Input>
+            ></Input> */}
 
             <div style={{ display: "flex", flexDirection: "column" }}>
               <Input
@@ -575,7 +575,7 @@ export default class CheckOutFormMobile extends React.Component {
 
   andrewMethod2(e) {
     const first = document.getElementById("first").value.trim();
-    const last = document.getElementById("last").value.trim();
+    // const last = document.getElementById("last").value.trim();
     const address1 = document.getElementById("address1").value.trim();
     const address2 = document.getElementById("address2").value.trim();
     const zip = document.getElementById("zip").value.trim();
@@ -585,7 +585,6 @@ export default class CheckOutFormMobile extends React.Component {
 
     if (
       first == "" ||
-      last == "" ||
       address1 == "" ||
       zip == "" ||
       city == "" ||
@@ -603,7 +602,7 @@ export default class CheckOutFormMobile extends React.Component {
     console.log(zip);
 
     localStorage.setItem("fname", first);
-    localStorage.setItem("lname", last);
+    // localStorage.setItem("lname", last);
     localStorage.setItem("address1", address1);
     localStorage.setItem("address2", address2);
     localStorage.setItem("zip", zip);
@@ -638,7 +637,7 @@ export default class CheckOutFormMobile extends React.Component {
         .then((b) => {
           console.log("THEN");
           console.log(b);
-          if (b === true && first && last && address1 && zip && city && state) {
+          if (b === true && first && address1 && zip && city && state) {
             console.log("PASSED");
             this.checkItems().then((a) => {
               console.log(a.length);
@@ -885,7 +884,7 @@ export default class CheckOutFormMobile extends React.Component {
     const API_KEY = "AIzaSyBbpHHOjcFkGJeUaEIQZ-zNVaYBw0UVfzw";
 
     const first = document.getElementById("first").value.trim();
-    const last = document.getElementById("last").value.trim();
+    // const last = document.getElementById("last").value.trim();
     const address1 = document.getElementById("address1").value.trim();
     const address2 = document.getElementById("address2").value.trim();
     const zip = document.getElementById("zip").value.trim();
@@ -904,12 +903,6 @@ export default class CheckOutFormMobile extends React.Component {
         loadingIcon: false,
       });
       alert("Please enter your first name");
-      return;
-    } else if (last === "") {
-      this.setState({
-        loadingIcon: false,
-      });
-      alert("Please enter your last name");
       return;
     } else if (address1 === "") {
       this.setState({

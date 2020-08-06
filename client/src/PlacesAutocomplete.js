@@ -172,7 +172,7 @@ export default class LocationSearchInput extends React.Component {
               marginLeft: mobile ? 0 : 10,
               width: 140,
               padding: "1vh",
-              height: "5vh",
+              height: "4vh",
               borderRadius: 6,
               backgroundColor: "#426CB4",
               fontWeight: 700,
