@@ -764,6 +764,12 @@ export default class Cart extends React.Component {
                 item.original_price - item.original_price * discount;
               const f = Math.round(discount * 100).toFixed(0);
 
+              var showDecimals = true;
+              if (currentPrice % 1 == 0) {
+                // It's a while number. Don't show decimals.
+                showDecimals = false;
+              }
+
               return (
                 <div
                   key={index}
@@ -805,7 +811,12 @@ export default class Cart extends React.Component {
                       }}
                     >
                       <div style={{ fontSize: 20, fontWeight: 600 }}>
-                        {"$" + (Math.round(currentPrice * 10) / 10).toFixed(1)}
+                        {!showDecimals &&
+                          "$" +
+                            (Math.round(currentPrice * 100) / 100).toFixed(0)}
+                        {showDecimals &&
+                          "$" +
+                            (Math.round(currentPrice * 100) / 100).toFixed(2)}
                       </div>
                       <div
                         style={{

@@ -89,6 +89,7 @@ function SimpleDialog(props) {
           marginTop: 30,
           justifyContent: "center",
           // alignItems: "center",
+          overflowX: "hidden",
         }}
       >
         <div

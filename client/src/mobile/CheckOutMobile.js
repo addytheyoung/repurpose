@@ -71,12 +71,13 @@ export default class CheckOutMobile extends Component {
     const subTotal = this.getSubtotal(this.state.myData.cart);
     const tax = this.getTax(subTotal);
     const shipping = this.getShipping(subTotal);
-    const total =
+    const total = (
       parseInt(
         parseInt(subTotal * 100) +
           parseInt(tax * 100) +
           parseInt(shipping * 100)
-      ) / 100;
+      ) / 100
+    ).toFixed(2);
 
     const signedIn =
       !!firebase.auth().currentUser || localStorage.getItem("tempUid");
@@ -478,7 +479,7 @@ export default class CheckOutMobile extends Component {
   }
 
   getTax(price) {
-    return parseInt(price * 0.08 * 100) / 100;
+    return (parseInt(price * 0.08 * 100) / 100).toFixed(2);
   }
 
   getShipping(price) {

@@ -111,7 +111,7 @@ export default class CheckOut extends React.Component {
                 justifyContent: "center",
                 alignItems: "center",
                 fontSize: 26,
-                color: "#7628dd",
+                color: "rgb(66, 108, 180)",
               }}
             >
               Collection
@@ -356,7 +356,7 @@ export default class CheckOut extends React.Component {
               justifyContent: "center",
               alignItems: "center",
               fontSize: 26,
-              color: "#7628dd",
+              color: "rgb(66, 108, 180)",
             }}
           >
             Collection

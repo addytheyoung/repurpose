@@ -388,8 +388,9 @@ export default class Buy extends React.Component {
                               marginTop: 30,
                               borderRadius: 5,
                               padding: 10,
-                              width: 150,
-                              marginLeft: 20,
+                              maxWidth: 150,
+                              minWidth: 75,
+
                               height: 40,
                               display: "flex",
                               alignItems: "center",

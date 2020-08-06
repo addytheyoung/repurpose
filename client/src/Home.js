@@ -445,9 +445,10 @@ export default class Home extends React.Component {
                             backgroundColor: "#426CB4",
                             marginTop: 30,
                             borderRadius: 5,
-                            marginLeft: 20,
+
                             padding: 10,
-                            width: 150,
+                            maxWidth: 150,
+                            minWidth: 75,
                             height: 40,
                             display: "flex",
                             alignItems: "center",
