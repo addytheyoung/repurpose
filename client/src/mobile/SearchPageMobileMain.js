@@ -89,16 +89,18 @@ export default class SearchPageMobileMain extends React.Component {
       return (
         <div
           style={{
-            position: "absolute",
-            left: "45vw",
-            top: 200,
+            height: "100vh",
           }}
         >
-          <ClipLoader
-            size={150}
-            color={"#123abc"}
-            loading={this.state.loading}
-          />
+          <div
+            style={{
+              position: "fixed",
+              left: window.innerWidth / 2 - 40,
+              top: "30vh",
+            }}
+          >
+            <ClipLoader size={80} color={"#123abc"} loading={true} />
+          </div>
         </div>
       );
 
@@ -129,16 +131,18 @@ export default class SearchPageMobileMain extends React.Component {
         {!this.state.loaded && (
           <div
             style={{
-              position: "absolute",
-              left: "45vw",
-              top: 200,
+              height: "100vh",
             }}
           >
-            <ClipLoader
-              size={150}
-              color={"#123abc"}
-              loading={this.state.loading}
-            />
+            <div
+              style={{
+                position: "fixed",
+                left: window.innerWidth / 2 - 40,
+                top: "30vh",
+              }}
+            >
+              <ClipLoader size={80} color={"#123abc"} loading={true} />
+            </div>
           </div>
         )}
         <div

@@ -42,6 +42,7 @@ import BuyMobile from "./mobile/BuyMobile";
 import CartMobile from "./mobile/CartMobile";
 import NewItemVariable from "./scripts/NewItemVariable";
 import SellMobile from "./mobile/SellMobile";
+import HomeRedirect from "./HomeRedirect";
 import {
   BrowserView,
   MobileView,
@@ -102,6 +103,11 @@ export default class RenderRoutes extends React.Component {
                 exact={true}
                 render={() => <ItemUpload />}
               />
+              <Route
+                path="/home-redirect"
+                exact={true}
+                render={() => <HomeRedirect />}
+              />
             </Router>
           </Elements>
         );
@@ -120,6 +126,11 @@ export default class RenderRoutes extends React.Component {
               path="/what-have-i-sold"
               exact={true}
               render={() => <WhatHaveISoldPage />}
+            />
+            <Route
+              path="/home-redirect"
+              exact={true}
+              render={() => <HomeRedirect />}
             />
             <Route
               path="/andrewtest"
@@ -272,6 +283,11 @@ export default class RenderRoutes extends React.Component {
                 exact={true}
                 render={() => <CheckOutMobile />}
               />
+              <Route
+                path="/home-redirect"
+                exact={true}
+                render={() => <HomeRedirect />}
+              />
             </Router>
           </Elements>
         );
@@ -315,6 +331,11 @@ export default class RenderRoutes extends React.Component {
               path="/andrewscripts4469"
               exact={true}
               render={() => <MoveItemCategory />}
+            />
+            <Route
+              path="/home-redirect"
+              exact={true}
+              render={() => <HomeRedirect />}
             />
             <Route path="/help" exact={true} render={() => <Help />} />
             <Route path="/sell" exact={true} render={() => <Sell_2 />} />

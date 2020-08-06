@@ -46,7 +46,7 @@ export default class Buy extends React.Component {
       return (
         <div
           style={{
-            position: "absolute",
+            position: "fixed",
             left: "45vw",
             top: 200,
           }}
@@ -94,7 +94,7 @@ export default class Buy extends React.Component {
       return (
         <div
           style={{
-            position: "absolute",
+            position: "fixed",
             left: "45vw",
             top: 200,
           }}
@@ -158,7 +158,7 @@ export default class Buy extends React.Component {
         {!this.state.loaded && (
           <div
             style={{
-              position: "absolute",
+              position: "fixed",
               left: "45vw",
               top: 200,
             }}

@@ -113,6 +113,11 @@ export default class HomeMobile extends React.Component {
         </div>
       );
     }
+    // Signed in? Go ahead and set the city.
+    if (firebase.auth().currentUser) {
+      localStorage.setItem("city", "Austin, TX");
+      window.location.reload();
+    }
 
     // Set the modal variables
     var itemDiscount = -1;

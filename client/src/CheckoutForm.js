@@ -106,14 +106,10 @@ export default class CheckoutForm extends React.Component {
       localStorage.setItem("deliverCity", "");
 
       const orders = this.state.myData.orders;
-      console.log(tempCart);
-      console.log(cart);
 
       // Update my own cart and remove everything
 
       var newOrders = orders.concat(tempCart);
-
-      console.log(newOrders);
 
       var myUid = null;
 
@@ -147,9 +143,7 @@ export default class CheckoutForm extends React.Component {
             const item = cart[i];
 
             // Deleted all items from database
-            console.log(item.category);
-            console.log(item.uid);
-            console.log("********(*****");
+
             firebase
               .firestore()
               .collection("Categories")
@@ -159,7 +153,6 @@ export default class CheckoutForm extends React.Component {
               // .update({})
               .update({ deleting_now: true })
               .then((f) => {
-                console.log(f);
                 firebase
                   .firestore()
                   .collection("Categories")
@@ -177,7 +170,6 @@ export default class CheckoutForm extends React.Component {
                         .get()
                         .then((user) => {
                           const userDocs = user.docs;
-                          console.log(userDocs.length);
                           if (userDocs.length === 0) {
                             // Shouldn't be, i'm removing from my own cart
                           }
@@ -198,7 +190,6 @@ export default class CheckoutForm extends React.Component {
                                   break;
                                 }
                                 if (newCart[p].uid === itemUids[l]) {
-                                  console.log("splicing array");
                                   l = 0;
                                   // Remove the item
                                   newCart.splice(p, 1);
@@ -206,7 +197,6 @@ export default class CheckoutForm extends React.Component {
                                 l++;
                               }
                             }
-                            console.log(newCart);
                             firebase
                               .firestore()
                               .collection("Users")
@@ -262,7 +252,7 @@ export default class CheckoutForm extends React.Component {
         {this.state.loadingIcon && (
           <div
             style={{
-              position: "absolute",
+              position: "fixed",
               left: "45vw",
               top: 200,
             }}
@@ -325,7 +315,7 @@ export default class CheckoutForm extends React.Component {
               style={{ margin: 10 }}
               placeholder="First Name"
             ></Input>
-            <Input
+            {/* <Input
               defaultValue={
                 localStorage.getItem("lname")
                   ? localStorage.getItem("lname")
@@ -334,7 +324,7 @@ export default class CheckoutForm extends React.Component {
               id="last"
               style={{ margin: 10 }}
               placeholder="Last Name"
-            ></Input>
+            ></Input> */}
             {this.props.deliveryType === "delivery" && (
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <Input
@@ -471,8 +461,6 @@ export default class CheckoutForm extends React.Component {
                 alert("error");
               }}
               onSuccess={(details, data) => {
-                console.log(details);
-                console.log(data);
                 this.setState({
                   error: null,
                   succeeded: true,
@@ -552,7 +540,7 @@ export default class CheckoutForm extends React.Component {
 
   andrewMethod2(e) {
     const first = document.getElementById("first").value.trim();
-    const last = document.getElementById("last").value.trim();
+    // const last = document.getElementById("last").value.trim();
     const address1 = document.getElementById("address1").value.trim();
     const address2 = document.getElementById("address2").value.trim();
     const zip = document.getElementById("zip").value.trim();
@@ -562,7 +550,6 @@ export default class CheckoutForm extends React.Component {
 
     if (
       first == "" ||
-      last == "" ||
       address1 == "" ||
       zip == "" ||
       city == "" ||
@@ -573,27 +560,15 @@ export default class CheckoutForm extends React.Component {
       window.location.href = "/checkout";
       return;
     } else if (!this.checkEmail(email)) {
-      alert("nigga");
       window.location.reload();
     }
 
-    console.log(address1);
-    console.log(zip);
-
     localStorage.setItem("fname", first);
-    localStorage.setItem("lname", last);
     localStorage.setItem("address1", address1);
     localStorage.setItem("address2", address2);
     localStorage.setItem("zip", zip);
 
-    // const url =
-    //   "https://maps.googleapis.com/maps/api/geocode/json?address=" +
-    //   address1 +
-    //   "&key=" +
-    //   API_KEY;
-
     if (!this.state.call) {
-      console.log("Andrew method");
       var myUid = null;
       localStorage.setItem("deliverAddress", address1);
       localStorage.setItem("deliverAddress2", address2);
@@ -613,12 +588,8 @@ export default class CheckoutForm extends React.Component {
 
       this.checkAddress()
         .then((b) => {
-          console.log("THEN");
-          console.log(b);
-          if (b === true && first && last && address1 && zip && city && state) {
-            console.log("PASSED");
+          if (b === true && first && address1 && zip && city && state) {
             this.checkItems().then((a) => {
-              console.log(a);
               if (!a) {
               } else if (a.length === this.state.myData.cart.length) {
               } else {
@@ -861,7 +832,7 @@ export default class CheckoutForm extends React.Component {
     const API_KEY = "AIzaSyBbpHHOjcFkGJeUaEIQZ-zNVaYBw0UVfzw";
 
     const first = document.getElementById("first").value.trim();
-    const last = document.getElementById("last").value.trim();
+    // const last = document.getElementById("last").value.trim();
     const address1 = document.getElementById("address1").value.trim();
     const address2 = document.getElementById("address2").value.trim();
     const zip = document.getElementById("zip").value.trim();
@@ -880,12 +851,6 @@ export default class CheckoutForm extends React.Component {
         loadingIcon: false,
       });
       alert("Please enter your first name");
-      return;
-    } else if (last === "") {
-      this.setState({
-        loadingIcon: false,
-      });
-      alert("Please enter your last name");
       return;
     } else if (address1 === "") {
       this.setState({

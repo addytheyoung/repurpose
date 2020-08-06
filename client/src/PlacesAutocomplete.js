@@ -60,9 +60,8 @@ export default class LocationSearchInput extends React.Component {
               } else {
                 localStorage.setItem("cart", 0);
               }
-              localStorage.setItem("city", "Austin, TX");
               localStorage.setItem("tempUid", uid);
-              window.location.reload();
+              window.location.href = "/home-redirect";
             });
         } else {
           // Too far.

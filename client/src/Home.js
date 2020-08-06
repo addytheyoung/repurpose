@@ -102,22 +102,24 @@ export default class Home extends React.Component {
   }
 
   render() {
+    console.log(!this.state.loaded);
     if (!this.state.loaded) {
       return (
         <div
           style={{
-            position: "absolute",
+            position: "fixed",
             left: "45vw",
             top: 200,
           }}
         >
-          <ClipLoader
-            size={150}
-            color={"#123abc"}
-            loading={this.state.loading}
-          />
+          <ClipLoader size={150} color={"#123abc"} loading={true} />
         </div>
       );
+    }
+    // Signed in? Go ahead and set the city.
+    if (firebase.auth().currentUser) {
+      localStorage.setItem("city", "Austin, TX");
+      window.location.reload();
     }
 
     // Set the modal variables
@@ -150,6 +152,17 @@ export default class Home extends React.Component {
           height: "100vh",
         }}
       >
+        {/* {!this.state.loaded && (
+          <div
+            style={{
+              position: "fixed",
+              left: "45vw",
+              top: 200,
+            }}
+          >
+            <ClipLoader size={150} color={"#123abc"} loading={true} />
+          </div>
+        )} */}
         {this.state.profile && (
           <SignInOnlyModal
             redirectUrl={"/"}
@@ -218,6 +231,7 @@ export default class Home extends React.Component {
                   Enter your delivery address to check availability
                 </div>
                 <PlacesAutocomplete
+                  loading={(loaded) => this.loading(loaded)}
                   activeButton={false}
                   modal={this.state.tempModal}
                 />
@@ -603,7 +617,11 @@ export default class Home extends React.Component {
               alignItems: "center",
             }}
           >
-            <PlacesAutocomplete activeButton={true} modal={null} />
+            <PlacesAutocomplete
+              loading={(loaded) => this.loading(loaded)}
+              activeButton={true}
+              modal={null}
+            />
           </div>
         </div>
 
@@ -798,6 +816,12 @@ export default class Home extends React.Component {
         <div style={{ height: "10vh" }}></div>
       </div>
     );
+  }
+
+  loading(loaded) {
+    this.setState({
+      loaded: loaded,
+    });
   }
 
   changeModalImg(pictureIndex) {

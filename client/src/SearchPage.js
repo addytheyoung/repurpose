@@ -141,7 +141,7 @@ export default class SearchPage extends React.Component {
         {!this.state.loaded && (
           <div
             style={{
-              position: "absolute",
+              position: "fixed",
               left: "45vw",
               top: 200,
             }}
