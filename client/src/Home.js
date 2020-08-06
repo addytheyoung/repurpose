@@ -16,6 +16,8 @@ import Money from "./images/money.svg";
 import MoneyMagnet from "./images/money_magnet.svg";
 import Shop from "./images/shop.svg";
 import Delivery from "./images/delivery.svg";
+import "react-chatbox-component/dist/style.css";
+import Chat from "./Chat";
 
 export default class Home extends React.Component {
   citiesList = ["Austin, TX"];
@@ -63,7 +65,7 @@ export default class Home extends React.Component {
         .doc(categoryList[i])
         .collection("All")
         .where("location", "==", "Austin, TX")
-        .limit(30)
+        .limit(1)
         .get()
         .then((allItems) => {
           i_index++;
@@ -163,6 +165,8 @@ export default class Home extends React.Component {
             <ClipLoader size={150} color={"#123abc"} loading={true} />
           </div>
         )} */}
+
+        <Chat />
         {this.state.profile && (
           <SignInOnlyModal
             redirectUrl={"/"}

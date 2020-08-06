@@ -10,6 +10,7 @@ import FilterBar from "./FilterBar";
 import Back from "./images/back.png";
 import Front from "./images/arrow.png";
 import { MixpanelProvider, MixpanelConsumer } from "react-mixpanel";
+import { ThemeProvider } from "@livechat/ui-kit";
 
 export default class Buy extends React.Component {
   constructor(props) {
