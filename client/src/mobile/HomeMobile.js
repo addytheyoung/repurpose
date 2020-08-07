@@ -10,6 +10,7 @@ import Money from "../images/money.svg";
 import Shop from "../images/shop.svg";
 import Delivery from "../images/delivery.svg";
 import Div100vh from "react-div-100vh";
+import Pin from "../images/gps.svg";
 
 export default class HomeMobile extends React.Component {
   citiesList = ["Austin, TX"];
@@ -201,30 +202,47 @@ export default class HomeMobile extends React.Component {
                     onClick={() => this.closeModal()}
                     src={Close}
                     style={{
-                      width: "10vw",
-                      height: "10vw",
-                      top: 30,
-                      right: 30,
+                      width: "5vw",
+                      height: "5vw",
+                      top: 20,
+                      right: 20,
                       position: "fixed",
                     }}
                   />
                 </div>
                 <div
                   style={{
-                    textAlign: "center",
-                    marginTop: "12vh",
+                    textAlign: "start",
+                    marginTop: "10vh",
                     marginBottom: "5vh",
-                    fontSize: 20,
+                    paddingLeft: "5vw",
+                    fontSize: 32,
+                    fontWeight: 500,
+                    height: "5vh",
                   }}
                 >
-                  Enter your city or zip to make sure we can deliver to you!
+                  Location
                 </div>
                 <PlacesAutocomplete
+                  openAddressModal={() => this.setState({ addressModal: true })}
                   loading={(loaded) => this.loading(loaded)}
                   mobile={true}
                   activeButton={false}
                   modal={this.state.tempModal}
                 />
+              </div>
+              <div style={{ padding: "5vw" }}>
+                <div
+                  style={{
+                    marginTop: "5vh",
+                    textAlign: "center",
+                    fontSize: 22,
+                    fontWeight: 400,
+                    color: "grey",
+                  }}
+                >
+                  We need to show you the right shop!
+                </div>
               </div>
             </div>
           </div>
@@ -618,8 +636,7 @@ export default class HomeMobile extends React.Component {
               paddingRight: "5vw",
             }}
           >
-            As many items as you want, delivered to you the next morning for a
-            flat $2 order fee.
+            Delivered to you the next morning for a flat $2 order fee.
           </div>
 
           <div
@@ -632,6 +649,7 @@ export default class HomeMobile extends React.Component {
             }}
           >
             <PlacesAutocomplete
+              openAddressModal={() => this.setState({ addressModal: true })}
               loading={(loaded) => this.loading(loaded)}
               activeButton={true}
               modal={null}

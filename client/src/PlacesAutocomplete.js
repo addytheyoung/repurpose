@@ -8,6 +8,7 @@ import "./css/PlacesAutocomplete.css";
 import * as firebase from "firebase";
 import { add } from "lodash";
 import ClipLoader from "react-spinners/ClipLoader";
+import Pin from "./images/gps.svg";
 
 export default class LocationSearchInput extends React.Component {
   lngPerMile = 57;
@@ -27,7 +28,11 @@ export default class LocationSearchInput extends React.Component {
   handleSelect = (address) => {
     this.props.loading(false);
     if (address == "") {
-      alert("Please enter your city or zip!");
+      if (this.props.mobile) {
+        this.props.openAddressModal();
+      } else {
+        alert("Please put in your city or zip!");
+      }
       this.props.loading(true);
       return;
     }
@@ -102,68 +107,107 @@ export default class LocationSearchInput extends React.Component {
             getSuggestionItemProps,
             loading,
           }) => (
-            <div>
-              <input
-                id="delivery-address-input"
-                style={{
-                  width: mobile ? "80vw" : "40vw",
-                  height: "5vh",
-                  fontSize: 18,
-                }}
-                {...getInputProps({
-                  placeholder: "Enter your city or zip code",
-                  className: "location-search-input",
-                })}
-              />
+            <div style={{ display: "flex", flexDirection: "column" }}>
               <div
-                className="autocomplete-dropdown-container"
+                onClick={() => (mobile ? this.props.openAddressModal() : null)}
+                id="delivery-address-input-container"
                 style={{
-                  // maxHeight: "30vh",
-                  minWidth: mobile ? "80vw" : "40vw",
-                  zIndex: 999,
-                  borderWidth: suggestions.length > 0 ? 1 : 0,
-                  borderRadius: 3,
-                  borderColor: "grey",
+                  width: mobile ? "92vw" : "42vw",
+                  height: "6vh",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
                   borderStyle: "solid",
-                  position: "absolute",
+                  borderWidth: 2,
+                  borderColor: "rgb(118, 118, 118)",
+                  borderRadius: 3,
                 }}
               >
-                {suggestions.map((suggestion, i) => {
-                  if (i >= 3) {
-                    return null;
-                  }
-                  return (
-                    <div
-                      key={i}
-                      style={{
-                        minHeight: mobile ? "10vh" : "10vh",
-                        borderBottomWidth: 1,
-                        borderBottomStyle: "solid",
-                        borderBottomColor: "grey",
-                        backgroundColor: "#ffffff",
-                        zIndex: 999,
-                      }}
-                    >
+                <img
+                  src={Pin}
+                  style={{
+                    width: "3vh",
+                    height: "3vh",
+                    marginLeft: "1vh",
+                    marginRight: "1vh",
+                  }}
+                />
+                <input
+                  autoFocus={this.props.activeButton ? false : true}
+                  id="delivery-address-input"
+                  style={{
+                    width: mobile ? "90vw" : "40vw",
+                    height: "5vh",
+                    fontSize: 18,
+                    border: "none",
+                    padding: 0,
+                    margin: 0,
+                  }}
+                  {...getInputProps({
+                    placeholder: "Enter your city or zip code",
+                    className: "location-search-input",
+                  })}
+                />
+              </div>
+              <div
+                style={{
+                  position: "relative",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <div
+                  className="autocomplete-dropdown-container"
+                  style={{
+                    // maxHeight: "30vh",
+                    minWidth: mobile ? "90vw" : "40vw",
+                    width: mobile ? "90vw" : "40vw",
+                    zIndex: 999,
+                    borderWidth: suggestions.length > 0 ? 1 : 0,
+                    borderRadius: 3,
+                    borderColor: "grey",
+                    borderStyle: "solid",
+                    position: "absolute",
+                    top: mobile ? "0vh" : "0vh",
+                  }}
+                >
+                  {suggestions.map((suggestion, i) => {
+                    if (i >= 3) {
+                      return null;
+                    }
+                    return (
                       <div
+                        key={i}
                         style={{
                           minHeight: mobile ? "10vh" : "10vh",
+                          borderBottomWidth: 1,
+                          borderBottomStyle: "solid",
+                          borderBottomColor: "grey",
+                          backgroundColor: "#ffffff",
                           zIndex: 999,
-                          maxWidth: "50vw",
-                          fontSize: 18,
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          padding: 10,
                         }}
-                        {...getSuggestionItemProps(suggestion, {})}
                       >
-                        <span style={{ fontWeight: 500, zIndex: 999 }}>
-                          {suggestion.description}
-                        </span>
+                        <div
+                          style={{
+                            minHeight: mobile ? "10vh" : "10vh",
+                            zIndex: 999,
+                            maxWidth: "50vw",
+                            fontSize: 18,
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            padding: 10,
+                          }}
+                          {...getSuggestionItemProps(suggestion, {})}
+                        >
+                          <span style={{ fontWeight: 500, zIndex: 999 }}>
+                            {suggestion.description}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
             </div>
           )}
@@ -175,9 +219,9 @@ export default class LocationSearchInput extends React.Component {
             id="start"
             style={{
               marginLeft: mobile ? 0 : 10,
-              width: 140,
+              width: mobile ? "90vw" : 140,
               padding: "1vh",
-              height: mobile ? "7vh" : "5vh",
+              height: mobile ? "6vh" : "5.5vh",
               borderRadius: 6,
               backgroundColor: "#426CB4",
               fontWeight: 700,

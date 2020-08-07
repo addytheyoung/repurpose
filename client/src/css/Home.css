@@ -62,21 +62,19 @@
 }
 
 #mobile-next-item {
-  background-color: rgb(66, 108, 180);
+  background-color: #dae2f1;
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
   border-radius: 5px;
-  color: white;
+  color: #375995;
   font-weight: 500;
-  background-color: rgb(66, 108, 180);
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
   border-radius: 5px;
-  color: white;
   font-size: 22px;
   margin-top: 3vh;
   font-weight: 500;
@@ -84,23 +82,29 @@
 }
 
 #mobile-prev-item {
-  background-color: rgb(66, 108, 180);
+  background-color: #dae2f1;
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
   border-radius: 5px;
-  color: white;
+  color: #375995;
   font-weight: 500;
-  background-color: rgb(66, 108, 180);
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
-  border-radius: 5px;
-  color: white;
+  border-radius: 5;
   font-size: 22px;
   margin-top: 3vh;
   font-weight: 500;
   margin-right: 3px;
+}
+
+.focus-visible {
+  outline: none;
+}
+
+#delivery-address-input-container {
+  margin: 0px;
 }
