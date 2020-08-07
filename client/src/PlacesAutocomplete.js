@@ -26,6 +26,11 @@ export default class LocationSearchInput extends React.Component {
 
   handleSelect = (address) => {
     this.props.loading(false);
+    if (address == "") {
+      alert("Please enter your city or zip!");
+      this.props.loading(true);
+      return;
+    }
 
     console.log(address);
     this.setState({
@@ -172,7 +177,7 @@ export default class LocationSearchInput extends React.Component {
               marginLeft: mobile ? 0 : 10,
               width: 140,
               padding: "1vh",
-              height: "5vh",
+              height: mobile ? "7vh" : "5vh",
               borderRadius: 6,
               backgroundColor: "#426CB4",
               fontWeight: 700,

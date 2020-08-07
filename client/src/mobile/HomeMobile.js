@@ -657,7 +657,7 @@ export default class HomeMobile extends React.Component {
               flexDirection: "column",
             }}
           >
-            <div style={{ display: "flex", width: "100vw", marginTop: "5vh" }}>
+            <div style={{ display: "flex", width: "100vw", marginTop: "7vh" }}>
               <div
                 style={{
                   display: "flex",

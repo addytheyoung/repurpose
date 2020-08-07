@@ -1,3 +1,21 @@
 #minimized-chat:hover {
   cursor: pointer;
 }
+
+#close:hover {
+  cursor: pointer;
+}
+
+#send:hover {
+  cursor: pointer;
+}
+
+#maximized-chat {
+  transition: ease-in-out;
+  transition-duration: 0.2s;
+}
+
+#minimized-chat {
+  transition: ease-in;
+  transition-duration: 0s;
+}

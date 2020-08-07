@@ -65,7 +65,7 @@ export default class Home extends React.Component {
         .doc(categoryList[i])
         .collection("All")
         .where("location", "==", "Austin, TX")
-        .limit(1)
+        .limit(30)
         .get()
         .then((allItems) => {
           i_index++;
@@ -166,7 +166,7 @@ export default class Home extends React.Component {
           </div>
         )} */}
 
-        <Chat />
+        {/* <Chat /> */}
         {this.state.profile && (
           <SignInOnlyModal
             redirectUrl={"/"}
