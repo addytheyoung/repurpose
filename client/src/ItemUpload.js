@@ -12,6 +12,7 @@ import Chip from "@material-ui/core/Chip";
 import api from "./api";
 import "react-image-crop/dist/ReactCrop.css";
 import CropTest from "./CropTest";
+import Bin from "./images/bin.png";
 
 import "./css/ItemUpload.css";
 
@@ -142,44 +143,84 @@ export default class ItemUpload extends React.Component {
           }}
         >
           {this.state.pictureArray.length > 0 && (
-            <CropTest
-              setCroppedImg={(croppedImgUrl) =>
-                this.setCroppedImg(croppedImgUrl)
-              }
-              picture={this.state.pictureArray[0]}
-            />
+            <div>
+              <CropTest
+                setCroppedImg={(croppedImgUrl) =>
+                  this.setCroppedImg(croppedImgUrl)
+                }
+                picture={this.state.pictureArray[0]}
+              />
+              <div onClick={() => this.splicePictureArray(0)}>
+                <img
+                  src={Bin}
+                  style={{ width: "10vw", height: "10vw", marginTop: "1vh" }}
+                ></img>
+              </div>
+            </div>
           )}
           {this.state.pictureArray.length > 1 && (
-            <CropTest
-              setCroppedImg={(croppedImgUrl) =>
-                this.setCroppedImg(croppedImgUrl)
-              }
-              picture={this.state.pictureArray[1]}
-            />
+            <div>
+              <CropTest
+                setCroppedImg={(croppedImgUrl) =>
+                  this.setCroppedImg(croppedImgUrl)
+                }
+                picture={this.state.pictureArray[1]}
+              />
+              <div onClick={() => this.splicePictureArray(1)}>
+                <img
+                  src={Bin}
+                  style={{ width: "10vw", height: "10vw", marginTop: "1vh" }}
+                ></img>
+              </div>
+            </div>
           )}
           {this.state.pictureArray.length > 2 && (
-            <CropTest
-              setCroppedImg={(croppedImgUrl) =>
-                this.setCroppedImg(croppedImgUrl)
-              }
-              picture={this.state.pictureArray[2]}
-            />
+            <div>
+              <CropTest
+                setCroppedImg={(croppedImgUrl) =>
+                  this.setCroppedImg(croppedImgUrl)
+                }
+                picture={this.state.pictureArray[2]}
+              />
+              <div onClick={() => this.splicePictureArray(2)}>
+                <img
+                  src={Bin}
+                  style={{ width: "10vw", height: "10vw", marginTop: "1vh" }}
+                ></img>
+              </div>
+            </div>
           )}
           {this.state.pictureArray.length > 3 && (
-            <CropTest
-              setCroppedImg={(croppedImgUrl) =>
-                this.setCroppedImg(croppedImgUrl)
-              }
-              picture={this.state.pictureArray[3]}
-            />
+            <div>
+              <CropTest
+                setCroppedImg={(croppedImgUrl) =>
+                  this.setCroppedImg(croppedImgUrl)
+                }
+                picture={this.state.pictureArray[3]}
+              />
+              <div onClick={() => this.splicePictureArray(3)}>
+                <img
+                  src={Bin}
+                  style={{ width: "10vw", height: "10vw", marginTop: "1vh" }}
+                ></img>
+              </div>
+            </div>
           )}
           {this.state.pictureArray.length > 4 && (
-            <CropTest
-              setCroppedImg={(croppedImgUrl) =>
-                this.setCroppedImg(croppedImgUrl)
-              }
-              picture={this.state.pictureArray[4]}
-            />
+            <div>
+              <CropTest
+                setCroppedImg={(croppedImgUrl) =>
+                  this.setCroppedImg(croppedImgUrl)
+                }
+                picture={this.state.pictureArray[4]}
+              />
+              <div onClick={() => this.splicePictureArray(4)}>
+                <img
+                  src={Bin}
+                  style={{ width: "10vw", height: "10vw", marginTop: "1vh" }}
+                ></img>
+              </div>
+            </div>
           )}
         </div>
 
@@ -535,6 +576,17 @@ export default class ItemUpload extends React.Component {
         <div style={{ height: 100 }}></div>
       </div>
     );
+  }
+
+  splicePictureArray(index) {
+    const temp = [];
+    for (var i = 0; i < this.state.pictureArray.length; i++) {
+      temp.push(this.state.pictureArray[i]);
+    }
+    temp.splice(index, 1);
+    this.setState({
+      pictureArray: temp,
+    });
   }
 
   scrapeItem() {

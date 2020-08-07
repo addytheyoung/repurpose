@@ -263,6 +263,7 @@ export default class RenderRoutes extends React.Component {
               {citiesList.includes(window.localStorage.getItem("city")) && (
                 <Route path="/" exact={true} render={() => <BuyMobile />} />
               )}
+
               <Route path="/sell" exact={true} render={() => <SellMobile />} />
 
               <Route

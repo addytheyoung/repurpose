@@ -622,7 +622,8 @@ export default class HomeMobile extends React.Component {
               fontWeight: 600,
               letterSpacing: 0.1,
               marginTop: "1vh",
-              textAlign: "center",
+              textAlign: "start",
+              paddingLeft: "5vw",
             }}
           >
             Cheap items, at your doorstep
@@ -631,12 +632,13 @@ export default class HomeMobile extends React.Component {
             style={{
               marginTop: "2vh",
               fontSize: 16,
-              textAlign: "center",
+              textAlign: "start",
               paddingLeft: "5vw",
               paddingRight: "5vw",
             }}
           >
-            Delivered to you the next morning for a flat $2 order fee.
+            Tons of items, delivered to you the next morning for a flat $2 order
+            fee.
           </div>
 
           <div
