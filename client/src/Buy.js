@@ -11,6 +11,7 @@ import Back from "./images/back.png";
 import Front from "./images/arrow.png";
 import { MixpanelProvider, MixpanelConsumer } from "react-mixpanel";
 import { ThemeProvider } from "@livechat/ui-kit";
+import Chat from "./Chat";
 
 export default class Buy extends React.Component {
   constructor(props) {
@@ -139,6 +140,7 @@ export default class Buy extends React.Component {
         id="buy-desktop-main"
         style={{ overflowY: "scroll", overflowX: "hidden", height: "100vh" }}
       >
+        <Chat />
         <div
           style={{
             position: "fixed",

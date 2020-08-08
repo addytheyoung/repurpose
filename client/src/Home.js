@@ -154,17 +154,7 @@ export default class Home extends React.Component {
           height: "100vh",
         }}
       >
-        {/* {!this.state.loaded && (
-          <div
-            style={{
-              position: "fixed",
-              left: "45vw",
-              top: 200,
-            }}
-          >
-            <ClipLoader size={150} color={"#123abc"} loading={true} />
-          </div>
-        )} */}
+        <Chat />
 
         {/* <Chat /> */}
         {this.state.profile && (

@@ -52,7 +52,7 @@ import {
 import SearchPageMobile from "./mobile/SearchPageMobile";
 import CheckOutMobile from "./mobile/CheckOutMobile";
 import SearchPageMobileMain from "./mobile/SearchPageMobileMain";
-import SignInModal from "./SignInModal";
+import ChatPage from "./ChatPage";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -81,6 +81,11 @@ export default class RenderRoutes extends React.Component {
               {citiesList.includes(window.localStorage.getItem("city")) && (
                 <Route path="/" exact={true} render={() => <BuyMobile />} />
               )}
+              <Route
+                path="/chatpage"
+                exact={true}
+                render={() => <ChatPage />}
+              />
               <Route path="/sell" exact={true} render={() => <SellMobile />} />
               <Route
                 path="/what-have-i-sold"
@@ -127,6 +132,7 @@ export default class RenderRoutes extends React.Component {
               exact={true}
               render={() => <WhatHaveISoldPage />}
             />
+            <Route path="/chatpage" exact={true} render={() => <ChatPage />} />
             <Route
               path="/home-redirect"
               exact={true}
@@ -285,6 +291,11 @@ export default class RenderRoutes extends React.Component {
                 render={() => <CheckOutMobile />}
               />
               <Route
+                path="/chatpage"
+                exact={true}
+                render={() => <ChatPage />}
+              />
+              <Route
                 path="/home-redirect"
                 exact={true}
                 render={() => <HomeRedirect />}
@@ -309,6 +320,7 @@ export default class RenderRoutes extends React.Component {
               exact={true}
               render={() => <WhatHaveISoldPage />}
             />
+            <Route path="/chatpage" exact={true} render={() => <ChatPage />} />
 
             <Route
               path="/facebooklink"
