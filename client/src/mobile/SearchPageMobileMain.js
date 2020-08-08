@@ -201,10 +201,10 @@ export default class SearchPageMobileMain extends React.Component {
                       onClick={() => this.closeModal()}
                       src={Close}
                       style={{
-                        width: "10vw",
-                        height: "10vw",
-                        top: 30,
-                        right: 30,
+                        width: "4vh",
+                        height: "4vh",
+                        top: "3vh",
+                        right: "3vh",
                         position: "fixed",
                       }}
                     />

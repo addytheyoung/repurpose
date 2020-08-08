@@ -248,10 +248,10 @@ export default class BuyMobile extends React.Component {
                       onClick={() => this.closeModal()}
                       src={Close}
                       style={{
-                        width: "10vw",
-                        height: "10vw",
-                        top: 30,
-                        right: 30,
+                        width: "4vh",
+                        height: "4vh",
+                        top: "3vh",
+                        right: "3vh",
                         position: "fixed",
                       }}
                     />
@@ -503,7 +503,7 @@ export default class BuyMobile extends React.Component {
                     alignItems: "center",
                     textAlign: "center",
                     marginTop: "2vh",
-                    fontSize: 20,
+                    fontSize: 16,
                     fontWeight: 500,
                     marginBottom: 15,
                     width: "80vw",

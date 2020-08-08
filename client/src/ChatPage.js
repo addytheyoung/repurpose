@@ -74,11 +74,22 @@ export default class ChatPage extends Component {
 
   sendMessage() {
     const message = document.getElementById("my-message-input").value;
+    if (!message || message == "") {
+      return;
+    }
     const allMessages = this.state.chatData;
     const messageObject = { sender: "me", text: message };
     allMessages.push(messageObject);
-    firebase.firestore().collection("Messages").doc(this.state.chatId).update({
-      messages: allMessages,
-    });
+    firebase
+      .firestore()
+      .collection("Messages")
+      .doc(this.state.chatId)
+      .update({
+        messages: allMessages,
+      })
+      .then(() => {
+        document.getElementById("my-message-input").value = "";
+        alert("Sent!");
+      });
   }
 }

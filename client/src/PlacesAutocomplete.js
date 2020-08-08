@@ -118,7 +118,7 @@ export default class LocationSearchInput extends React.Component {
                   flexDirection: "row",
                   alignItems: "center",
                   borderStyle: "solid",
-                  borderWidth: 2,
+                  borderWidth: 1.5,
                   borderColor: "rgb(118, 118, 118)",
                   borderRadius: 3,
                 }}
@@ -157,6 +157,7 @@ export default class LocationSearchInput extends React.Component {
                 }}
               >
                 <div
+                  id="autocomplete-dropdown-container"
                   className="autocomplete-dropdown-container"
                   style={{
                     // maxHeight: "30vh",
@@ -177,6 +178,7 @@ export default class LocationSearchInput extends React.Component {
                     }
                     return (
                       <div
+                        id="address-drop"
                         key={i}
                         style={{
                           minHeight: mobile ? "10vh" : "10vh",

@@ -11,6 +11,7 @@ import Shop from "../images/shop.svg";
 import Delivery from "../images/delivery.svg";
 import Div100vh from "react-div-100vh";
 import Pin from "../images/gps.svg";
+import MobileChat from "./MobileChat";
 
 export default class HomeMobile extends React.Component {
   citiesList = ["Austin, TX"];
@@ -148,6 +149,7 @@ export default class HomeMobile extends React.Component {
           height: "100vh",
         }}
       >
+        <MobileChat />
         {this.state.profile && (
           <SignInOnlyModal
             redirectUrl={"/"}
@@ -202,10 +204,10 @@ export default class HomeMobile extends React.Component {
                     onClick={() => this.closeModal()}
                     src={Close}
                     style={{
-                      width: "5vw",
-                      height: "5vw",
-                      top: 20,
-                      right: 20,
+                      width: "4vh",
+                      height: "4vh",
+                      top: "3vh",
+                      right: "3vh",
                       position: "fixed",
                     }}
                   />
@@ -231,17 +233,17 @@ export default class HomeMobile extends React.Component {
                   modal={this.state.tempModal}
                 />
               </div>
-              <div style={{ padding: "5vw" }}>
+              <div style={{ padding: "3vw" }}>
                 <div
                   style={{
                     marginTop: "5vh",
                     textAlign: "center",
-                    fontSize: 22,
+                    fontSize: 18,
                     fontWeight: 400,
                     color: "grey",
                   }}
                 >
-                  We need to show you the right shop!
+                  We need this to show you the right shop!
                 </div>
               </div>
             </div>
@@ -297,10 +299,10 @@ export default class HomeMobile extends React.Component {
                     onClick={() => this.closeModal()}
                     src={Close}
                     style={{
-                      width: "10vw",
-                      height: "10vw",
-                      top: 30,
-                      right: 30,
+                      width: "4vh",
+                      height: "4vh",
+                      top: "3vh",
+                      right: "3vh",
                       position: "fixed",
                     }}
                   />

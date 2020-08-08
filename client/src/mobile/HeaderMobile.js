@@ -22,7 +22,8 @@ import Filter from "../images/filter.png";
 import AttachMoneyOutlinedIcon from "@material-ui/icons/AttachMoneyOutlined";
 import SignInModal from "../SignInModal";
 import CityPageMobile from "./CityPageMobile";
-import BuySellPageMobile from "./BuySellPageMobile";
+import MobileChat from "./MobileChat";
+import Q from "@material-ui/icons/HelpOutline";
 
 export default class HeaderBar extends React.Component {
   citiesList = ["Central TX"];
@@ -88,9 +89,10 @@ export default class HeaderBar extends React.Component {
             <div
               onClick={() => this.openFilterPage()}
               style={{
-                minHeight: "60%",
+                minHeight: "80%",
                 paddingLeft: 3,
-                marginLeft: 20,
+                marginLeft: "2vw",
+                paddingRight: 3,
                 minWidth: "20vw",
                 display: "flex",
                 justifyContent: "center",
@@ -116,6 +118,7 @@ export default class HeaderBar extends React.Component {
                     width: "8vw",
                     height: "8vw",
                     color: "#375995",
+                    paddingLeft: "1vw",
                   }}
                 ></FilterListOutlinedIcon>
                 <div
@@ -125,6 +128,8 @@ export default class HeaderBar extends React.Component {
                     color: "#375995",
                     paddingRight: 5,
                     paddingLeft: 5,
+                    paddingTop: 5,
+                    paddingBottom: 5,
                   }}
                 >
                   Filters
@@ -139,7 +144,7 @@ export default class HeaderBar extends React.Component {
                 })
               }
               style={{
-                minHeight: "60%",
+                minHeight: "80%",
                 minWidth: "20vw",
                 display: "flex",
                 justifyContent: "center",
@@ -177,6 +182,8 @@ export default class HeaderBar extends React.Component {
                     color: "#375995",
                     paddingRight: 5,
                     paddingLeft: 5,
+                    paddingTop: 5,
+                    paddingBottom: 5,
                   }}
                 >
                   {"Central TX"}

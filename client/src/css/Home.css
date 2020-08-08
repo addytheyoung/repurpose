@@ -108,3 +108,8 @@
 #delivery-address-input-container {
   margin: 0px;
 }
+
+#address-drop:hover {
+  cursor: pointer;
+  background-color: #f5f5f5 !important;
+}
