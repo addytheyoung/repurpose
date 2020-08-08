@@ -161,6 +161,7 @@ export default class HomeMobile extends React.Component {
             style={{
               display: "flex",
               justifyContent: "center",
+              height: "100vh",
 
               // alignItems: "center"
             }}
@@ -563,7 +564,7 @@ export default class HomeMobile extends React.Component {
             </div>
           </div>
           <div style={{ width: "100%" }}></div>
-          {firebase.auth().currentUser && (
+          {/* {firebase.auth().currentUser && (
             <div
               id="become-collector"
               onClick={() =>
@@ -584,7 +585,7 @@ export default class HomeMobile extends React.Component {
             >
               Sign in
             </div>
-          )}
+          )} */}
           <div
             id="become-collector"
             onClick={() => (window.location.href = "/help/?header=fdc")}
@@ -606,7 +607,7 @@ export default class HomeMobile extends React.Component {
         <div
           style={{
             minHeight: "30vh",
-            maxHeight: "40vh",
+            maxHeight: "50vh",
             width: "100vw",
             backgroundColor: "#ffffff",
             paddingTop: 10,
@@ -626,6 +627,7 @@ export default class HomeMobile extends React.Component {
               marginTop: "1vh",
               textAlign: "start",
               paddingLeft: "5vw",
+              paddingRight: "5vw",
             }}
           >
             Cheap items, at your doorstep

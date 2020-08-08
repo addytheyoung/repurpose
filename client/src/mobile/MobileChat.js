@@ -81,140 +81,154 @@ export default class MobileChat extends Component {
     } else {
       return (
         <div
-          id="maximized-chat"
           style={{
-            borderWidth: 1,
-            borderColor: "lightgrey",
-            borderStyle: "solid",
+            display: "flex",
+            justifyContent: "center",
             height: "100vh",
-            width: "100vw",
-            position: "fixed",
-            bottom: "0vh",
-            backgroundColor: "#ffffff",
-            borderRadius: 5,
-            zIndex: 999,
+
+            // alignItems: "center"
           }}
         >
           <div
-            id="chatscroll"
+            id="maximized-chat"
             style={{
-              overflowY: "scroll",
-              overflowX: "hidden",
-              height: this.props.top ? "86vh" : "94vh",
+              borderWidth: 1,
+              borderColor: "lightgrey",
+              borderStyle: "solid",
+              height: "100vh",
+              width: "100vw",
+              position: "fixed",
+              // bottom: "0vh",
+              backgroundColor: "#ffffff",
+              borderRadius: 5,
               zIndex: 999,
             }}
           >
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <div
-                  id="close"
-                  style={{
-                    marginRight: "1vh",
-                    marginTop: "1vh",
-                    position: "fixed",
-                  }}
-                >
-                  <img
-                    onClick={() => this.openChat(false)}
-                    src={Close}
-                    style={{ width: "3vh", height: "3vh" }}
-                  ></img>
-                </div>
-              </div>
-              {this.state.messages.map((message, index) => {
-                if (message.sender == "me") {
-                  return (
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "flex-start",
-                      }}
-                    >
-                      <div
-                        style={{
-                          textAlign: "left",
-                          padding: 10,
-                          backgroundColor: "rgb(66, 108, 180)",
-                          borderRadius: 10,
-                          color: "white",
-                          marginTop: 10,
-                          maxWidth: "76%",
-                          marginLeft: 10,
-                          fontSize: 13,
-                        }}
-                      >
-                        {message.text}
-                      </div>
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "flex-end",
-                      }}
-                    >
-                      <div
-                        style={{
-                          textAlign: "left",
-                          padding: 10,
-                          backgroundColor: "#f3f3f3",
-                          borderRadius: 10,
-                          color: "black",
-                          marginTop: 10,
-                          maxWidth: "60%",
-                          marginRight: 10,
-                          fontSize: 13,
-                        }}
-                      >
-                        {message.text}
-                      </div>
-                    </div>
-                  );
-                }
-              })}
-            </div>
-          </div>
-          <div
-            style={{
-              height: "5vh",
-              width: "100%",
-              display: "flex",
-              flexDirection: "row",
-            }}
-          >
-            <Input
-              id="message-input"
-              style={{
-                width: "80%",
-                height: "5vh",
-                marginLeft: "5%",
-                fontSize: 13,
-              }}
-              placeholder="What do you want to know?"
-            ></Input>
             <div
-              onClick={() => this.sendMessage()}
-              id="send"
+              id="chatscroll"
               style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                overflowY: "scroll",
+                overflowX: "hidden",
+                //   position: "fixed",
+                height: this.props.top ? "80vh" : "90vh",
+                zIndex: 999,
               }}
             >
-              <img
-                style={{ width: "3vh", height: "3vh", marginLeft: "2vw" }}
-                src={Send}
-              ></img>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <div
+                    id="close"
+                    style={{
+                      marginRight: "1vh",
+                      marginTop: "1vh",
+                      position: "fixed",
+                    }}
+                  >
+                    <img
+                      onClick={() => this.openChat(false)}
+                      src={Close}
+                      style={{ width: "3vh", height: "3vh" }}
+                    ></img>
+                  </div>
+                </div>
+                {this.state.messages.map((message, index) => {
+                  if (message.sender == "me") {
+                    return (
+                      <div
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "flex-start",
+                        }}
+                      >
+                        <div
+                          style={{
+                            textAlign: "left",
+                            padding: 10,
+                            backgroundColor: "rgb(66, 108, 180)",
+                            borderRadius: 10,
+                            color: "white",
+                            marginTop: 10,
+                            maxWidth: "76%",
+                            marginLeft: 10,
+                            fontSize: 13,
+                          }}
+                        >
+                          {message.text}
+                        </div>
+                      </div>
+                    );
+                  } else {
+                    return (
+                      <div
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "flex-end",
+                        }}
+                      >
+                        <div
+                          style={{
+                            textAlign: "left",
+                            padding: 10,
+                            backgroundColor: "#f3f3f3",
+                            borderRadius: 10,
+                            color: "black",
+                            marginTop: 10,
+                            maxWidth: "60%",
+                            marginRight: 10,
+                            fontSize: 13,
+                          }}
+                        >
+                          {message.text}
+                        </div>
+                      </div>
+                    );
+                  }
+                })}
+              </div>
+            </div>
+            <div
+              style={{
+                height: "5vh",
+                width: "100%",
+                display: "flex",
+                flexDirection: "row",
+                bottom: "20vh",
+                position: "absolute",
+                zIndex: 1000,
+              }}
+            >
+              <Input
+                id="message-input"
+                style={{
+                  width: "80%",
+                  height: "5vh",
+                  marginLeft: "5%",
+                  fontSize: 13,
+                }}
+                placeholder="What do you want to know?"
+              ></Input>
+              <div
+                onClick={() => this.sendMessage()}
+                id="send"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <img
+                  style={{ width: "3vh", height: "3vh", marginLeft: "2vw" }}
+                  src={Send}
+                ></img>
+              </div>
             </div>
           </div>
         </div>
