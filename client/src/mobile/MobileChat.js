@@ -37,11 +37,6 @@ export default class MobileChat extends Component {
       return null;
     }
 
-    const t = this;
-    window.setInterval(function () {
-      t.checkMessages();
-    }, 4000);
-
     if (this.state.minimized) {
       return (
         <div
@@ -85,8 +80,6 @@ export default class MobileChat extends Component {
             display: "flex",
             justifyContent: "center",
             height: "100vh",
-
-            // alignItems: "center"
           }}
         >
           <div
@@ -98,6 +91,7 @@ export default class MobileChat extends Component {
               height: "100vh",
               width: "100vw",
               position: "fixed",
+              top: 0,
               // bottom: "0vh",
               backgroundColor: "#ffffff",
               borderRadius: 5,
@@ -110,7 +104,7 @@ export default class MobileChat extends Component {
                 overflowY: "scroll",
                 overflowX: "hidden",
                 //   position: "fixed",
-                height: this.props.top ? "80vh" : "90vh",
+                height: this.props.top ? "90vh" : "90vh",
                 zIndex: 999,
               }}
             >
@@ -137,127 +131,87 @@ export default class MobileChat extends Component {
                     ></img>
                   </div>
                 </div>
-                {this.state.messages.map((message, index) => {
-                  if (message.sender == "me") {
-                    return (
-                      <div
-                        style={{
-                          width: "100%",
-                          display: "flex",
-                          justifyContent: "flex-start",
-                        }}
-                      >
-                        <div
-                          style={{
-                            textAlign: "left",
-                            padding: 10,
-                            backgroundColor: "rgb(66, 108, 180)",
-                            borderRadius: 10,
-                            color: "white",
-                            marginTop: 10,
-                            maxWidth: "76%",
-                            marginLeft: 10,
-                            fontSize: 13,
-                          }}
-                        >
-                          {message.text}
-                        </div>
-                      </div>
-                    );
-                  } else {
-                    return (
-                      <div
-                        style={{
-                          width: "100%",
-                          display: "flex",
-                          justifyContent: "flex-end",
-                        }}
-                      >
-                        <div
-                          style={{
-                            textAlign: "left",
-                            padding: 10,
-                            backgroundColor: "#f3f3f3",
-                            borderRadius: 10,
-                            color: "black",
-                            marginTop: 10,
-                            maxWidth: "60%",
-                            marginRight: 10,
-                            fontSize: 13,
-                          }}
-                        >
-                          {message.text}
-                        </div>
-                      </div>
-                    );
-                  }
-                })}
               </div>
-            </div>
-            <div
-              style={{
-                height: "5vh",
-                width: "100%",
-                display: "flex",
-                flexDirection: "row",
-                bottom: "20vh",
-                position: "absolute",
-                zIndex: 1000,
-              }}
-            >
+              <div style={{ height: "20vh" }}></div>
+              <div
+                style={{
+                  marginLeft: "5%",
+                  fontSize: 20,
+                  display: "flex",
+                  flexDirection: "row",
+                  marginRight: "5%",
+                  width: "90vw",
+                  flexWrap: "wrap",
+                  fontWeight: 600,
+                  color: "grey",
+                }}
+              >
+                <div>Call or text</div>
+                <b
+                  style={{
+                    color: "rgb(66, 108, 180)",
+                    marginLeft: "2vw",
+                    marginRight: "2vw",
+                    fontWeight: 800,
+                  }}
+                >
+                  903-203-1286
+                </b>{" "}
+                <div>anytime for live help from us!</div>
+              </div>
+
+              <div style={{ marginLeft: "5%", fontSize: 15, marginTop: "3vh" }}>
+                Or, send an email here:
+              </div>
+
+              <Input
+                id="email-input"
+                style={{
+                  width: "80%",
+                  height: "5vh",
+                  marginLeft: "10%",
+                  marginTop: "5vh",
+                  fontSize: 16,
+                }}
+                placeholder="Email"
+              ></Input>
               <Input
                 id="message-input"
                 style={{
                   width: "80%",
-                  height: "5vh",
-                  marginLeft: "5%",
-                  fontSize: 13,
+                  // height: "25vh",
+                  marginLeft: "10%",
+                  fontSize: 16,
+                  textAlign: "start",
+                  marginTop: "3vh",
                 }}
+                rows={1}
+                rowsMax={20}
+                multiline
                 placeholder="What do you want to know?"
               ></Input>
               <div
+                style={{
+                  padding: 10,
+                  backgroundColor: "rgb(66, 108, 180)",
+                  color: "white",
+                  fontWeight: 600,
+                  textAlign: "center",
+                  width: "80%",
+                  marginLeft: "10%",
+                  marginTop: "5vh",
+                  borderRadius: 5,
+                }}
                 onClick={() => this.sendMessage()}
                 id="send"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
               >
-                <img
-                  style={{ width: "3vh", height: "3vh", marginLeft: "2vw" }}
-                  src={Send}
-                ></img>
+                SEND
               </div>
             </div>
           </div>
         </div>
       );
     }
-  }
-
-  checkMessages() {
-    if (
-      !this.state.chatId ||
-      this.state.messages[this.state.messages.length - 1].sender == "me"
-    ) {
-      return;
-    }
-    const chatId = this.state.chatId;
-    firebase
-      .firestore()
-      .collection("Messages")
-      .doc(chatId)
-      .get()
-      .then((chats) => {
-        const messages = chats.data().messages;
-        if (messages[messages.length - 1].sender == "me") {
-          // I sent a message, show it.
-          this.setState({
-            messages: messages,
-          });
-        }
-      });
   }
 
   openChat(open) {
@@ -267,64 +221,26 @@ export default class MobileChat extends Component {
   }
 
   sendMessage() {
-    const message = document.getElementById("message-input").value;
-    document.getElementById("message-input").value = "";
-    const chatId = this.state.chatId;
-    const messageObject = { sender: "customer", text: message };
-    const messages = this.state.messages;
+    const email = document.getElementById("email-input").value;
+    const message = document.getElementById("message-input").value.trim();
 
-    if (chatId) {
-      // Current conversation
-      const tempMessages = [];
-      for (var i = 0; i < messages.length; i++) {
-        tempMessages.push(messages[i]);
-      }
-      tempMessages.push(messageObject);
-
-      this.setState({
-        messages: tempMessages,
-      });
-
-      firebase.firestore().collection("Messages").doc(chatId).update({
-        messages: tempMessages,
-      });
-    } else {
-      // Make one! New convo
-      const id = this.randomNumber(20);
-      const messageObject = { sender: "customer", text: message };
-
-      api.sendEmail(
-        "andrew@collection.deals",
-        '"' +
-          message +
-          '"' +
-          "\n\n" +
-          "New conversation: " +
-          "https://collection.deals/chatpage/?id=" +
-          id
-      );
-
-      firebase
-        .firestore()
-        .collection("Messages")
-        .doc(id)
-        .set({
-          id: id,
-          messages: [messageObject],
-        })
-        .then(() => {
-          const tempMessages = [];
-          for (var i = 0; i < this.state.messages.length; i++) {
-            tempMessages.push(this.state.messages[i]);
-          }
-          tempMessages.push(messageObject);
-
-          this.setState({
-            messages: tempMessages,
-            chatId: id,
-          });
-        });
+    if (!this.checkEmail(email)) {
+      return;
     }
+    if (!message || message == "") {
+      alert("Please put in a message!");
+      return;
+    }
+
+    api.sendEmail(
+      "andrew@collection.deals",
+      "New message from: " + email + "\n\n" + message
+    );
+    alert("Message sent! We'll get back soon.");
+    this.setState({
+      minimized: true,
+    });
+    return;
   }
 
   randomNumber(length) {
@@ -336,5 +252,17 @@ export default class MobileChat extends Component {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
+  }
+
+  checkEmail(email) {
+    if (!email) {
+      alert("Bad email");
+      return false;
+    }
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return true;
+    }
+    alert("Bad email");
+    return false;
   }
 }
