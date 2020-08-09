@@ -12,6 +12,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import "./css/Cart.css";
+import Chat from "./Chat";
 
 export default class Cart extends React.Component {
   constructor(props) {
@@ -152,6 +153,7 @@ export default class Cart extends React.Component {
 
     return (
       <div>
+        <Chat />
         {this.state.profile && (
           <div
             style={{

@@ -7,6 +7,8 @@ import Close from "../images/close.png";
 import HeaderMobile from "./HeaderMobile";
 import FooterMobile from "./FooterMobile";
 import Div100vh from "react-div-100vh";
+import { MenuItem, Input, Select } from "@material-ui/core";
+import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 
 export default class SearchPageMobileMain extends React.Component {
   constructor(props) {
@@ -122,6 +124,86 @@ export default class SearchPageMobileMain extends React.Component {
       if (itemCurrentPrice % 1 == 0) {
         showDecimalsCurrent = false;
       }
+    }
+
+    if (this.state.items.length == 0) {
+      return (
+        <div
+          style={{ overflowX: "hidden", overflowY: "scroll", height: "100vh" }}
+        >
+          <div style={{ marginLeft: "5vw", marginTop: "10vh", fontSize: 18 }}>
+            Nothing here! Try a different term...
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: "30vh",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Input
+                onKeyPress={(e) => this.keyPress(e)}
+                defaultValue={
+                  this.props.searchTerm ? this.props.searchTerm : ""
+                }
+                id="search-input-mobile"
+                placeholder="Search for anything"
+                style={{ marginRight: 5, height: 40 }}
+              />
+            </div>
+            <div
+              onClick={() => this.keyPress("search")}
+              id="search"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                // justifyContent: "center",
+                alignItems: "center",
+                fontSize: 14,
+                marginLeft: "2vw",
+                backgroundColor: "rgb(218, 226, 241)",
+                borderRadius: 5,
+                padding: "2vw",
+              }}
+            >
+              <SearchOutlinedIcon
+                style={{
+                  width: "8vw",
+                  height: "8vw",
+                  color: "#000000",
+                }}
+              ></SearchOutlinedIcon>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              ></div>
+            </div>
+          </div>
+
+          <div style={{ position: "fixed", bottom: 0, zIndex: 105 }}>
+            <FooterMobile
+              searchPage={true}
+              openPage={(page) => this.openPage(page)}
+              profilePage={this.state.profilePage}
+              cartPage={true}
+            />
+          </div>
+        </div>
+      );
     }
 
     return (
@@ -428,12 +510,76 @@ export default class SearchPageMobileMain extends React.Component {
             />
           </div> */}
           <div style={{ position: "fixed", bottom: 0, zIndex: 105 }}>
-            <FooterMobile searchPage={true} />
+            <FooterMobile
+              searchPage={true}
+              openPage={(page) => this.openPage(page)}
+              profilePage={this.state.profilePage}
+              cartPage={true}
+            />
           </div>
 
           <div
             style={{
-              marginTop: "12vh",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: "5vh",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Input
+                onKeyPress={(e) => this.keyPress(e)}
+                defaultValue={
+                  this.props.searchTerm ? this.props.searchTerm : ""
+                }
+                id="search-input-mobile"
+                placeholder="Search for anything"
+                style={{ marginRight: 5, height: 40 }}
+              />
+            </div>
+            <div
+              onClick={() => this.keyPress("search")}
+              id="search"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                // justifyContent: "center",
+                alignItems: "center",
+                fontSize: 14,
+                marginLeft: "2vw",
+                backgroundColor: "rgb(218, 226, 241)",
+                borderRadius: 5,
+                padding: "2vw",
+              }}
+            >
+              <SearchOutlinedIcon
+                style={{
+                  width: "8vw",
+                  height: "8vw",
+                  color: "#000000",
+                }}
+              ></SearchOutlinedIcon>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              ></div>
+            </div>
+          </div>
+
+          <div
+            style={{
+              marginTop: "6vh",
               overflowX: "hidden",
             }}
           >
@@ -445,22 +591,6 @@ export default class SearchPageMobileMain extends React.Component {
                   alignItems: "center",
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    textAlign: "center",
-                    marginTop: "2vh",
-                    fontSize: 20,
-                    fontWeight: 500,
-                    marginBottom: 15,
-                    width: "80vw",
-                  }}
-                >
-                  Items near you, delivered to your doorstep every morning.
-                </div>
-
                 <div
                   style={{
                     display: "flex",
@@ -611,6 +741,12 @@ export default class SearchPageMobileMain extends React.Component {
     );
   }
 
+  openPage(page) {
+    if (page == "search") {
+      window.location.href = "/";
+    }
+  }
+
   changeModalImg(pictureIndex) {
     this.setState({
       modalPictureIndex: pictureIndex,
@@ -653,6 +789,30 @@ export default class SearchPageMobileMain extends React.Component {
       ) {
         return true;
       }
+    }
+  }
+
+  keyPress(e) {
+    // Pressed icon
+
+    if (e == "search" || e.key == "Enter") {
+      const search = document.getElementById("search-input-mobile").value;
+      const city = localStorage.getItem("city");
+      const category = "All Categories";
+      if (!search || search.trim() === "") {
+        alert("Bad search");
+        return;
+      }
+      this.closeModal();
+      window.location.href =
+        "/search/?" +
+        "search=" +
+        search +
+        "&category=" +
+        category +
+        "&city=" +
+        city;
+      return;
     }
   }
 

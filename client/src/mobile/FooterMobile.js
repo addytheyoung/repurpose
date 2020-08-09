@@ -281,9 +281,9 @@ export default class FooterMobile extends React.Component {
                   backgroundColor: "red",
                   borderRadius: 100,
                   position: "absolute",
-                  width: "4vw",
-                  height: "4vw",
-                  marginLeft: "3vw",
+                  width: "4.5vw",
+                  height: "4.5vw",
+                  marginLeft: "3.5vw",
                 }}
               >
                 {localStorage.getItem("cart")}

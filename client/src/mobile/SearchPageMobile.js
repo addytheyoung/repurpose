@@ -29,7 +29,6 @@ export default class SearchPageMobile extends React.Component {
             zIndex: 1,
             borderRadius: 5,
             zIndex: 101,
-
             top: 0,
             backgroundColor: "#f5f5f5",
             alignItems: "center",
@@ -65,42 +64,37 @@ export default class SearchPageMobile extends React.Component {
                   style={{ marginRight: 5, height: 40 }}
                 />
               </div>
-              {/* <div
+              <div
+                onClick={() => this.keyPress("search")}
+                id="search"
                 style={{
                   display: "flex",
-                  justifyContent: "center",
+                  flexDirection: "column",
+                  // justifyContent: "center",
                   alignItems: "center",
-                  width: 120,
+                  fontSize: 14,
+                  marginLeft: "2vw",
+                  backgroundColor: "rgb(218, 226, 241)",
+                  borderRadius: 5,
+                  padding: "2vw",
                 }}
               >
-                <Select id="category-mobile" defaultValue={"All Categories"}>
-                  <MenuItem value={"All Categories"}>All Categories</MenuItem>
-                  <MenuItem value={"Art & Decoration"}>
-                    Art & Decoration
-                  </MenuItem>
-                  <MenuItem value={"Books"}>Books</MenuItem>
-                  <MenuItem value={"Clothing, Shoes, & Accessories"}>
-                    {"Clothing, Shoes, & Accessories"}
-                  </MenuItem>
-                  <MenuItem value={"Electronics"}>{"Electronics"}</MenuItem>
-                  <MenuItem value={"Home"}>{"Home"}</MenuItem>
-                  <MenuItem value={"Garden"}>{"Garden"}</MenuItem>
+                <SearchOutlinedIcon
+                  style={{
+                    width: "8vw",
+                    height: "8vw",
+                    color: "#000000",
+                  }}
+                ></SearchOutlinedIcon>
 
-                  <MenuItem value={"Pet Supplies"}>{"Pet Supplies"}</MenuItem>
-
-                  <MenuItem value={"Sports & Hobbies"}>
-                    {"Sports & Hobbies"}
-                  </MenuItem>
-                  <MenuItem value={"Toys & Games"}>{"Toys & Games"}</MenuItem>
-                </Select>
-              </div> */}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              ></div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                ></div>
+              </div>
             </div>
           </div>
         </div>
@@ -109,7 +103,9 @@ export default class SearchPageMobile extends React.Component {
   }
 
   keyPress(e) {
-    if (e.key == "Enter") {
+    // Pressed icon
+
+    if (e == "search" || e.key == "Enter") {
       const search = document.getElementById("search-input-mobile").value;
       const city = localStorage.getItem("city");
       const category = "All Categories";
