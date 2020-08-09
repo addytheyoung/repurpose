@@ -188,7 +188,7 @@ export default class MobileChat extends Component {
                 rows={1}
                 rowsMax={20}
                 multiline
-                placeholder="What do you want to know?"
+                placeholder="How can we help?"
               ></Input>
               <div
                 style={{
