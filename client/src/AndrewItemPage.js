@@ -9,7 +9,7 @@ export default class AndrewItemPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeSeller: "8dXpQZIgYJRV7Zhc3DNuC6KduZf2",
+      activeSeller: "",
       activeCategory: null,
       activeItems: [],
       activeModal: null,
@@ -23,7 +23,7 @@ export default class AndrewItemPage extends React.Component {
   render() {
     if (firebase.auth().currentUser.uid != "q2SYPrnJwNhaC3PcMhE3LTZ1AIv1") {
       alert("Bad user!");
-      return null;
+      return <div></div>;
     }
     var total = 0;
     for (var i = 0; i < this.state.activeItems.length; i++) {
@@ -77,10 +77,10 @@ export default class AndrewItemPage extends React.Component {
                     onClick={() => this.closeModal()}
                     src={Close}
                     style={{
-                      width: 30,
-                      height: 30,
-                      marginTop: 20,
-                      marginRight: 20,
+                      width: 20,
+                      height: 20,
+                      marginTop: 15,
+                      marginRight: 15,
                     }}
                   />
                 </div>

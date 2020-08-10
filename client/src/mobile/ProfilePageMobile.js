@@ -205,11 +205,12 @@ export default class ProfilePageMobile extends React.Component {
 
                   <div style={{ display: "flex", flexDirection: "row" }}>
                     <div
-                      onClick={() => (window.location.href = "/orders")}
+                      onClick={() =>
+                        (window.location.href = "/what-have-i-sold")
+                      }
                       id="my-orders"
                       style={{
-                        backgroundColor: "#426CB4",
-                        fontSize: 16,
+                        backgroundColor: "#a1a1a1",
                         borderRadius: 5,
                         padding: 10,
                         height: "5vh",
@@ -217,14 +218,14 @@ export default class ProfilePageMobile extends React.Component {
                         color: "white",
                         fontWeight: 600,
                         marginTop: 10,
-                        marginRight: 10,
+                        marginBottom: 10,
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
                         textAlign: "center",
                       }}
                     >
-                      MY ORDERS
+                      MY SALES
                     </div>
                     {/* <div
                     onClick={() => (window.location.href = "/mysales")}

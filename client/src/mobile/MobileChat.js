@@ -127,7 +127,13 @@ export default class MobileChat extends Component {
                     <img
                       onClick={() => this.openChat(false)}
                       src={Close}
-                      style={{ width: "3vh", height: "3vh" }}
+                      style={{
+                        width: "4vh",
+                        height: "4vh",
+                        top: "3vh",
+                        right: "3vh",
+                        position: "fixed",
+                      }}
                     ></img>
                   </div>
                 </div>

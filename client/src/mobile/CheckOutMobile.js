@@ -167,10 +167,11 @@ export default class CheckOutMobile extends Component {
                     onClick={() => this.closeModal()}
                     src={Close}
                     style={{
-                      width: 30,
-                      height: 30,
-                      marginTop: 20,
-                      marginRight: 20,
+                      width: "4vh",
+                      height: "4vh",
+                      top: "3vh",
+                      right: "3vh",
+                      position: "fixed",
                     }}
                   />
                 </div>

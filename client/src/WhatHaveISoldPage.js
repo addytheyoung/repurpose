@@ -235,10 +235,10 @@ export default class WhatHaveISoldPage extends React.Component {
                     onClick={() => this.closeModal()}
                     src={Close}
                     style={{
-                      width: 30,
-                      height: 30,
-                      marginTop: 20,
-                      marginRight: 20,
+                      width: 20,
+                      height: 20,
+                      marginTop: 15,
+                      marginRight: 15,
                     }}
                   />
                 </div>

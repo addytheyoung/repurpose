@@ -40,13 +40,7 @@ export default class ItemUpload extends React.Component {
         if (data.seller) {
           this.setState({
             city: data.city,
-            sellerStripeId: this.sellerID,
-            loaded: true,
-          });
-        } else {
-          this.setState({
-            city: data.city,
-            sellerStripeId: "donate",
+            sellerStripeId: localStorage.getItem("sellerId"),
             loaded: true,
           });
         }
@@ -85,6 +79,13 @@ export default class ItemUpload extends React.Component {
   }
 
   render() {
+    if (
+      !firebase.auth().currentUser ||
+      !firebase.auth().currentUser.uid === "q2SYPrnJwNhaC3PcMhE3LTZ1AIv1"
+    ) {
+      alert("Please sign in");
+      return null;
+    }
     const MenuProps = {
       PaperProps: {
         style: {
@@ -706,6 +707,9 @@ export default class ItemUpload extends React.Component {
   }
 
   changeValue(e, type) {
+    if (type == "sellerStripeId") {
+      localStorage.setItem("sellerId", e.target.value);
+    }
     this.setState({
       [type]: e.target.value,
     });

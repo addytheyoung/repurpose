@@ -206,10 +206,10 @@ export default class Cart extends React.Component {
                     onClick={() => this.closeModal()}
                     src={Close}
                     style={{
-                      width: 30,
-                      height: 30,
-                      marginTop: 20,
-                      marginRight: 20,
+                      width: 20,
+                      height: 20,
+                      marginTop: 15,
+                      marginRight: 15,
                     }}
                   />
                 </div>
@@ -344,14 +344,17 @@ export default class Cart extends React.Component {
                       Profile
                     </div>
                     <div
-                      onClick={() => (window.location.href = "/orders")}
+                      onClick={() =>
+                        (window.location.href = "/what-have-i-sold")
+                      }
                       id="my-orders"
                       style={{
                         backgroundColor: "#a1a1a1",
                         borderRadius: 5,
                         padding: 10,
-                        height: 30,
-                        width: 100,
+                        height: "5vh",
+                        minWidth: 120,
+                        maxWidth: 150,
                         color: "white",
                         fontWeight: 600,
                         marginTop: 10,
@@ -361,7 +364,7 @@ export default class Cart extends React.Component {
                         alignItems: "center",
                       }}
                     >
-                      MY ORDERS
+                      MY SALES
                     </div>
                     {/* <div
                       onClick={() => (window.location.href = "/mysales")}
@@ -394,8 +397,9 @@ export default class Cart extends React.Component {
                         backgroundColor: "#a1a1a1",
                         borderRadius: 5,
                         padding: 10,
-                        height: 30,
-                        width: 100,
+                        height: "5vh",
+                        minWidth: 120,
+                        maxWidth: 150,
                         color: "white",
                         fontWeight: 600,
                         marginTop: 10,
@@ -418,7 +422,13 @@ export default class Cart extends React.Component {
                       flexDirection: "column",
                     }}
                   >
-                    <div style={{ fontSize: 22, fontWeight: 600 }}>
+                    <div
+                      style={{
+                        fontSize: 22,
+                        paddingLeft: "2vw",
+                        fontWeight: 600,
+                      }}
+                    >
                       Are you sure you want to logout?
                     </div>
                     <div
@@ -522,10 +532,10 @@ export default class Cart extends React.Component {
                     onClick={() => this.closeModal()}
                     src={Close}
                     style={{
-                      width: 30,
-                      height: 30,
-                      marginTop: 20,
-                      marginRight: 20,
+                      width: 20,
+                      height: 20,
+                      marginTop: 15,
+                      marginRight: 15,
                     }}
                   />
                 </div>
