@@ -9,7 +9,7 @@
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "10.10.0"
+    "node": "10"
   },
   "dependencies": {
     "@material-ui/lab": "^4.0.0-alpha.47",
