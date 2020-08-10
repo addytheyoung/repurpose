@@ -13,11 +13,17 @@ import api from "./api";
 import "react-image-crop/dist/ReactCrop.css";
 import CropTest from "./CropTest";
 import Bin from "./images/bin.png";
-
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+} from "react-device-detect";
 import "./css/ItemUpload.css";
 
 export default class ItemUpload extends React.Component {
-  sellerID = "qMueYTZMubazxdTNVrW1wvkVwOH3";
+  // sellerID = "qMueYTZMubazxdTNVrW1wvkVwOH3";
+  sellerID = "";
   citiesList = ["Austin, TX"];
 
   constructor(props) {
@@ -125,14 +131,24 @@ export default class ItemUpload extends React.Component {
           height: "100vh  ",
         }}
       >
-        <div id="camera">
-          <Camera
-            isImageMirror={false}
-            idealFacingMode={"environment"}
-            onTakePhoto={(dataUri) => this.handleTakePhoto(dataUri)}
-          ></Camera>
-        </div>
-
+        {isMobile && (
+          <div id="camera">
+            <Camera
+              onCameraStop={() => console.log("s")}
+              oncameraError={() => console.log("e")}
+              isImageMirror={false}
+              idealFacingMode={"environment"}
+              onTakePhoto={(dataUri) => this.handleTakePhoto(dataUri)}
+            ></Camera>
+          </div>
+        )}
+        {!isMobile && (
+          <input
+            type="file"
+            id="input"
+            onChangeCapture={() => this.uploadedImage()}
+          />
+        )}
         <div
           style={{
             width: "100vw",
@@ -223,7 +239,6 @@ export default class ItemUpload extends React.Component {
             </div>
           )}
         </div>
-
         <div style={{ marginTop: 20 }}>Upload an item</div>
         <div>
           <Input
@@ -251,7 +266,6 @@ export default class ItemUpload extends React.Component {
             placeholder={"Price"}
           />
         </div>
-
         <div
           style={{
             display: "flex",
@@ -342,7 +356,6 @@ export default class ItemUpload extends React.Component {
             </MenuItem>
           </Select>
         </div>
-
         {this.state.category == "Home" && (
           <div
             style={{
@@ -382,8 +395,7 @@ export default class ItemUpload extends React.Component {
             </Select>
           </div>
         )}
-
-        {this.state.category == "Clothing, Shoes, & Accessories" && (
+        {/* {this.state.category == "Clothing, Shoes, & Accessories" && (
           <div style={{ height: 450, width: "80vw" }}>
             <Input
               style={{ width: "80vw", height: 120, marginTop: 10 }}
@@ -432,7 +444,7 @@ export default class ItemUpload extends React.Component {
               </MenuItem>
             </Select>
           </div>
-        )}
+        )} */}
         <div>
           <Input
             style={{ width: "80vw", height: 50, marginTop: 10 }}
@@ -480,15 +492,14 @@ export default class ItemUpload extends React.Component {
             value={this.state.sellerStripeId}
             placeholder={"Seller ID"}
           />
-        </div>
+        </div>{" "}
         {/* <div>
-            <Input
-              value={this.state.id}
-              defaultValue={this.state.id}
-              placeholder={"My email / ID"}
-            />
-          </div> */}
-
+          <Input
+            value={this.state.id}
+            defaultValue={this.state.id}
+            placeholder={"My email / ID"}
+          />
+        </div> */}
         <div>
           <Autocomplete
             defaultValue={this.state.city}
@@ -576,6 +587,18 @@ export default class ItemUpload extends React.Component {
         <div style={{ height: 100 }}></div>
       </div>
     );
+  }
+
+  uploadedImage() {
+    const image = document.getElementById("input").files[0];
+    const blob = URL.createObjectURL(image);
+    if (!image || !blob) {
+      return;
+    }
+
+    const pictureArrayTemp = this.state.pictureArray;
+    pictureArrayTemp.push(blob);
+    this.setState({ pictureArray: pictureArrayTemp });
   }
 
   splicePictureArray(index) {
@@ -700,19 +723,19 @@ export default class ItemUpload extends React.Component {
       alert("Picture");
       return;
     }
-    if (category == "Clothing, Shoes, & Accessories") {
-      // Check the brand, size, gender
-      if (!this.state.gender) {
-        alert("Gender");
-        return;
-      } else if (!this.state.brand) {
-        alert("Brand");
-        return;
-      } else if (!this.state.size) {
-        alert("Size");
-        return;
-      }
-    }
+    // if (category == "Clothing, Shoes, & Accessories") {
+    //   // Check the brand, size, gender
+    //   if (!this.state.gender) {
+    //     alert("Gender");
+    //     return;
+    //   } else if (!this.state.brand) {
+    //     alert("Brand");
+    //     return;
+    //   } else if (!this.state.size) {
+    //     alert("Size");
+    //     return;
+    //   }
+    // }
     this.setState({
       loaded: false,
     });

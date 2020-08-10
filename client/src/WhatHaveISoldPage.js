@@ -20,8 +20,11 @@ export default class WhatHaveISoldPage extends React.Component {
       return;
     }
 
-    const mySellerId = firebase.auth().currentUser.uid;
-    console.log(firebase.auth().currentUser.uid);
+    var mySellerId = firebase.auth().currentUser.uid;
+    console.log(mySellerId);
+    if (mySellerId == "t0ytnJa1v3WWpCLFsIUgI0qVAnF2") {
+      mySellerId = "me";
+    }
     const allItemSold = [];
     // Go through all the orders, find the orders that contain my seller id
     firebase
@@ -62,7 +65,11 @@ export default class WhatHaveISoldPage extends React.Component {
     ];
 
     // const activeSeller = "JsVK7C1mHeMQg61tnB4qgkyPOik2";
-    const activeSeller = firebase.auth().currentUser.uid;
+    var activeSeller = firebase.auth().currentUser.uid;
+    console.log(mySellerId);
+    if (activeSeller == "t0ytnJa1v3WWpCLFsIUgI0qVAnF2") {
+      activeSeller = "me";
+    }
     const finalArr = [];
     var i_index = 0;
     for (var i = 0; i < categoryList.length; i++) {

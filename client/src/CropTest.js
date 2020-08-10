@@ -12,8 +12,8 @@ export default class CropTest extends PureComponent {
     src: null,
     crop: {
       aspect: 660 / 600,
-      width: 660,
-      height: 600,
+      width: 1320,
+      height: 1200,
       unit: "px",
 
       // x: (window.innerWidth - window.innerWidth) / 2,
