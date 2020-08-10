@@ -14,6 +14,7 @@ import { ThemeProvider } from "@livechat/ui-kit";
 import Chat from "./Chat";
 
 export default class Buy extends React.Component {
+  innerWidth = window.innerWidth;
   constructor(props) {
     super(props);
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
@@ -196,6 +197,7 @@ export default class Buy extends React.Component {
               <div
                 style={{
                   width: "60vw",
+                  minWidth: this.innerWidth * 0.6,
                   borderRadius: 5,
                   position: "fixed",
                   height: "80vh",
@@ -391,10 +393,9 @@ export default class Buy extends React.Component {
                               marginTop: 30,
                               borderRadius: 5,
                               padding: 10,
-                              maxWidth: 150,
-                              minWidth: 75,
-
-                              height: 40,
+                              maxWidth: 200,
+                              minWidth: 150,
+                              height: "5vh",
                               display: "flex",
                               alignItems: "center",
                               justifyContent: "center",

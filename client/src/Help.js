@@ -136,8 +136,7 @@ export default class Help extends React.Component {
             </div>
             <div className="about-mobile-main-1">
               Call 903-203-1286 or email andrew@collection.deals if you have any
-              concerns or questions! We're somewhat new, and always looking for
-              feedback!
+              concerns or questions!
             </div>
             <div style={{ height: "20vh" }}></div>
           </div>
@@ -258,8 +257,7 @@ export default class Help extends React.Component {
           </div>
           <div className="about-mobile-main-1">
             Call 903-203-1286 or email andrew@collection.deals if you have any
-            concerns or questions! We're somewhat new, and always looking for
-            feedback!
+            concerns or questions!
           </div>
         </div>
         <div style={{ height: "20vh" }}></div>

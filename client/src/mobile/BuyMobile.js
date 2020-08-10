@@ -422,7 +422,6 @@ export default class BuyMobile extends React.Component {
                             borderRadius: 5,
                             padding: 10,
                             width: 300,
-
                             height: "7vh",
                             display: "flex",
                             alignItems: "center",

@@ -2,7 +2,6 @@ import React from "react";
 import * as firebase from "firebase";
 import HeaderBar from "./HeaderBar";
 import ClipLoader from "react-spinners/ClipLoader";
-import "./css/Shop.css";
 import FilterBar from "./FilterBar";
 import Art from "./images/art.jpeg";
 import Close from "./images/close.png";
@@ -175,11 +174,13 @@ export default class SearchPage extends React.Component {
             <div
               style={{
                 width: "60vw",
+                minWidth: this.innerWidth * 0.6,
                 borderRadius: 5,
+                position: "fixed",
                 height: "80vh",
                 top: 30,
                 backgroundColor: "#f5f5f5",
-                position: "fixed",
+                // position: "absolute",
                 zIndex: 100,
                 opacity: 1,
               }}
@@ -362,9 +363,9 @@ export default class SearchPage extends React.Component {
                             marginTop: 30,
                             borderRadius: 5,
                             padding: 10,
-                            width: 150,
-                            marginLeft: 20,
-                            height: 40,
+                            maxWidth: 200,
+                            minWidth: 150,
+                            height: "5vh",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",

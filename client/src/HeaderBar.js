@@ -11,7 +11,6 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 import cart2 from "./images/cart-green.svg";
-import Shop from "./Shop";
 import Close from "./images/close.png";
 import city from "./images/architectonic.png";
 import FilterBar from "./FilterBar";

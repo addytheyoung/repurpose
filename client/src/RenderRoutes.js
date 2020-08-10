@@ -5,7 +5,6 @@ import Buy from "./Buy";
 import FooterMobile from "./mobile/FooterMobile";
 import GetTotal from "./scripts/GetTotal";
 import OrderKit from "./OrderKit";
-import Shop from "./Shop";
 import SellInfo from "./SellInfo";
 import WhatHaveISoldPage from "./WhatHaveISoldPage";
 import Item from "./Item";
@@ -209,7 +208,6 @@ export default class RenderRoutes extends React.Component {
 
             <Route path="/sell" exact={true} render={() => <Sell_2 />} />
             <Route path="/sell/kit" exact={true} render={() => <OrderKit />} />
-            <Route path="/shop" exact={false} render={() => <Shop />} />
             <Route path="/item" exact={false} render={() => <Item />} />
             <Route path="/profile" exact={true} render={() => <Profile />} />
             <Route path="/cart" exact={true} render={() => <Cart />} />
@@ -352,7 +350,6 @@ export default class RenderRoutes extends React.Component {
             />
             <Route path="/help" exact={true} render={() => <Help />} />
             <Route path="/sell" exact={true} render={() => <Sell_2 />} />
-            <Route path="/shop" exact={false} render={() => <Shop />} />
             <Route path="/item" exact={false} render={() => <Item />} />
             <Route path="/profile" exact={true} render={() => <Profile />} />
             <Route path="/cart" exact={true} render={() => <Cart />} />

@@ -15,6 +15,7 @@ import "./css/Cart.css";
 import Chat from "./Chat";
 
 export default class Cart extends React.Component {
+  innerWidth = window.innerWidth;
   constructor(props) {
     super(props);
     localStorage.setItem("deliveryType", "delivery");
@@ -508,12 +509,14 @@ export default class Cart extends React.Component {
             ></div>
             <div
               style={{
-                width: "50vw",
+                width: "60vw",
+                minWidth: this.innerWidth * 0.6,
                 borderRadius: 5,
+                position: "fixed",
                 height: "80vh",
                 top: 30,
                 backgroundColor: "#f5f5f5",
-                position: "absolute",
+                // position: "absolute",
                 zIndex: 100,
                 opacity: 1,
               }}

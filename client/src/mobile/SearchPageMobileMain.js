@@ -1,7 +1,6 @@
 import React from "react";
 import * as firebase from "firebase";
 import ClipLoader from "react-spinners/ClipLoader";
-import "../css/Shop.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Close from "../images/close.png";
 import HeaderMobile from "./HeaderMobile";
