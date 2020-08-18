@@ -2,8 +2,9 @@ const functions = require("firebase-functions");
 const env = require("dotenv").config({ path: "./.env" });
 const puppeteer = require("puppeteer");
 // const stripe = require("stripe")("rk_live_jwpHKngcsUmcz9gHths0I1ZX003cKwZQQl");
-const stripe = require("stripe")("sk_live_MUbbkQ150n00y57q1tjlwWQM00s213LRkP");
-// const stripe = require("stripe")("sk_test_hkMGIPsjJ7Ag57pFz1eX0ASX00ijQ9oo1X");
+// const stripe = require("stripe")("sk_live_MUbbkQ150n00y57q1tjlwWQM00s213LRkP");
+
+const stripe = require("stripe")("sk_test_hkMGIPsjJ7Ag57pFz1eX0ASX00ijQ9oo1X");
 // const paypal = EExwl4bt3FO-Vl7714Qh71y0lUpwnkCNm-1_vk7kKTMD4WIH4hH61OwwxOhijkn2dTk6kd2pKB8cl1WT
 var admin = require("firebase-admin");
 const express = require("express");
@@ -13,6 +14,12 @@ const app = express();
 const Firestore = require("@google-cloud/firestore");
 const { resolve } = require("path");
 var serviceAccount = require("./key.json");
+const paypal = require("paypal-rest-sdk");
+const engines = require("consolidate");
+
+app.engine("ejs", engines.ejs);
+app.set("views", "../views");
+app.set("view engine", "ejs");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -21,6 +28,132 @@ admin.initializeApp({
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+paypal.configure({
+  mode: "live",
+  client_id:
+    "AVWKPfLbUrnVVHtF3EqllXbIqqAhJvRrlwa9vVi4k_uFGT4Jcd7TSsWxXKdGED5B66RNcrczgnnISVLk",
+  client_secret:
+    "EEzWM8KQhmRtcG1cucS6vcMTvZqGFMx3yx6dJFMR5UM6W35wZ9YXqAr1TgYidgIoYGvx7bliibINumcz",
+});
+
+app.get("/paypal-success", (req, res) => {
+  res.render("success");
+});
+
+app.get("/paypal-page", (req, res) => {
+  res.render("index");
+});
+
+app.get("/paypal-cancel", (req, res) => {
+  res.render("cancel");
+});
+
+app.get("/paypal", (req, res) => {
+  // const create_payment_json = req.body.json;
+  console.log("\n\n\nREQ BODYYYYY\n\n\n");
+  console.log(req);
+  var create_payment_json = {
+    intent: "sale",
+    payer: {
+      payment_method: "paypal",
+    },
+    redirect_urls: {
+      return_url: "http://localhost:4242/paypal-success",
+      cancel_url: "http://localhost:4242/paypal-cancel",
+    },
+    transactions: [
+      {
+        item_list: {
+          items: [
+            {
+              name: "item",
+              sku: "item",
+              price: "1.00",
+              currency: "USD",
+              quantity: 1,
+            },
+          ],
+        },
+        amount: {
+          currency: "USD",
+          total: "1.00",
+        },
+        description: "This is the payment description.",
+      },
+    ],
+  };
+
+  paypal.payment.create(create_payment_json, function (error, payment) {
+    if (error) {
+      throw error;
+    } else {
+      // console.log("Create Payment Response");
+      // console.log(payment);
+      res.redirect(payment.links[1].href);
+    }
+  });
+});
+
+app.get("/paypal-success", (req, res) => {
+  var PayerID = req.query.PayerID;
+  var paymentId = req.query.paymentId;
+  var execute_payment_json = {
+    payer_id: PayerID,
+    transactions: [
+      {
+        amount: {
+          currency: "USD",
+          total: "1.00",
+        },
+      },
+    ],
+  };
+  paypal.payment.execute(paymentId, execute_payment_json, function (
+    error,
+    payment
+  ) {
+    if (error) {
+      console.log(error.response);
+      throw error;
+    } else {
+      console.log("Get Payment Response");
+      console.log(JSON.stringify(payment));
+      res.render("success");
+    }
+  });
+});
+
+app.post("/create-source", async (req, res) => {
+  const token = req.body.token;
+  console.log("\n\nPARAMS **\n\n");
+  console.log(token);
+
+  try {
+    const x = await stripe.sources.create({
+      type: "card",
+      token: token.tokenId,
+    });
+    res.json(x);
+  } catch (err) {
+    console.log("\n\nERROR:****\n\n");
+    console.log(err);
+  }
+});
+
+app.post("/charge-card", async (req, res) => {
+  try {
+    const x = await stripe.charges.create({
+      amount: 100,
+      currency: "usd",
+      source: req.body.source,
+      description: "Yoyoyo",
+    });
+    res.json(x);
+  } catch (err) {
+    res.json(err);
+  }
+});
 
 app.post("/send-email", (req, res) => {
   const email = req.body.email;
