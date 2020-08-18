@@ -1276,7 +1276,6 @@ export default class BuyMobile extends React.Component {
 
         if (allItems.empty) {
           if (this.state.currentCategoryIndex == categoryList.length - 1) {
-            alert("2");
             this.setState({
               finishedLoading: true,
             });
