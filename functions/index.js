@@ -37,10 +37,6 @@ paypal.configure({
     "EEzWM8KQhmRtcG1cucS6vcMTvZqGFMx3yx6dJFMR5UM6W35wZ9YXqAr1TgYidgIoYGvx7bliibINumcz",
 });
 
-app.get("/paypal-success", (req, res) => {
-  res.render("success");
-});
-
 app.get("/paypal-page", (req, res) => {
   res.render("index");
 });
@@ -51,8 +47,9 @@ app.get("/paypal-cancel", (req, res) => {
 
 app.get("/paypal", (req, res) => {
   // const create_payment_json = req.body.json;
-  console.log("\n\n\nREQ BODYYYYY\n\n\n");
-  console.log(req);
+  // console.log("\n\n\nREQ BODYYYYY\n\n\n");
+  // console.log(req);
+
   var create_payment_json = {
     intent: "sale",
     payer: {
@@ -62,24 +59,22 @@ app.get("/paypal", (req, res) => {
       return_url: "http://localhost:4242/paypal-success",
       cancel_url: "http://localhost:4242/paypal-cancel",
     },
+    note_to_payer:
+      "We do NOT use the shipping address above. We use the address you gave us in the previous form.",
+
     transactions: [
       {
-        item_list: {
-          items: [
-            {
-              name: "item",
-              sku: "item",
-              price: "1.00",
-              currency: "USD",
-              quantity: 1,
-            },
-          ],
-        },
         amount: {
           currency: "USD",
           total: "1.00",
+          details: {
+            subtotal: "1",
+            tax: "0",
+            shipping: "0",
+          },
         },
-        description: "This is the payment description.",
+        description:
+          "We do NOT use the shipping address above. We use the address you gave us in the previous form.",
       },
     ],
   };
@@ -89,13 +84,14 @@ app.get("/paypal", (req, res) => {
       throw error;
     } else {
       // console.log("Create Payment Response");
-      // console.log(payment);
       res.redirect(payment.links[1].href);
+      // res.redirect("https://www.wikipedia.org");
     }
   });
 });
 
 app.get("/paypal-success", (req, res) => {
+  console.log("\n\n\nPAYMENT SUCCESS*****\n\n\n\n");
   var PayerID = req.query.PayerID;
   var paymentId = req.query.paymentId;
   var execute_payment_json = {
@@ -117,9 +113,10 @@ app.get("/paypal-success", (req, res) => {
       console.log(error.response);
       throw error;
     } else {
+      res.render("success");
+
       console.log("Get Payment Response");
       console.log(JSON.stringify(payment));
-      res.render("success");
     }
   });
 });

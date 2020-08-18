@@ -1,16 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <style>
+      .loader {
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
     <title>Document</title>
   </head>
   <body>
-    <h1>Paypal</h1>
-    <form name="f1" action="/paypal">
+    <div
+      style="
+        width: 100wv;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <div class="loader"></div>
+    </div>
+
+    <form name="f1" action="/paypal" style="opacity: 0;">
       <input type="text" id="price" />
-      <button id="button1" type="submit">Pay</button>
+      <button id="button1" type="submit"></button>
     </form>
   </body>
 </html>
