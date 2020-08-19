@@ -16,6 +16,7 @@ const { resolve } = require("path");
 var serviceAccount = require("./key.json");
 const paypal = require("paypal-rest-sdk");
 const engines = require("consolidate");
+const { random } = require("lodash");
 
 app.engine("ejs", engines.ejs);
 app.set("views", "../views");
@@ -386,3 +387,188 @@ let getProductDetails = (myData) => {
 app.listen(4242, () => console.log(`Node server listening on port ${4242}!`));
 
 exports.app = functions.https.onRequest(app);
+
+exports.dropPrices = functions.pubsub
+  .schedule("every 3 hours from 6:00 to 23:00")
+  .timeZone("America/New_York")
+  .onRun((context) => {
+    const categoryList = [
+      "Art & Decoration",
+      "Books",
+      "Clothing, Shoes, & Accessories",
+      "Electronics",
+      "Home",
+      "Garden",
+      "Pet Supplies",
+      "Sports & Hobbies",
+      "Toys & Games",
+      "Everything Else",
+    ];
+
+    const priceList = [1.0, 0.9, 0.8, 0.7];
+    var numAdded = 0;
+
+    // 0) The longer the item has been in the store, it's more likely to drop, and with a higher drop %
+    // 1) Grab 8 random items with lower discounted items more likely to be grabbed.
+    for (var i = 0; i < 4; i++) {
+      // Choose categories and prices at random.
+      const currentCategory =
+        categoryList[Math.floor(Math.random() * categoryList.length)];
+      const randomPrice1 =
+        priceList[Math.floor(Math.random() * priceList.length)];
+      const randomPrice2 =
+        priceList[Math.floor(Math.random() * priceList.length)];
+      const currentPriceArray = [randomPrice1, randomPrice2];
+      const collectionRef = firebase
+        .firestore()
+        .collection("Categories")
+        .doc(currentCategory)
+        .collection("All");
+
+      collectionRef
+        .where("location", "==", "Austin, TX")
+        .where("current_price", "in", currentPriceArray)
+        .orderBy("uid")
+        .get()
+        .then((snapshot) => {
+          // Number of items in our collection. Choose one at random
+          const numItems = snapshot.docs.length;
+          const randomItem1 = snapshot.docs[
+            Math.floor(Math.random() * numItems)
+          ].data();
+          const randomItem2 = snapshot.docs[
+            Math.floor(Math.random() * numItems)
+          ].data();
+
+          // Get the current discount
+          const itemDiscount1 = randomItem1.current_price;
+          const itemDiscount2 = randomItem2.current_price;
+
+          var newDiscount1 = itemDiscount1 - 0.2;
+          var newDiscount2 = itemDiscount2 - 0.2;
+
+          if (newDiscount1 == 0.8) {
+            newDiscount1 = 0.7;
+          }
+          if (newDiscount1 == 0.1) {
+            newDiscount1 = 0.2;
+          }
+          if (newDiscount2 == 0.8) {
+            newDiscount2 = 0.7;
+          }
+          if (newDiscount2 == 0.1) {
+            newDiscount2 = 0.2;
+          }
+
+          collectionRef.doc(randomItem1.uid).update({
+            current_price: newDiscount1,
+            new_discount: true,
+          });
+
+          collectionRef.doc(randomItem2.uid).update({
+            current_price: newDiscount2,
+            new_discount: true,
+          });
+
+          numAdded += 2;
+        });
+    }
+
+    var transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true, // use SSL
+      auth: {
+        user: "andrew@collection.deals",
+        pass: "Collection#0831",
+      },
+    });
+
+    var mailOptions = {
+      from: "andrew@collection.deals",
+      to: "andrew@collection.deals",
+      subject: "CRON: New discounts ADDED.",
+      text: "CRON: New discounts ADDED.",
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+
+    return null;
+  });
+
+exports.removePriceDropTag = functions.pubsub
+  .schedule("every 48 hours 5:55")
+  .timeZone("America/New_York")
+  .onRun((context) => {
+    const categoryList = [
+      "Art & Decoration",
+      "Books",
+      "Clothing, Shoes, & Accessories",
+      "Electronics",
+      "Home",
+      "Garden",
+      "Pet Supplies",
+      "Sports & Hobbies",
+      "Toys & Games",
+      "Everything Else",
+    ];
+    // Remove the tags of old items, and put in new tags every time this runs
+    const collectionRef = firebase
+      .firestore()
+      .collection("Categories")
+      .doc(currentCategory)
+      .collection("All");
+
+    var numRemoved = 0;
+    for (var i = 0; i < categoryList.length; i++) {
+      const currentCategory = categoryList[i];
+      collectionRef
+        .where("new_discount", "==", true)
+        .orderBy("uid")
+        .get()
+        .then((snapshot) => {
+          i_index++;
+          const docs = snapshot.docs;
+          for (var j = 0; j < docs.length; j++) {
+            numRemoved++;
+            const doc = docs[j];
+            collectionRef.doc(doc.id).update({
+              new_discount: false,
+            });
+          }
+        });
+    }
+
+    var transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true, // use SSL
+      auth: {
+        user: "andrew@collection.deals",
+        pass: "Collection#0831",
+      },
+    });
+
+    var mailOptions = {
+      from: "andrew@collection.deals",
+      to: "andrew@collection.deals",
+      subject: "CRON: New discounts REMOVED.",
+      text: "CRON: New discounts REMOVED.",
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+
+    return null;
+  });
