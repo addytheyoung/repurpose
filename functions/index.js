@@ -406,7 +406,6 @@ exports.dropPrices = functions.pubsub
     ];
 
     const priceList = [1.0, 0.9, 0.8, 0.7];
-    var numAdded = 0;
 
     // 0) The longer the item has been in the store, it's more likely to drop, and with a higher drop %
     // 1) Grab 8 random items with lower discounted items more likely to be grabbed.
@@ -469,8 +468,6 @@ exports.dropPrices = functions.pubsub
             current_price: newDiscount2,
             new_discount: true,
           });
-
-          numAdded += 2;
         });
     }
 
@@ -525,7 +522,6 @@ exports.removePriceDropTag = functions.pubsub
       .doc(currentCategory)
       .collection("All");
 
-    var numRemoved = 0;
     for (var i = 0; i < categoryList.length; i++) {
       const currentCategory = categoryList[i];
       collectionRef
