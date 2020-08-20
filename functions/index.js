@@ -389,7 +389,7 @@ app.listen(4242, () => console.log(`Node server listening on port ${4242}!`));
 exports.app = functions.https.onRequest(app);
 
 exports.dropPrices = functions.pubsub
-  .schedule("every 3 hours from 6:00 to 23:00")
+  .schedule("every 12 hours from 6:00 to 23:00")
   .timeZone("America/New_York")
   .onRun((context) => {
     const categoryList = [
@@ -418,7 +418,7 @@ exports.dropPrices = functions.pubsub
       const randomPrice2 =
         priceList[Math.floor(Math.random() * priceList.length)];
       const currentPriceArray = [randomPrice1, randomPrice2];
-      const collectionRef = firebase
+      const collectionRef = admin
         .firestore()
         .collection("Categories")
         .doc(currentCategory)
@@ -431,6 +431,16 @@ exports.dropPrices = functions.pubsub
         .get()
         .then((snapshot) => {
           // Number of items in our collection. Choose one at random
+          console.log(snapshot.docs.length);
+          console.log(Math.floor(Math.random() * snapshot.docs.length));
+          console.log(
+            snapshot.docs[Math.floor(Math.random() * snapshot.docs.length)]
+          );
+          console.log(
+            snapshot.docs[
+              Math.floor(Math.random() * snapshot.docs.length)
+            ].data()
+          );
           const numItems = snapshot.docs.length;
           const randomItem1 = snapshot.docs[
             Math.floor(Math.random() * numItems)
@@ -500,7 +510,7 @@ exports.dropPrices = functions.pubsub
   });
 
 exports.removePriceDropTag = functions.pubsub
-  .schedule("every 48 hours 5:55")
+  .schedule("every 48 hours")
   .timeZone("America/New_York")
   .onRun((context) => {
     const categoryList = [
@@ -516,7 +526,7 @@ exports.removePriceDropTag = functions.pubsub
       "Everything Else",
     ];
     // Remove the tags of old items, and put in new tags every time this runs
-    const collectionRef = firebase
+    const collectionRef = admin
       .firestore()
       .collection("Categories")
       .doc(currentCategory)
