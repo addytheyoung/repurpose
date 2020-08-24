@@ -739,15 +739,15 @@ export default class CheckoutForm extends React.Component {
     // Step 1: Fetch product details such as amount and currency from
     // API to make sure it can't be tampered with in the client.
 
-    const cart = api.getProductDetails(this.state.myData.cart);
-    this.state.subTotal = cart.subTotal;
-    this.state.description = cart.description;
-    this.state.pictures = cart.pictures;
-    this.state.tax = cart.tax;
-    this.state.shipping = cart.shipping;
-    this.state.total = cart.total;
-    this.state.amount = cart.amount;
-    this.state.currency = cart.currency;
+    // const cart = api.getProductDetails(this.state.myData.cart);
+    // this.state.subTotal = cart.subTotal;
+    // this.state.description = cart.description;
+    // this.state.pictures = cart.pictures;
+    // this.state.tax = cart.tax;
+    // this.state.shipping = cart.shipping;
+    // this.state.total = cart.total;
+    // this.state.amount = cart.amount;
+    // this.state.currency = cart.currency;
 
     console.log("GOT PRODUCT DETAILS");
 
@@ -943,7 +943,7 @@ export default class CheckoutForm extends React.Component {
           .then((res) => {
             i_index++;
             if (i_index == sellers.length) {
-              // Create our customer
+              // Create our customer DELETED
               api
                 .createCustomer()
                 .then((e) => {

@@ -65,68 +65,6 @@ const sendEmail = (email, meeting) => {
     });
 };
 
-const createSeller = (options) => {
-  console.log(options);
-  return window
-    .fetch(`/make-seller`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(options),
-    })
-    .then((res) => {
-      console.log("RES");
-
-      if (res.status === 200) {
-        return res.json();
-      } else {
-        return null;
-      }
-    })
-    .then((data) => {
-      console.log("DATA");
-      console.log(data);
-      if (!data || data.error) {
-        throw Error("API Error");
-      } else {
-        return data;
-      }
-    })
-    .catch((e) => {
-      console.log(e.message);
-    });
-};
-
-const createCustomer = (options) => {
-  console.log("Creating customer API");
-  return window
-    .fetch(`/customer`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    .then((res) => {
-      if (res.status === 200) {
-        console.log(res);
-        return res.json();
-      } else {
-        console.log("not res");
-        return null;
-      }
-    })
-    .then((data) => {
-      if (!data || data.error) {
-        console.log("bad data");
-        throw Error("API Error");
-      } else {
-        console.log(data);
-        return data;
-      }
-    });
-};
-
 const createTransfers = (seller, cost, worker) => {
   const json = { seller: seller, cost: cost, worker: worker };
   return window
@@ -178,71 +116,6 @@ const createPaymentIntent = (total, stripe_unique_id) => {
 const payWithPaypal = (x) => {
   console.log(x);
   return "x";
-};
-
-const getProductDetails = (cart) => {
-  const subTotal = getSubtotal(cart);
-  const tax = getTax(subTotal);
-  const shipping = getShipping(subTotal);
-  const total = parseInt((parseInt(subTotal) + tax + shipping) * 100) / 100;
-  return {
-    subTotal: subTotal,
-    description: cart.description,
-    pictures: cart.pictures,
-    tax: tax,
-    shipping: shipping,
-    total: total,
-    currency: "usd",
-    amount: total,
-    description: "dqdqwdqwdq",
-  };
-  console.log(total);
-  return window
-    .fetch(`/product-details`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    .then((res) => {
-      if (res.status === 200) {
-        return res.json();
-      } else {
-        return null;
-      }
-    })
-    .then((data) => {
-      if (!data || data.error) {
-        throw Error("API Error");
-      } else {
-        return data;
-      }
-    });
-};
-
-const getPublicStripeKey = (options) => {
-  return window
-    .fetch(`/public-key`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    .then((res) => {
-      if (res.status === 200) {
-        return res.json();
-      } else {
-        return null;
-      }
-    })
-    .then((data) => {
-      if (!data || data.error) {
-        console.log("API error:", { data });
-        throw Error("API Error");
-      } else {
-        return data.publicKey;
-      }
-    });
 };
 
 const getSubtotal = (cart) => {
@@ -327,11 +200,7 @@ const api = {
   createTransfers: createTransfers,
   sendEmail: sendEmail,
   getLatLng: getLatLng,
-  createSeller: createSeller,
   createPaymentIntent,
-  createCustomer: createCustomer,
-  getPublicStripeKey: getPublicStripeKey,
-  getProductDetails: getProductDetails,
 };
 
 export default api;
