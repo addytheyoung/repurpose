@@ -283,13 +283,11 @@ app.post("/fetch-item-price", async (req, res) => {
     });
 });
 
+// Create a stripe customer
 app.post("/create-stripe-customer", async (req, res) => {
-  const cardToken = req.body.cardToken;
   const email = req.body.email;
-
   try {
     const customer = await stripe.customers.create({
-      source: cardToken,
       email: email,
     });
     res.json(customer);
@@ -299,18 +297,17 @@ app.post("/create-stripe-customer", async (req, res) => {
   }
 });
 
+// Charge a stripe customer
 app.post("/charge-stripe-customer", async (req, res) => {
   const total = req.body.total;
   const customer = req.body.customer;
   console.log(total);
   console.log(customer);
-  return;
-
   try {
     const charge = await stripe.charges.create({
-      amount: total,
+      amount: total * 100,
       currency: "usd",
-      customer: customer.id,
+      customer: customer,
     });
 
     res.json(charge);
@@ -320,13 +317,32 @@ app.post("/charge-stripe-customer", async (req, res) => {
   }
 });
 
+// Create a stripe customer card
+app.post("/create-customer-card", async (req, res) => {
+  const customerId = req.body.customerId;
+  const cardToken = req.body.cardToken;
+
+  try {
+    const card = await stripe.customers.createSource(customerId, {
+      source: cardToken,
+    });
+    res.json(card);
+  } catch (err) {
+    console.log(err);
+    res.json(err);
+  }
+
+  return;
+});
+
+// Update the stripe customers card
 app.post("/update-customer-card", async (req, res) => {
   const customerId = req.body.customerId;
   const cardToken = req.body.cardToken;
 
   try {
     const newCustomer = await stripe.customers.update(customerId, {
-      source: cardToken,
+      default_source: cardToken,
     });
 
     res.json(newCustomer);
