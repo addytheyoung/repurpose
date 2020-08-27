@@ -32,11 +32,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 paypal.configure({
-  mode: "live",
+  // mode: "live",
+  // client_id:
+  //   "AVWKPfLbUrnVVHtF3EqllXbIqqAhJvRrlwa9vVi4k_uFGT4Jcd7TSsWxXKdGED5B66RNcrczgnnISVLk",
+  // client_secret:
+  //   "EEzWM8KQhmRtcG1cucS6vcMTvZqGFMx3yx6dJFMR5UM6W35wZ9YXqAr1TgYidgIoYGvx7bliibINumcz",
+  mode: "sandbox",
   client_id:
-    "AVWKPfLbUrnVVHtF3EqllXbIqqAhJvRrlwa9vVi4k_uFGT4Jcd7TSsWxXKdGED5B66RNcrczgnnISVLk",
+    "AebrbuffsMy8souGrrTS02XFMu0XN7MrbbtmXfII-fNIcVz9FE0ndArXMXrJzIw2EdVhGW-fXWbi_Kmn",
   client_secret:
-    "EEzWM8KQhmRtcG1cucS6vcMTvZqGFMx3yx6dJFMR5UM6W35wZ9YXqAr1TgYidgIoYGvx7bliibINumcz",
+    "EOEcKQIWhapQNGGrW6MQFrqSogkHlLM6pB49DNc4ImeK83TT2wI9o55o0UI9M6XYvpxZ3N1fEq-88cYs",
+});
+
+app.get("/test", (req, res) => {
+  res.send({ working: "Working!" });
 });
 
 app.get("/paypal-page", (req, res) => {
@@ -47,10 +56,12 @@ app.get("/paypal-cancel", (req, res) => {
   res.render("cancel");
 });
 
-app.get("/paypal", (req, res) => {
+app.post("/paypal", (req, res) => {
   // const create_payment_json = req.body.json;
   // console.log("\n\n\nREQ BODYYYYY\n\n\n");
-  // console.log(req);
+
+  const price = req.body.pricename;
+  console.log(price);
 
   var create_payment_json = {
     intent: "sale",
@@ -62,21 +73,21 @@ app.get("/paypal", (req, res) => {
       cancel_url: "http://localhost:4242/paypal-cancel",
     },
     note_to_payer:
-      "We do NOT use the shipping address above. We use the address you gave us in the previous form.",
+      "We do NOT use the shipping address here. We use the address you gave us in the previous form. Ignore the shipping address here.",
 
     transactions: [
       {
         amount: {
           currency: "USD",
-          total: "1.00",
+          total: price,
           details: {
-            subtotal: "1",
+            subtotal: price,
             tax: "0",
             shipping: "0",
           },
         },
         description:
-          "We do NOT use the shipping address above. We use the address you gave us in the previous form.",
+          "We do NOT use the shipping address here. We use the address you gave us in the previous form. Ignore the shipping",
       },
     ],
   };
@@ -92,7 +103,7 @@ app.get("/paypal", (req, res) => {
   });
 });
 
-app.get("/paypal-success", (req, res) => {
+app.get("/paypal-success", async (req, res) => {
   console.log("\n\n\nPAYMENT SUCCESS*****\n\n\n\n");
   var PayerID = req.query.PayerID;
   var paymentId = req.query.paymentId;
@@ -107,7 +118,7 @@ app.get("/paypal-success", (req, res) => {
       },
     ],
   };
-  paypal.payment.execute(paymentId, execute_payment_json, function (
+  await paypal.payment.execute(paymentId, execute_payment_json, function (
     error,
     payment
   ) {
@@ -231,7 +242,7 @@ app.post("/create-payment-intent", async (req, res) => {
     transfer_group: "abcdef",
     amount: amount,
     currency: "usd",
-    description: "An item bought from Collection",
+    description: "An item bought from Tate's Crate",
   };
 
   try {

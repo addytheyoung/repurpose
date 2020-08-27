@@ -41,8 +41,8 @@
       <div class="loader"></div>
     </div>
 
-    <form name="f1" action="/paypal" style="opacity: 0;">
-      <input type="text" id="price" />
+    <form name="f1" action="/paypal" style="opacity: 0" method="POST">
+      <input type="text" id="price" name="pricename" />
       <button id="button1" type="submit"></button>
     </form>
   </body>

@@ -1,0 +1,104 @@
+[debug] [2020-08-27T23:05:36.444Z] ----------------------------------------------------------------------
+[debug] [2020-08-27T23:05:36.445Z] Command:       /Users/andrewyoung/.nvm/versions/node/v10.10.0/bin/node /usr/local/bin/firebase functions:shell
+[debug] [2020-08-27T23:05:36.445Z] CLI Version:   8.6.0
+[debug] [2020-08-27T23:05:36.445Z] Platform:      darwin
+[debug] [2020-08-27T23:05:36.445Z] Node Version:  v10.10.0
+[debug] [2020-08-27T23:05:36.446Z] Time:          Thu Aug 27 2020 18:05:36 GMT-0500 (Central Daylight Time)
+[debug] [2020-08-27T23:05:36.446Z] ----------------------------------------------------------------------
+[debug] [2020-08-27T23:05:36.446Z] 
+[debug] [2020-08-27T23:05:36.452Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-08-27T23:05:36.452Z] > authorizing via signed-in user
+[debug] [2020-08-27T23:05:36.453Z] [iam] checking project repurpose-e523f for permissions ["firebase.projects.get"]
+[debug] [2020-08-27T23:05:36.455Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/repurpose-e523f:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2020-08-27T23:05:36.711Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 27 Aug 2020 23:05:36 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=126","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-08-27T23:05:36.719Z] [functions] Using node@10 from host.
+[debug] [2020-08-27T23:05:36.726Z] [functions] Watching "/Users/andrewyoung/repurpose/functions" for Cloud Functions...
+[debug] [2020-08-27T23:05:36.737Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-08-27T23:05:36.738Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2020-08-27T23:05:36.738Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2020-08-27T23:05:36.738Z] DEBUG: [worker-~diagnostic~-41532fca-fb73-45e9-aae8-24188dacac3c]: Assigning socketPath: /var/folders/_0/g68g3n0d28vck1btdhvstc1w0000gn/T/fire_emu_23889.sock
+[debug] [2020-08-27T23:05:36.738Z] DEBUG: [worker-~diagnostic~-41532fca-fb73-45e9-aae8-24188dacac3c]: BUSY
+[debug] [2020-08-27T23:05:37.013Z] DEBUG: [runtime-status] [23889] Functions runtime initialized. {"cwd":"/Users/andrewyoung/repurpose/functions","node_version":"10.10.0"}
+[debug] [2020-08-27T23:05:37.014Z] DEBUG: [runtime-status] [23889] Disabled runtime features: undefined
+[debug] [2020-08-27T23:05:37.016Z] DEBUG: [runtime-status] [23889] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-08-27T23:05:37.017Z] DEBUG: [runtime-status] [23889] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-27T23:05:37.018Z] DEBUG: [runtime-status] [23889] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-27T23:05:37.021Z] DEBUG: [runtime-status] [23889] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2020-08-27T23:05:37.021Z] DEBUG: [runtime-status] [23889] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-27T23:05:37.055Z] DEBUG: [runtime-status] [23889] Checked functions.config() {"config":{}}
+[debug] [2020-08-27T23:05:37.055Z] DEBUG: [runtime-status] [23889] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2020-08-27T23:05:37.056Z] DEBUG: [runtime-status] [23889] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-27T23:05:37.056Z] DEBUG: [runtime-status] [23889] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-08-27T23:05:37.057Z] DEBUG: [runtime-status] [23889] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-27T23:05:37.057Z] DEBUG: [runtime-status] [23889] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-admin/lib/index.js"}}
+[warn] ⚠  /Users/andrewyoung/repurpose/functions/index.js:48
+  res.send({ working?: "Working!" });
+                    ^
+
+SyntaxError: Unexpected token ?
+    at new Script (vm.js:79:7)
+    at createScript (vm.js:251:10)
+    at Object.runInThisContext (vm.js:303:10)
+    at Module._compile (internal/modules/cjs/loader.js:657:28)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:700:10)
+    at Module.load (internal/modules/cjs/loader.js:599:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:538:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:530:3)
+    at Module.require (internal/modules/cjs/loader.js:637:17)
+    at require (internal/modules/cjs/helpers.js:20:18) {"metadata":{"emulator":{"name":"functions"},"message":"/Users/andrewyoung/repurpose/functions/index.js:48\n  res.send({ working?: \"Working!\" });\n                    ^\n\nSyntaxError: Unexpected token ?\n    at new Script (vm.js:79:7)\n    at createScript (vm.js:251:10)\n    at Object.runInThisContext (vm.js:303:10)\n    at Module._compile (internal/modules/cjs/loader.js:657:28)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:700:10)\n    at Module.load (internal/modules/cjs/loader.js:599:32)\n    at tryModuleLoad (internal/modules/cjs/loader.js:538:12)\n    at Function.Module._load (internal/modules/cjs/loader.js:530:3)\n    at Module.require (internal/modules/cjs/loader.js:637:17)\n    at require (internal/modules/cjs/helpers.js:20:18)"}}
+[warn] ⚠  We were unable to load your functions code. (see above) {"metadata":{"emulator":{"name":"functions"}}}
+[debug] [2020-08-27T23:05:37.075Z] DEBUG: [worker-~diagnostic~-41532fca-fb73-45e9-aae8-24188dacac3c]: exited
+[debug] [2020-08-27T23:05:37.075Z] DEBUG: [worker-~diagnostic~-41532fca-fb73-45e9-aae8-24188dacac3c]: FINISHED
+[debug] [2020-08-27T23:05:46.351Z] DEBUG: File /Users/andrewyoung/repurpose/functions/index.js changed, reloading triggers
+[debug] [2020-08-27T23:05:47.357Z] DEBUG: [worker-pool] Cleaned up workers for ~diagnostic~: 1 --> 0
+[debug] [2020-08-27T23:05:47.363Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-08-27T23:05:47.363Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2020-08-27T23:05:47.363Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2020-08-27T23:05:47.363Z] DEBUG: [worker-~diagnostic~-6b95f243-c95f-4796-b407-4229c55f8088]: Assigning socketPath: /var/folders/_0/g68g3n0d28vck1btdhvstc1w0000gn/T/fire_emu_23906.sock
+[debug] [2020-08-27T23:05:47.363Z] DEBUG: [worker-~diagnostic~-6b95f243-c95f-4796-b407-4229c55f8088]: BUSY
+[debug] [2020-08-27T23:05:47.631Z] DEBUG: [runtime-status] [23906] Functions runtime initialized. {"cwd":"/Users/andrewyoung/repurpose/functions","node_version":"10.10.0"}
+[debug] [2020-08-27T23:05:47.633Z] DEBUG: [runtime-status] [23906] Disabled runtime features: undefined
+[debug] [2020-08-27T23:05:47.635Z] DEBUG: [runtime-status] [23906] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-08-27T23:05:47.636Z] DEBUG: [runtime-status] [23906] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-27T23:05:47.636Z] DEBUG: [runtime-status] [23906] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-27T23:05:47.639Z] DEBUG: [runtime-status] [23906] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2020-08-27T23:05:47.640Z] DEBUG: [runtime-status] [23906] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-27T23:05:47.670Z] DEBUG: [runtime-status] [23906] Checked functions.config() {"config":{}}
+[debug] [2020-08-27T23:05:47.670Z] DEBUG: [runtime-status] [23906] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2020-08-27T23:05:47.670Z] DEBUG: [runtime-status] [23906] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-27T23:05:47.671Z] DEBUG: [runtime-status] [23906] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-08-27T23:05:47.671Z] DEBUG: [runtime-status] [23906] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-27T23:05:47.672Z] DEBUG: [runtime-status] [23906] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2020-08-27T23:05:48.475Z] DEBUG: [runtime-status] [23906] initializeApp(DEFAULT) {"credential":{"implicit":false,"projectId":"repurpose-e523f","privateKey":"-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQChRKgU/2adtRp9\nRLnEJKplAahnZ9a32xmlzobIS56tSWjgA502oJrac/pI+QhD5K6QARbJgnfD8LB3\nGKrOKG7Z0JqMHscPv1GpZxVaMsIv+0z9bR2d9tOwMlvh/mN1dHtMIZAAfVs9OqdF\nrb3nNS7a+Pm49s+0HOOIzb0hZ22AO71i4tWOUBJo07qqTUdE3xwUuuRp5E/muJUw\n+wZyodFcKhK0ExvFcJ5Wr43GncICwoGmforM5u6ej6biVTEjt0LnzzhMhnnEB8vJ\nMPeDUGeh/Ic5o+pwcgtXO1Agk/UUTUM9AitPFLRJI1C25IH8CYISTOv+Bx9xS/5R\nd8mzIfHbAgMBAAECggEACQg127s0LZgDjEmJl/Uvv+l4W5ZCvdhdFt66yMQHdpAa\nehVpvDIBikOdnHGqJ1dK+ZC+DHosqAI2d+0fP92e278lsLxWjMi705+M4BjgrFxI\nQxdV5c95qrAfWkhrnJvx/eERVh2vOv4qeSoSbT0ayzPPlK7qEh3eFn7jXVgUF27q\nU1sQGIv/ufeMFmdUl9790tA+g6PWPa+fP9qrHNB+asfT7/NBvhYMXBSFeb7DIATv\nX82po5vfhdGskfo/AtahPleO1WZ4oDDkadwM7+Hh71/u3ftFUNFaan+f1oexYA+w\nN5NFZ8lobneyJNdFy+flw/Wm+L39PvlYVj0lP6rUyQKBgQDUs7qrL0CIrNvbuPCh\nslp88ZfMX6EQzY798B/6YwGhO8CTlIx6BhXKMD1+5HB0L+bqn8Mkgjqx0peKhY4h\nE5v24AkO/ul5VaLyIbhEsOoK/D5R9QWUpPUlcS4onVNRhji/++p1mB9TNQVWi7sX\n1jMGDA1DkbaCJtYd/17wffO8aQKBgQDCGJ6YqnLfAA4vgIUQek9/Pg3VaBSYXuHl\nrv05gFOgXMtebZeZ8mxE0JAChR7FasssIAMaCoqKlY3ckd3V2sbLfebKNVsFVkLF\nuW7yyHBZJGjbndAlu/UxO97AEdgzs2OwZVxpBpXz1NB7gjWuIxHBiRi1wHcdWIH9\ngNPfC2XDowKBgDyT54EjlwSV/pPoaxgSPLVC9VGulqe7c5MdFW5xTiCGbQVbFFsY\napJIBOuj0ec1UVXXJHO8Z00HxkMcYGtJM20vR0UvEn2NBzhgpCNkI3P3fSRIXUuF\nY5BDWLsWe4lHadg7vf250ooXGqsYZrOWPLfnLMvmrw0IVIj8lyR1KrqpAoGBAJLL\nx/cywppCEnh+vSTPPJzBs/i5NQpgiH0MMdxxX84jIHSUcloubRBGpQQi5jjtIiiH\nNZFWc52IqrgtYhfB1SRGXmyEmgiZSvr72huo2L+yt9ORscE4PKM14qxlUp0Xicf5\ngUC1iGfXhq5CtpKzV1SGebfMjsoVDItMCfHhTt/9AoGAP+aPxNmFUX/1vXaZluKX\nq1dmbzOCfLVAEmcj+bNjCr0I4PeWmsl/KSYR1TkexuialmHeuZ5hHqrrPABDNZ9R\nxo/JlYuutXp5DMIPWI1z7KuGPKoek+a/8S6T96T3PqMOy58r1x0jE6R3zHFu4Ll/\nmM19YFE4Nc2G+11RX2+nFKs=\n-----END PRIVATE KEY-----\n","clientEmail":"firebase-adminsdk-bn2gp@repurpose-e523f.iam.gserviceaccount.com","httpClient":{"retry":{"maxRetries":4,"statusCodes":[503],"ioErrorCodes":["ECONNRESET","ETIMEDOUT"],"backOffFactor":0.5,"maxDelayInMillis":60000}}},"databaseURL":"https://repurpose-e523f.firebaseio.com"}
+[debug] [2020-08-27T23:05:48.485Z] [functions[app]] http function initialized (http://localhost:5000/repurpose-e523f/us-central1/app).
+[debug] [2020-08-27T23:05:48.485Z] [functions[dropPrices]] function ignored because the pubsub emulator does not exist or is not running.
+[debug] [2020-08-27T23:05:48.485Z] [functions[removePriceDropTag]] function ignored because the pubsub emulator does not exist or is not running.
+[debug] [2020-08-27T23:05:48.485Z] DEBUG: [worker-~diagnostic~-6b95f243-c95f-4796-b407-4229c55f8088]: IDLE
+[info] >  Node server listening on port 4242! {"user":"Node server listening on port 4242!","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Node server listening on port 4242!"}}
+[debug] [2020-08-27T23:06:29.559Z] DEBUG: File /Users/andrewyoung/repurpose/functions/index.js changed, reloading triggers
+[debug] [2020-08-27T23:06:30.561Z] DEBUG: [worker-pool] Shutting down IDLE worker (~diagnostic~)
+[debug] [2020-08-27T23:06:30.561Z] DEBUG: [worker-~diagnostic~-6b95f243-c95f-4796-b407-4229c55f8088]: FINISHING
+[debug] [2020-08-27T23:06:30.567Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-08-27T23:06:30.567Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=2
+[debug] [2020-08-27T23:06:30.567Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2020-08-27T23:06:30.567Z] DEBUG: [worker-~diagnostic~-dcfc0fa1-0a87-4157-a964-a0dfbf3b7481]: Assigning socketPath: /var/folders/_0/g68g3n0d28vck1btdhvstc1w0000gn/T/fire_emu_23927.sock
+[debug] [2020-08-27T23:06:30.568Z] DEBUG: [worker-~diagnostic~-dcfc0fa1-0a87-4157-a964-a0dfbf3b7481]: BUSY
+[debug] [2020-08-27T23:06:30.568Z] DEBUG: [worker-~diagnostic~-6b95f243-c95f-4796-b407-4229c55f8088]: exited
+[debug] [2020-08-27T23:06:30.568Z] DEBUG: [worker-~diagnostic~-6b95f243-c95f-4796-b407-4229c55f8088]: FINISHED
+[debug] [2020-08-27T23:06:30.819Z] DEBUG: [runtime-status] [23927] Functions runtime initialized. {"cwd":"/Users/andrewyoung/repurpose/functions","node_version":"10.10.0"}
+[debug] [2020-08-27T23:06:30.820Z] DEBUG: [runtime-status] [23927] Disabled runtime features: undefined
+[debug] [2020-08-27T23:06:30.822Z] DEBUG: [runtime-status] [23927] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-08-27T23:06:30.823Z] DEBUG: [runtime-status] [23927] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-27T23:06:30.823Z] DEBUG: [runtime-status] [23927] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-27T23:06:30.826Z] DEBUG: [runtime-status] [23927] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2020-08-27T23:06:30.826Z] DEBUG: [runtime-status] [23927] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-27T23:06:30.854Z] DEBUG: [runtime-status] [23927] Checked functions.config() {"config":{}}
+[debug] [2020-08-27T23:06:30.855Z] DEBUG: [runtime-status] [23927] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2020-08-27T23:06:30.855Z] DEBUG: [runtime-status] [23927] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-27T23:06:30.855Z] DEBUG: [runtime-status] [23927] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-08-27T23:06:30.856Z] DEBUG: [runtime-status] [23927] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-27T23:06:30.856Z] DEBUG: [runtime-status] [23927] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2020-08-27T23:06:31.194Z] DEBUG: [runtime-status] [23927] initializeApp(DEFAULT) {"credential":{"implicit":false,"projectId":"repurpose-e523f","privateKey":"-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQChRKgU/2adtRp9\nRLnEJKplAahnZ9a32xmlzobIS56tSWjgA502oJrac/pI+QhD5K6QARbJgnfD8LB3\nGKrOKG7Z0JqMHscPv1GpZxVaMsIv+0z9bR2d9tOwMlvh/mN1dHtMIZAAfVs9OqdF\nrb3nNS7a+Pm49s+0HOOIzb0hZ22AO71i4tWOUBJo07qqTUdE3xwUuuRp5E/muJUw\n+wZyodFcKhK0ExvFcJ5Wr43GncICwoGmforM5u6ej6biVTEjt0LnzzhMhnnEB8vJ\nMPeDUGeh/Ic5o+pwcgtXO1Agk/UUTUM9AitPFLRJI1C25IH8CYISTOv+Bx9xS/5R\nd8mzIfHbAgMBAAECggEACQg127s0LZgDjEmJl/Uvv+l4W5ZCvdhdFt66yMQHdpAa\nehVpvDIBikOdnHGqJ1dK+ZC+DHosqAI2d+0fP92e278lsLxWjMi705+M4BjgrFxI\nQxdV5c95qrAfWkhrnJvx/eERVh2vOv4qeSoSbT0ayzPPlK7qEh3eFn7jXVgUF27q\nU1sQGIv/ufeMFmdUl9790tA+g6PWPa+fP9qrHNB+asfT7/NBvhYMXBSFeb7DIATv\nX82po5vfhdGskfo/AtahPleO1WZ4oDDkadwM7+Hh71/u3ftFUNFaan+f1oexYA+w\nN5NFZ8lobneyJNdFy+flw/Wm+L39PvlYVj0lP6rUyQKBgQDUs7qrL0CIrNvbuPCh\nslp88ZfMX6EQzY798B/6YwGhO8CTlIx6BhXKMD1+5HB0L+bqn8Mkgjqx0peKhY4h\nE5v24AkO/ul5VaLyIbhEsOoK/D5R9QWUpPUlcS4onVNRhji/++p1mB9TNQVWi7sX\n1jMGDA1DkbaCJtYd/17wffO8aQKBgQDCGJ6YqnLfAA4vgIUQek9/Pg3VaBSYXuHl\nrv05gFOgXMtebZeZ8mxE0JAChR7FasssIAMaCoqKlY3ckd3V2sbLfebKNVsFVkLF\nuW7yyHBZJGjbndAlu/UxO97AEdgzs2OwZVxpBpXz1NB7gjWuIxHBiRi1wHcdWIH9\ngNPfC2XDowKBgDyT54EjlwSV/pPoaxgSPLVC9VGulqe7c5MdFW5xTiCGbQVbFFsY\napJIBOuj0ec1UVXXJHO8Z00HxkMcYGtJM20vR0UvEn2NBzhgpCNkI3P3fSRIXUuF\nY5BDWLsWe4lHadg7vf250ooXGqsYZrOWPLfnLMvmrw0IVIj8lyR1KrqpAoGBAJLL\nx/cywppCEnh+vSTPPJzBs/i5NQpgiH0MMdxxX84jIHSUcloubRBGpQQi5jjtIiiH\nNZFWc52IqrgtYhfB1SRGXmyEmgiZSvr72huo2L+yt9ORscE4PKM14qxlUp0Xicf5\ngUC1iGfXhq5CtpKzV1SGebfMjsoVDItMCfHhTt/9AoGAP+aPxNmFUX/1vXaZluKX\nq1dmbzOCfLVAEmcj+bNjCr0I4PeWmsl/KSYR1TkexuialmHeuZ5hHqrrPABDNZ9R\nxo/JlYuutXp5DMIPWI1z7KuGPKoek+a/8S6T96T3PqMOy58r1x0jE6R3zHFu4Ll/\nmM19YFE4Nc2G+11RX2+nFKs=\n-----END PRIVATE KEY-----\n","clientEmail":"firebase-adminsdk-bn2gp@repurpose-e523f.iam.gserviceaccount.com","httpClient":{"retry":{"maxRetries":4,"statusCodes":[503],"ioErrorCodes":["ECONNRESET","ETIMEDOUT"],"backOffFactor":0.5,"maxDelayInMillis":60000}}},"databaseURL":"https://repurpose-e523f.firebaseio.com"}
+[debug] [2020-08-27T23:06:31.199Z] DEBUG: [worker-~diagnostic~-dcfc0fa1-0a87-4157-a964-a0dfbf3b7481]: IDLE
+[info] >  Node server listening on port 4242! {"user":"Node server listening on port 4242!","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Node server listening on port 4242!"}}
