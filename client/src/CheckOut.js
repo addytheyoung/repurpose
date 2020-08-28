@@ -8,7 +8,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import CardSection from "./CardSection";
 import * as firebase from "firebase";
 
 import FormLabel from "@material-ui/core/FormLabel";

@@ -2,7 +2,6 @@ import React from "react";
 import Close from "../images/close.png";
 import DialogPrice from "../DialogPrice";
 import DialogCategory from "../DialogCategory";
-import DialogElse from "../DialogElse";
 import PriceDialogMobile from "./PriceDialogMobile";
 import CategoryDialogMobile from "./CategoryDialogMobile";
 import SaleDialogMobile from "./SaleDialogMobile";

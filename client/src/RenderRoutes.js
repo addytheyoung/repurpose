@@ -2,21 +2,16 @@ import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import * as firebase from "firebase";
 import Buy from "./Buy";
-import FooterMobile from "./mobile/FooterMobile";
 import GetTotal from "./scripts/GetTotal";
 import OrderKit from "./OrderKit";
-import SellInfo from "./SellInfo";
 import WhatHaveISoldPage from "./WhatHaveISoldPage";
 import Item from "./Item";
 import Profile from "./Profile";
 import Cart from "./Cart";
 import AndrewItemPage from "./AndrewItemPage";
 import AndrewOrders from "./AndrewOrders";
-import Agreement from "./Agreement.js";
 import CheckOut from "./CheckOut";
-import GetKit from "./GetKit";
-import BecomeCollector from "./BecomeCollector";
-import ItemPriceScraper from "./ItemPriceScraper.js";
+import ItemPriceScraper from "./scripts/ItemPriceScraper.js";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Home from "./Home";
@@ -27,7 +22,6 @@ import AddDatesToFirebase from "./scripts/AddDatesToFirebase";
 import Charge from "./Charge";
 import Help from "./Help";
 import MoveItemCategory from "./scripts/MoveItemCategory";
-import BuyOrSell from "./BuyOrSell";
 import Sell_2 from "./Sell_2";
 import MoveItemCities from "./scripts/MoveItemCities";
 import MoveCategoryCategory from "./scripts/MoveCategoryCategory";
@@ -42,16 +36,10 @@ import CartMobile from "./mobile/CartMobile";
 import NewItemVariable from "./scripts/NewItemVariable";
 import SellMobile from "./mobile/SellMobile";
 import HomeRedirect from "./HomeRedirect";
-import {
-  BrowserView,
-  MobileView,
-  isBrowser,
-  isMobile,
-} from "react-device-detect";
+import { isMobile } from "react-device-detect";
 import SearchPageMobile from "./mobile/SearchPageMobile";
 import CheckOutMobile from "./mobile/CheckOutMobile";
 import SearchPageMobileMain from "./mobile/SearchPageMobileMain";
-import ChatPage from "./ChatPage";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -80,11 +68,7 @@ export default class RenderRoutes extends React.Component {
               {citiesList.includes(window.localStorage.getItem("city")) && (
                 <Route path="/" exact={true} render={() => <BuyMobile />} />
               )}
-              <Route
-                path="/chatpage"
-                exact={true}
-                render={() => <ChatPage />}
-              />
+
               <Route path="/sell" exact={true} render={() => <SellMobile />} />
               <Route
                 path="/what-have-i-sold"
@@ -131,7 +115,6 @@ export default class RenderRoutes extends React.Component {
               exact={true}
               render={() => <WhatHaveISoldPage />}
             />
-            <Route path="/chatpage" exact={true} render={() => <ChatPage />} />
             <Route
               path="/home-redirect"
               exact={true}
@@ -197,11 +180,7 @@ export default class RenderRoutes extends React.Component {
               exact={true}
               render={() => <NewItemVariable />}
             />
-            <Route
-              path="/become_collector"
-              exact={true}
-              render={() => <BecomeCollector />}
-            />
+
             <Route path="/orders" exact={true} render={() => <Orders />} />
             <Route path="/search" exact={false} render={() => <SearchPage />} />
             <Route path="/help" exact={true} render={() => <Help />} />
@@ -217,11 +196,7 @@ export default class RenderRoutes extends React.Component {
               exact={true}
               render={() => <Charge />}
             />
-            <Route
-              path="/facebooklink"
-              exact={true}
-              render={() => <BuyOrSell />}
-            />
+
             <Route
               path="/andrewscripts4468"
               exact={true}
@@ -236,21 +211,6 @@ export default class RenderRoutes extends React.Component {
               path="/andrewscripts4470"
               exact={true}
               render={() => <AddDatesToFirebase />}
-            />
-            <Route
-              path="/sell/agreement"
-              exact={true}
-              render={() => <Agreement />}
-            />
-            <Route
-              path="/sell-info"
-              exact={false}
-              render={() => <SellInfo />}
-            />
-            <Route
-              path="/sell/getkit"
-              exact={false}
-              render={() => <GetKit />}
             />
           </Router>
         </Elements>
@@ -288,11 +248,7 @@ export default class RenderRoutes extends React.Component {
                 exact={true}
                 render={() => <CheckOutMobile />}
               />
-              <Route
-                path="/chatpage"
-                exact={true}
-                render={() => <ChatPage />}
-              />
+
               <Route
                 path="/home-redirect"
                 exact={true}
@@ -318,21 +274,9 @@ export default class RenderRoutes extends React.Component {
               exact={true}
               render={() => <WhatHaveISoldPage />}
             />
-            <Route path="/chatpage" exact={true} render={() => <ChatPage />} />
-
-            <Route
-              path="/facebooklink"
-              exact={true}
-              render={() => <BuyOrSell />}
-            />
 
             <Route path="/search" exact={false} render={() => <SearchPage />} />
 
-            <Route
-              path="/become_collector"
-              exact={true}
-              render={() => <BecomeCollector />}
-            />
             <Route
               path="/andrewscripts4467"
               exact={true}

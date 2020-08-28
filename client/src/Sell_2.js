@@ -1,28 +1,14 @@
 import React from "react";
 import HeaderBar from "./HeaderBar";
 import _ from "lodash";
-import { compose, withProps, lifecycle } from "recompose";
-import { SearchBox } from "react-google-maps/lib/components/places/SearchBox";
-import api from "./api";
-import { Input } from "@material-ui/core";
+
 import * as firebase from "firebase";
 import "./css/Sell_2.css";
-import Star from "./images/shapes-and-symbols (2).svg";
-import Calendar from "react-calendar";
-import Close from "./images/close.png";
-import AndrewMap from "./AndrewMap";
 import Next from "./images/next.svg";
 import Clock from "./images/clock.svg";
 import Money from "./images/money.svg";
 import Delivery from "./images/delivery.svg";
 import MultImageUpload from "./MultiImageUpload";
-
-import {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  Marker,
-} from "react-google-maps";
 import SignInModal from "./SignInModal";
 
 export default class Sell_2 extends React.Component {
