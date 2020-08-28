@@ -1,7 +1,6 @@
 import React from "react";
 import "../css/Buy.css";
 import "../css/BuyMobile.css";
-import ClipLoader from "react-spinners/ClipLoader";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Close from "../images/close.png";
 import HeaderBar from "../HeaderBar";
@@ -17,6 +16,7 @@ import SearchPageMobile from "./SearchPageMobile";
 import Div100vh from "react-div-100vh";
 import AboutPageMobile from "./AboutPageMobile";
 import ProfilePageMobile from "./ProfilePageMobile";
+import LoadingPage from "../LoadingPage";
 
 export default class BuyMobile extends React.Component {
   constructor(props) {
@@ -54,20 +54,8 @@ export default class BuyMobile extends React.Component {
     console.log(!this.state.finishedLoading);
     if (!this.state.loaded || !this.state.foundNewItems) {
       return (
-        <div
-          style={{
-            height: "100vh",
-          }}
-        >
-          <div
-            style={{
-              position: "fixed",
-              left: window.innerWidth / 2 - 40,
-              top: "30vh",
-            }}
-          >
-            <ClipLoader size={80} color={"#123abc"} loading={true} />
-          </div>
+        <div>
+          <LoadingPage />
         </div>
       );
     }
@@ -104,18 +92,8 @@ export default class BuyMobile extends React.Component {
           }
         });
       return (
-        <div
-          style={{
-            position: "absolute",
-            left: "45vw",
-            top: 200,
-          }}
-        >
-          <ClipLoader
-            size={150}
-            color={"#123abc"}
-            loading={this.state.loading}
-          />
+        <div>
+          <LoadingPage />
         </div>
       );
     }
@@ -178,18 +156,8 @@ export default class BuyMobile extends React.Component {
           />
         )}
         {!this.state.loaded && (
-          <div
-            style={{
-              position: "absolute",
-              left: "45vw",
-              top: 200,
-            }}
-          >
-            <ClipLoader
-              size={150}
-              color={"#123abc"}
-              loading={this.state.loading}
-            />
+          <div>
+            <LoadingPage />
           </div>
         )}
         <div

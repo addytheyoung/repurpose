@@ -2,7 +2,6 @@ import React from "react";
 import PlacesAutocomplete from "./PlacesAutocomplete";
 import "./css/Home.css";
 import * as firebase from "firebase";
-import ClipLoader from "react-spinners/ClipLoader";
 import Close from "./images/close.png";
 import randomizeArray from "./global_methods/randomizeArray";
 import SignInOnlyModal from "./SignInOnlyModal";
@@ -14,6 +13,7 @@ import Chat from "./Chat";
 import ItemScroller from "./ItemScroller";
 import ItemModal from "./ItemModal";
 import Treasure from "./images/treasureGIMP.png";
+import LoadingPage from "./LoadingPage";
 
 export default class Home extends React.Component {
   citiesList = ["Austin, TX"];
@@ -103,14 +103,8 @@ export default class Home extends React.Component {
     console.log(!this.state.loaded);
     if (!this.state.loaded) {
       return (
-        <div
-          style={{
-            position: "fixed",
-            left: "45vw",
-            top: 200,
-          }}
-        >
-          <ClipLoader size={150} color={"#123abc"} loading={true} />
+        <div>
+          <LoadingPage />
         </div>
       );
     }

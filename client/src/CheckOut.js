@@ -16,7 +16,7 @@ import Art from "./images/art.jpeg";
 import Close from "./images/close.png";
 import Bin from "./images/bin.png";
 import api from "./api";
-import ClipLoader from "react-spinners/ClipLoader";
+import LoadingPage from "./LoadingPage";
 
 export default class CheckOut extends React.Component {
   constructor(props) {
@@ -63,18 +63,8 @@ export default class CheckOut extends React.Component {
   render() {
     if (!this.state.loaded) {
       return (
-        <div
-          style={{
-            position: "fixed",
-            left: "45vw",
-            top: 200,
-          }}
-        >
-          <ClipLoader
-            size={150}
-            color={"#123abc"}
-            loading={this.state.loading}
-          />
+        <div>
+          <LoadingPage />
         </div>
       );
     }

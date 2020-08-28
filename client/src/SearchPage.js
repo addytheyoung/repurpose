@@ -1,10 +1,10 @@
 import React from "react";
 import * as firebase from "firebase";
 import HeaderBar from "./HeaderBar";
-import ClipLoader from "react-spinners/ClipLoader";
 import FilterBar from "./FilterBar";
 import Art from "./images/art.jpeg";
 import Close from "./images/close.png";
+import LoadingPage from "./LoadingPage";
 
 export default class SearchPage extends React.Component {
   constructor(props) {
@@ -138,18 +138,8 @@ export default class SearchPage extends React.Component {
     return (
       <div>
         {!this.state.loaded && (
-          <div
-            style={{
-              position: "fixed",
-              left: "45vw",
-              top: 200,
-            }}
-          >
-            <ClipLoader
-              size={150}
-              color={"#123abc"}
-              loading={this.state.loading}
-            />
+          <div>
+            <LoadingPage />
           </div>
         )}
         {this.state.modal && (

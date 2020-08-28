@@ -7,7 +7,6 @@ import PlacesAutocomplete, {
 import "./css/PlacesAutocomplete.css";
 import * as firebase from "firebase";
 import { add } from "lodash";
-import ClipLoader from "react-spinners/ClipLoader";
 import Pin from "./images/gps.svg";
 
 export default class LocationSearchInput extends React.Component {

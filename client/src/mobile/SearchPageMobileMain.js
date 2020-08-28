@@ -1,6 +1,5 @@
 import React from "react";
 import * as firebase from "firebase";
-import ClipLoader from "react-spinners/ClipLoader";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Close from "../images/close.png";
 import HeaderMobile from "./HeaderMobile";
@@ -8,6 +7,7 @@ import FooterMobile from "./FooterMobile";
 import Div100vh from "react-div-100vh";
 import { MenuItem, Input, Select } from "@material-ui/core";
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
+import LoadingPage from "../LoadingPage";
 
 export default class SearchPageMobileMain extends React.Component {
   constructor(props) {
@@ -88,20 +88,8 @@ export default class SearchPageMobileMain extends React.Component {
   render() {
     if (!this.state.loaded)
       return (
-        <div
-          style={{
-            height: "100vh",
-          }}
-        >
-          <div
-            style={{
-              position: "fixed",
-              left: window.innerWidth / 2 - 40,
-              top: "30vh",
-            }}
-          >
-            <ClipLoader size={80} color={"#123abc"} loading={true} />
-          </div>
+        <div>
+          <LoadingPage />
         </div>
       );
 
@@ -210,20 +198,8 @@ export default class SearchPageMobileMain extends React.Component {
         style={{ overflowX: "hidden", overflowY: "scroll", height: "100vh" }}
       >
         {!this.state.loaded && (
-          <div
-            style={{
-              height: "100vh",
-            }}
-          >
-            <div
-              style={{
-                position: "fixed",
-                left: window.innerWidth / 2 - 40,
-                top: "30vh",
-              }}
-            >
-              <ClipLoader size={80} color={"#123abc"} loading={true} />
-            </div>
+          <div>
+            <LoadingPage />
           </div>
         )}
         <div

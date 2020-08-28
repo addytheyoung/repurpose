@@ -2,7 +2,6 @@ import React from "react";
 import PlacesAutocomplete from "../PlacesAutocomplete";
 import "../css/HomeMobile.css";
 import * as firebase from "firebase";
-import ClipLoader from "react-spinners/ClipLoader";
 import Close from "../images/close.png";
 import randomizeArray from "../global_methods/randomizeArray";
 import SignInOnlyModal from "../SignInOnlyModal";
@@ -12,6 +11,7 @@ import Delivery from "../images/delivery.svg";
 import Div100vh from "react-div-100vh";
 import Pin from "../images/gps.svg";
 import MobileChat from "./MobileChat";
+import LoadingPage from "../LoadingPage";
 
 export default class HomeMobile extends React.Component {
   citiesList = ["Austin, TX"];
@@ -98,20 +98,8 @@ export default class HomeMobile extends React.Component {
   render() {
     if (!this.state.loaded) {
       return (
-        <div
-          style={{
-            height: "100vh",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              left: window.innerWidth / 2 - 40,
-              top: "30vh",
-            }}
-          >
-            <ClipLoader size={80} color={"#123abc"} loading={true} />
-          </div>
+        <div>
+          <LoadingPage />
         </div>
       );
     }

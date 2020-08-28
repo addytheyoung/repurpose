@@ -2,12 +2,12 @@ import React from "react";
 import HeaderMobile from "./HeaderMobile";
 import FooterMobile from "./FooterMobile";
 import Bin from "../images/bin.png";
-import ClipLoader from "react-spinners/ClipLoader";
 import "../css/CartMobile.css";
 import AboutPageMobile from "./AboutPageMobile";
 import ProfilePageMobile from "./ProfilePageMobile";
 import SearchPageMobile from "./SearchPageMobile";
 import * as firebase from "firebase";
+import LoadingPage from "../LoadingPage";
 
 export default class CartMobile extends React.Component {
   constructor(props) {
@@ -109,20 +109,8 @@ export default class CartMobile extends React.Component {
   render() {
     if (!this.state.loaded) {
       return (
-        <div
-          style={{
-            height: "100vh",
-          }}
-        >
-          <div
-            style={{
-              position: "fixed",
-              left: window.innerWidth / 2 - 40,
-              top: "30vh",
-            }}
-          >
-            <ClipLoader size={80} color={"#123abc"} loading={true} />
-          </div>
+        <div>
+          <LoadingPage />
         </div>
       );
     }

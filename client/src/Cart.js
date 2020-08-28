@@ -1,7 +1,6 @@
 import React from "react";
 import HeaderBar from "./HeaderBar";
 import * as firebase from "firebase";
-import ClipLoader from "react-spinners/ClipLoader";
 import Art from "./images/art.jpeg";
 import Close from "./images/close.png";
 import Bin from "./images/bin.png";
@@ -13,6 +12,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import "./css/Cart.css";
 import Chat from "./Chat";
+import LoadingPage from "./LoadingPage";
 
 export default class Cart extends React.Component {
   innerWidth = window.innerWidth;
@@ -114,18 +114,8 @@ export default class Cart extends React.Component {
   render() {
     if (!this.state.loaded) {
       return (
-        <div
-          style={{
-            position: "fixed",
-            left: "45vw",
-            top: 200,
-          }}
-        >
-          <ClipLoader
-            size={150}
-            color={"#123abc"}
-            loading={this.state.loading}
-          />
+        <div>
+          <LoadingPage />
         </div>
       );
     }

@@ -1,6 +1,5 @@
 import React from "react";
 import "./css/Buy.css";
-import ClipLoader from "react-spinners/ClipLoader";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Close from "./images/close.png";
 import HeaderBar from "./HeaderBar";
@@ -15,6 +14,7 @@ import Chat from "./Chat";
 import Item from "./Item";
 import ItemScroller from "./ItemScroller";
 import ItemModal from "./ItemModal";
+import LoadingPage from "./LoadingPage";
 
 export default class Buy extends React.Component {
   innerWidth = window.innerWidth;
@@ -96,18 +96,8 @@ export default class Buy extends React.Component {
       (page && !this.state.loaded)
     ) {
       return (
-        <div
-          style={{
-            position: "fixed",
-            left: "45vw",
-            top: 200,
-          }}
-        >
-          <ClipLoader
-            size={150}
-            color={"#123abc"}
-            loading={this.state.loading}
-          />
+        <div>
+          <LoadingPage />
         </div>
       );
     }
@@ -142,18 +132,8 @@ export default class Buy extends React.Component {
           }
         });
       return (
-        <div
-          style={{
-            position: "fixed",
-            left: "45vw",
-            top: 200,
-          }}
-        >
-          <ClipLoader
-            size={150}
-            color={"#123abc"}
-            loading={this.state.loading}
-          />
+        <div>
+          <LoadingPage />
         </div>
       );
     }
@@ -185,18 +165,8 @@ export default class Buy extends React.Component {
           />
         </div>
         {!this.state.loaded && (
-          <div
-            style={{
-              position: "fixed",
-              left: "45vw",
-              top: 200,
-            }}
-          >
-            <ClipLoader
-              size={150}
-              color={"#123abc"}
-              loading={this.state.loading}
-            />
+          <div>
+            <LoadingPage />
           </div>
         )}
         <div style={{ display: !this.state.loaded ? "none" : "block" }}>

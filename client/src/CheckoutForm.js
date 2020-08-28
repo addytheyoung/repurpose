@@ -9,7 +9,7 @@ import "./css/CheckoutForm.css";
 
 import * as firebase from "firebase";
 import api from "./api";
-import ClipLoader from "react-spinners/ClipLoader";
+import LoadingPage from "./LoadingPage";
 
 export default class CheckoutForm extends React.Component {
   lngPerMile = 57;
@@ -250,18 +250,8 @@ export default class CheckoutForm extends React.Component {
     return (
       <div>
         {this.state.loadingIcon && (
-          <div
-            style={{
-              position: "fixed",
-              left: "45vw",
-              top: 200,
-            }}
-          >
-            <ClipLoader
-              size={150}
-              color={"#123abc"}
-              loading={this.state.loading}
-            />
+          <div>
+            <LoadingPage />
           </div>
         )}
 
