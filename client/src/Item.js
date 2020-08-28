@@ -20,7 +20,7 @@ export default class Item extends React.Component {
           width: 220,
           marginLeft: 10,
           marginRight: 10,
-          height: 280,
+          height: 320,
         }}
       >
         <img

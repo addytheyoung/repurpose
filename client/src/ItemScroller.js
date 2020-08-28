@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Item from "./Item";
+import "./css/ItemScroller.css";
 
 export default class ItemScroller extends Component {
   constructor(props) {
@@ -9,9 +10,10 @@ export default class ItemScroller extends Component {
   }
 
   render() {
-    const { width, items, itemPage } = this.props;
+    const { width, items, itemPage, title, mobile } = this.props;
     return (
       <div
+        id="scroller-body"
         style={{
           display: "flex",
           justifyContent: "center",
@@ -31,20 +33,46 @@ export default class ItemScroller extends Component {
         >
           <div
             style={{
-              fontSize: 26,
-              fontWeight: 500,
-              textAlign: "center",
-              fontFamily: "Gill Sans",
+              width: 350,
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            Items Near Austin
+            <div
+              style={{
+                fontSize: 26,
+                width: 240,
+                fontWeight: 500,
+                textAlign: "center",
+                fontFamily: "Gill Sans",
+              }}
+            >
+              {title}
+            </div>
+            <div style={{ width: 30 }}></div>
+            <div
+              onClick={() => this.takeMetoPage()}
+              id="see-all"
+              style={{
+                fontFamily: "Gill Sans",
+                fontSize: 18,
+                width: 50,
+                color: "rgb(24, 118, 242)",
+                fontFamily: "Gill Sans",
+              }}
+            >
+              See All
+            </div>
           </div>
+
           <div
             style={{
               display: "flex",
               flexDirection: "row",
               justifyContent: "flex-end",
-              width: width > 960 ? 960 / 2 - 100 : 720 / 2 - 100,
+              width: width > 960 ? 960 / 2 - 200 : 720 / 2 - 200,
             }}
           >
             <div
@@ -100,6 +128,11 @@ export default class ItemScroller extends Component {
         </div>
       </div>
     );
+  }
+
+  takeMetoPage() {
+    const { title, openScrollerPage } = this.props;
+    openScrollerPage(title);
   }
 
   scrollLeft(element, change, duration) {

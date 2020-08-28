@@ -33,6 +33,7 @@ export default class HeaderBar extends React.Component {
     };
   }
   render() {
+    const { resetState } = this.props;
     const singedin = !!firebase.auth().currentUser;
     const signedModal = !singedin && !this.state.newUser && !this.state.retUser;
     const path = window.location.pathname;
@@ -514,6 +515,7 @@ export default class HeaderBar extends React.Component {
         >
           <Link
             to="/"
+            onClick={() => (resetState ? resetState() : null)}
             style={{
               marginRight: 20,
               marginLeft: 20,
@@ -568,6 +570,7 @@ export default class HeaderBar extends React.Component {
             ></img>
           </Link>
           <Link
+            onClick={() => (resetState ? resetState() : null)}
             id="buy-link"
             to="/"
             style={{
@@ -594,7 +597,7 @@ export default class HeaderBar extends React.Component {
                   ? "#d8d8d8"
                   : "#ffffff",
               borderRadius: 3,
-              marginLeft: 20,
+              marginLeft: 10,
             }}
           >
             Buy
@@ -844,7 +847,7 @@ export default class HeaderBar extends React.Component {
 
             <div
               style={{
-                color: "green",
+                color: "rgb(66, 108, 180)",
                 fontWeight: 700,
                 fontSize: 18,
                 padding: 5,
@@ -1008,9 +1011,7 @@ export default class HeaderBar extends React.Component {
         this.state.retUser = false;
         this.state.profile = false;
         var myUid = localStorage.getItem("tempUid");
-        console.log(myUid);
         if (myUid) {
-          console.log(myUid);
           // Transfer the data
           firebase
             .firestore()

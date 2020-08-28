@@ -1,0 +1,8 @@
+#scroller-body:hover {
+  /* cursor: pointer; */
+}
+
+#see-all:hover {
+  cursor: pointer;
+  text-decoration-style: wavy;
+}

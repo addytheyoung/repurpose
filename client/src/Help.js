@@ -55,7 +55,7 @@ export default class Help extends React.Component {
               >
                 <div
                   style={{
-                    fontFamily: "Gill Sans",
+                    fontFamily: "Pridi",
                     fontWeight: 700,
                     marginLeft: 20,
                     display: "flex",
@@ -69,7 +69,7 @@ export default class Help extends React.Component {
                 </div>
                 <div
                   style={{
-                    fontFamily: "Gill Sans",
+                    fontFamily: "Pridi",
                     fontWeight: 700,
                     display: "flex",
                     justifyContent: "center",
@@ -205,7 +205,7 @@ export default class Help extends React.Component {
             >
               <div
                 style={{
-                  fontFamily: "Gill Sans",
+                  fontFamily: "Pridi",
                   fontWeight: 700,
                   marginLeft: 20,
                   display: "flex",
@@ -219,7 +219,7 @@ export default class Help extends React.Component {
               </div>
               <div
                 style={{
-                  fontFamily: "Gill Sans",
+                  fontFamily: "Pridi",
                   fontWeight: 700,
                   display: "flex",
                   justifyContent: "center",

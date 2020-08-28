@@ -48,8 +48,10 @@ export default class Sell_2 extends React.Component {
             flexDirection: "column",
           }}
         >
-          <div style={{ fontSize: 30, fontWeight: 600, fontFamily: "Pridi" }}>
-            Sell your clutter with Collection
+          <div
+            style={{ fontSize: 30, fontWeight: 600, fontFamily: "Gill Sans" }}
+          >
+            Sell your clutter with Tate's Crate
           </div>
           <div style={{ display: "flex", flexDirection: "row", marginTop: 60 }}>
             <div
@@ -64,14 +66,15 @@ export default class Sell_2 extends React.Component {
                 style={{
                   marginRight: 5,
                   marginLeft: 5,
+                  height: 50,
                   width: 190,
                   display: "flex",
                   justifyContent: "center",
-                  alignItems: "center",
                   textAlign: "center",
+                  fontFamily: "Gill Sans",
                 }}
               >
-                Choose a time you're free
+                Choose a time you're free, and call us
               </div>
               <img
                 src={Clock}
@@ -106,6 +109,8 @@ export default class Sell_2 extends React.Component {
                   justifyContent: "center",
                   alignItems: "center",
                   textAlign: "center",
+                  fontFamily: "Gill Sans",
+                  height: 50,
                 }}
               >
                 We send a truck to pick everything up
@@ -143,6 +148,8 @@ export default class Sell_2 extends React.Component {
                   justifyContent: "center",
                   alignItems: "center",
                   textAlign: "center",
+                  fontFamily: "Gill Sans",
+                  height: 50,
                 }}
               >
                 We price each item, and pay YOU when they sell
@@ -155,23 +162,24 @@ export default class Sell_2 extends React.Component {
           </div>
 
           <div style={{ display: "flex", marginTop: 80 }}>
-            <div style={{ fontSize: 26, marginRight: 10 }}>
-              {" "}
+            <div
+              style={{ fontSize: 26, marginRight: 10, fontFamily: "Gill Sans" }}
+            >
               Call to get started:
             </div>
             <div style={{ fontWeight: 800, fontSize: 26 }}>(903)-203-1286</div>
           </div>
           <div style={{ display: "flex", flexDirection: "row", marginTop: 8 }}>
-            <div style={{ fontSize: 14 }}>
+            <div style={{ fontSize: 14, fontFamily: "Gill Sans" }}>
               Call 24 hours a day, 7 days a week.
             </div>
-            <div
+            {/* <div
               id="click"
-              style={{ color: "blue", fontSize: 14, marginLeft: 5 }}
+              style={{ color: "blue", fontSize: 14, marginLeft: 5, }}
               onClick={() => this.startSelling()}
             >
               Or, fill out the form here!
-            </div>
+            </div> */}
           </div>
 
           {this.state.priceItems && (
@@ -209,12 +217,21 @@ export default class Sell_2 extends React.Component {
                 alignItems: "center",
               }}
             >
-              <div style={{ marginTop: 120, fontWeight: 500, fontSize: 20 }}>
+              <div
+                style={{
+                  marginTop: 120,
+                  fontWeight: 500,
+                  fontSize: 20,
+                  fontFamily: "Gill Sans",
+                }}
+              >
                 See how much you'll make from your items here
               </div>
-              <div style={{ fontSize: 13, marginTop: 10 }}>
+              {/* <div
+                style={{ fontSize: 13, marginTop: 10, fontFamily: "Gill Sans" }}
+              >
                 Our sellers have made over $10,000 already!
-              </div>
+              </div> */}
 
               {/* <div
             style={{
@@ -302,6 +319,7 @@ export default class Sell_2 extends React.Component {
                     marginRight: 15,
                     textAlign: "center",
                     fontSize: 18,
+                    fontFamily: "Gill Sans",
                   }}
                 >
                   "Super easy. They came and took away all my old clothes and
@@ -326,6 +344,7 @@ export default class Sell_2 extends React.Component {
                     marginRight: 15,
                     textAlign: "center",
                     fontSize: 18,
+                    fontFamily: "Gill Sans",
                   }}
                 >
                   "We were moving, and I was going to just take all our stuff to
