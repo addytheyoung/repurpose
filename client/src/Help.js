@@ -1,5 +1,4 @@
 import React from "react";
-import HeaderBar from "./HeaderBar";
 import "./css/About.css";
 import {
   BrowserView,
@@ -7,6 +6,7 @@ import {
   isBrowser,
   isMobile,
 } from "react-device-detect";
+import Treasure from "./images/treasureGIMP.png";
 
 export default class Help extends React.Component {
   render() {
@@ -47,19 +47,44 @@ export default class Help extends React.Component {
                 id="bar"
                 style={{
                   display: "flex",
-                  flexDirection: "column",
+                  flexDirection: "row",
                   justifyContent: "center",
                   alignItems: "center",
-                  paddingTop: 10,
-                  paddingBottom: 10,
-                  fontSize: 22,
-                  fontWeight: 700,
-                  color: "#426CB4",
-                  marginTop: "2vh",
-                  marginBottom: "2vh",
+                  marginTop: 40,
                 }}
               >
-                Collection
+                <div
+                  style={{
+                    fontFamily: "Gill Sans",
+                    fontWeight: 700,
+                    marginLeft: 20,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: 32,
+                    color: "#426CB4",
+                  }}
+                >
+                  Tate's
+                </div>
+                <div
+                  style={{
+                    fontFamily: "Gill Sans",
+                    fontWeight: 700,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: 32,
+                    color: "#AF7366",
+                    marginLeft: 5,
+                  }}
+                >
+                  Crate
+                </div>
+                <img
+                  style={{ width: 50, height: 50, marginLeft: 20 }}
+                  src={Treasure}
+                ></img>
               </div>
 
               <div
@@ -172,19 +197,44 @@ export default class Help extends React.Component {
               id="bar"
               style={{
                 display: "flex",
-                flexDirection: "column",
+                flexDirection: "row",
                 justifyContent: "center",
                 alignItems: "center",
-                paddingTop: 10,
-                paddingBottom: 10,
-                fontSize: 22,
-                fontWeight: 700,
-                color: "#426CB4",
-                marginTop: "2vh",
-                marginBottom: "2vh",
+                marginTop: 40,
               }}
             >
-              Collection
+              <div
+                style={{
+                  fontFamily: "Gill Sans",
+                  fontWeight: 700,
+                  marginLeft: 20,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: 32,
+                  color: "#426CB4",
+                }}
+              >
+                Tate's
+              </div>
+              <div
+                style={{
+                  fontFamily: "Gill Sans",
+                  fontWeight: 700,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: 32,
+                  color: "#AF7366",
+                  marginLeft: 5,
+                }}
+              >
+                Crate
+              </div>
+              <img
+                style={{ width: 50, height: 50, marginLeft: 20 }}
+                src={Treasure}
+              ></img>
             </div>
 
             <div
@@ -201,14 +251,15 @@ export default class Help extends React.Component {
                 all of it directly to you for just $2, no matter how many items.
               </div>
               <div>
-                Yes, you can buy $100 worth of items and it's just $2 for
-                delivery
+                Prices drop every 3 hours (see the timer), up to 90%, and new
+                items are added often
               </div>
               <div>
                 Items are added and prices drop everyday. Since we always have
                 items coming in, we want to get rid of a lot of our inventory.
                 Check back often for deals and new items!
               </div>
+              <div>Delivery will always be less than 24 hours.</div>
               <div
                 onClick={() => (window.location.href = "/")}
                 className="about-main-button"

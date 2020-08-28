@@ -16,18 +16,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: "Gill Sans";
 }
 
 .home2 {
   font-size: 20px;
   margin-bottom: 10px;
   margin-top: 10px;
-  font-weight: 500;
+  font-weight: 600;
+  font-family: "Gill Sans";
 }
 
 .home3 {
   text-align: center;
   width: 20vw;
+  font-family: "Gill Sans";
 }
 
 #prev-item:hover,
@@ -50,6 +53,7 @@
   align-items: center;
   color: white;
   font-weight: 500;
+  font-family: "Gill Sans";
 }
 
 #prev-item {
@@ -115,4 +119,10 @@
 #address-drop:hover {
   cursor: pointer;
   background-color: #f5f5f5 !important;
+}
+
+#add-to-cart:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition-duration: 0.2s;
 }

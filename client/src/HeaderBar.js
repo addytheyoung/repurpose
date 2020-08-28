@@ -15,6 +15,7 @@ import Close from "./images/close.png";
 import city from "./images/architectonic.png";
 import FilterBar from "./FilterBar";
 import Pin from "./images/gps.svg";
+import Treasure from "./images/treasureGIMP.png";
 
 export default class HeaderBar extends React.Component {
   citiesList = ["Central Texas"];
@@ -36,7 +37,13 @@ export default class HeaderBar extends React.Component {
     const signedModal = !singedin && !this.state.newUser && !this.state.retUser;
     const path = window.location.pathname;
     return (
-      <div id="headerbar-main">
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          height: 80,
+        }}
+      >
         {this.state.profile && (
           <div
             style={{
@@ -509,6 +516,8 @@ export default class HeaderBar extends React.Component {
             to="/"
             style={{
               marginRight: 20,
+              marginLeft: 20,
+              width: 170,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -517,37 +526,46 @@ export default class HeaderBar extends React.Component {
               overflow: "hidden",
             }}
           >
-            <div style={{ display: "flex", flexDirection: "row", width: 180 }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: 100,
+              }}
+            >
               <div
                 style={{
-                  fontWeight: 600,
-                  height: 80,
+                  fontWeight: 700,
                   fontFamily: "Pridi",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                   fontSize: 28,
                   color: "#426CB4",
-                  marginLeft: 50,
+                  height: 30,
                 }}
               >
-                Collect
+                Tate's
               </div>
               <div
                 style={{
-                  fontWeight: 600,
-                  height: 80,
+                  fontWeight: 700,
                   fontFamily: "Pridi",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                   fontSize: 28,
-                  color: "#426CB4",
+                  color: "#AF7366",
+                  height: 30,
                 }}
               >
-                ion
+                Crate
               </div>
             </div>
+            <img
+              style={{ width: 50, height: 50, marginLeft: 0 }}
+              src={Treasure}
+            ></img>
           </Link>
           <Link
             id="buy-link"
@@ -576,6 +594,7 @@ export default class HeaderBar extends React.Component {
                   ? "#d8d8d8"
                   : "#ffffff",
               borderRadius: 3,
+              marginLeft: 20,
             }}
           >
             Buy

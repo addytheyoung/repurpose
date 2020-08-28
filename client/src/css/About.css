@@ -28,6 +28,7 @@
   width: 80vw;
   margin-top: 1vh;
   margin-bottom: 1vh;
+  /* font-family: "Gill Sans"; */
 }
 
 .about-main-3 {
@@ -46,6 +47,7 @@
 
 .about-main-button {
   background-color: #426cb4;
+  max-width: 20vw;
   color: white;
   margin-top: 30px;
   border-radius: 5px;

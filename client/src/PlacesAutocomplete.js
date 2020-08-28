@@ -27,6 +27,7 @@ export default class LocationSearchInput extends React.Component {
 
   handleSelect = (address) => {
     this.props.loading(false);
+    // Bank address?
     if (address == "") {
       if (this.props.mobile) {
         this.props.openAddressModal();
@@ -35,6 +36,38 @@ export default class LocationSearchInput extends React.Component {
       }
       this.props.loading(true);
       return;
+    }
+    if (
+      address == "austin" ||
+      address == "Austin" ||
+      address == "pflugerville" ||
+      address == "Pflugerville" ||
+      address == "Round Rock" ||
+      address == "round rock"
+    ) {
+      const uid = this.randomNumber(20);
+      firebase
+        .firestore()
+        .collection("Users")
+        .doc(uid)
+        .set({
+          cart: this.props.modal ? [this.props.modal] : [],
+          orders: [],
+          sales: [],
+          temporary: true,
+          main_address: address,
+        })
+        .then(() => {
+          this.props.loading(true);
+          localStorage.setItem("address", address);
+          if (this.props.modal) {
+            localStorage.setItem("cart", 1);
+          } else {
+            localStorage.setItem("cart", 0);
+          }
+          localStorage.setItem("tempUid", uid);
+          window.location.href = "/home-redirect";
+        });
     }
 
     console.log(address);
@@ -59,8 +92,6 @@ export default class LocationSearchInput extends React.Component {
               sales: [],
               temporary: true,
               main_address: address,
-              lat: this.lat,
-              lng: this.lng,
             })
             .then(() => {
               this.props.loading(true);
@@ -107,7 +138,12 @@ export default class LocationSearchInput extends React.Component {
             getSuggestionItemProps,
             loading,
           }) => (
-            <div style={{ display: "flex", flexDirection: "column" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
               <div
                 onClick={() => (mobile ? this.props.openAddressModal() : null)}
                 id="delivery-address-input-container"
@@ -161,8 +197,8 @@ export default class LocationSearchInput extends React.Component {
                   className="autocomplete-dropdown-container"
                   style={{
                     // maxHeight: "30vh",
-                    minWidth: mobile ? "90vw" : "40vw",
-                    width: mobile ? "90vw" : "40vw",
+                    minWidth: mobile ? "92vw" : "42vw",
+                    width: mobile ? "92vw" : "42vw",
                     zIndex: 999,
                     borderWidth: suggestions.length > 0 ? 1 : 0,
                     borderRadius: 3,
@@ -170,6 +206,7 @@ export default class LocationSearchInput extends React.Component {
                     borderStyle: "solid",
                     position: "absolute",
                     top: mobile ? "0vh" : "0vh",
+                    backgroundColor: "#ffffff",
                   }}
                 >
                   {suggestions.map((suggestion, i) => {
@@ -182,10 +219,11 @@ export default class LocationSearchInput extends React.Component {
                         key={i}
                         style={{
                           minHeight: mobile ? "10vh" : "10vh",
+                          minWidth: mobile ? "92vw" : "42vw",
+                          textAlign: "left",
                           borderBottomWidth: 1,
                           borderBottomStyle: "solid",
                           borderBottomColor: "grey",
-                          backgroundColor: "#ffffff",
                           zIndex: 999,
                         }}
                       >
@@ -196,9 +234,10 @@ export default class LocationSearchInput extends React.Component {
                             maxWidth: "50vw",
                             fontSize: 18,
                             display: "flex",
-                            justifyContent: "center",
+                            justifyContent: "flex-start",
                             alignItems: "center",
                             padding: 10,
+                            textAlign: "left",
                           }}
                           {...getSuggestionItemProps(suggestion, {})}
                         >
@@ -221,13 +260,13 @@ export default class LocationSearchInput extends React.Component {
             id="start"
             style={{
               marginLeft: mobile ? 0 : 10,
-              width: mobile ? "90vw" : 140,
+              width: mobile ? "90vw" : 200,
               padding: "1vh",
               minHeight: 45,
               height: mobile ? "6vh" : "5.5vh",
               borderRadius: 6,
               backgroundColor: "#426CB4",
-              fontWeight: 700,
+              fontWeight: 600,
               fontSize: 18,
               color: "white",
               display: "flex",
@@ -235,9 +274,10 @@ export default class LocationSearchInput extends React.Component {
               alignItems: "center",
               textAlign: "center",
               marginTop: mobile ? "2vh" : 0,
+              fontFamily: "Gill Sans",
             }}
           >
-            SEE ITEMS
+            OPEN THE CRATE
           </div>
         )}
       </div>

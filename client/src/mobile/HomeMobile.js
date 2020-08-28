@@ -860,8 +860,8 @@ export default class HomeMobile extends React.Component {
             <img src={Money} style={{ width: 60, height: 60 }}></img>
             <div className="mobile-home2">Price Drops</div>
             <div className="mobile-home3">
-              We drop the prices of items every week, up to 80%. We're stupid
-              cheap.
+              We drop the prices of random items every 3 hours, up to 90%! We're
+              stupid cheap.
             </div>
           </div>
 
