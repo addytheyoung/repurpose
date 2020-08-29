@@ -51,6 +51,7 @@ export default class Chat extends Component {
             style={{
               color: "white",
               fontWeight: 600,
+              fontFamily: "Gill Sans",
             }}
           >
             Ask Us a Question

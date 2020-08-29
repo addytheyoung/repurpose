@@ -1,5 +1,8 @@
 import React from "react";
 import Close from "./images/close.png";
+import { Input } from "@material-ui/core";
+import api from "./api";
+import checkEmail from "./global_methods/checkEmail";
 
 export default class ItemModal extends React.Component {
   constructor(props) {
@@ -246,17 +249,103 @@ export default class ItemModal extends React.Component {
                 </div>
               </div>
             </div>
+
             <div
               style={{
-                marginLeft: 20,
-                fontSize: 20,
+                display: "flex",
+                flexDirection: "row",
                 marginTop: 20,
-                fontWeight: 600,
-                fontFamily: "Gill Sans",
+                marginLeft: 20,
+                alignItems: "center",
               }}
             >
-              Item Details
+              <div
+                style={{
+                  fontSize: 20,
+                  fontWeight: 600,
+                  fontFamily: "Gill Sans",
+                }}
+              >
+                Item Details
+              </div>
+              <div
+                onClick={() => this.activeQuestion()}
+                id="minimized-chat"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  right: "5vw",
+                  bottom: "0vh",
+                  height: "3.5vh",
+                  width: "20vw",
+                  backgroundColor: "rgb(66, 108, 180)",
+                  borderRadius: 5,
+                  zIndex: 999,
+                  marginLeft: 20,
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: "Gill Sans",
+                    color: "white",
+                    textAlign: "center",
+                  }}
+                >
+                  Question about this item?
+                </div>
+              </div>
             </div>
+
+            {this.state.question && (
+              <div>
+                <Input
+                  id="email-input"
+                  style={{
+                    width: "80%",
+                    height: "5vh",
+                    marginLeft: "10%",
+                    marginTop: "5vh",
+                    fontSize: 16,
+                  }}
+                  placeholder="Email"
+                ></Input>
+
+                <Input
+                  id="message-input"
+                  style={{
+                    width: "80%",
+                    // height: "25vh",
+                    marginLeft: "10%",
+                    fontSize: 16,
+                    textAlign: "start",
+                    marginTop: "3vh",
+                  }}
+                  rows={1}
+                  rowsMax={20}
+                  multiline
+                  placeholder="What do you want to know?"
+                ></Input>
+                <div
+                  style={{
+                    padding: 10,
+                    backgroundColor: "rgb(66, 108, 180)",
+                    color: "white",
+                    fontWeight: 600,
+                    textAlign: "center",
+                    width: "80%",
+                    marginLeft: "10%",
+                    marginTop: "5vh",
+                    borderRadius: 5,
+                  }}
+                  onClick={() => this.sendMessage()}
+                  id="send"
+                >
+                  SEND
+                </div>
+              </div>
+            )}
+
             <div
               style={{
                 marginTop: 10,
@@ -295,5 +384,40 @@ export default class ItemModal extends React.Component {
     this.setState({
       modalPictureIndex: pictureIndex,
     });
+  }
+
+  activeQuestion() {
+    this.setState({
+      question: true,
+    });
+  }
+
+  sendMessage() {
+    const email = document.getElementById("email-input").value;
+    const message = document.getElementById("message-input").value.trim();
+
+    if (!checkEmail(email)) {
+      return;
+    }
+    if (!message || message == "") {
+      alert("Please put in a message!");
+      return;
+    }
+
+    api.sendEmail(
+      "andrew@collection.deals",
+      "New item info request from: " +
+        email +
+        "\n\n" +
+        message +
+        "\n\n" +
+        "Item: " +
+        this.props.item.uid
+    );
+    alert("Message sent! We'll get back soon.");
+    this.setState({
+      minimized: true,
+    });
+    return;
   }
 }

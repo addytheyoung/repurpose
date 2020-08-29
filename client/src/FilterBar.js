@@ -3,21 +3,32 @@ import "./css/FilterBar.css";
 import DialogPrice from "./DialogPrice";
 import DialogCategory from "./DialogCategory";
 import DialogSale from "./DialogSale";
+import DialogPage from "./DialogPage";
 
 export default class FilterBar extends React.Component {
   render() {
     return (
-      <div style={{}}>
+      <div
+        style={{
+          position: "fixed",
+          height: "90vh",
+          top: "10vh",
+          backgroundColor: "#ffffff",
+          borderRightStyle: "solid",
+          borderRightWidth: 1,
+          borderRightColor: "lightgrey",
+          height: "100vh",
+          width: 200,
+        }}
+      >
         <div
           id="bar"
           style={{
             display: "flex",
             flexDirection: "column",
-            marginLeft: "2vw",
-            marginRight: "2vw",
-            maxWidth: 150,
-            paddingTop: 10,
-            paddingBottom: 10,
+            marginLeft: 20,
+            marginRight: 20,
+            marginTop: 50,
           }}
         >
           {/* <DialogPrice
@@ -41,9 +52,14 @@ export default class FilterBar extends React.Component {
             changeCategory={(categories) => this.changeCategory(categories)}
           />
           <DialogSale changeSale={(sales) => this.changeSale(sales)} />
+          <DialogPage changePage={(page) => this.changePage(page)} />
         </div>
       </div>
     );
+  }
+
+  changePage(page) {
+    this.props.updatePage(page);
   }
 
   changeSale(sales) {

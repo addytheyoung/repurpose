@@ -25,7 +25,8 @@ export default class Buy extends React.Component {
     // What are we looking at?
     const q = window.location.search;
     const urlParams = new URLSearchParams(q);
-    const page = urlParams.get("page");
+    var page = urlParams.get("page");
+
     var item = urlParams.get("item");
     var itemCategory = urlParams.get("itemcategory");
 
@@ -147,21 +148,17 @@ export default class Buy extends React.Component {
         id="buy-desktop-main"
         style={{ overflowY: "scroll", overflowX: "hidden", height: "100vh" }}
       >
-        <Chat />
-        <div
-          style={{
-            position: "fixed",
-            height: "90vh",
-            top: "10vh",
-            width: "15vw",
-            backgroundColor: "#fafafa",
-          }}
-        >
+        {!item && <Chat />}
+        <div>
           <FilterBar
             updateCategoryFilter={(category) =>
               this.updateCategoryFilter(category)
             }
             updateSaleFilter={(a, b) => this.updateSaleFilter(a, b)}
+            updatePage={(page) => {
+              window.history.replaceState(null, null, "/?page=" + page);
+              window.location.reload();
+            }}
           />
         </div>
         {!this.state.loaded && (
