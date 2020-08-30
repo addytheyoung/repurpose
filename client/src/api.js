@@ -1,3 +1,5 @@
+// Pay with our paypal intent
+
 const getLatLng = (address, zip, city, state) => {
   const front_url =
     "https://maps.googleapis.com/maps/api/geocode/json?address=";

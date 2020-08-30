@@ -32,16 +32,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 paypal.configure({
-  mode: "live",
-  client_id:
-    "AVWKPfLbUrnVVHtF3EqllXbIqqAhJvRrlwa9vVi4k_uFGT4Jcd7TSsWxXKdGED5B66RNcrczgnnISVLk",
-  client_secret:
-    "EEzWM8KQhmRtcG1cucS6vcMTvZqGFMx3yx6dJFMR5UM6W35wZ9YXqAr1TgYidgIoYGvx7bliibINumcz",
-  // mode: "sandbox",
+  // mode: "live",
   // client_id:
-  //   "AebrbuffsMy8souGrrTS02XFMu0XN7MrbbtmXfII-fNIcVz9FE0ndArXMXrJzIw2EdVhGW-fXWbi_Kmn",
+  //   "AVWKPfLbUrnVVHtF3EqllXbIqqAhJvRrlwa9vVi4k_uFGT4Jcd7TSsWxXKdGED5B66RNcrczgnnISVLk",
   // client_secret:
-  //   "EOEcKQIWhapQNGGrW6MQFrqSogkHlLM6pB49DNc4ImeK83TT2wI9o55o0UI9M6XYvpxZ3N1fEq-88cYs",
+  //   "EEzWM8KQhmRtcG1cucS6vcMTvZqGFMx3yx6dJFMR5UM6W35wZ9YXqAr1TgYidgIoYGvx7bliibINumcz",
+  mode: "sandbox",
+  client_id:
+    "AebrbuffsMy8souGrrTS02XFMu0XN7MrbbtmXfII-fNIcVz9FE0ndArXMXrJzIw2EdVhGW-fXWbi_Kmn",
+  client_secret:
+    "EOEcKQIWhapQNGGrW6MQFrqSogkHlLM6pB49DNc4ImeK83TT2wI9o55o0UI9M6XYvpxZ3N1fEq-88cYs",
 });
 
 app.get("/test", (req, res) => {
@@ -61,6 +61,9 @@ app.post("/paypal", (req, res) => {
   // console.log("\n\n\nREQ BODYYYYY\n\n\n");
 
   const price = req.body.pricename;
+  const type = req.body.type;
+  console.log(type);
+
   console.log(price);
 
   var create_payment_json = {
@@ -69,8 +72,16 @@ app.post("/paypal", (req, res) => {
       payment_method: "paypal",
     },
     redirect_urls: {
-      return_url: "http://localhost:4242/paypal-success",
-      cancel_url: "http://localhost:4242/paypal-cancel",
+      // return_url: "http://localhost:4242/paypal-success",
+      return_url:
+        "http://localhost:4242/paypal-success/?type=" +
+        type +
+        "&total=" +
+        price,
+      cancel_url:
+        type === "desktop"
+          ? "http://localhost:3000/checkout"
+          : "http://localhost:4242/paypal-cancel",
     },
     note_to_payer:
       "We do NOT use the shipping address here. We use the address you gave us in the previous form. Ignore the shipping address here.",
@@ -96,24 +107,28 @@ app.post("/paypal", (req, res) => {
     if (error) {
       throw error;
     } else {
-      // console.log("Create Payment Response");
+      console.log("Create Payment Response");
       res.redirect(payment.links[1].href);
-      // res.redirect("https://www.wikipedia.org");
     }
   });
 });
 
 app.get("/paypal-success", async (req, res) => {
-  console.log("\n\n\nPAYMENT SUCCESS*****\n\n\n\n");
   var PayerID = req.query.PayerID;
   var paymentId = req.query.paymentId;
+  const type = req.query.type;
+  const total = req.query.total;
+  console.log("Success");
+  console.log(type);
+  console.log(total);
+
   var execute_payment_json = {
     payer_id: PayerID,
     transactions: [
       {
         amount: {
           currency: "USD",
-          total: "1.00",
+          total: total,
         },
       },
     ],
@@ -126,10 +141,13 @@ app.get("/paypal-success", async (req, res) => {
       console.log(error.response);
       throw error;
     } else {
-      res.render("success");
-
-      console.log("Get Payment Response");
       console.log(JSON.stringify(payment));
+
+      if (type == "desktop") {
+        res.redirect("http://localhost:3000/checkout/?success=true");
+      } else {
+        res.render("success");
+      }
     }
   });
 });
@@ -247,7 +265,6 @@ app.post("/create-payment-intent", async (req, res) => {
 
   try {
     const paymentIntent = await stripe.paymentIntents.create(options);
-    console.log("Res payment int");
     res.json(paymentIntent);
   } catch (err) {
     console.log(err);

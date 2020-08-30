@@ -26,7 +26,6 @@ export default class LocationSearchInput extends React.Component {
   };
 
   handleSelectCheckout = (address) => {
-    alert(address);
     if (address == "") {
       alert("Please put in your city or zip!");
       this.props.loading(true);

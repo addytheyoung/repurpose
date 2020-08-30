@@ -42,6 +42,20 @@ export default class CheckoutForm extends React.Component {
   }
 
   render() {
+    // Get our parameters
+    const q = window.location.search;
+    const urlParams = new URLSearchParams(q);
+
+    if (this.state.loaded) {
+      // Cancelled. Just the token.
+      if (urlParams.get("token")) {
+        alert("Paypal Transacton cancelled");
+        window.history.replaceState(null, null, "/");
+      } else if (urlParams.get("success")) {
+        this.handlePaypalResponse();
+      }
+    }
+
     this.state.myData = this.props.myData;
     const signedInWithFirebase = !!firebase.auth().currentUser;
 
@@ -412,14 +426,27 @@ export default class CheckoutForm extends React.Component {
             </div>
 
             <form
+              id="paypal-form"
+              on
               action="http://localhost:4242/paypal"
               method="POST"
-              target="_blank"
             >
-              <input type="text" id="price" name="pricename" value={14} />
+              <input
+                style={{ height: 0, width: 0, visibility: "hidden" }}
+                type="text"
+                id="price"
+                name="pricename"
+                value={this.props.total}
+              />
+              <input
+                style={{ height: 0, width: 0, visibility: "hidden" }}
+                type="text"
+                id="type"
+                name="type"
+                value={"desktop"}
+              ></input>
 
-              <button
-                type="submit"
+              <div
                 id="paypal-button"
                 onClick={() => this.payWithPaypal()}
                 style={{
@@ -427,54 +454,17 @@ export default class CheckoutForm extends React.Component {
                   padding: 10,
                   borderRadius: 5,
                   backgroundColor: "#ffc439",
-                  marginTop: 20,
                   height: 50,
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  border: 0,
+                  outline: "none",
                 }}
               >
                 <img src={PayPal} style={{ width: 100, height: 100 }} />
-              </button>
+              </div>
             </form>
-
-            {/* <div style={{ minWidth: 400, maxWidth: 600, marginTop: 20 }}>
-              <PayPalButton
-                shippingPreference="NO_SHIPPING"
-                amount={this.props.total}
-                onCancel={(e) =>
-                  this.setState({
-                    loadingIcon: false,
-                    call: false,
-                  })
-                }
-                onClick={(e) => this.andrewMethod2(e)}
-                onError={(e) => {
-                  console.log(e);
-                  alert("error");
-                }}
-                onSuccess={(details, data) => {
-                  this.setState({
-                    error: null,
-                    succeeded: true,
-                    processing: false,
-                    loadingIcon: false,
-                  });
-
-                  // OPTIONAL: Call your server to save the transaction
-                  return api.payWithPaypal().then((res) => {});
-                }}
-                options={{
-                  clientId:
-                    "AVWKPfLbUrnVVHtF3EqllXbIqqAhJvRrlwa9vVi4k_uFGT4Jcd7TSsWxXKdGED5B66RNcrczgnnISVLk",
-                  // clientId:
-                  //   "AagrypGvYi5QmDHv0rhdJnr91B_Qha89rbKFeLqjv6kUBHUd5MTMMOsRj88Q_erUKM9jQaxaO4d2pLhm",
-                  currency: "USD",
-                  // merchantId: "3WEGGZYB8FJFL",
-                  disableFunding: "card,credit",
-                }}
-              />
-            </div> */}
 
             <div style={{ height: 50 }}></div>
           </form>
@@ -671,6 +661,38 @@ export default class CheckoutForm extends React.Component {
     );
   }
 
+  // Handle the response from the Paypal Server
+  async handlePaypalResponse() {
+    return;
+    // 1) Remove bad items from cart
+    // await this.deleteItemsAndRemoveFromCart(result);
+    // 2) Email a reciept
+    const email = this.state.email;
+    const cart = this.state.myData.cart;
+
+    var emailText =
+      "Thank you for your purchase!\n\nYou purchased: " +
+      cart.length +
+      " items for $" +
+      this.props.totalAmount +
+      ". " +
+      "\n\nItems will be delivered to " +
+      this.state.address1 +
+      ", " +
+      this.state.address2 +
+      " the next morning!" +
+      "\n\n";
+
+    api.sendEmail(email, emailText);
+    api.sendEmail("andrew@collection.deals", emailText);
+
+    // this.setState({
+    //   showModal: false,
+    //   paymentComplete: true,
+    //   paymentDetails: result,
+    // });
+  }
+
   paypalFrame() {
     const frame = document.getElementById("paypal-frame");
     frame.contentWindow.foo = function () {
@@ -681,6 +703,7 @@ export default class CheckoutForm extends React.Component {
   // Pay with Paypal!
   async payWithPaypal() {
     // 0) Get all the information
+    const form = document.getElementById("paypal-form");
     const address1 = this.state.address1;
     const address2 = this.state.address2;
     const email = this.state.email.trim().toLowerCase();
@@ -707,7 +730,7 @@ export default class CheckoutForm extends React.Component {
 
     // // 2) Check if the items are still valid
     // const itemResult = await this.checkItems();
-    // if (itemResult.length != this.state.myProfileData.cart.length) {
+    // if (itemResult.length != this.state.myData.cart.length) {
     //   alert(
     //     "Something in your cart has been purchased. you have not been charged."
     //   );
@@ -724,10 +747,8 @@ export default class CheckoutForm extends React.Component {
     //   return;
     // }
 
-    // 3) Open the Paypal modal
-    this.setState({
-      paypalModal: true,
-    });
+    // 3) Submit the form
+    form.submit();
   }
 
   checkAddress(address) {
