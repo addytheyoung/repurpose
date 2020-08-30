@@ -15,3 +15,7 @@
   opacity: 0.7;
   transition-duration: 0.2s;
 }
+
+#paypal-button:hover {
+  cursor: pointer;
+}

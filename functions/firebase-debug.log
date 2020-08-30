@@ -240,3 +240,276 @@ SyntaxError: Unexpected token ?
 [warn] ⚠  functions: The following emulators are not running, calls to these services will affect production: firestore, database, pubsub 
 [debug] [2020-08-29T15:32:08.147Z] DEBUG: [worker-~diagnostic~-84a59d3b-e3e0-4cc7-953a-d325cdf823aa]: IDLE
 [info] >  Node server listening on port 4242! {"user":"Node server listening on port 4242!","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Node server listening on port 4242!"}}
+[debug] [2020-08-29T20:23:17.143Z] ----------------------------------------------------------------------
+[debug] [2020-08-29T20:23:17.145Z] Command:       /Users/andrewyoung/.nvm/versions/node/v10.10.0/bin/node /usr/local/bin/firebase functions:shell
+[debug] [2020-08-29T20:23:17.146Z] CLI Version:   8.6.0
+[debug] [2020-08-29T20:23:17.146Z] Platform:      darwin
+[debug] [2020-08-29T20:23:17.146Z] Node Version:  v10.10.0
+[debug] [2020-08-29T20:23:17.147Z] Time:          Sat Aug 29 2020 15:23:17 GMT-0500 (Central Daylight Time)
+[debug] [2020-08-29T20:23:17.147Z] ----------------------------------------------------------------------
+[debug] [2020-08-29T20:23:17.148Z] 
+[debug] [2020-08-29T20:23:17.158Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-08-29T20:23:17.158Z] > authorizing via signed-in user
+[debug] [2020-08-29T20:23:17.158Z] [iam] checking project repurpose-e523f for permissions ["firebase.projects.get"]
+[debug] [2020-08-29T20:23:17.160Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-08-29T20:23:17.160Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-08-29T20:23:17.359Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 29 Aug 2020 20:23:17 GMT","server":"scaffolding on HTTPServer2","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-08-29T20:23:17.373Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/repurpose-e523f:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2020-08-29T20:23:17.601Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 29 Aug 2020 20:23:17 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=77","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-08-29T20:23:17.608Z] [functions] Using node@10 from host.
+[debug] [2020-08-29T20:23:17.614Z] [functions] Watching "/Users/andrewyoung/repurpose/functions" for Cloud Functions...
+[debug] [2020-08-29T20:23:17.622Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-08-29T20:23:17.622Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2020-08-29T20:23:17.622Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2020-08-29T20:23:17.622Z] DEBUG: [worker-~diagnostic~-a8d64c39-2182-4f95-a94a-8fcc8baeb292]: Assigning socketPath: /var/folders/_0/g68g3n0d28vck1btdhvstc1w0000gn/T/fire_emu_45255.sock
+[debug] [2020-08-29T20:23:17.623Z] DEBUG: [worker-~diagnostic~-a8d64c39-2182-4f95-a94a-8fcc8baeb292]: BUSY
+[debug] [2020-08-29T20:23:17.895Z] DEBUG: [runtime-status] [45255] Functions runtime initialized. {"cwd":"/Users/andrewyoung/repurpose/functions","node_version":"10.10.0"}
+[debug] [2020-08-29T20:23:17.896Z] DEBUG: [runtime-status] [45255] Disabled runtime features: undefined
+[debug] [2020-08-29T20:23:17.899Z] DEBUG: [runtime-status] [45255] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-08-29T20:23:17.901Z] DEBUG: [runtime-status] [45255] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-29T20:23:17.902Z] DEBUG: [runtime-status] [45255] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-29T20:23:17.905Z] DEBUG: [runtime-status] [45255] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2020-08-29T20:23:17.905Z] DEBUG: [runtime-status] [45255] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-29T20:23:17.951Z] DEBUG: [runtime-status] [45255] Checked functions.config() {"config":{}}
+[debug] [2020-08-29T20:23:17.951Z] DEBUG: [runtime-status] [45255] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2020-08-29T20:23:17.951Z] DEBUG: [runtime-status] [45255] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-29T20:23:17.952Z] DEBUG: [runtime-status] [45255] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-08-29T20:23:17.952Z] DEBUG: [runtime-status] [45255] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-29T20:23:17.952Z] DEBUG: [runtime-status] [45255] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2020-08-29T20:23:18.657Z] DEBUG: [runtime-status] [45255] initializeApp(DEFAULT) {"credential":{"implicit":false,"projectId":"repurpose-e523f","privateKey":"-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQChRKgU/2adtRp9\nRLnEJKplAahnZ9a32xmlzobIS56tSWjgA502oJrac/pI+QhD5K6QARbJgnfD8LB3\nGKrOKG7Z0JqMHscPv1GpZxVaMsIv+0z9bR2d9tOwMlvh/mN1dHtMIZAAfVs9OqdF\nrb3nNS7a+Pm49s+0HOOIzb0hZ22AO71i4tWOUBJo07qqTUdE3xwUuuRp5E/muJUw\n+wZyodFcKhK0ExvFcJ5Wr43GncICwoGmforM5u6ej6biVTEjt0LnzzhMhnnEB8vJ\nMPeDUGeh/Ic5o+pwcgtXO1Agk/UUTUM9AitPFLRJI1C25IH8CYISTOv+Bx9xS/5R\nd8mzIfHbAgMBAAECggEACQg127s0LZgDjEmJl/Uvv+l4W5ZCvdhdFt66yMQHdpAa\nehVpvDIBikOdnHGqJ1dK+ZC+DHosqAI2d+0fP92e278lsLxWjMi705+M4BjgrFxI\nQxdV5c95qrAfWkhrnJvx/eERVh2vOv4qeSoSbT0ayzPPlK7qEh3eFn7jXVgUF27q\nU1sQGIv/ufeMFmdUl9790tA+g6PWPa+fP9qrHNB+asfT7/NBvhYMXBSFeb7DIATv\nX82po5vfhdGskfo/AtahPleO1WZ4oDDkadwM7+Hh71/u3ftFUNFaan+f1oexYA+w\nN5NFZ8lobneyJNdFy+flw/Wm+L39PvlYVj0lP6rUyQKBgQDUs7qrL0CIrNvbuPCh\nslp88ZfMX6EQzY798B/6YwGhO8CTlIx6BhXKMD1+5HB0L+bqn8Mkgjqx0peKhY4h\nE5v24AkO/ul5VaLyIbhEsOoK/D5R9QWUpPUlcS4onVNRhji/++p1mB9TNQVWi7sX\n1jMGDA1DkbaCJtYd/17wffO8aQKBgQDCGJ6YqnLfAA4vgIUQek9/Pg3VaBSYXuHl\nrv05gFOgXMtebZeZ8mxE0JAChR7FasssIAMaCoqKlY3ckd3V2sbLfebKNVsFVkLF\nuW7yyHBZJGjbndAlu/UxO97AEdgzs2OwZVxpBpXz1NB7gjWuIxHBiRi1wHcdWIH9\ngNPfC2XDowKBgDyT54EjlwSV/pPoaxgSPLVC9VGulqe7c5MdFW5xTiCGbQVbFFsY\napJIBOuj0ec1UVXXJHO8Z00HxkMcYGtJM20vR0UvEn2NBzhgpCNkI3P3fSRIXUuF\nY5BDWLsWe4lHadg7vf250ooXGqsYZrOWPLfnLMvmrw0IVIj8lyR1KrqpAoGBAJLL\nx/cywppCEnh+vSTPPJzBs/i5NQpgiH0MMdxxX84jIHSUcloubRBGpQQi5jjtIiiH\nNZFWc52IqrgtYhfB1SRGXmyEmgiZSvr72huo2L+yt9ORscE4PKM14qxlUp0Xicf5\ngUC1iGfXhq5CtpKzV1SGebfMjsoVDItMCfHhTt/9AoGAP+aPxNmFUX/1vXaZluKX\nq1dmbzOCfLVAEmcj+bNjCr0I4PeWmsl/KSYR1TkexuialmHeuZ5hHqrrPABDNZ9R\nxo/JlYuutXp5DMIPWI1z7KuGPKoek+a/8S6T96T3PqMOy58r1x0jE6R3zHFu4Ll/\nmM19YFE4Nc2G+11RX2+nFKs=\n-----END PRIVATE KEY-----\n","clientEmail":"firebase-adminsdk-bn2gp@repurpose-e523f.iam.gserviceaccount.com","httpClient":{"retry":{"maxRetries":4,"statusCodes":[503],"ioErrorCodes":["ECONNRESET","ETIMEDOUT"],"backOffFactor":0.5,"maxDelayInMillis":60000}}},"databaseURL":"https://repurpose-e523f.firebaseio.com"}
+[debug] [2020-08-29T20:23:18.663Z] [functions[app]] http function initialized (http://localhost:5000/repurpose-e523f/us-central1/app).
+[debug] [2020-08-29T20:23:18.663Z] [functions[dropPrices]] function ignored because the pubsub emulator does not exist or is not running.
+[debug] [2020-08-29T20:23:18.663Z] [functions[removePriceDropTag]] function ignored because the pubsub emulator does not exist or is not running.
+[info] i  functions: Loaded functions: app, dropPrices, removePriceDropTag 
+[warn] ⚠  functions: The following emulators are not running, calls to these services will affect production: firestore, database, pubsub 
+[debug] [2020-08-29T20:23:18.671Z] DEBUG: [worker-~diagnostic~-a8d64c39-2182-4f95-a94a-8fcc8baeb292]: IDLE
+[info] >  Node server listening on port 4242! {"user":"Node server listening on port 4242!","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Node server listening on port 4242!"}}
+[info] >  andrew@collection.deals {"user":"andrew@collection.deals","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m andrew@collection.deals"}}
+[info] >  New item info request from: andrewtateyoung@gmail.com {"user":"New item info request from: andrewtateyoung@gmail.com","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m New item info request from: andrewtateyoung@gmail.com"}}
+[info] >   {"user":"","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m "}}
+[info] >  What is this?soidjfsdfj {"user":"What is this?soidjfsdfj","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m What is this?soidjfsdfj"}}
+[info] >  jfsoidjfosdfsd {"user":"jfsoidjfosdfsd","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m jfsoidjfosdfsd"}}
+[info] >  f {"user":"f","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m f"}}
+[info] >  sjdfspjdf {"user":"sjdfspjdf","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m sjdfspjdf"}}
+[info] >   {"user":"","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m "}}
+[info] >  Item: JMGo0wVrjX8PB7YUspSJ3kK3D7oS93 {"user":"Item: JMGo0wVrjX8PB7YUspSJ3kK3D7oS93","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Item: JMGo0wVrjX8PB7YUspSJ3kK3D7oS93"}}
+[info] >  Email sent: 250 2.0.0 OK  1598735582 z10sm770305otk.6 - gsmtp {"user":"Email sent: 250 2.0.0 OK  1598735582 z10sm770305otk.6 - gsmtp","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Email sent: 250 2.0.0 OK  1598735582 z10sm770305otk.6 - gsmtp"}}
+[info] >  andrew@collection.deals {"user":"andrew@collection.deals","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m andrew@collection.deals"}}
+[info] >  New item info request from: andrewtateyoung@gmail.com {"user":"New item info request from: andrewtateyoung@gmail.com","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m New item info request from: andrewtateyoung@gmail.com"}}
+[info] >   {"user":"","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m "}}
+[info] >  What is this?soidjfsdfj {"user":"What is this?soidjfsdfj","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m What is this?soidjfsdfj"}}
+[info] >  jfsoidjfosdfsd {"user":"jfsoidjfosdfsd","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m jfsoidjfosdfsd"}}
+[info] >  f {"user":"f","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m f"}}
+[info] >  sjdfspjdf {"user":"sjdfspjdf","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m sjdfspjdf"}}
+[info] >   {"user":"","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m "}}
+[info] >  Item: JMGo0wVrjX8PB7YUspSJ3kK3D7oS93 {"user":"Item: JMGo0wVrjX8PB7YUspSJ3kK3D7oS93","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Item: JMGo0wVrjX8PB7YUspSJ3kK3D7oS93"}}
+[info] >  Email sent: 250 2.0.0 OK  1598735608 q62sm825153ooa.12 - gsmtp {"user":"Email sent: 250 2.0.0 OK  1598735608 q62sm825153ooa.12 - gsmtp","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Email sent: 250 2.0.0 OK  1598735608 q62sm825153ooa.12 - gsmtp"}}
+[info] >  andrew@collection.deals {"user":"andrew@collection.deals","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m andrew@collection.deals"}}
+[info] >  New item info request from: andrewtateyoung@gmail.com {"user":"New item info request from: andrewtateyoung@gmail.com","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m New item info request from: andrewtateyoung@gmail.com"}}
+[info] >   {"user":"","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m "}}
+[info] >  asdf {"user":"asdf","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m asdf"}}
+[info] >   {"user":"","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m "}}
+[info] >  Item: JMGo0wVrjX8PB7YUspSJ3kK3D7oS93 {"user":"Item: JMGo0wVrjX8PB7YUspSJ3kK3D7oS93","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Item: JMGo0wVrjX8PB7YUspSJ3kK3D7oS93"}}
+[info] >  Email sent: 250 2.0.0 OK  1598735617 s7sm690485oig.48 - gsmtp {"user":"Email sent: 250 2.0.0 OK  1598735617 s7sm690485oig.48 - gsmtp","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Email sent: 250 2.0.0 OK  1598735617 s7sm690485oig.48 - gsmtp"}}
+[info] >  andrew@collection.deals {"user":"andrew@collection.deals","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m andrew@collection.deals"}}
+[info] >  New item info request from: andrewtateyoung@gmail.com {"user":"New item info request from: andrewtateyoung@gmail.com","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m New item info request from: andrewtateyoung@gmail.com"}}
+[info] >   {"user":"","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m "}}
+[info] >  sdf {"user":"sdf","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m sdf"}}
+[info] >   {"user":"","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m "}}
+[info] >  Item: JMGo0wVrjX8PB7YUspSJ3kK3D7oS93 {"user":"Item: JMGo0wVrjX8PB7YUspSJ3kK3D7oS93","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Item: JMGo0wVrjX8PB7YUspSJ3kK3D7oS93"}}
+[info] >  Email sent: 250 2.0.0 OK  1598735637 t28sm849756ood.25 - gsmtp {"user":"Email sent: 250 2.0.0 OK  1598735637 t28sm849756ood.25 - gsmtp","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Email sent: 250 2.0.0 OK  1598735637 t28sm849756ood.25 - gsmtp"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  14 {"user":14,"metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m 14"}}
+[debug] [2020-08-30T03:17:48.450Z] DEBUG: File /Users/andrewyoung/repurpose/functions/index.js changed, reloading triggers
+[debug] [2020-08-30T03:17:49.451Z] DEBUG: [worker-pool] Shutting down IDLE worker (~diagnostic~)
+[debug] [2020-08-30T03:17:49.452Z] DEBUG: [worker-~diagnostic~-a8d64c39-2182-4f95-a94a-8fcc8baeb292]: FINISHING
+[debug] [2020-08-30T03:17:49.457Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-08-30T03:17:49.458Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=2
+[debug] [2020-08-30T03:17:49.458Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2020-08-30T03:17:49.458Z] DEBUG: [worker-~diagnostic~-bf50c3a7-3ce6-4dd2-bf9a-0d43a1ecfa19]: Assigning socketPath: /var/folders/_0/g68g3n0d28vck1btdhvstc1w0000gn/T/fire_emu_49411.sock
+[debug] [2020-08-30T03:17:49.458Z] DEBUG: [worker-~diagnostic~-bf50c3a7-3ce6-4dd2-bf9a-0d43a1ecfa19]: BUSY
+[debug] [2020-08-30T03:17:49.459Z] DEBUG: [worker-~diagnostic~-a8d64c39-2182-4f95-a94a-8fcc8baeb292]: exited
+[debug] [2020-08-30T03:17:49.459Z] DEBUG: [worker-~diagnostic~-a8d64c39-2182-4f95-a94a-8fcc8baeb292]: FINISHED
+[debug] [2020-08-30T03:17:50.060Z] DEBUG: [runtime-status] [49411] Functions runtime initialized. {"cwd":"/Users/andrewyoung/repurpose/functions","node_version":"10.10.0"}
+[debug] [2020-08-30T03:17:50.062Z] DEBUG: [runtime-status] [49411] Disabled runtime features: undefined
+[debug] [2020-08-30T03:17:50.065Z] DEBUG: [runtime-status] [49411] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-08-30T03:17:50.067Z] DEBUG: [runtime-status] [49411] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-30T03:17:50.068Z] DEBUG: [runtime-status] [49411] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-30T03:17:50.071Z] DEBUG: [runtime-status] [49411] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2020-08-30T03:17:50.071Z] DEBUG: [runtime-status] [49411] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-30T03:17:50.121Z] DEBUG: [runtime-status] [49411] Checked functions.config() {"config":{}}
+[debug] [2020-08-30T03:17:50.121Z] DEBUG: [runtime-status] [49411] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2020-08-30T03:17:50.122Z] DEBUG: [runtime-status] [49411] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-30T03:17:50.123Z] DEBUG: [runtime-status] [49411] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-08-30T03:17:50.123Z] DEBUG: [runtime-status] [49411] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.7.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-08-30T03:17:50.123Z] DEBUG: [runtime-status] [49411] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/andrewyoung/repurpose/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2020-08-30T03:17:50.914Z] DEBUG: [runtime-status] [49411] initializeApp(DEFAULT) {"credential":{"implicit":false,"projectId":"repurpose-e523f","privateKey":"-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQChRKgU/2adtRp9\nRLnEJKplAahnZ9a32xmlzobIS56tSWjgA502oJrac/pI+QhD5K6QARbJgnfD8LB3\nGKrOKG7Z0JqMHscPv1GpZxVaMsIv+0z9bR2d9tOwMlvh/mN1dHtMIZAAfVs9OqdF\nrb3nNS7a+Pm49s+0HOOIzb0hZ22AO71i4tWOUBJo07qqTUdE3xwUuuRp5E/muJUw\n+wZyodFcKhK0ExvFcJ5Wr43GncICwoGmforM5u6ej6biVTEjt0LnzzhMhnnEB8vJ\nMPeDUGeh/Ic5o+pwcgtXO1Agk/UUTUM9AitPFLRJI1C25IH8CYISTOv+Bx9xS/5R\nd8mzIfHbAgMBAAECggEACQg127s0LZgDjEmJl/Uvv+l4W5ZCvdhdFt66yMQHdpAa\nehVpvDIBikOdnHGqJ1dK+ZC+DHosqAI2d+0fP92e278lsLxWjMi705+M4BjgrFxI\nQxdV5c95qrAfWkhrnJvx/eERVh2vOv4qeSoSbT0ayzPPlK7qEh3eFn7jXVgUF27q\nU1sQGIv/ufeMFmdUl9790tA+g6PWPa+fP9qrHNB+asfT7/NBvhYMXBSFeb7DIATv\nX82po5vfhdGskfo/AtahPleO1WZ4oDDkadwM7+Hh71/u3ftFUNFaan+f1oexYA+w\nN5NFZ8lobneyJNdFy+flw/Wm+L39PvlYVj0lP6rUyQKBgQDUs7qrL0CIrNvbuPCh\nslp88ZfMX6EQzY798B/6YwGhO8CTlIx6BhXKMD1+5HB0L+bqn8Mkgjqx0peKhY4h\nE5v24AkO/ul5VaLyIbhEsOoK/D5R9QWUpPUlcS4onVNRhji/++p1mB9TNQVWi7sX\n1jMGDA1DkbaCJtYd/17wffO8aQKBgQDCGJ6YqnLfAA4vgIUQek9/Pg3VaBSYXuHl\nrv05gFOgXMtebZeZ8mxE0JAChR7FasssIAMaCoqKlY3ckd3V2sbLfebKNVsFVkLF\nuW7yyHBZJGjbndAlu/UxO97AEdgzs2OwZVxpBpXz1NB7gjWuIxHBiRi1wHcdWIH9\ngNPfC2XDowKBgDyT54EjlwSV/pPoaxgSPLVC9VGulqe7c5MdFW5xTiCGbQVbFFsY\napJIBOuj0ec1UVXXJHO8Z00HxkMcYGtJM20vR0UvEn2NBzhgpCNkI3P3fSRIXUuF\nY5BDWLsWe4lHadg7vf250ooXGqsYZrOWPLfnLMvmrw0IVIj8lyR1KrqpAoGBAJLL\nx/cywppCEnh+vSTPPJzBs/i5NQpgiH0MMdxxX84jIHSUcloubRBGpQQi5jjtIiiH\nNZFWc52IqrgtYhfB1SRGXmyEmgiZSvr72huo2L+yt9ORscE4PKM14qxlUp0Xicf5\ngUC1iGfXhq5CtpKzV1SGebfMjsoVDItMCfHhTt/9AoGAP+aPxNmFUX/1vXaZluKX\nq1dmbzOCfLVAEmcj+bNjCr0I4PeWmsl/KSYR1TkexuialmHeuZ5hHqrrPABDNZ9R\nxo/JlYuutXp5DMIPWI1z7KuGPKoek+a/8S6T96T3PqMOy58r1x0jE6R3zHFu4Ll/\nmM19YFE4Nc2G+11RX2+nFKs=\n-----END PRIVATE KEY-----\n","clientEmail":"firebase-adminsdk-bn2gp@repurpose-e523f.iam.gserviceaccount.com","httpClient":{"retry":{"maxRetries":4,"statusCodes":[503],"ioErrorCodes":["ECONNRESET","ETIMEDOUT"],"backOffFactor":0.5,"maxDelayInMillis":60000}}},"databaseURL":"https://repurpose-e523f.firebaseio.com"}
+[debug] [2020-08-30T03:17:50.922Z] DEBUG: [worker-~diagnostic~-bf50c3a7-3ce6-4dd2-bf9a-0d43a1ecfa19]: IDLE
+[info] >  Node server listening on port 4242! {"user":"Node server listening on port 4242!","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Node server listening on port 4242!"}}
+[info] >  Res payment int {"user":"Res payment int","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Res payment int"}}
+[info] >  14 {"user":14,"metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m 14"}}

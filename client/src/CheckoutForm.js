@@ -4,12 +4,14 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { PayPalButton } from "react-paypal-button-v2";
 
-import { Input, Select, MenuItem, Button } from "@material-ui/core";
+import { Input, Select, MenuItem, Button, Modal } from "@material-ui/core";
 import "./css/CheckoutForm.css";
-
+import PayPal from "./images/paypal3.png";
 import * as firebase from "firebase";
 import api from "./api";
 import LoadingPage from "./LoadingPage";
+import PlacesAutocomplete from "./PlacesAutocomplete";
+import checkEmail from "./global_methods/checkEmail";
 
 export default class CheckoutForm extends React.Component {
   lngPerMile = 57;
@@ -22,8 +24,6 @@ export default class CheckoutForm extends React.Component {
       amount: 0,
       currency: "",
       description: "",
-      email: "",
-      address: "",
       clientSecret: null,
       error: null,
       metadata: null,
@@ -34,11 +34,16 @@ export default class CheckoutForm extends React.Component {
       finished: false,
       deliveryType: localStorage.getItem("deliveryType"),
       timesCalledStripe: 0,
+      address1: "",
+      address2: "",
+      email: "",
+      paypalModal: true,
     };
   }
 
   render() {
     this.state.myData = this.props.myData;
+    const signedInWithFirebase = !!firebase.auth().currentUser;
 
     const options = {
       style: {
@@ -254,278 +259,483 @@ export default class CheckoutForm extends React.Component {
             <LoadingPage />
           </div>
         )}
+        {/* {this.state.paypalModal && (
+         
+        )} */}
 
-        {/* {this.props.deliveryType === "delivery" && (
-          <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
-       
-              <div>
-                Flat fee of $1.00 for delivery. <br /> <br />
-                <br />
+        {signedInWithFirebase && (
+          // Were signed in to firebase. Show the users cards
+          <form
+            style={{
+              paddingLeft: 0,
+              minWidth: 400,
+              maxWidth: 600,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 18,
+                  fontWeight: 500,
+                  marginBottom: 10,
+                  textAlign: "center",
+                }}
+              >
+                Delivery Info
               </div>
-            
-          </div>
-        )} */}
-        {/* {this.props.deliveryType === "pickup" && (
-          <div style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}>
-            Pickup location is 2414 Longview Street, <br />
-            Austin TX. We'll send you an email to confirm.
-          </div>
-        )} */}
+              <PlacesAutocomplete
+                updateAddress={(address) =>
+                  this.setState({
+                    address1: address,
+                  })
+                }
+                checkoutPage={true}
+                loading={(loaded) => this.loading(loaded)}
+                activeButton={false}
+                modal={null}
+              />
+              <input
+                onChange={(e) =>
+                  this.setState({
+                    address2: e.target.value,
+                  })
+                }
+                value={this.state.address2}
+                id="address2"
+                style={{
+                  width: "42vw",
+                  marginBottom: 0,
+                  marginTop: 20,
+                  borderRadius: 3,
+                  borderWidth: 1.5,
+                  borderStyle: "solid",
+                  borderWidth: 1.5,
+                  borderColor: "rgb(118, 118, 118)",
+                  borderRadius: 3,
+                  height: "6vh",
+                  fontSize: 18,
+                  paddingLeft: 10,
+                }}
+                placeholder="Apt, Floor, Suite"
+              ></input>
 
-        <form
-          onSubmit={(ev) => this.andrewMethod(ev)}
-          style={{
-            paddingLeft: 0,
-            minWidth: 400,
-            maxWidth: 600,
-          }}
-        >
-          {this.state.error && (
-            <div className="message sr-field-error">{this.state.error}</div>
-          )}
+              <input
+                onChange={(e) =>
+                  this.setState({
+                    email: e.target.value,
+                  })
+                }
+                value={this.state.email}
+                id="email"
+                style={{
+                  width: "42vw",
+                  marginTop: 20,
+                  borderRadius: 3,
+                  borderWidth: 1.5,
+                  borderStyle: "solid",
+                  borderWidth: 1.5,
+                  borderColor: "rgb(118, 118, 118)",
+                  borderRadius: 3,
+                  height: "6vh",
+                  fontSize: 18,
+                  paddingLeft: 10,
+                }}
+                placeholder="Email"
+              ></input>
+            </div>
 
-          <div style={{ display: "flex", flexDirection: "column" }}>
             <div
               style={{
                 fontSize: 18,
                 fontWeight: 500,
                 marginBottom: 10,
                 textAlign: "center",
+                marginTop: 50,
               }}
             >
-              Delivery Address
+              Payment
             </div>
-            <Input
-              defaultValue={
-                localStorage.getItem("fname")
-                  ? localStorage.getItem("fname")
-                  : ""
-              }
-              id="first"
-              style={{ margin: 10 }}
-              placeholder="First Name"
-            ></Input>
-            {/* <Input
-              defaultValue={
-                localStorage.getItem("lname")
-                  ? localStorage.getItem("lname")
-                  : ""
-              }
-              id="last"
-              style={{ margin: 10 }}
-              placeholder="Last Name"
-            ></Input> */}
-            {this.props.deliveryType === "delivery" && (
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <Input
-                  defaultValue={
-                    localStorage.getItem("address1")
-                      ? localStorage.getItem("address1")
-                      : ""
-                  }
-                  id="address1"
-                  style={{ margin: 10 }}
-                  placeholder="Address"
-                ></Input>
-                <Input
-                  defaultValue={
-                    localStorage.getItem("address2")
-                      ? localStorage.getItem("address2")
-                      : ""
-                  }
-                  id="address2"
-                  style={{ margin: 10 }}
-                  placeholder="Apt, Suite, or Floor"
-                ></Input>
-                <Input
-                  defaultValue={
-                    localStorage.getItem("zip")
-                      ? localStorage.getItem("zip")
-                      : ""
-                  }
-                  id="zip"
-                  style={{ margin: 10 }}
-                  placeholder="Zip Code"
-                ></Input>
-                <Input
-                  id="city"
-                  style={{ margin: 10 }}
-                  placeholder="City"
-                ></Input>
-                <Select
-                  disabled
-                  defaultValue={"TX"}
-                  placeholder={"State"}
-                  style={{ margin: 10 }}
-                  id="state"
-                >
-                  <MenuItem value="State">
-                    <div style={{ color: "#a1a1a1" }}>State</div>
-                  </MenuItem>
-                  <MenuItem value="AK">AK</MenuItem>
-                  <MenuItem value="AL">AL</MenuItem>
-                  <MenuItem value="AR">AR</MenuItem>
-                  <MenuItem value="AZ">AZ</MenuItem>
-                  <MenuItem value="CA">CA</MenuItem>
-                  <MenuItem value="CO">CO</MenuItem>
-                  <MenuItem value="CT">CT</MenuItem>
-                  <MenuItem value="DC">DC</MenuItem>
-                  <MenuItem value="DE">DE</MenuItem>
-                  <MenuItem value="FL">FL</MenuItem>
-                  <MenuItem value="GA">GA</MenuItem>
-                  <MenuItem value="IA">IA</MenuItem>
-                  <MenuItem value="ID">ID</MenuItem>
-                  <MenuItem value="IL">IL</MenuItem>
-                  <MenuItem value="IN">IN</MenuItem>
-                  <MenuItem value="KS">KS</MenuItem>
-                  <MenuItem value="KY">KY</MenuItem>
-                  <MenuItem value="LA">LA</MenuItem>
-                  <MenuItem value="MA">MA</MenuItem>
-                  <MenuItem value="MD">MD</MenuItem>
-                  <MenuItem value="ME">ME</MenuItem>
-                  <MenuItem value="MI">MI</MenuItem>
-                  <MenuItem value="MN">MN</MenuItem>
-                  <MenuItem value="MO">MO</MenuItem>
-                  <MenuItem value="MS">MS</MenuItem>
-                  <MenuItem value="MT">MT</MenuItem>
-                  <MenuItem value="NC">NC</MenuItem>
-                  <MenuItem value="ND">ND</MenuItem>
-                  <MenuItem value="NE">NE</MenuItem>
-                  <MenuItem value="NH">NH</MenuItem>
-                  <MenuItem value="NJ">NJ</MenuItem>
-                  <MenuItem value="NM">NM</MenuItem>
-                  <MenuItem value="NV">NV</MenuItem>
-                  <MenuItem value="NY">NY</MenuItem>
-                  <MenuItem value="OH">OH</MenuItem>
-                  <MenuItem value="OK">OK</MenuItem>
-                  <MenuItem value="OR">OR</MenuItem>
-                  <MenuItem value="PA">PA</MenuItem>
-                  <MenuItem value="RI">RI</MenuItem>
-                  <MenuItem value="SC">SC</MenuItem>
-                  <MenuItem value="SD">SD</MenuItem>
-                  <MenuItem value="TN">TN</MenuItem>
-                  <MenuItem value="TX">TX</MenuItem>
-                  <MenuItem value="UT">UT</MenuItem>
-                  <MenuItem value="VA">VA</MenuItem>
-                  <MenuItem value="VT">VT</MenuItem>
-                  <MenuItem value="WA">WA</MenuItem>
-                  <MenuItem value="WI">WI</MenuItem>
-                  <MenuItem value="WV">WV</MenuItem>
-                  <MenuItem value="WY">WY</MenuItem>
-                </Select>
-                <Input
-                  id="email"
-                  defaultValue={
-                    this.state.myData.email ? this.state.myData.email : ""
-                  }
-                  placeholder="email"
-                ></Input>
+
+            <div
+              className="sr-combo-inputs"
+              style={{ minWidth: 400, maxWidth: 550 }}
+            >
+              <div className="sr-combo-inputs-row">
+                <CardElement
+                  className="sr-input sr-card-element"
+                  options={options}
+                />
               </div>
-            )}
-          </div>
+            </div>
 
-          {/* <div
-            style={{
-              textAlign: "center",
-              marginTop: 10,
-              marginBottom: 5,
-              fontWeight: 500,
-            }}
-          >
-            Pay with PayPal
-          </div> */}
-
-          <div style={{ minWidth: 400, maxWidth: 600, marginTop: 20 }}>
-            <PayPalButton
-              shippingPreference="NO_SHIPPING"
-              amount={this.props.total}
-              onCancel={(e) =>
-                this.setState({
-                  loadingIcon: false,
-                  call: false,
-                })
+            <button
+              id="pay"
+              style={{
+                backgroundColor: "#426CB4",
+                height: 58,
+                width: "100%",
+                borderRadius: 5,
+                borderWidth: 0,
+                color: "white",
+                fontWeight: 600,
+                fontSize: 20,
+              }}
+              className="btn"
+              disabled={
+                this.state.processing ||
+                !this.state.clientSecret ||
+                !this.props.stripe
               }
-              onClick={(e) => this.andrewMethod2(e)}
-              onError={(e) => {
-                console.log(e);
-                alert("error");
-              }}
-              onSuccess={(details, data) => {
-                this.setState({
-                  error: null,
-                  succeeded: true,
-                  processing: false,
-                  loadingIcon: false,
-                });
+            >
+              {this.state.processing ? "Processing…" : "Add Card"}
+            </button>
 
-                // OPTIONAL: Call your server to save the transaction
-                return api.payWithPaypal().then((res) => {});
+            <div
+              style={{
+                textAlign: "center",
+                fontWeight: 500,
+                marginBottom: 20,
+                marginTop: 20,
+                minWidth: 400,
+                maxWidth: 600,
+                color: "grey",
               }}
-              options={{
-                clientId:
-                  "AVWKPfLbUrnVVHtF3EqllXbIqqAhJvRrlwa9vVi4k_uFGT4Jcd7TSsWxXKdGED5B66RNcrczgnnISVLk",
-                // clientId:
-                //   "AagrypGvYi5QmDHv0rhdJnr91B_Qha89rbKFeLqjv6kUBHUd5MTMMOsRj88Q_erUKM9jQaxaO4d2pLhm",
-                currency: "USD",
-                // merchantId: "3WEGGZYB8FJFL",
-                disableFunding: "card,credit",
-              }}
-            />
-          </div>
-          <div
+            >
+              OR
+            </div>
+
+            <form
+              action="http://localhost:4242/paypal"
+              method="POST"
+              target="_blank"
+            >
+              <input type="text" id="price" name="pricename" value={14} />
+
+              <button
+                type="submit"
+                id="paypal-button"
+                onClick={() => this.payWithPaypal()}
+                style={{
+                  width: "100%",
+                  padding: 10,
+                  borderRadius: 5,
+                  backgroundColor: "#ffc439",
+                  marginTop: 20,
+                  height: 50,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <img src={PayPal} style={{ width: 100, height: 100 }} />
+              </button>
+            </form>
+
+            {/* <div style={{ minWidth: 400, maxWidth: 600, marginTop: 20 }}>
+              <PayPalButton
+                shippingPreference="NO_SHIPPING"
+                amount={this.props.total}
+                onCancel={(e) =>
+                  this.setState({
+                    loadingIcon: false,
+                    call: false,
+                  })
+                }
+                onClick={(e) => this.andrewMethod2(e)}
+                onError={(e) => {
+                  console.log(e);
+                  alert("error");
+                }}
+                onSuccess={(details, data) => {
+                  this.setState({
+                    error: null,
+                    succeeded: true,
+                    processing: false,
+                    loadingIcon: false,
+                  });
+
+                  // OPTIONAL: Call your server to save the transaction
+                  return api.payWithPaypal().then((res) => {});
+                }}
+                options={{
+                  clientId:
+                    "AVWKPfLbUrnVVHtF3EqllXbIqqAhJvRrlwa9vVi4k_uFGT4Jcd7TSsWxXKdGED5B66RNcrczgnnISVLk",
+                  // clientId:
+                  //   "AagrypGvYi5QmDHv0rhdJnr91B_Qha89rbKFeLqjv6kUBHUd5MTMMOsRj88Q_erUKM9jQaxaO4d2pLhm",
+                  currency: "USD",
+                  // merchantId: "3WEGGZYB8FJFL",
+                  disableFunding: "card,credit",
+                }}
+              />
+            </div> */}
+
+            <div style={{ height: 50 }}></div>
+          </form>
+        )}
+
+        {!signedInWithFirebase && (
+          // Not signed in. Show the temporary modal
+          <form
+            onSubmit={(ev) => this.andrewMethod(ev)}
             style={{
-              textAlign: "center",
-              fontWeight: 500,
-              marginBottom: 20,
-              marginTop: 20,
+              paddingLeft: 0,
               minWidth: 400,
               maxWidth: 600,
             }}
           >
-            OR
-          </div>
-          {/* <div style={{ textAlign: "center", fontWeight: 500 }}>
-            Pay with debit
-          </div> */}
-          <div
-            className="sr-combo-inputs"
-            style={{ minWidth: 400, maxWidth: 550 }}
-          >
-            <div className="sr-combo-inputs-row">
-              <CardElement
-                className="sr-input sr-card-element"
-                options={options}
+            {this.state.error && (
+              <div className="message sr-field-error">{this.state.error}</div>
+            )}
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 18,
+                  fontWeight: 500,
+                  marginBottom: 10,
+                  textAlign: "center",
+                }}
+              >
+                Delivery Info
+              </div>
+              <PlacesAutocomplete
+                checkoutPage={true}
+                loading={(loaded) => this.loading(loaded)}
+                activeButton={false}
+                modal={null}
+              />
+              <input
+                onChange={(e) =>
+                  this.setState({
+                    address2: e.target.value,
+                  })
+                }
+                value={this.state.address2}
+                style={{
+                  width: "42vw",
+                  marginBottom: 0,
+                  marginTop: 20,
+                  borderRadius: 3,
+                  borderWidth: 1.5,
+                  borderStyle: "solid",
+                  borderWidth: 1.5,
+                  borderColor: "rgb(118, 118, 118)",
+                  borderRadius: 3,
+                  height: "6vh",
+                  fontSize: 18,
+                  paddingLeft: 10,
+                }}
+                placeholder="Apt, Floor, Suite"
+              ></input>
+
+              <input
+                onChange={(e) =>
+                  this.setState({
+                    email: e.target.value,
+                  })
+                }
+                value={this.state.email}
+                id="email"
+                style={{
+                  width: "42vw",
+                  marginTop: 20,
+                  borderRadius: 3,
+                  borderWidth: 1.5,
+                  borderStyle: "solid",
+                  borderWidth: 1.5,
+                  borderColor: "rgb(118, 118, 118)",
+                  borderRadius: 3,
+                  height: "6vh",
+                  fontSize: 18,
+                  paddingLeft: 10,
+                }}
+                placeholder="Email"
+              ></input>
+            </div>
+
+            <div
+              style={{
+                fontSize: 18,
+                fontWeight: 500,
+                marginBottom: 10,
+                textAlign: "center",
+                marginTop: 50,
+              }}
+            >
+              Payment
+            </div>
+
+            <div
+              className="sr-combo-inputs"
+              style={{ minWidth: 400, maxWidth: 550 }}
+            >
+              <div className="sr-combo-inputs-row">
+                <CardElement
+                  className="sr-input sr-card-element"
+                  options={options}
+                />
+              </div>
+            </div>
+
+            <button
+              id="pay"
+              style={{
+                backgroundColor: "#426CB4",
+                height: 58,
+                width: "100%",
+                borderRadius: 5,
+                borderWidth: 0,
+                color: "white",
+                fontWeight: 600,
+                fontSize: 20,
+              }}
+              className="btn"
+              disabled={
+                this.state.processing ||
+                !this.state.clientSecret ||
+                !this.props.stripe
+              }
+            >
+              {this.state.processing ? "Processing…" : "Add Card"}
+            </button>
+
+            <div style={{ minWidth: 400, maxWidth: 600, marginTop: 20 }}>
+              <PayPalButton
+                shippingPreference="NO_SHIPPING"
+                amount={this.props.total}
+                onCancel={(e) =>
+                  this.setState({
+                    loadingIcon: false,
+                    call: false,
+                  })
+                }
+                onClick={(e) => this.andrewMethod2(e)}
+                onError={(e) => {
+                  console.log(e);
+                  alert("error");
+                }}
+                onSuccess={(details, data) => {
+                  this.setState({
+                    error: null,
+                    succeeded: true,
+                    processing: false,
+                    loadingIcon: false,
+                  });
+
+                  // OPTIONAL: Call your server to save the transaction
+                  return api.payWithPaypal().then((res) => {});
+                }}
+                options={{
+                  clientId:
+                    "AVWKPfLbUrnVVHtF3EqllXbIqqAhJvRrlwa9vVi4k_uFGT4Jcd7TSsWxXKdGED5B66RNcrczgnnISVLk",
+                  // clientId:
+                  //   "AagrypGvYi5QmDHv0rhdJnr91B_Qha89rbKFeLqjv6kUBHUd5MTMMOsRj88Q_erUKM9jQaxaO4d2pLhm",
+                  currency: "USD",
+                  // merchantId: "3WEGGZYB8FJFL",
+                  disableFunding: "card,credit",
+                }}
               />
             </div>
-          </div>
+            <div
+              style={{
+                textAlign: "center",
+                fontWeight: 500,
+                marginBottom: 20,
+                marginTop: 20,
+                minWidth: 400,
+                maxWidth: 600,
+                color: "grey",
+              }}
+            >
+              OR
+            </div>
 
-          <button
-            id="pay"
-            style={{
-              backgroundColor: "#426CB4",
-              height: 58,
-              width: "100%",
-              borderRadius: 5,
-              borderWidth: 0,
-              color: "white",
-              fontWeight: 600,
-              fontSize: 20,
-            }}
-            // onClick={(e) => this.prevent(e)}
-            className="btn"
-            disabled={
-              this.state.processing ||
-              !this.state.clientSecret ||
-              !this.props.stripe
-            }
-          >
-            {this.state.processing ? "Processing…" : "Pay with Card"}
-          </button>
-
-          <div style={{ height: 50 }}></div>
-        </form>
+            <div style={{ height: 50 }}></div>
+          </form>
+        )}
       </div>
     );
+  }
+
+  paypalFrame() {
+    const frame = document.getElementById("paypal-frame");
+    frame.contentWindow.foo = function () {
+      alert("sdfpisdof");
+    };
+  }
+
+  // Pay with Paypal!
+  async payWithPaypal() {
+    // 0) Get all the information
+    const address1 = this.state.address1;
+    const address2 = this.state.address2;
+    const email = this.state.email.trim().toLowerCase();
+    const currentUser = !!firebase.auth().currentUser;
+    var myUid = localStorage.getItem("tempUid");
+    if (currentUser) {
+      myUid = firebase.auth().currentUser.uid;
+    }
+    // if (!this.checkAddress(address1) || !checkEmail(email)) {
+    //   return;
+    // }
+
+    // // 1) Update the users address (If they are one)
+    // if (currentUser) {
+    //   await firebase
+    //     .firestore()
+    //     .collection("Users")
+    //     .doc(firebase.auth().currentUser.uid)
+    //     .update({
+    //       address1: address1,
+    //       address2: address2,
+    //     });
+    // }
+
+    // // 2) Check if the items are still valid
+    // const itemResult = await this.checkItems();
+    // if (itemResult.length != this.state.myProfileData.cart.length) {
+    //   alert(
+    //     "Something in your cart has been purchased. you have not been charged."
+    //   );
+    //   await firebase
+    //     .firestore()
+    //     .collection("Users")
+    //     .doc(myUid)
+    //     .update({
+    //       cart: itemResult,
+    //     })
+    //     .then(() => {
+    //       this.props.navigation.goBack();
+    //     });
+    //   return;
+    // }
+
+    // 3) Open the Paypal modal
+    this.setState({
+      paypalModal: true,
+    });
+  }
+
+  checkAddress(address) {
+    if (!address || address == "") {
+      alert("Please input an address!");
+      return false;
+    }
+    return true;
   }
 
   andrewMethod2(e) {
@@ -977,70 +1187,5 @@ export default class CheckoutForm extends React.Component {
 
       console.log("[PaymentIntent]", payload.paymentIntent);
     }
-  }
-
-  async checkAddress(e) {
-    return true;
-    console.log(e);
-
-    console.log("address");
-    var address1 = document.getElementById("address1").value;
-    const zip = document.getElementById("zip").value.trim();
-    const city = document.getElementById("city").value.trim();
-    const state = document.getElementById("state").textContent;
-    console.log(state);
-    console.log(city);
-    console.log(address1);
-    console.log(zip);
-    if (address1) {
-      address1 = document.getElementById("address1").value.trim();
-    }
-    if (!address1 || !zip || !city || state === "State") {
-      return -1;
-    }
-    return api
-      .getLatLng(address1, zip, city, state)
-      .then((a) => {
-        const latitude = a.results[0].geometry.location.lat;
-        const longitude = a.results[0].geometry.location.lng;
-        // Check that they are within delivery range
-
-        return api
-          .getLatLng(localStorage.getItem("city"))
-          .then((a) => {
-            const latitude2 = a.results[0].geometry.location.lat;
-            const longitude2 = a.results[0].geometry.location.lng;
-            // Check that they are within delivery range
-            const x =
-              Math.pow((latitude2 - latitude) * this.latPerMile, 2) +
-              Math.pow((longitude2 - longitude) * this.lngPerMile, 2);
-            const milesBetween = Math.sqrt(x);
-            console.log(milesBetween);
-
-            if (milesBetween >= 30) {
-              return false;
-            } else {
-              return true;
-            }
-          })
-          .catch((e) => {
-            console.log(e.message);
-          });
-      })
-      .catch((e) => {
-        console.log(e.message);
-      });
-  }
-
-  checkEmail(email) {
-    if (!email) {
-      alert("Bad email");
-      return false;
-    }
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-      return true;
-    }
-    alert("Bad email");
-    return false;
   }
 }

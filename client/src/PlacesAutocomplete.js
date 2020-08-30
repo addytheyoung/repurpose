@@ -21,7 +21,20 @@ export default class LocationSearchInput extends React.Component {
   }
 
   handleChange = (address) => {
+    this.props.updateAddress(address);
     this.setState({ address });
+  };
+
+  handleSelectCheckout = (address) => {
+    alert(address);
+    if (address == "") {
+      alert("Please put in your city or zip!");
+      this.props.loading(true);
+      return;
+    }
+    this.setState({
+      address: address,
+    });
   };
 
   handleSelect = (address) => {
@@ -36,6 +49,7 @@ export default class LocationSearchInput extends React.Component {
       this.props.loading(true);
       return;
     }
+    // Known address?
     if (
       address == "austin" ||
       address == "Austin" ||
@@ -116,6 +130,7 @@ export default class LocationSearchInput extends React.Component {
 
   render() {
     const mobile = this.props.mobile;
+    const { loading, activeButton, modal, checkoutPage } = this.props;
 
     return (
       <div
@@ -129,7 +144,9 @@ export default class LocationSearchInput extends React.Component {
         <PlacesAutocomplete
           value={this.state.address}
           onChange={this.handleChange}
-          onSelect={this.handleSelect}
+          onSelect={
+            checkoutPage ? this.handleSelectCheckout : this.handleSelect
+          }
         >
           {({
             getInputProps,
@@ -158,16 +175,20 @@ export default class LocationSearchInput extends React.Component {
                   borderRadius: 3,
                 }}
               >
-                <img
-                  src={Pin}
-                  style={{
-                    width: "3vh",
-                    height: "3vh",
-                    marginLeft: "1vh",
-                    marginRight: "1vh",
-                  }}
-                />
+                {!checkoutPage && (
+                  <img
+                    src={Pin}
+                    style={{
+                      width: "3vh",
+                      height: "3vh",
+                      marginLeft: "1vh",
+                      marginRight: "1vh",
+                    }}
+                  />
+                )}
                 <input
+                  type="search"
+                  autoComplete="off"
                   autoFocus={this.props.activeButton ? false : true}
                   id="delivery-address-input"
                   style={{
@@ -177,9 +198,14 @@ export default class LocationSearchInput extends React.Component {
                     border: "none",
                     padding: 0,
                     margin: 0,
+                    paddingLeft: checkoutPage ? 10 : 0,
                   }}
                   {...getInputProps({
-                    placeholder: "Enter your city or zip code",
+                    autoComplete: "off",
+                    autoFocus: true,
+                    placeholder: checkoutPage
+                      ? "Delivery address"
+                      : "Enter your city or zip code",
                     className: "location-search-input",
                   })}
                 />

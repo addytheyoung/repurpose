@@ -17,6 +17,7 @@ import Close from "./images/close.png";
 import Bin from "./images/bin.png";
 import api from "./api";
 import LoadingPage from "./LoadingPage";
+import Treasure from "./images/treasureGIMP.png";
 
 export default class CheckOut extends React.Component {
   constructor(props) {
@@ -94,16 +95,39 @@ export default class CheckOut extends React.Component {
           <a href="/" style={{ textDecoration: "none" }}>
             <div
               style={{
-                fontWeight: 700,
-                marginTop: 50,
                 display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                fontSize: 26,
-                color: "rgb(66, 108, 180)",
+                flexDirection: "column",
+                width: 100,
               }}
             >
-              Collection
+              <div
+                style={{
+                  fontWeight: 700,
+                  fontFamily: "Pridi",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: 28,
+                  color: "#426CB4",
+                  height: 30,
+                }}
+              >
+                Tate's
+              </div>
+              <div
+                style={{
+                  fontWeight: 700,
+                  fontFamily: "Pridi",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: 28,
+                  color: "#AF7366",
+                  height: 30,
+                }}
+              >
+                Crate
+              </div>
             </div>
           </a>
           <div style={{ marginTop: 50, fontWeight: 500, fontSize: 22 }}>
@@ -339,21 +363,53 @@ export default class CheckOut extends React.Component {
           </div>
         )}
 
-        <a style={{ textDecoration: "none" }} href="/">
-          <div
-            style={{
-              fontWeight: 700,
-              marginTop: 30,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: 26,
-              color: "rgb(66, 108, 180)",
-            }}
-          >
-            Collection
+        <div
+          onClick={() => (window.location.href = "/")}
+          style={{
+            textDecoration: "none",
+            marginTop: 10,
+            flexDirection: "row",
+            display: "flex",
+            justifyContent: "center",
+            width: "100vw",
+            alignItems: "center",
+          }}
+        >
+          <div style={{ display: "flex", flexDirection: "column", width: 100 }}>
+            <div
+              style={{
+                fontWeight: 700,
+                fontFamily: "Pridi",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontSize: 28,
+                color: "#426CB4",
+                height: 30,
+              }}
+            >
+              Tate's
+            </div>
+            <div
+              style={{
+                fontWeight: 700,
+                fontFamily: "Pridi",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontSize: 28,
+                color: "#AF7366",
+                height: 30,
+              }}
+            >
+              Crate
+            </div>
           </div>
-        </a>
+          <img
+            style={{ width: 50, height: 50, marginLeft: 0 }}
+            src={Treasure}
+          ></img>
+        </div>
         <div
           style={{
             display: "flex",

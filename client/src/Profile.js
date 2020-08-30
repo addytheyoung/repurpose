@@ -20,7 +20,8 @@ export default class Profile extends React.Component {
   }
 
   render() {
-    const { closeModal } = this.props;
+    const { closeModal, cartPage } = this.props;
+    console.log(this.props);
     const singedin = !!firebase.auth().currentUser;
     const signedModal = !singedin && !this.state.newUser && !this.state.retUser;
     const path = window.location.pathname;
@@ -109,8 +110,10 @@ export default class Profile extends React.Component {
                       fontFamily: "Gill Sans",
                     }}
                   >
-                    Sign up / sign in
+                    {cartPage && "Sign up to checkout"}
+                    {!cartPage && "Sign up / sign in"}
                   </div>
+
                   <Input
                     id="email"
                     placeholder="Enter your email"
@@ -134,8 +137,52 @@ export default class Profile extends React.Component {
                       alignItems: "center",
                     }}
                   >
-                    START SHOPPING
+                    {"CONTINUE"}
                   </div>
+                  {cartPage && (
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
+                    >
+                      <div
+                        style={{
+                          marginTop: 10,
+                          color: "grey",
+                        }}
+                      >
+                        OR
+                      </div>
+                      <div
+                        onClick={() => (window.location.href = "/checkout")}
+                        id="start-shopping"
+                        style={{
+                          padding: 10,
+                          borderRadius: 5,
+                          backgroundColor: "#d1d1d1",
+                          marginTop: 20,
+                          height: "5vh",
+                          width: 300,
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <div
+                          style={{
+                            color: "#1f1f1f",
+                            fontWeight: 600,
+                          }}
+                        >
+                          CHECKOUT AS GUEST
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
               {!singedin && this.state.newUser && (
@@ -145,7 +192,6 @@ export default class Profile extends React.Component {
                     flexDirection: "column",
                     justifyContent: "center",
                     alignItems: "center",
-                    fontFamily: "Gill Sans",
                   }}
                 >
                   <div
@@ -482,7 +528,11 @@ export default class Profile extends React.Component {
                   this.state.newUser = false;
                   this.state.retUser = false;
                   this.state.profile = false;
-                  window.location.reload();
+                  if (this.props.cartPage) {
+                    window.location.href = "/checkout";
+                  } else {
+                    window.location.reload();
+                  }
                 });
             });
         } else {

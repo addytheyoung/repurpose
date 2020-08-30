@@ -239,7 +239,7 @@ export default class ItemModal extends React.Component {
                         alignItems: "center",
                         justifyContent: "center",
                         color: "#ffffff",
-                        fontWeight: 500,
+                        fontWeight: 600,
                       }}
                     >
                       {!addingToCart && "ADD TO CART"}
@@ -414,10 +414,8 @@ export default class ItemModal extends React.Component {
         "Item: " +
         this.props.item.uid
     );
+    this.props.closeModal();
     alert("Message sent! We'll get back soon.");
-    this.setState({
-      minimized: true,
-    });
     return;
   }
 }

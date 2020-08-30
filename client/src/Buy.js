@@ -204,7 +204,13 @@ export default class Buy extends React.Component {
                     !this.activeFilter("categories") &&
                     !this.state.emptyArray &&
                     !this.state.activePage && (
-                      <div>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                        }}
+                      >
                         <ItemScroller
                           heartedItem={
                             this.props.profileData &&
