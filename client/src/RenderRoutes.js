@@ -192,7 +192,6 @@ export default class RenderRoutes extends React.Component {
             <Route path="/sell" exact={true} render={() => <Sell_2 />} />
             <Route path="/sell/kit" exact={true} render={() => <OrderKit />} />
             <Route path="/item" exact={false} render={() => <Item />} />
-            <Route path="/profile" exact={true} render={() => <Profile />} />
             <Route path="/cart" exact={true} render={() => <Cart />} />
             <Route path="/checkout" exact={true} render={() => <CheckOut />} />
             <Route
@@ -299,7 +298,6 @@ export default class RenderRoutes extends React.Component {
             <Route path="/help" exact={true} render={() => <Help />} />
             <Route path="/sell" exact={true} render={() => <Sell_2 />} />
             <Route path="/item" exact={false} render={() => <Item />} />
-            <Route path="/profile" exact={true} render={() => <Profile />} />
             <Route path="/cart" exact={true} render={() => <Cart />} />
             <Route path="/checkout" exact={true} render={() => <CheckOut />} />
           </Router>

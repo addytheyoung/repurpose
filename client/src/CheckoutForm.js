@@ -47,6 +47,7 @@ export default class CheckoutForm extends React.Component {
       email: this.props.myData ? this.props.myData.email : "",
       activePaymentData: null,
       paymentTypeModal: false,
+      addingCard: false,
     };
     this.findData();
   }
@@ -89,8 +90,6 @@ export default class CheckoutForm extends React.Component {
 
     // Did we succeed?
     if (this.state.succeeded) {
-      this.finishMethod();
-
       return null;
     }
 
@@ -272,7 +271,7 @@ export default class CheckoutForm extends React.Component {
                     >
                       ****
                     </div>
-                    <div>{activePaymentData.last4}</div>
+                    <div>{item.last4}</div>
                     {index == 0 && (
                       <div
                         style={{
@@ -376,6 +375,22 @@ export default class CheckoutForm extends React.Component {
             </div>
           )}
 
+          {activePaymentData && (
+            <div
+              style={{
+                textAlign: "center",
+                fontWeight: 500,
+                marginBottom: 20,
+                marginTop: 20,
+                minWidth: 400,
+                maxWidth: 600,
+                color: "grey",
+              }}
+            >
+              OR
+            </div>
+          )}
+
           <div className="sr-combo-inputs" style={{ minWidth: 400 }}>
             <div className="sr-combo-inputs-row">
               <CardElement
@@ -402,30 +417,29 @@ export default class CheckoutForm extends React.Component {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              marginBottom: 20,
             }}
             className="btn"
-            // disabled={
-            //   this.state.processing ||
-            //   !this.state.clientSecret ||
-            //   !this.props.stripe
-            // }
+            disabled={this.state.addingCard}
           >
-            {this.state.processing ? "Processing…" : "Add Card"}
+            {this.state.addingCard ? "Adding..." : "Add Card"}
           </div>
 
-          <div
-            style={{
-              textAlign: "center",
-              fontWeight: 500,
-              marginBottom: 20,
-              marginTop: 20,
-              minWidth: 400,
-              maxWidth: 600,
-              color: "grey",
-            }}
-          >
-            OR
-          </div>
+          {!activePaymentData && (
+            <div
+              style={{
+                textAlign: "center",
+                fontWeight: 500,
+                marginBottom: 20,
+                marginTop: 20,
+                minWidth: 400,
+                maxWidth: 600,
+                color: "grey",
+              }}
+            >
+              OR
+            </div>
+          )}
 
           <form
             id="paypal-form"
@@ -473,9 +487,50 @@ export default class CheckoutForm extends React.Component {
     );
   }
 
+  async handlePaypalResponse() {
+    // 1) Email a reciept
+    const cart = this.state.myData.cart;
+    const email = this.state.email.trim().toLowerCase();
+
+    var emailText =
+      "Thank you for your purchase!\n\nYou purchased: " +
+      cart.length +
+      " items for $" +
+      this.props.total +
+      ". " +
+      "\n\nItems will be delivered to " +
+      this.state.address1 +
+      ", " +
+      this.state.address2 +
+      " the next morning!" +
+      "\n\n" +
+      "Call 903-203-1286 if you have any issues or concerns.";
+
+    if (result.receipt_url) {
+      emailText += "View your reciept here: " + result.receipt_url;
+    }
+
+    api.sendEmail(email, emailText);
+    api.sendEmail("andrew@collection.deals", emailText);
+
+    // 2) Remove the items purchased from the shop, and update users cart
+    //await this.deleteItemsAndRemoveFromCart(result);
+
+    // 3) Take user to confirmation screen.
+
+    this.props.finished();
+    this.setState({
+      paymentComplete: true,
+      paymentDetails: result,
+      succeeded: true,
+    });
+  }
+
   async selectPaymentToken(cardToken, index, paymentTokens) {
     if (index == 0) {
-      alert("That payment method is already selected!");
+      this.setState({
+        paymentTypeModal: false,
+      });
       return;
     }
     console.log(cardToken);
@@ -519,6 +574,11 @@ export default class CheckoutForm extends React.Component {
 
   // Confirm purchase with a previous token
   async confirmPurchase() {
+    // 0) Turn off the payment modal
+    this.setState({
+      paymentTypeModal: false,
+    });
+
     // 0) Get all the info
     const address1 = this.state.address1;
     const address2 = this.state.address2;
@@ -558,7 +618,7 @@ export default class CheckoutForm extends React.Component {
           cart: itemResult,
         })
         .then(() => {
-          this.props.navigation.goBack();
+          window.location.reload();
         });
       return;
     }
@@ -573,7 +633,7 @@ export default class CheckoutForm extends React.Component {
       console.log("charged customer");
       console.log(result);
     }
-    // 3) Email a reciept
+    // 4) Email a reciept
     const cart = myProfileData.cart;
     var emailText =
       "Thank you for your purchase!\n\nYou purchased: " +
@@ -586,7 +646,8 @@ export default class CheckoutForm extends React.Component {
       ", " +
       this.state.address2 +
       " the next morning!" +
-      "\n\n";
+      "\n\n" +
+      "Call 903-203-1286 if you have any issues or concerns.";
 
     if (result.receipt_url) {
       emailText += "View your reciept here: " + result.receipt_url;
@@ -595,10 +656,10 @@ export default class CheckoutForm extends React.Component {
     api.sendEmail(email, emailText);
     api.sendEmail("andrew@collection.deals", emailText);
 
-    // 4) Remove the items purchased from the shop, and update users cart
+    // 5) Remove the items purchased from the shop, and update users cart
     //await this.deleteItemsAndRemoveFromCart(result);
 
-    // 5) Take user to confirmation screen.
+    // 6) Take user to confirmation screen.
     this.props.finished();
     this.setState({
       paymentComplete: true,
@@ -610,6 +671,12 @@ export default class CheckoutForm extends React.Component {
   // Create or update a stripe customer
   async createOrUpdateStripeCustomer(cardToken) {
     console.log("create or update");
+
+    console.log(cardToken);
+    if (!cardToken) {
+      alert("Card declined. Please try again.");
+      return;
+    }
     // See if we are a customer.
     const myProfileData = this.state.myData;
     const uid = firebase.auth().currentUser.uid;
@@ -688,6 +755,9 @@ export default class CheckoutForm extends React.Component {
       })
       .then(() => {
         console.log(myCardTokens);
+        this.setState({
+          paymentTypeModal: false,
+        });
         this.findData();
       });
   }
@@ -714,33 +784,25 @@ export default class CheckoutForm extends React.Component {
             myData.card_tokens && myData.card_tokens.length > 0
               ? myData.card_tokens[0]
               : null,
+          addingCard: false,
         });
       });
   }
 
   // Pay with or add a card
   async payWithCard() {
+    // 0) Turn off the payment modal
+    this.setState({
+      paymentTypeModal: false,
+      addingCard: true,
+    });
+
     // 1) Get all the info
     const address1 = this.state.address1;
     const address2 = this.state.address2;
     const email = this.state.email.trim().toLowerCase();
-    // if (!this.checkAddress(address1) || !checkEmail(email)) {
-    //   return;
-    // }
 
-    // // 2) Update users address info
-    // if (firebase.auth().currentUser) {
-    //   firebase
-    //     .firestore()
-    //     .collection("Users")
-    //     .doc(firebase.auth().currentUser.uid)
-    //     .update({
-    //       address1: address1,
-    //       address2: address2,
-    //     });
-    // }
-
-    // 3) Get the token from this card
+    // 2) Get the token from this card
 
     const cardElement = this.props.elements.getElement(CardElement);
 
@@ -756,41 +818,9 @@ export default class CheckoutForm extends React.Component {
 
     // 4) Create or update our stripe customer
     await this.createOrUpdateStripeCustomer(token.token);
-  }
 
-  // If we're done, call this!
-  async finishMethod(result) {
-    const email = this.state.email.trim().toLowerCase();
-
-    // 1) Remove items from carts properly
-    // await this.deleteItemsAndRemoveFromCart()
-
-    // 2) Send the email reciept
-    var cart = this.state.myData.cart;
-    var tempCart = JSON.parse(JSON.stringify(this.state.myData.cart));
-
-    var emailText =
-      "Thank you for your purchase!\n\nYou purchased: " +
-      cart.length +
-      " items for $" +
-      this.props.total +
-      ". " +
-      "\n\nItems will be delivered to " +
-      this.state.address1 +
-      ", " +
-      this.state.address2 +
-      " the next morning!" +
-      "\n\n" +
-      "Call 903-203-1286 if you have any issues or concerns.";
-
-    if (result && result.receipt_url) {
-      emailText += "View your reciept here: " + result.receipt_url;
-    }
-
-    api.sendEmail(email, emailText);
-    api.sendEmail("andrew@collection.deals", emailText);
-
-    // 3) Call finish prop
+    this.findData();
+    cardElement.clear();
   }
 
   // Delete items from my and other users carts, and remove it from our database
@@ -971,21 +1001,21 @@ export default class CheckoutForm extends React.Component {
     if (currentUser) {
       myUid = firebase.auth().currentUser.uid;
     }
-    // if (!this.checkAddress(address1) || !checkEmail(email)) {
-    //   return;
-    // }
+    if (!this.checkAddress(address1) || !checkEmail(email)) {
+      return;
+    }
 
     // 1) Update the users address (If they are one)
-    // if (currentUser) {
-    //   await firebase
-    //     .firestore()
-    //     .collection("Users")
-    //     .doc(firebase.auth().currentUser.uid)
-    //     .update({
-    //       address1: address1,
-    //       address2: address2,
-    //     });
-    // }
+    if (currentUser) {
+      await firebase
+        .firestore()
+        .collection("Users")
+        .doc(firebase.auth().currentUser.uid)
+        .update({
+          address1: address1,
+          address2: address2,
+        });
+    }
 
     // 2) Check if the items are still valid
     const itemResult = await this.checkItems();

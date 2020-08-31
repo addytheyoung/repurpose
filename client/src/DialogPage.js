@@ -93,13 +93,7 @@ function SimpleDialog(props) {
         >
           Cheapest of the cheap
         </div>
-        <div
-          onClick={() => saveContent(3)}
-          className="category-link"
-          style={{ fontWeight: 400 }}
-        >
-          More coming soon!
-        </div>
+
         <div style={{ height: 50 }}></div>
       </div>
     </Dialog>

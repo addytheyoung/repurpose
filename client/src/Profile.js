@@ -303,7 +303,7 @@ export default class Profile extends React.Component {
                     onClick={() => (window.location.href = "/what-have-i-sold")}
                     id="my-orders"
                     style={{
-                      backgroundColor: "#a1a1a1",
+                      backgroundColor: "rgb(55, 89, 149)",
                       borderRadius: 5,
                       padding: 10,
                       height: "5vh",
@@ -320,26 +320,7 @@ export default class Profile extends React.Component {
                   >
                     MY SALES
                   </div>
-                  {/* <div
-                      onClick={() => (window.location.href = "/mysales")}
-                      id="my-sales"
-                      style={{
-                        backgroundColor: "#a1a1a1",
-                        borderRadius: 5,
-                        padding: 10,
-                         height: "5vh",
-                        width: 100,
-                        color: "white",
-                        fontWeight: 600,
-                        marginTop: 10,
-                        marginBottom: 10,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      MY SALES
-                    </div> */}
+
                   <div
                     onClick={() =>
                       this.setState({
@@ -528,11 +509,7 @@ export default class Profile extends React.Component {
                   this.state.newUser = false;
                   this.state.retUser = false;
                   this.state.profile = false;
-                  if (this.props.cartPage) {
-                    window.location.href = "/checkout";
-                  } else {
-                    window.location.reload();
-                  }
+                  window.location.href = this.props.redirectUrl;
                 });
             });
         } else {
@@ -556,7 +533,7 @@ export default class Profile extends React.Component {
               this.state.newUser = false;
               this.state.retUser = false;
               this.state.profile = false;
-              window.location.reload();
+              window.location.href = this.props.redirectUrl;
             });
         }
       })
@@ -577,7 +554,7 @@ export default class Profile extends React.Component {
         this.state.newUser = false;
         this.state.retUser = false;
         this.state.profile = false;
-        window.location.reload();
+        window.location.href = this.props.redirectUrl;
       })
       .catch((e) => {
         alert(e.message);

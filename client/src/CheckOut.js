@@ -94,7 +94,16 @@ export default class CheckOut extends React.Component {
           }}
         >
           <HeaderBar />
-          <a href="/" style={{ textDecoration: "none" }}>
+          <a
+            href="/"
+            style={{
+              textDecoration: "none",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <div
               style={{
                 display: "flex",
@@ -131,6 +140,7 @@ export default class CheckOut extends React.Component {
                 Crate
               </div>
             </div>
+            <img style={{ width: 50, height: 50 }} src={Treasure}></img>
           </a>
           <div style={{ marginTop: 50, fontWeight: 500, fontSize: 22 }}>
             Success! Your order is complete, and you've been sent an email! Your
@@ -138,9 +148,8 @@ export default class CheckOut extends React.Component {
             <br />
           </div>
           <div>
-            {" "}
-            Click the help button on the top if any issues occur. If any items
-            don't work, we will refund you.
+            Call the number in your emailed reciept if any issues or concerns
+            occour.
           </div>
         </div>
       );

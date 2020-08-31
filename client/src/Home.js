@@ -14,6 +14,7 @@ import ItemScroller from "./ItemScroller";
 import ItemModal from "./ItemModal";
 import Treasure from "./images/treasureGIMP.png";
 import LoadingPage from "./LoadingPage";
+import Profile from "./Profile";
 
 export default class Home extends React.Component {
   citiesList = ["Austin, TX"];
@@ -125,11 +126,9 @@ export default class Home extends React.Component {
         <Chat />
 
         {this.state.profile && (
-          <SignInOnlyModal
-            redirectUrl={"/"}
-            closeModal={() => this.closeModal()}
-          />
+          <Profile redirectUrl="/" closeModal={() => this.closeModal()} />
         )}
+
         {this.state.addressModal && (
           <div
             style={{

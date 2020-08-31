@@ -43,7 +43,9 @@ export default class HeaderBar extends React.Component {
 
     return (
       <div>
-        {this.state.profile && <Profile closeModal={() => this.closeModal()} />}
+        {this.state.profile && (
+          <Profile redirectUrl="/" closeModal={() => this.closeModal()} />
+        )}
         {this.state.searching && (
           <Search closeModal={() => this.closeModal()}></Search>
         )}

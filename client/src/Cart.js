@@ -148,7 +148,11 @@ export default class Cart extends React.Component {
       <div>
         {!this.state.modal && <Chat />}
         {this.state.profile && (
-          <Profile cartPage={true} closeModal={() => this.closeModal()} />
+          <Profile
+            redirectUrl="/checkout"
+            cartPage={true}
+            closeModal={() => this.closeModal()}
+          />
         )}
         {this.state.modal && (
           <ItemModal
