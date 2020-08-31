@@ -124,7 +124,7 @@ export default class Chat extends Component {
                 color: "grey",
               }}
             >
-              <div>Call or text</div>
+              <div>Call</div>
               <b
                 style={{
                   color: "rgb(66, 108, 180)",

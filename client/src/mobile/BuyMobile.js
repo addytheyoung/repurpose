@@ -17,6 +17,7 @@ import Div100vh from "react-div-100vh";
 import AboutPageMobile from "./AboutPageMobile";
 import ProfilePageMobile from "./ProfilePageMobile";
 import LoadingPage from "../LoadingPage";
+import ItemModal from "./ItemModal";
 
 export default class BuyMobile extends React.Component {
   constructor(props) {
@@ -51,17 +52,29 @@ export default class BuyMobile extends React.Component {
     this.pullNewItemsFromDatabase();
   }
   render() {
-    console.log(!this.state.finishedLoading);
-    if (!this.state.loaded || !this.state.foundNewItems) {
+    // Get all our params from the window.
+    // 1) Are we looking at an item?
+    // 2) Are we looking at a category?
+    // 3) Are we looking at a page?
+    const q = window.location.search;
+    const urlParams = new URLSearchParams(q);
+    const page = urlParams.get("page");
+    var item = urlParams.get("item");
+    var itemCategory = urlParams.get("itemcategory");
+
+    // Don't load the page till we have our data
+    if (
+      (!page && (!this.state.loaded || this.state.timesPulledFromOther < 3)) ||
+      (page && !this.state.loaded)
+    ) {
       return (
         <div>
           <LoadingPage />
         </div>
       );
     }
-    const q = window.location.search;
-    const urlParams = new URLSearchParams(q);
-    var itemCategory = urlParams.get("itemcategory");
+
+    // Get the proper category
     if (itemCategory && itemCategory.trim() == "Art") {
       itemCategory = "Art & Decoration";
     } else if (itemCategory && itemCategory.trim() == "Clothing, Shoes,") {
@@ -71,6 +84,7 @@ export default class BuyMobile extends React.Component {
     } else if (itemCategory && itemCategory.trim() == "Toys") {
       itemCategory = "Toys & Games";
     }
+
     const city = urlParams.get("city");
     var item = urlParams.get("item");
     if (item && !this.state.modal) {
@@ -99,26 +113,6 @@ export default class BuyMobile extends React.Component {
     }
     if (city) {
       localStorage.setItem("city", city);
-    }
-
-    // Set the modal variables
-    var itemDiscount = -1;
-    var itemCurrentPrice = -1;
-    var showDecimalsOriginal = true;
-    var showDecimalsCurrent = true;
-    if (item) {
-      itemDiscount = 1 - this.state.modal.current_price;
-      itemCurrentPrice =
-        this.state.modal.original_price -
-        this.state.modal.original_price * itemDiscount;
-      // See if we need decimals for the original price
-      if (this.state.modal.original_price % 1 == 0) {
-        showDecimalsOriginal = false;
-      }
-      // See if ywe need decimals for the current price
-      if (itemCurrentPrice % 1 == 0) {
-        showDecimalsCurrent = false;
-      }
     }
 
     return (
@@ -160,282 +154,20 @@ export default class BuyMobile extends React.Component {
             <LoadingPage />
           </div>
         )}
+        {item && (
+          <ItemModal
+            addingToCart={this.state.addingToCart}
+            closeModal={() => this.closeModal()}
+            item={this.state.modal}
+            addToCart={(item) => this.addToCart(item)}
+          />
+        )}
         <div
           style={{
             display: !this.state.loaded ? "none" : "block",
             overflowX: "hidden",
           }}
         >
-          {item && (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                zIndex: 200,
-                // alignItems: "center"
-              }}
-            >
-              <Div100vh
-                style={{
-                  width: "100vw",
-                  borderRadius: 5,
-                  position: "fixed",
-                  overflowY: "scroll",
-                  height: "100vh",
-                  top: 0,
-                  backgroundColor: "#f5f5f5",
-                  // position: "absolute",
-                  zIndex: 200,
-                  opacity: 1,
-                }}
-              >
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <div
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontSize: 24,
-                        fontWeight: 500,
-                        marginTop: 20,
-                        textAlign: "center",
-                        padding: 10,
-                        width: "65vw",
-                        minHeight: 20,
-                      }}
-                    >
-                      {this.state.modal.title}
-                    </div>
-                    <img
-                      id="close"
-                      onClick={() => this.closeModal()}
-                      src={Close}
-                      style={{
-                        width: "4vh",
-                        height: "4vh",
-                        top: "3vh",
-                        right: "3vh",
-                        position: "fixed",
-                      }}
-                    />
-                  </div>
-
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                      }}
-                    >
-                      <div style={{}}>
-                        <img
-                          src={
-                            this.state.modal.pictures[
-                              this.state.modalPictureIndex
-                            ]
-                          }
-                          style={{
-                            borderRadius: 3,
-                            width: "80vw",
-                            height: "72vw",
-                            marginTop: 20,
-                          }}
-                        ></img>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          marginLeft: 20,
-                          marginTop: 10,
-                        }}
-                      >
-                        {this.state.modal.pictures.map((pic, index) => {
-                          if (this.state.modal.pictures.length == 1) {
-                            return;
-                          }
-                          return (
-                            <div
-                              id="picture-map"
-                              key={index}
-                              onClick={() => this.changeModalImg(index)}
-                            >
-                              <img
-                                src={pic}
-                                style={{
-                                  width: 80,
-                                  height: 80 * 0.9,
-                                  marginLeft: 5,
-                                  marginRight: 5,
-                                }}
-                              ></img>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        {/* <div
-                          style={{
-                            fontSize: 24,
-                            fontWeight: 500,
-                            marginTop: 10,
-                            textAlign: "center",
-                            padding: 10,
-                          }}
-                        >
-                          {this.state.modal.title}
-                        </div> */}
-
-                        {Math.round(itemDiscount * 100).toFixed(0) != 0 && (
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <div
-                              style={{
-                                marginTop: 10,
-                                fontWeight: 500,
-                                fontSize: 22,
-                                textAlign: "center",
-                                textDecoration: "line-through",
-                              }}
-                            >
-                              {!showDecimalsOriginal &&
-                                "$" +
-                                  (
-                                    Math.round(
-                                      this.state.modal.original_price * 100
-                                    ) / 100
-                                  ).toFixed(0)}
-                              {showDecimalsOriginal &&
-                                "$" +
-                                  (
-                                    Math.round(
-                                      this.state.modal.original_price * 100
-                                    ) / 100
-                                  ).toFixed(2)}
-                            </div>
-                            <div
-                              style={{
-                                fontWeight: 400,
-                                fontSize: 16,
-                                marginLeft: 10,
-                                color: "#cc0000",
-                                textAlign: "center",
-                                marginTop: 10,
-                              }}
-                            >
-                              {Math.round(itemDiscount * 100).toFixed(0) +
-                                "% off"}
-                            </div>
-                          </div>
-                        )}
-
-                        <div
-                          style={{
-                            marginTop: 30,
-                            fontWeight: 700,
-                            fontSize: 24,
-                            textAlign: "center",
-                          }}
-                        >
-                          {!showDecimalsCurrent &&
-                            "$" +
-                              (
-                                Math.round(itemCurrentPrice * 100) / 100
-                              ).toFixed(0)}
-                          {showDecimalsCurrent &&
-                            "$" +
-                              (
-                                Math.round(itemCurrentPrice * 100) / 100
-                              ).toFixed(2)}
-                        </div>
-
-                        <div
-                          onClick={() => this.addToCart(this.state.modal)}
-                          id="add-to-cart"
-                          style={{
-                            backgroundColor: "#426CB4",
-                            marginTop: 20,
-                            borderRadius: 5,
-                            padding: 10,
-                            width: 300,
-                            height: "7vh",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            color: "#ffffff",
-                            fontWeight: 600,
-                            fontSize: 22,
-                          }}
-                        >
-                          {!this.state.addingToCart && "ADD TO CART"}
-                          {this.state.addingToCart && "Adding..."}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      marginLeft: 20,
-                      fontSize: 14,
-                      marginTop: 20,
-                      fontWeight: 600,
-                    }}
-                  >
-                    Item Details
-                  </div>
-                  <div
-                    style={{
-                      marginTop: 10,
-                      fontSize: 14,
-                      marginLeft: 20,
-                      marginRight: 20,
-                      borderTopColor: "#a1a1a1",
-                      borderTopWidth: 1,
-                      borderTopStyle: "solid",
-                    }}
-                  >
-                    <div style={{ marginTop: 5 }}>
-                      {this.state.modal.description}
-                    </div>
-                    <div style={{ height: "20vh" }}></div>
-                  </div>
-                </div>
-              </Div100vh>
-            </div>
-          )}
-
           <div
             id="buy-mobile-main"
             style={{

@@ -80,6 +80,9 @@ export default class MobileChat extends Component {
             display: "flex",
             justifyContent: "center",
             height: "100vh",
+            width: "100vw",
+            position: "fixed",
+            zIndex: 999,
           }}
         >
           <div
@@ -152,7 +155,7 @@ export default class MobileChat extends Component {
                   color: "grey",
                 }}
               >
-                <div>Call or text</div>
+                <div>Call</div>
                 <b
                   style={{
                     color: "rgb(66, 108, 180)",

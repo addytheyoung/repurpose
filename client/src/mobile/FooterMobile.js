@@ -85,13 +85,26 @@ export default class FooterMobile extends React.Component {
                 fontSize: 14,
               }}
             >
-              <HomeOutlinedIcon
-                style={{
-                  width: "8vw",
-                  height: "8vw",
-                  color: this.state.homePage ? "#426CB4" : "#000000",
-                }}
-              ></HomeOutlinedIcon>
+              {!this.state.homePage && (
+                <img
+                  src={require("../images/hometest.svg")}
+                  style={{
+                    width: "8vw",
+                    height: "8vw",
+                    color: "#f1f1f1",
+                  }}
+                />
+              )}
+              {this.state.homePage && (
+                <img
+                  src={require("../images/hometest2.svg")}
+                  style={{
+                    width: "8vw",
+                    height: "8vw",
+                    color: "#f1f1f1",
+                  }}
+                />
+              )}
               <div
                 style={{
                   fontWeight: 500,
@@ -249,14 +262,19 @@ export default class FooterMobile extends React.Component {
                 fontSize: 14,
               }}
             >
-              <ShoppingCartOutlinedIcon
-                style={{
-                  width: "8vw",
-                  height: "8vw",
+              {!this.state.cartPage && (
+                <img
+                  src={require("../images/shopping-cart.svg")}
+                  style={{ width: "8vw", height: "8vw" }}
+                />
+              )}
 
-                  color: this.state.cartPage ? "#426CB4" : "#000000",
-                }}
-              ></ShoppingCartOutlinedIcon>
+              {this.state.cartPage && (
+                <img
+                  src={require("../images/shopping-cart (1).svg")}
+                  style={{ width: "8vw", height: "8vw" }}
+                />
+              )}
 
               <div
                 style={{
@@ -278,15 +296,17 @@ export default class FooterMobile extends React.Component {
                   alignItems: "center",
                   fontWeight: 700,
                   fontSize: 12,
-                  backgroundColor: "red",
+                  backgroundColor: "rgb(66, 108, 180)",
                   borderRadius: 100,
                   position: "absolute",
-                  width: "4.5vw",
-                  height: "4.5vw",
-                  marginLeft: "3.5vw",
+                  width: "5.5vw",
+                  height: "5.5vw",
+                  marginLeft: "5vw",
                 }}
               >
-                {localStorage.getItem("cart")}
+                <div style={{ fontSize: 14 }}>
+                  {localStorage.getItem("cart")}3
+                </div>
               </div>
             )}
           </div>

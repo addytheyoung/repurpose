@@ -8,16 +8,17 @@ import SignInOnlyModal from "../SignInOnlyModal";
 import Money from "../images/money.svg";
 import Shop from "../images/shop.svg";
 import Delivery from "../images/delivery.svg";
-import Div100vh from "react-div-100vh";
 import Pin from "../images/gps.svg";
 import MobileChat from "./MobileChat";
 import LoadingPage from "../LoadingPage";
+import Treasure from "../images/treasureGIMP.png";
+import ItemScroller from "./ItemScroller";
+import ItemModal from "./ItemModal";
 
 export default class HomeMobile extends React.Component {
   citiesList = ["Austin, TX"];
   constructor(props) {
     super(props);
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
 
     this.state = {
       loaded: false,
@@ -103,30 +104,11 @@ export default class HomeMobile extends React.Component {
         </div>
       );
     }
+
     // Signed in? Go ahead and set the city.
     if (firebase.auth().currentUser) {
       localStorage.setItem("city", "Austin, TX");
       window.location.reload();
-    }
-
-    // Set the modal variables
-    var itemDiscount = -1;
-    var itemCurrentPrice = -1;
-    var showDecimalsOriginal = true;
-    var showDecimalsCurrent = true;
-    if (this.state.modal) {
-      itemDiscount = 1 - this.state.modal.current_price;
-      itemCurrentPrice =
-        this.state.modal.original_price -
-        this.state.modal.original_price * itemDiscount;
-      // See if we need decimals for the original price
-      if (this.state.modal.original_price % 1 == 0) {
-        showDecimalsOriginal = false;
-      }
-      // See if ywe need decimals for the current price
-      if (itemCurrentPrice % 1 == 0) {
-        showDecimalsCurrent = false;
-      }
     }
 
     return (
@@ -215,6 +197,7 @@ export default class HomeMobile extends React.Component {
                   Location
                 </div>
                 <PlacesAutocomplete
+                  updateAddress={(address) => console.log(address)}
                   openAddressModal={() => this.setState({ addressModal: true })}
                   loading={(loaded) => this.loading(loaded)}
                   mobile={true}
@@ -239,274 +222,12 @@ export default class HomeMobile extends React.Component {
           </div>
         )}
         {this.state.modal && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              zIndex: 200,
-              // alignItems: "center"
-            }}
-          >
-            <Div100vh
-              style={{
-                width: "100vw",
-                borderRadius: 5,
-                position: "fixed",
-                overflowY: "scroll",
-                height: "100vh",
-                top: 0,
-                backgroundColor: "#f5f5f5",
-                // position: "absolute",
-                zIndex: 200,
-                opacity: 1,
-              }}
-            >
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <div
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: 24,
-                      fontWeight: 500,
-                      marginTop: 20,
-                      textAlign: "center",
-                      padding: 10,
-                      width: "65vw",
-                      minHeight: 20,
-                    }}
-                  >
-                    {this.state.modal.title}
-                  </div>
-                  <img
-                    id="close"
-                    onClick={() => this.closeModal()}
-                    src={Close}
-                    style={{
-                      width: "4vh",
-                      height: "4vh",
-                      top: "3vh",
-                      right: "3vh",
-                      position: "fixed",
-                    }}
-                  />
-                </div>
-
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
-                  >
-                    <div style={{}}>
-                      <img
-                        src={
-                          this.state.modal.pictures[
-                            this.state.modalPictureIndex
-                          ]
-                        }
-                        style={{
-                          borderRadius: 3,
-                          width: "80vw",
-                          height: "72vw",
-                          marginTop: 20,
-                        }}
-                      ></img>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        marginLeft: 20,
-                        marginTop: 10,
-                      }}
-                    >
-                      {this.state.modal.pictures.map((pic, index) => {
-                        if (this.state.modal.pictures.length == 1) {
-                          return;
-                        }
-                        return (
-                          <div
-                            id="picture-map"
-                            key={index}
-                            onClick={() => this.changeModalImg(index)}
-                          >
-                            <img
-                              src={pic}
-                              style={{
-                                width: 80,
-                                height: 80 * 0.9,
-                                marginLeft: 5,
-                                marginRight: 5,
-                              }}
-                            ></img>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      {/* <div
-                          style={{
-                            fontSize: 24,
-                            fontWeight: 500,
-                            marginTop: 10,
-                            textAlign: "center",
-                            padding: 10,
-                          }}
-                        >
-                          {this.state.modal.title}
-                        </div> */}
-
-                      {Math.round(itemDiscount * 100).toFixed(0) != 0 && (
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <div
-                            style={{
-                              marginTop: 10,
-                              fontWeight: 500,
-                              fontSize: 22,
-                              textAlign: "center",
-                              textDecoration: "line-through",
-                            }}
-                          >
-                            {!showDecimalsOriginal &&
-                              "$" +
-                                (
-                                  Math.round(
-                                    this.state.modal.original_price * 100
-                                  ) / 100
-                                ).toFixed(0)}
-                            {showDecimalsOriginal &&
-                              "$" +
-                                (
-                                  Math.round(
-                                    this.state.modal.original_price * 100
-                                  ) / 100
-                                ).toFixed(2)}
-                          </div>
-                          <div
-                            style={{
-                              fontWeight: 400,
-                              fontSize: 16,
-                              marginLeft: 10,
-                              color: "#cc0000",
-                              textAlign: "center",
-                              marginTop: 10,
-                            }}
-                          >
-                            {Math.round(itemDiscount * 100).toFixed(0) +
-                              "% off"}
-                          </div>
-                        </div>
-                      )}
-
-                      <div
-                        style={{
-                          marginTop: 30,
-                          fontWeight: 700,
-                          fontSize: 24,
-                          textAlign: "center",
-                        }}
-                      >
-                        {!showDecimalsCurrent &&
-                          "$" +
-                            (Math.round(itemCurrentPrice * 100) / 100).toFixed(
-                              0
-                            )}
-                        {showDecimalsCurrent &&
-                          "$" +
-                            (Math.round(itemCurrentPrice * 100) / 100).toFixed(
-                              2
-                            )}
-                      </div>
-
-                      <div
-                        onClick={() => this.addToCart(this.state.modal)}
-                        id="add-to-cart"
-                        style={{
-                          backgroundColor: "#426CB4",
-                          marginTop: 20,
-                          borderRadius: 5,
-                          padding: 10,
-                          width: 300,
-
-                          height: "7vh",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          color: "#ffffff",
-                          fontWeight: 600,
-                          fontSize: 22,
-                        }}
-                      >
-                        {!this.state.addingToCart && "ADD TO CART"}
-                        {this.state.addingToCart && "Adding..."}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  style={{
-                    marginLeft: 20,
-                    fontSize: 14,
-                    marginTop: 20,
-                    fontWeight: 600,
-                  }}
-                >
-                  Item Details
-                </div>
-                <div
-                  style={{
-                    marginTop: 10,
-                    fontSize: 14,
-                    marginLeft: 20,
-                    marginRight: 20,
-                    borderTopColor: "#a1a1a1",
-                    borderTopWidth: 1,
-                    borderTopStyle: "solid",
-                  }}
-                >
-                  <div style={{ marginTop: 5 }}>
-                    {this.state.modal.description}
-                  </div>
-                  <div style={{ height: "20vh" }}></div>
-                </div>
-              </div>
-            </Div100vh>
-          </div>
+          <ItemModal
+            addingToCart={this.state.addingToCart}
+            addToCart={(item) => this.addToCart(item)}
+            closeModal={() => this.closeModal()}
+            item={this.state.modal}
+          />
         )}
         <div
           style={{
@@ -520,36 +241,54 @@ export default class HomeMobile extends React.Component {
           }}
         >
           <div
-            id="bar"
-            style={{ display: "flex", flexDirection: "row", width: 180 }}
+            id="close"
+            onClick={() => (window.location.href = "/")}
+            style={{
+              textDecoration: "none",
+              marginTop: 10,
+              flexDirection: "row",
+              display: "flex",
+              justifyContent: "center",
+              width: "100vw",
+              alignItems: "center",
+            }}
           >
             <div
-              style={{
-                fontWeight: 800,
-                height: 80,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                fontSize: 28,
-                color: "#426CB4",
-                marginLeft: 50,
-              }}
+              style={{ display: "flex", flexDirection: "column", width: 100 }}
             >
-              Collect
+              <div
+                style={{
+                  fontWeight: 700,
+                  fontFamily: "Pridi",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: 28,
+                  color: "#426CB4",
+                  height: 30,
+                }}
+              >
+                Tate's
+              </div>
+              <div
+                style={{
+                  fontWeight: 700,
+                  fontFamily: "Pridi",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: 28,
+                  color: "#AF7366",
+                  height: 30,
+                }}
+              >
+                Crate
+              </div>
             </div>
-            <div
-              style={{
-                fontWeight: 800,
-                height: 80,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                fontSize: 28,
-                color: "#426CB4",
-              }}
-            >
-              ion
-            </div>
+            <img
+              style={{ width: 50, height: 50, marginLeft: 0 }}
+              src={Treasure}
+            ></img>
           </div>
           <div style={{ width: "100%" }}></div>
           {/* {firebase.auth().currentUser && (
@@ -576,7 +315,7 @@ export default class HomeMobile extends React.Component {
           )} */}
           <div
             id="become-collector"
-            onClick={() => (window.location.href = "/help/?header=fdc")}
+            onClick={() => (window.location.href = "/help")}
             style={{
               minWidth: 100,
               fontWeight: 500,
@@ -611,11 +350,12 @@ export default class HomeMobile extends React.Component {
             style={{
               fontSize: 28,
               fontWeight: 600,
-              letterSpacing: 0.1,
+              letterSpacing: 0,
               marginTop: "1vh",
               textAlign: "start",
               paddingLeft: "5vw",
               paddingRight: "5vw",
+              fontFamily: "Gill Sans",
             }}
           >
             Cheap items, at your doorstep
@@ -627,6 +367,7 @@ export default class HomeMobile extends React.Component {
               textAlign: "start",
               paddingLeft: "5vw",
               paddingRight: "5vw",
+              fontFamily: "Gill Sans",
             }}
           >
             Tons of items, delivered to you the next morning for a flat $2 order
@@ -652,188 +393,12 @@ export default class HomeMobile extends React.Component {
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-            marginTop: "1vh",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "column",
-            }}
-          >
-            <div style={{ display: "flex", width: "100vw", marginTop: "7vh" }}>
-              <div
-                style={{
-                  display: "flex",
-                  fontSize: 26,
-                  fontWeight: 500,
-                  textAlign: "center",
-                  marginLeft: "20vw",
-                  width: "60vw",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                Items Near Austin
-              </div>
-              <div
-                style={{
-                  opacity: 0.6,
-                  fontSize: 17,
-                  textAlign: "center",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                (1,000+)
-              </div>
-            </div>
+        <ItemScroller
+          itemPage={(item) => this.itemPage(item)}
+          items={this.state.items}
+          title="Items Near Austin"
+        />
 
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <div
-                id="mobile-prev-item"
-                onClick={() =>
-                  this.scrollLeft(document.getElementById("scroll"), -300, 100)
-                }
-              >
-                Prev
-              </div>
-              <div
-                id="mobile-next-item"
-                onClick={() =>
-                  this.scrollLeft(document.getElementById("scroll"), 300, 100)
-                }
-              >
-                Next
-              </div>
-            </div>
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <div
-              id="scroll"
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                width: "98vw",
-                marginLeft: "1vw",
-                marginRight: "1vw",
-                overflowX: "scroll",
-                marginTop: 20,
-              }}
-            >
-              {this.state.items.map((item, index) => {
-                const discount = 1 - item.current_price;
-                const currentPrice =
-                  item.original_price - item.original_price * discount;
-                var showDecimals = true;
-                if (currentPrice % 1 == 0) {
-                  // It's a while number. Don't show decimals.
-                  showDecimals = false;
-                }
-
-                return (
-                  <div
-                    key={index}
-                    onClick={() => this.itemPage(item)}
-                    id="box"
-                    style={{
-                      width: "49vw",
-                      marginLeft: "0.3vw",
-                      marginRight: "0.3vw",
-                      marginBottom: "1vh",
-                    }}
-                  >
-                    <img
-                      src={item.pictures[0]}
-                      style={{
-                        width: "49vw",
-                        height: "44.5vw",
-                        borderRadius: 5,
-                        overflow: "hidden",
-                      }}
-                    ></img>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        paddingLeft: "1vw",
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontSize: 18,
-                          fontWeight: 400,
-                          maxWidth: "48vw",
-                        }}
-                      >
-                        {item.title}
-                      </div>
-                      <div
-                        style={{
-                          marginTop: 5,
-                          fontWeight: 600,
-                          fontSize: 20,
-                          display: "flex",
-                          flexDirection: "row",
-                          alignItems: "center",
-                        }}
-                      >
-                        <div
-                          style={{
-                            fontWeight: 600,
-                            fontSize: 20,
-                          }}
-                        >
-                          {!showDecimals &&
-                            "$" +
-                              (Math.round(currentPrice * 100) / 100).toFixed(0)}
-                          {showDecimals &&
-                            "$" +
-                              (Math.round(currentPrice * 100) / 100).toFixed(2)}
-                        </div>
-                        <div
-                          style={{
-                            fontWeight: 400,
-                            fontSize: 16,
-                            marginLeft: 10,
-                            color: "#cc0000",
-                            opacity: discount == 0 ? 0 : discount * 15 * 0.25,
-                          }}
-                        >
-                          {Math.round(discount * 100).toFixed(0) + "%"}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
         <div
           style={{
             display: "flex",
@@ -842,6 +407,7 @@ export default class HomeMobile extends React.Component {
             alignItems: "center",
             width: "100vw",
             marginTop: "3vh",
+            fontFamily: "Gill Sans",
           }}
         >
           <div className="mobile-home1">
@@ -999,46 +565,5 @@ export default class HomeMobile extends React.Component {
       .catch((e) => {
         alert(e.message);
       });
-  }
-
-  easeInOutQuad(t, b, c, d) {
-    t /= d / 2;
-    if (t < 1) return (c / 2) * t * t + b;
-    t--;
-    return (-c / 2) * (t * (t - 2) - 1) + b;
-  }
-
-  scrollLeft(element, change, duration) {
-    var start = element.scrollLeft,
-      currentTime = 0,
-      increment = 20;
-
-    const t = this;
-    const st = this.state;
-    var animateScroll = function () {
-      currentTime += increment;
-      if (change > 0) {
-        element.scrollLeft = element.scrollLeft + window.innerWidth / 5;
-      } else {
-        element.scrollLeft = element.scrollLeft - window.innerWidth / 5;
-      }
-      if (currentTime < duration) {
-        setTimeout(animateScroll, increment);
-      }
-    };
-    animateScroll();
-  }
-
-  componentDidMount() {
-    this.updateWindowDimensions();
-    window.addEventListener("resize", this.updateWindowDimensions);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateWindowDimensions);
-  }
-
-  updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
 }

@@ -7,8 +7,18 @@ import {
   isMobile,
 } from "react-device-detect";
 import Treasure from "./images/treasureGIMP.png";
+import Chat from "./Chat";
+import MobileChat from "./mobile/MobileChat";
 
 export default class Help extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      chat: false,
+    };
+  }
+
   render() {
     const q = window.location.search;
     const urlParams = new URLSearchParams(q);
@@ -21,12 +31,15 @@ export default class Help extends React.Component {
       return (
         <div
           style={{
-            display: "flex",
             justifyContent: "center",
             overflowY: "scroll",
+            overflowX: "hidden",
             height: "100vh",
+            display: "flex",
           }}
         >
+          <MobileChat />
+
           <div
             style={{
               width: "80vw",
@@ -112,9 +125,26 @@ export default class Help extends React.Component {
                 </div>
                 <div
                   onClick={() => (window.location.href = "/")}
-                  className="about-main-button"
+                  style={{
+                    padding: 10,
+                    backgroundColor: "rgb(66, 108, 180)",
+                    borderRadius: 5,
+                    width: "50vw",
+                    height: "6vh",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
                 >
-                  BUY NOW
+                  <div
+                    style={{
+                      color: "white",
+                      fontWeight: 600,
+                      textAlign: "center",
+                    }}
+                  >
+                    BUY NOW
+                  </div>
                 </div>
               </div>
 
@@ -151,10 +181,27 @@ export default class Help extends React.Component {
                   donate them.
                 </div>
                 <div
-                  onClick={() => (window.location.href = "/")}
-                  className="about-main-button"
+                  onClick={() => (window.location.href = "/sell")}
+                  style={{
+                    padding: 10,
+                    backgroundColor: "rgb(66, 108, 180)",
+                    borderRadius: 5,
+                    width: "50vw",
+                    height: "6vh",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
                 >
-                  SELL NOW
+                  <div
+                    style={{
+                      color: "white",
+                      fontWeight: 600,
+                      textAlign: "center",
+                    }}
+                  >
+                    SELL NOW
+                  </div>
                 </div>
                 {/* <div style={{ height: "8vh" }}></div> */}
               </div>
@@ -311,6 +358,7 @@ export default class Help extends React.Component {
             concerns or questions!
           </div>
         </div>
+
         <div style={{ height: "20vh" }}></div>
       </div>
     );

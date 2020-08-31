@@ -54,7 +54,7 @@
   margin-bottom: 1vh;
   margin-left: 20px;
   padding: 10px;
-  height: 5vh;
+  height: 6vh;
   display: flex;
   font-size: 18px !important;
   align-items: center;
@@ -72,6 +72,8 @@
   margin-left: 20px;
   padding: 10px;
   height: 5vh;
+  width: 20vw;
+
   display: flex;
   font-size: 18px !important;
   align-items: center;
