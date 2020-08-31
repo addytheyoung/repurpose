@@ -19,3 +19,8 @@
 #paypal-button:hover {
   cursor: pointer;
 }
+
+#active-payment-data:hover {
+  cursor: pointer;
+  background-color: #f1f1f1;
+}

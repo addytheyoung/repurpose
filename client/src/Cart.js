@@ -165,9 +165,10 @@ export default class Cart extends React.Component {
           style={{
             display: "flex",
             flexDirection: "row",
-            marginLeft: "5vw",
-            marginRight: "5vw",
+            marginLeft: "3vw",
+            marginRight: "3vw",
             overflowY: "scroll",
+            justifyContent: "center",
             height: "90vh",
           }}
         >
@@ -176,6 +177,7 @@ export default class Cart extends React.Component {
               display: "flex",
               flexDirection: "column",
               width: "40vw",
+              maxWidth: 450,
               //   borderWidth: 1,
               //   borderStyle: "solid"
             }}
@@ -298,7 +300,7 @@ export default class Cart extends React.Component {
                   <div
                     onClick={() => this.removeFromCart(item, this.state.myData)}
                     id="bin"
-                    style={{ marginLeft: 50, width: 35, height: 35 }}
+                    style={{ marginLeft: 10, width: 35, height: 35 }}
                   >
                     <img src={Bin} style={{ width: 30, height: 30 }}></img>
                   </div>
@@ -311,8 +313,10 @@ export default class Cart extends React.Component {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                width: "50vw",
-                marginLeft: 20,
+                width: "30vw",
+                minWidth: 300,
+                marginLeft: 70,
+                alignItems: "flex-start",
               }}
             >
               <div
@@ -325,6 +329,8 @@ export default class Cart extends React.Component {
                   fontSize: 20,
                   fontWeight: 600,
                   marginTop: 30,
+                  width: "30vw",
+                  minWidth: 300,
                 }}
               >
                 Order Summary
@@ -337,6 +343,7 @@ export default class Cart extends React.Component {
                   fontWeight: 500,
                   alignItems: "center",
                   width: "30vw",
+                  minWidth: 300,
                   justifyContent: "space-between",
                 }}
               >
@@ -351,6 +358,7 @@ export default class Cart extends React.Component {
                   flexDirection: "row",
                   alignItems: "center",
                   width: "30vw",
+                  minWidth: 300,
                   justifyContent: "space-between",
                 }}
               >
@@ -366,6 +374,7 @@ export default class Cart extends React.Component {
                   fontWeight: 500,
                   alignItems: "center",
                   width: "30vw",
+                  minWidth: 300,
                   justifyContent: "space-between",
                 }}
               >
@@ -381,6 +390,7 @@ export default class Cart extends React.Component {
                   fontWeight: 600,
                   alignItems: "center",
                   width: "30vw",
+                  minWidth: 300,
                   justifyContent: "space-between",
                 }}
               >
@@ -388,58 +398,8 @@ export default class Cart extends React.Component {
                 <div>{"$" + total}</div>
               </div>
 
-              {/* <div
-                style={{
-                  marginTop: 10,
-                  width: "30vw",
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <RadioGroup
-                  value={this.state.deliveryType}
-                  onChange={(e) => this.setPickup(e)}
-                  defaultValue="pickup"
-                  row
-                  aria-label="position"
-                  name="position"
-                  defaultValue="top"
-                >
-                  <FormControlLabel
-                    disabled
-                    value="pickup"
-                    control={<Radio color="primary" />}
-                    label="Pickup (Coming soon!)"
-                    labelPlacement="top"
-                  />
-                  <FormControlLabel
-                    value="delivery"
-                    control={<Radio color="primary" />}
-                    label="Delivery"
-                    labelPlacement="top"
-                  />
-                </RadioGroup>
-              </div> */}
-
-              {this.state.deliveryType === "delivery" && (
-                <div
-                  style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}
-                ></div>
-              )}
-              {this.state.deliveryType === "pickup" && (
-                <div
-                  style={{ marginTop: 10, marginBottom: 10, fontWeight: 500 }}
-                >
-                  Pickup location is 2414 Longview Street, Austin TX. We'll send
-                  you an email to confirm.
-                </div>
-              )}
-
               <div
                 style={{
-                  width: "30vw",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
@@ -455,7 +415,8 @@ export default class Cart extends React.Component {
                     backgroundColor: "rgb(66, 108, 180)",
                     textDecoration: "none",
                     color: "white",
-                    width: 300,
+                    width: "30vw",
+                    minWidth: 300,
                     height: 60,
                     display: "flex",
                     justifyContent: "center",
@@ -466,17 +427,6 @@ export default class Cart extends React.Component {
                   }}
                 >
                   CHECK OUT
-                </div>
-                <div
-                  style={{
-                    marginTop: 40,
-                    fontWeight: 500,
-                    textAlign: "center",
-                    fontSize: 20,
-                  }}
-                >
-                  Don't like your purchase? <br />
-                  We'll refund you!
                 </div>
               </div>
             </div>
@@ -532,14 +482,7 @@ export default class Cart extends React.Component {
   }
 
   goToCheckout() {
-    if (firebase.auth().currentUser) {
-      window.location.href = "/checkout";
-    } else {
-      // Bring up sign up modal
-      this.setState({
-        profile: true,
-      });
-    }
+    window.location.href = "/checkout";
   }
 
   setPickup(e) {

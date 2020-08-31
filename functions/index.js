@@ -314,6 +314,7 @@ app.post("/fetch-item-price", async (req, res) => {
 // Create a stripe customer
 app.post("/create-stripe-customer", async (req, res) => {
   const email = req.body.email;
+  console.log(email + "**");
   try {
     const customer = await stripe.customers.create({
       email: email,

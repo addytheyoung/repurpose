@@ -1,4 +1,114 @@
-// Pay with our paypal intent
+// Create a Stripe customer
+const createCustomer = (email) => {
+  return window
+    .fetch(`/create-stripe-customer`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: email }),
+    })
+    .then((res) => {
+      console.log("RESULT GOOD");
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        console.log("RESULT BAD");
+        return null;
+      }
+    })
+    .then((data) => {
+      if (!data || data.error) {
+        throw new Error("Create Source error");
+      } else {
+        return data;
+      }
+    });
+};
+
+// Charge a Stripe customer
+const chargeCustomer = (total, customer) => {
+  return window
+    .fetch(`/charge-stripe-customer`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ total: total, customer: customer }),
+    })
+    .then((res) => {
+      console.log("RESULT GOOD");
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        console.log("RESULT BAD");
+        return null;
+      }
+    })
+    .then((data) => {
+      if (!data || data.error) {
+        throw new Error("Create Source error");
+      } else {
+        return data;
+      }
+    });
+};
+
+// Create a customers card
+const createCustomerCard = (customerId, cardToken) => {
+  return window
+    .fetch(`/create-customer-card`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ customerId: customerId, cardToken: cardToken }),
+    })
+    .then((res) => {
+      console.log("RESULT GOOD");
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        console.log("RESULT BAD");
+        return null;
+      }
+    })
+    .then((data) => {
+      if (!data || data.error) {
+        throw new Error("Create Source error");
+      } else {
+        return data;
+      }
+    });
+};
+
+// Update a customers card
+const updateCustomerCard = (customerId, cardToken) => {
+  return window
+    .fetch(`/update-customer-card`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ customerId: customerId, cardToken: cardToken }),
+    })
+    .then((res) => {
+      console.log("RESULT GOOD");
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        console.log("RESULT BAD");
+        return null;
+      }
+    })
+    .then((data) => {
+      if (!data || data.error) {
+        throw new Error("Create Source error");
+      } else {
+        return data;
+      }
+    });
+};
 
 const getLatLng = (address, zip, city, state) => {
   const front_url =
@@ -203,6 +313,10 @@ const api = {
   sendEmail: sendEmail,
   getLatLng: getLatLng,
   createPaymentIntent,
+  createCustomerCard: createCustomerCard,
+  createCustomer: createCustomer,
+  updateCustomerCard: updateCustomerCard,
+  chargeCustomer: chargeCustomer,
 };
 
 export default api;

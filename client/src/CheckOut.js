@@ -18,6 +18,7 @@ import Bin from "./images/bin.png";
 import api from "./api";
 import LoadingPage from "./LoadingPage";
 import Treasure from "./images/treasureGIMP.png";
+import PaymentTypePage from "./PaymentTypePage";
 
 export default class CheckOut extends React.Component {
   constructor(props) {
@@ -69,6 +70,7 @@ export default class CheckOut extends React.Component {
         </div>
       );
     }
+
     const subTotal = this.getSubtotal(this.state.myData.cart);
     const tax = this.getTax(subTotal);
     const shipping = this.getShipping(subTotal);
@@ -364,6 +366,7 @@ export default class CheckOut extends React.Component {
         )}
 
         <div
+          id="close"
           onClick={() => (window.location.href = "/")}
           style={{
             textDecoration: "none",
@@ -663,9 +666,6 @@ export default class CheckOut extends React.Component {
                 <ElementsConsumer>
                   {({ elements, stripe }) => (
                     <CheckoutForm
-                      // initialDeliveryType={this.initialDeliveryType}
-                      // initialTotal={this.initialTotal}
-
                       setShipping={(b, c, d) => this.setPickup(null, b, c, d)}
                       deliveryType={this.state.deliveryType}
                       finished={() => this.finished()}
