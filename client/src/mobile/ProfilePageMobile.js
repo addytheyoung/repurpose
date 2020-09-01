@@ -13,6 +13,8 @@ export default class ProfilePageMobile extends React.Component {
     const singedin = !!firebase.auth().currentUser;
     const signedModal = !singedin && !this.state.newUser && !this.state.retUser;
 
+    const { redirectToCheckout } = this.props;
+
     return (
       <div
         style={{
@@ -57,7 +59,7 @@ export default class ProfilePageMobile extends React.Component {
                     marginTop: "20vh",
                   }}
                 >
-                  {this.props.redirectToCheckout && (
+                  {redirectToCheckout && (
                     <div
                       style={{
                         fontSize: 18,
@@ -65,10 +67,10 @@ export default class ProfilePageMobile extends React.Component {
                         marginBottom: "3vh",
                       }}
                     >
-                      Sign up to checkout!
+                      Sign up to checkout! <br /> Your cart will be saved.
                     </div>
                   )}
-                  {!this.props.redirectToCheckout && (
+                  {!redirectToCheckout && (
                     <div style={{ fontSize: 18, fontWeight: 700 }}>
                       Sign up / sign in
                     </div>
@@ -85,7 +87,7 @@ export default class ProfilePageMobile extends React.Component {
                       backgroundColor: "#426CB4",
                       borderRadius: 5,
                       padding: 10,
-                      height: "5vh",
+                      height: 60,
                       width: "60vw",
                       fontSize: 16,
                       color: "white",
@@ -97,7 +99,7 @@ export default class ProfilePageMobile extends React.Component {
                       alignItems: "center",
                     }}
                   >
-                    START SHOPPING
+                    CONTINUE
                   </div>
                 </div>
               )}
@@ -119,7 +121,7 @@ export default class ProfilePageMobile extends React.Component {
                       backgroundColor: "#426CB4",
                       borderRadius: 5,
                       padding: 10,
-                      height: "5vh",
+                      height: 60,
                       width: "60vw",
                       fontSize: 16,
                       color: "white",
@@ -131,7 +133,7 @@ export default class ProfilePageMobile extends React.Component {
                       alignItems: "center",
                     }}
                   >
-                    START SHOPPING
+                    {redirectToCheckout ? "CHECKOUT" : " START SHOPPING"}
                   </div>
                 </div>
               )}
@@ -166,7 +168,7 @@ export default class ProfilePageMobile extends React.Component {
                         backgroundColor: "#426CB4",
                         borderRadius: 5,
                         padding: 10,
-                        height: "5vh",
+                        height: 60,
                         width: "60vw",
                         fontSize: 16,
                         color: "white",
@@ -178,7 +180,7 @@ export default class ProfilePageMobile extends React.Component {
                         alignItems: "center",
                       }}
                     >
-                      START SHOPPING
+                      {redirectToCheckout ? "CHECKOUT" : " START SHOPPING"}
                     </div>
                   </div>
                 </div>
@@ -213,8 +215,8 @@ export default class ProfilePageMobile extends React.Component {
                         backgroundColor: "#a1a1a1",
                         borderRadius: 5,
                         padding: 10,
-                        height: "5vh",
-                        width: "20vw",
+                        height: 60,
+                        width: "40vw",
                         color: "white",
                         fontWeight: 600,
                         marginTop: 10,
@@ -259,8 +261,8 @@ export default class ProfilePageMobile extends React.Component {
                         fontSize: 16,
                         borderRadius: 5,
                         padding: 10,
-                        height: "5vh",
-                        width: "20vw",
+                        height: 60,
+                        width: "40vw",
                         color: "white",
                         fontWeight: 600,
                         marginTop: 10,
@@ -304,7 +306,7 @@ export default class ProfilePageMobile extends React.Component {
                         backgroundColor: "#426CB4",
                         borderRadius: 5,
                         padding: 10,
-                        height: "5vh",
+                        height: 60,
                         width: "20vw",
                         fontSize: 16,
                         color: "white",

@@ -60,10 +60,10 @@ export default class CityPageMobile extends React.Component {
                 onClick={() => this.closeModal()}
                 src={Close}
                 style={{
-                  width: "4vh",
-                  height: "4vh",
-                  top: "3vh",
-                  right: "3vh",
+                  width: 30,
+                  height: 30,
+                  top: 20,
+                  right: 20,
                   position: "fixed",
                 }}
               />

@@ -57,6 +57,7 @@ app.get("/paypal-cancel", (req, res) => {
 });
 
 app.post("/paypal", (req, res) => {
+  console.log("fetched paypal");
   // const create_payment_json = req.body.json;
   // console.log("\n\n\nREQ BODYYYYY\n\n\n");
 

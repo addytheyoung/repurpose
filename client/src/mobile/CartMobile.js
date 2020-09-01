@@ -148,7 +148,7 @@ export default class CartMobile extends React.Component {
           )}
           {this.state.profilePage && (
             <ProfilePageMobile
-              redirectToCheckout={this.state.redirectToCheckout}
+              redirectToCheckout={window.location.pathname == "/cart"}
               closePage={() => this.closePage()}
             />
           )}
@@ -175,7 +175,7 @@ export default class CartMobile extends React.Component {
         )}
         {this.state.profilePage && (
           <ProfilePageMobile
-            redirectToCheckout={this.state.redirectToCheckout}
+            redirectToCheckout={window.location.pathname == "/cart"}
             closePage={() => this.closePage()}
           />
         )}
@@ -484,17 +484,14 @@ export default class CartMobile extends React.Component {
   }
 
   goToCheckout() {
-    window.location.href = "/checkout";
-
-    // if (firebase.auth().currentUser) {
-    //   window.location.href = "/checkout";
-
-    // } else {
-    //   // Bring up sign up modal
-    //   this.setState({
-    //     profilePage: true,
-    //   });
-    // }
+    if (firebase.auth().currentUser) {
+      window.location.href = "/checkout";
+    } else {
+      // Bring up sign up modal
+      this.setState({
+        profilePage: true,
+      });
+    }
   }
 
   openPage(page) {

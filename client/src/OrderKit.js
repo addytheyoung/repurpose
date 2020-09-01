@@ -49,7 +49,7 @@ export default class OrderKit extends React.Component {
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    width: 300,
+                    width: 30,
                     marginTop: 20,
                   }}
                 >
@@ -59,7 +59,7 @@ export default class OrderKit extends React.Component {
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    width: 300,
+                    width: 30,
                     marginTop: 20,
                   }}
                 >
@@ -69,7 +69,7 @@ export default class OrderKit extends React.Component {
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    width: 300,
+                    width: 30,
                     marginTop: 50,
                   }}
                 >
@@ -82,7 +82,7 @@ export default class OrderKit extends React.Component {
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    width: 300,
+                    width: 30,
                     marginTop: 20,
                   }}
                 >
@@ -95,7 +95,7 @@ export default class OrderKit extends React.Component {
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    width: 300,
+                    width: 30,
                     marginTop: 20,
                   }}
                 >

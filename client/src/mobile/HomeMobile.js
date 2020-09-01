@@ -175,10 +175,10 @@ export default class HomeMobile extends React.Component {
                     onClick={() => this.closeModal()}
                     src={Close}
                     style={{
-                      width: "4vh",
-                      height: "4vh",
-                      top: "3vh",
-                      right: "3vh",
+                      width: 30,
+                      height: 30,
+                      top: 20,
+                      right: 20,
                       position: "fixed",
                     }}
                   />
@@ -198,7 +198,7 @@ export default class HomeMobile extends React.Component {
                 </div>
                 <PlacesAutocomplete
                   updateAddress={(address) => console.log(address)}
-                  openAddressModal={() => this.setState({ addressModal: true })}
+                  openAddressModal={() => console.log("u")}
                   loading={(loaded) => this.loading(loaded)}
                   mobile={true}
                   activeButton={false}
@@ -334,7 +334,6 @@ export default class HomeMobile extends React.Component {
         <div
           style={{
             minHeight: "30vh",
-            maxHeight: "50vh",
             width: "100vw",
             backgroundColor: "#ffffff",
             paddingTop: 10,
@@ -374,23 +373,26 @@ export default class HomeMobile extends React.Component {
             fee.
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              marginTop: "5vh",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <PlacesAutocomplete
-              openAddressModal={() => this.setState({ addressModal: true })}
-              loading={(loaded) => this.loading(loaded)}
-              activeButton={true}
-              modal={null}
-              mobile={true}
-            />
-          </div>
+          {!this.state.addressModal && (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                marginTop: "5vh",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <PlacesAutocomplete
+                updateAddress={(address) => console.log(address)}
+                openAddressModal={() => this.setState({ addressModal: true })}
+                loading={(loaded) => this.loading(loaded)}
+                activeButton={true}
+                modal={null}
+                mobile={true}
+              />
+            </div>
+          )}
         </div>
 
         <ItemScroller

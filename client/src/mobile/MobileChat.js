@@ -49,7 +49,7 @@ export default class MobileChat extends Component {
             alignItems: "center",
             right: this.props.top ? "auto" : "10vw",
             bottom: this.props.top ? "auto" : "0vh",
-            height: "5vh",
+            height: 40,
             width: "80vw",
             marginBottom: this.props.top ? "3vh" : "0vh",
 
@@ -132,10 +132,10 @@ export default class MobileChat extends Component {
                       onClick={() => this.openChat(false)}
                       src={Close}
                       style={{
-                        width: "4vh",
-                        height: "4vh",
-                        top: "3vh",
-                        right: "3vh",
+                        width: 30,
+                        height: 30,
+                        top: 20,
+                        right: 20,
                         position: "fixed",
                       }}
                     ></img>

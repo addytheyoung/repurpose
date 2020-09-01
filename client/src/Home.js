@@ -313,7 +313,7 @@ export default class Home extends React.Component {
             paddingBottom: 20,
             display: "flex",
             flexDirection: "column",
-            // justifyContent: "center",
+            justifyContent: "center",
             alignItems: "center",
           }}
         >
@@ -359,14 +359,16 @@ export default class Home extends React.Component {
             />
           </div>
         </div>
+        <div style={{ width: "100%", marginLeft: "10%" }}>
+          <ItemScroller
+            title={"Items Near Austin"}
+            itemPage={(item) => this.itemPage(item)}
+            mobile={false}
+            items={this.state.items}
+            width={this.state.width}
+          />
+        </div>
 
-        <ItemScroller
-          title={"Items Near Austin"}
-          itemPage={(item) => this.itemPage(item)}
-          mobile={false}
-          items={this.state.items}
-          width={this.state.width}
-        />
         <div
           style={{
             display: "flex",

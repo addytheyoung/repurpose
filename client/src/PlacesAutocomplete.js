@@ -38,7 +38,7 @@ export default class LocationSearchInput extends React.Component {
 
   handleSelect = (address) => {
     this.props.loading(false);
-    // Bank address?
+    // Blank address?
     if (address == "") {
       if (this.props.mobile) {
         this.props.openAddressModal();
@@ -160,11 +160,15 @@ export default class LocationSearchInput extends React.Component {
               }}
             >
               <div
-                onClick={() => (mobile ? this.props.openAddressModal() : null)}
+                onClick={() =>
+                  mobile && !this.props.checkoutPage
+                    ? this.props.openAddressModal()
+                    : null
+                }
                 id="delivery-address-input-container"
                 style={{
                   width: mobile ? "92vw" : "42vw",
-                  height: "6vh",
+                  height: 60,
                   display: "flex",
                   flexDirection: "row",
                   alignItems: "center",
@@ -186,9 +190,10 @@ export default class LocationSearchInput extends React.Component {
                   />
                 )}
                 <input
+                  autocomplete="off"
                   type="search"
                   autoComplete="off"
-                  autoFocus={this.props.activeButton ? false : true}
+                  autoFocus={this.props.addressModal ? true : false}
                   id="delivery-address-input"
                   style={{
                     width: mobile ? "90vw" : "40vw",
@@ -201,7 +206,7 @@ export default class LocationSearchInput extends React.Component {
                   }}
                   {...getInputProps({
                     autoComplete: "off",
-                    autoFocus: true,
+                    autocomplete: "off",
                     placeholder: checkoutPage
                       ? "Delivery address"
                       : "Enter your city or zip code",
@@ -255,7 +260,7 @@ export default class LocationSearchInput extends React.Component {
                           style={{
                             minHeight: mobile ? "10vh" : "10vh",
                             zIndex: 999,
-                            maxWidth: "50vw",
+                            maxWidth: mobile ? "92vw" : "50vw",
                             fontSize: 18,
                             display: "flex",
                             justifyContent: "flex-start",
@@ -265,7 +270,14 @@ export default class LocationSearchInput extends React.Component {
                           }}
                           {...getSuggestionItemProps(suggestion, {})}
                         >
-                          <span style={{ fontWeight: 500, zIndex: 999 }}>
+                          <span
+                            style={{
+                              fontWeight: 500,
+                              zIndex: 999,
+                              width: "100%",
+                              height: "100%",
+                            }}
+                          >
                             {suggestion.description}
                           </span>
                         </div>
@@ -278,7 +290,7 @@ export default class LocationSearchInput extends React.Component {
           )}
         </PlacesAutocomplete>
 
-        {this.props.activeButton && (
+        {this.props.aååctiveButton && (
           <div
             onClick={() => this.handleSelect(this.state.address)}
             id="start"
@@ -286,8 +298,7 @@ export default class LocationSearchInput extends React.Component {
               marginLeft: mobile ? 0 : 10,
               width: mobile ? "90vw" : 200,
               padding: "1vh",
-              minHeight: 45,
-              height: mobile ? "6vh" : "5.5vh",
+              height: 60,
               borderRadius: 6,
               backgroundColor: "#426CB4",
               fontWeight: 600,

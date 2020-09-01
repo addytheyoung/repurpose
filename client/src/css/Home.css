@@ -115,6 +115,20 @@
   outline: none;
 }
 
+#delivery-address-input,
+#delivery-addres-input:active {
+  outline-width: 0;
+}
+
+#location-search-input:active {
+  outline-width: 0px !important;
+  outline-style: none !important;
+}
+
+.data-focus-visible-added {
+  outline-width: 0px;
+}
+
 #delivery-address-input-container {
   margin: 0px;
 }

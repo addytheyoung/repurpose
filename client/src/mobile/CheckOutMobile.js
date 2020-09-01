@@ -5,6 +5,7 @@ import Close from "../images/close.png";
 import Bin from "../images/bin.png";
 import { CardElement, ElementsConsumer } from "@stripe/react-stripe-js";
 import CheckOutFormMobile from "./CheckOutFormMobile";
+import Treasure from "../images/treasureGIMP.png";
 
 export default class CheckOutMobile extends Component {
   constructor(props) {
@@ -88,32 +89,73 @@ export default class CheckOutMobile extends Component {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            justifyContent: "center",
+            width: "100vw",
           }}
         >
-          <a href="/" style={{ textDecoration: "none" }}>
+          <a
+            href="/"
+            style={{
+              textDecoration: "none",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <div
               style={{
-                fontWeight: 700,
-                marginTop: 50,
                 display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                fontSize: 26,
-                color: "rgb(66, 108, 180)",
+                flexDirection: "column",
+                width: 100,
               }}
             >
-              Collection
+              <div
+                style={{
+                  fontWeight: 700,
+                  fontFamily: "Pridi",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: 28,
+                  color: "#426CB4",
+                  height: 30,
+                }}
+              >
+                Tate's
+              </div>
+              <div
+                style={{
+                  fontWeight: 700,
+                  fontFamily: "Pridi",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: 28,
+                  color: "#AF7366",
+                  height: 30,
+                }}
+              >
+                Crate
+              </div>
             </div>
+            <img style={{ width: 50, height: 50 }} src={Treasure}></img>
           </a>
-          <div style={{ marginTop: 50, fontWeight: 500, fontSize: 22 }}>
-            Success! Your order is complete, and you've been sent an email! Your
-            items will be delivered in the next 24 hours. <br />
+          <div
+            style={{
+              marginTop: 50,
+              fontWeight: 500,
+              fontSize: 22,
+              width: "90vw",
+              marginLeft: "5vw",
+            }}
+          >
+            Success! Your order is complete, and you've been emailed a reciept!
+            Your items will be delivered in the next 24 hours. <br />
             <br />
           </div>
-          <div>
-            {" "}
-            Click the help button on the top if any issues occur. If any items
-            don't work, we will refund you.
+          <div style={{ width: "90vw", marginLeft: "5vw" }}>
+            Call the number in the email if any issues occour. See you soon!
           </div>
         </div>
       );
@@ -167,10 +209,10 @@ export default class CheckOutMobile extends Component {
                     onClick={() => this.closeModal()}
                     src={Close}
                     style={{
-                      width: "4vh",
-                      height: "4vh",
-                      top: "3vh",
-                      right: "3vh",
+                      width: 30,
+                      height: 30,
+                      top: 20,
+                      right: 20,
                       position: "fixed",
                     }}
                   />

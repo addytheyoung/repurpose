@@ -19,7 +19,7 @@ export default class ItemScroller extends Component {
           justifyContent: "center",
           alignItems: "center",
           flexDirection: "column",
-          marginTop: "1vh",
+          marginTop: "5vh",
           width: "80%",
         }}
       >
