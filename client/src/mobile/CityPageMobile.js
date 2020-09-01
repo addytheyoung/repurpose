@@ -71,39 +71,33 @@ export default class CityPageMobile extends React.Component {
           </div>
 
           <div
-            id="combo-box-demo-mobile-div"
             style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
+              fontSize: 32,
+              marginLeft: "5%",
+              fontWeight: "500",
+              fontFamily: "Gill Sans",
+              marginTop: 50,
+              marginBottom: 50,
+            }}
+          >
+            Location / Crate
+          </div>
+
+          <div
+            style={{ marginLeft: 50, fontFamily: "Gill Sans", fontSize: 24 }}
+          >
+            You're viewing our only crate! (The Longhorn crate, for Austin and
+            nearby areas)
+          </div>
+          <div
+            style={{
+              marginLeft: 50,
+              fontFamily: "Gill Sans",
+              marginTop: 20,
               fontSize: 20,
             }}
           >
-            <Autocomplete
-              id="combo-box-demo-mobile"
-              defaultValue={"Central TX"}
-              options={this.citiesList}
-              getOptionLabel={(option) => option}
-              renderOption={(option) => (
-                <div
-                  onClick={() => this.updateCity(option)}
-                  style={{ width: "100%", height: "5vh", fontSize: 20 }}
-                >
-                  {option}
-                </div>
-              )}
-              renderInput={(params) => (
-                <TextField
-                  style={{ fontSize: 20, height: "5vh" }}
-                  {...params}
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-              freeSolo={true}
-              style={{ width: "60vw", fontSize: 20, height: "5vh" }}
-            />
+            We'll be adding more soon!
           </div>
         </div>
       </div>

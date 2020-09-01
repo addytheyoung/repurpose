@@ -305,7 +305,7 @@ export default class FooterMobile extends React.Component {
                 }}
               >
                 <div style={{ fontSize: 14 }}>
-                  {localStorage.getItem("cart")}3
+                  {localStorage.getItem("cart")}
                 </div>
               </div>
             )}

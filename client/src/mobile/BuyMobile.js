@@ -47,7 +47,7 @@ export default class BuyMobile extends React.Component {
       width: 0,
       height: 0,
       emptyArray: false,
-      timer1: "",
+      timer1: this.getTimerValue("timer1"),
       timesPulledFromOther: 0,
       justAddedItems: [],
       justDroppedItems: [],
@@ -88,8 +88,6 @@ export default class BuyMobile extends React.Component {
     const loaded = this.state.loaded;
     const timesPulledFromOther = this.state.timesPulledFromOther;
 
-    console.log(loaded);
-    console.log(timesPulledFromOther);
     // General case.
     if (loaded && timesPulledFromOther == 3) {
       return false;
@@ -168,6 +166,7 @@ export default class BuyMobile extends React.Component {
         {!this.state.aboutPage && (
           <div style={{ position: "fixed", top: 0, zIndex: 100 }}>
             <HeaderMobile
+              updatePageFilter={(page) => this.openScrollerPage(page)}
               closePage={() => this.closeScrollerPage()}
               page={page != null ? this.state.activePage : null}
               updateSalesFilter={(sales) => this.updateSalesFilter(sales)}
@@ -298,7 +297,12 @@ export default class BuyMobile extends React.Component {
                     marginTop: "2vh",
                     fontSize: 16,
                     fontWeight: 500,
-                    width: "80vw",
+                    width: "100vw",
+                    borderBottomWidth: 1.5,
+                    borderBottomStyle: "solid",
+                    borderBottomColor: "lightgrey",
+                    paddingBottom: 20,
+                    fontFamily: "Gill Sans",
                   }}
                 >
                   Cheap, used items near you, delivered every morning.
@@ -316,6 +320,16 @@ export default class BuyMobile extends React.Component {
                           alignItems: "center",
                         }}
                       >
+                        <div
+                          style={{
+                            fontFamily: "Gill Sans",
+                            paddingLeft: 10,
+                            fontSize: 18,
+                            marginTop: 20,
+                          }}
+                        >
+                          {this.state.timer1}
+                        </div>
                         <ItemScroller
                           heartedItem={
                             this.props.profileData &&
@@ -1012,7 +1026,9 @@ export default class BuyMobile extends React.Component {
       });
   }
 
+  // Open the proper page, if we're looking at one.
   openScrollerPage(page) {
+    console.log(page);
     const newCategories = [
       true,
       true,
@@ -1027,16 +1043,18 @@ export default class BuyMobile extends React.Component {
     const newSales = [true, true, true, true, true, true];
     if (page == "Just dropped in price") {
       // Pull items that just dropped in price
+      window.history.replaceState(null, null, "/?page=" + page);
+
       this.pullItemsFromDatabase(newCategories, true, newSales, page, 0);
     } else if (page == "Just added") {
       // Pull items where current_price == 1.0
+      window.history.replaceState(null, null, "/?page=" + page);
       const sales = [true, false, false, false, false, false];
-
       this.pullItemsFromDatabase(newCategories, true, sales, page, 0);
     } else if (page == "Cheapest of the cheap") {
       // Pull items where current_price is <= 0.4
+      window.history.replaceState(null, null, "/?page=" + page);
       const sales = [false, false, false, false, false, true];
-
       this.pullItemsFromDatabase(newCategories, true, sales, page, 0);
     }
   }
@@ -1227,11 +1245,47 @@ export default class BuyMobile extends React.Component {
     }
   }
 
-  loadPage(index) {
-    if (!this.state.loaded && index == 5) {
-      this.setState({
-        loaded: true,
-      });
-    }
+  getTimerValue() {
+    const t = this;
+
+    setInterval(function () {
+      const currentDate = new Date();
+      const modNumber = currentDate.getHours() % 3;
+      var hoursLeft = modNumber;
+      var minutesLeft = 59 - currentDate.getMinutes();
+      var secondsLeft = 59 - currentDate.getSeconds();
+      if (secondsLeft.toString().length == 1) {
+        secondsLeft = "0" + secondsLeft;
+      }
+
+      if (modNumber == 0) {
+        hoursLeft = 2;
+      } else if (modNumber == 2) {
+        hoursLeft = 0;
+      }
+      // Check if we're wihtin the timeframe
+      if (currentDate.getHours() < 8) {
+        // 0 == 12:00 AM
+        hoursLeft = 7 - currentDate.getHours();
+      } else if (currentDate.getHours() == 23) {
+        // 23 == 11:00 PM
+        hoursLeft = 8;
+      }
+      if (hoursLeft == 0) {
+        t.setState({
+          timer1: "Next price drop: " + minutesLeft + ":" + secondsLeft,
+        });
+      } else {
+        t.setState({
+          timer1:
+            "Next price drop: " +
+            hoursLeft +
+            ":" +
+            minutesLeft +
+            ":" +
+            secondsLeft,
+        });
+      }
+    }, 950);
   }
 }

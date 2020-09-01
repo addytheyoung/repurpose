@@ -5,6 +5,7 @@ import DialogCategory from "../DialogCategory";
 import PriceDialogMobile from "./PriceDialogMobile";
 import CategoryDialogMobile from "./CategoryDialogMobile";
 import SaleDialogMobile from "./SaleDialogMobile";
+import PageDialogMobile from "./PageDialogMobile";
 
 export default class FilterPageMobile extends React.Component {
   constructor(props) {
@@ -59,6 +60,17 @@ export default class FilterPageMobile extends React.Component {
               />
             </div>
             <div
+              style={{
+                fontSize: 32,
+                marginLeft: "5%",
+                fontWeight: "500",
+                fontFamily: "Gill Sans",
+                marginTop: 50,
+              }}
+            >
+              Filters
+            </div>
+            <div
               id="bar"
               style={{
                 display: "flex",
@@ -90,11 +102,20 @@ export default class FilterPageMobile extends React.Component {
                 categories={this.props.categories}
                 changeCategory={(category) => this.changeCategory(category)}
               />
+
+              <PageDialogMobile
+                page={this.props.page}
+                changePage={(page) => this.changePage(page)}
+              />
             </div>
           </div>
         </div>
       </div>
     );
+  }
+
+  changePage(page) {
+    this.props.changePage(page);
   }
 
   changeSales(sales) {

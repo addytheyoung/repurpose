@@ -29,7 +29,7 @@ export default class ItemScroller extends Component {
             flexDirection: "column",
           }}
         >
-          <div style={{ display: "flex", width: "100vw", marginTop: "7vh" }}>
+          <div style={{ display: "flex", width: "100vw", marginTop: "2vh" }}>
             <div
               style={{
                 display: "flex",

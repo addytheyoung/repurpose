@@ -53,6 +53,7 @@ export default class HeaderBar extends React.Component {
         {this.state.filterPage && (
           <div style={{ zIndex: 220 }}>
             <FilterPageMobile
+              changePage={(page) => this.updatePageFilter(page)}
               updateSaleFilter={(sales) => this.updateSalesFilter(sales)}
               updateCategoryFilter={(category) =>
                 this.updateCategoryFilter(category)
@@ -245,6 +246,14 @@ export default class HeaderBar extends React.Component {
         )}
       </div>
     );
+  }
+
+  updatePageFilter(page) {
+    this.setState({
+      page: page,
+      filterPage: false,
+    });
+    this.props.updatePageFilter(page);
   }
 
   updateSalesFilter(sales) {

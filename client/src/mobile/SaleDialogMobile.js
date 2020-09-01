@@ -433,26 +433,31 @@ export default function SimpleDialogDemo(props) {
   };
 
   return (
-    <div style={{ marginTop: "2vh" }}>
+    <div
+      style={{
+        padding: 10,
+        // backgroundColor: activeSaleFilter ? "rgb(218, 226, 241)" : "white",
+        width: "80%",
+        borderRadius: 5,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: "5%",
+        borderWidth: 1,
+        borderColor: "rgb(55, 89, 149)",
+        height: "20%",
+        borderStyle: "solid",
+      }}
+    >
       <div
         onClick={handleClickOpen}
         id="price"
         style={{
-          borderWidth: 3,
-          borderRadius: 20,
-          borderStyle: "solid",
-          paddingTop: 10,
-          paddingBottom: 10,
-          minWidth: "50vw",
-          minHeight: "5vh",
-          fontWeight: 600,
-          paddingLeft: 25,
-          paddingRight: 25,
-          borderColor: "#a1a1a1",
-          fontSize: 24,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          fontFamily: "Gill Sans",
+          color: "rgb(55, 89, 149)",
+          fontWeight: "500",
+          fontSize: 26,
+          fontFamily: "Gill Sans",
         }}
       >
         Sale

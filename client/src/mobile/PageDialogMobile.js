@@ -33,28 +33,8 @@ function SimpleDialog(props) {
 
   const [checked, setChecked] = React.useState(categories);
 
-  const handleChange = (index) => {
-    var temp = [];
-    for (var i = 0; i < checked.length; i++) {
-      if (i == index) {
-        temp.push(!checked[i]);
-      } else {
-        temp.push(checked[i]);
-      }
-    }
-    setChecked(temp);
-  };
-
   const handleClose = () => {
     onClose(selectedValue);
-  };
-
-  const handleListItemClick = (value) => {
-    onClose(value);
-  };
-
-  const clear = () => {
-    setChecked([true, true, true, true, true, true, true, true, true, true]);
   };
 
   return (
@@ -95,135 +75,41 @@ function SimpleDialog(props) {
             fontWeight: "500",
             fontFamily: "Gill Sans",
             marginTop: 50,
-            marginBottom: 10,
+            marginBottom: 30,
           }}
         >
-          Categories
+          Pages
         </div>
-        <div style={{ height: "4vh" }}></div>
         <div
-          onClick={() => saveContent(props, -1, handleClose)}
+          onClick={() => saveContent(props, "", handleClose)}
           className="category-mobile-link"
         >
-          {"All"}
+          See everything
+        </div>
+        <div
+          onClick={() =>
+            saveContent(props, "Just dropped in price", handleClose)
+          }
+          className="category-mobile-link"
+        >
+          Just dropped in price
+        </div>
+        <div
+          onClick={() => saveContent(props, "Just added", handleClose)}
+          className="category-mobile-link"
+        >
+          Just added
+        </div>
+        <div
+          onClick={() =>
+            saveContent(props, "Cheapest of the cheap", handleClose)
+          }
+          className="category-mobile-link"
+        >
+          Cheapest of the cheap
         </div>
 
-        <div
-          onClick={() => saveContent(props, 0, handleClose)}
-          className="category-mobile-link"
-          style={{
-            backgroundColor:
-              categories[0] && categories.includes(false)
-                ? "rgb(218, 226, 241)"
-                : "#ffffff",
-          }}
-        >
-          {"Art & Decoration"}
-        </div>
-
-        <div
-          onClick={() => saveContent(props, 1, handleClose)}
-          className="category-mobile-link"
-          style={{
-            backgroundColor:
-              categories[1] && categories.includes(false)
-                ? "rgb(218, 226, 241)"
-                : "#ffffff",
-          }}
-        >
-          {"Books"}
-        </div>
-
-        <div
-          onClick={() => saveContent(props, 2, handleClose)}
-          className="category-mobile-link"
-          style={{
-            backgroundColor:
-              categories[2] && categories.includes(false)
-                ? "rgb(218, 226, 241)"
-                : "#ffffff",
-          }}
-        >
-          {"Clothing, Shoes, & Accessories"}
-        </div>
-
-        <div
-          onClick={() => saveContent(props, 3, handleClose)}
-          className="category-mobile-link"
-          style={{
-            backgroundColor:
-              categories[3] && categories.includes(false)
-                ? "rgb(218, 226, 241)"
-                : "#ffffff",
-          }}
-        >
-          {"Electronics"}
-        </div>
-
-        <div
-          onClick={() => saveContent(props, 4, handleClose)}
-          className="category-mobile-link"
-          style={{
-            backgroundColor:
-              categories[4] && categories.includes(false)
-                ? "rgb(218, 226, 241)"
-                : "#ffffff",
-          }}
-        >
-          {"Home"}
-        </div>
-
-        <div
-          onClick={() => saveContent(props, 5, handleClose)}
-          className="category-mobile-link"
-          style={{
-            backgroundColor:
-              categories[5] && categories.includes(false)
-                ? "rgb(218, 226, 241)"
-                : "#ffffff",
-          }}
-        >
-          {"Garden"}
-        </div>
-
-        <div
-          onClick={() => saveContent(props, 6, handleClose)}
-          className="category-mobile-link"
-          style={{
-            backgroundColor:
-              categories[5] && categories.includes(false)
-                ? "rgb(218, 226, 241)"
-                : "#ffffff",
-          }}
-        >
-          {"Pet Supplies"}
-        </div>
-
-        <div
-          onClick={() => saveContent(props, 7, handleClose)}
-          className="category-mobile-link"
-          style={{
-            backgroundColor:
-              categories[6] && categories.includes(false)
-                ? "rgb(218, 226, 241)"
-                : "#ffffff",
-          }}
-        >
-          {"Sports & Hobbies"}
-        </div>
-
-        <div
-          onClick={() => saveContent(props, 8, handleClose)}
-          className="category-mobile-link"
-          style={{
-            backgroundColor:
-              categories[7] && categories.includes(false)
-                ? "rgb(218, 226, 241)"
-                : "#ffffff",
-          }}
-        >
-          {"Toys & Games"}
-        </div>
+        <div style={{ height: 50 }}></div>
 
         <div style={{ height: "20vh" }}></div>
       </div>
@@ -245,10 +131,10 @@ function clearContent(props, handleClose, clear) {
   handleClose();
 }
 
-function saveContent(props, category, handleClose) {
+function saveContent(props, page, handleClose) {
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-  props.changeCategory(category);
+  props.changePage(page);
   handleClose();
 }
 
@@ -293,9 +179,10 @@ export default function SimpleDialogDemo(props) {
           fontFamily: "Gill Sans",
         }}
       >
-        Category
+        Page
       </div>
       <SimpleDialog
+        changePage={props.changePage}
         categories={props.categories}
         clearContent={props.clearContent}
         changeCategory={props.changeCategory}

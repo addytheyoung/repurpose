@@ -3,6 +3,7 @@ import "../css/SellMobile.css";
 import Clock from "../images/clock.svg";
 import Money from "../images/money.svg";
 import Delivery from "../images/delivery.svg";
+import Treasure from "../images/treasureGIMP.png";
 
 export default class SellMobile extends Component {
   constructor(props) {
@@ -14,8 +15,52 @@ export default class SellMobile extends Component {
   render() {
     return (
       <div id="sell-mobile-main">
-        <div className="sell-mobile-title">Collection</div>
-        <div className="sell-mobile-1">Sell your clutter with Collection</div>
+        <div
+          onClick={() => (window.location.href = "/")}
+          id="bar"
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 40,
+            marginBottom: 10,
+          }}
+        >
+          <div
+            style={{
+              fontFamily: "Pridi",
+              fontWeight: 700,
+              marginLeft: 20,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: 32,
+              color: "#426CB4",
+            }}
+          >
+            Tate's
+          </div>
+          <div
+            style={{
+              fontFamily: "Pridi",
+              fontWeight: 700,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: 32,
+              color: "#AF7366",
+              marginLeft: 5,
+            }}
+          >
+            Crate
+          </div>
+          <img
+            style={{ width: 50, height: 50, marginLeft: 20 }}
+            src={Treasure}
+          ></img>
+        </div>
+        <div className="sell-mobile-1">Sell your clutter with Tate's Crate</div>
         <div
           style={{
             display: "flex",
