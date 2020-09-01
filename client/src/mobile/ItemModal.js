@@ -289,7 +289,7 @@ export default class ItemModal extends Component {
 
   changeModalImg(pictureIndex) {
     this.setState({
-      modalPictureIndex: pictureIndex,
+      currentPictureIndex: pictureIndex,
     });
   }
 

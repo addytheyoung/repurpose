@@ -9,7 +9,7 @@ export default class ItemScroller extends Component {
   }
 
   render() {
-    const { width, items, itemPage, title, mobile } = this.props;
+    const { width, items, itemPage, title, mobile, homePage } = this.props;
 
     return (
       <div
@@ -45,18 +45,20 @@ export default class ItemScroller extends Component {
             >
               {title}
             </div>
-            <div
-              style={{
-                opacity: 0.6,
-                fontSize: 17,
-                textAlign: "center",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              (1,000+)
-            </div>
+            {this.props.homePage && (
+              <div
+                style={{
+                  opacity: 0.6,
+                  fontSize: 17,
+                  textAlign: "center",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                (1,000+)
+              </div>
+            )}
           </div>
 
           <div

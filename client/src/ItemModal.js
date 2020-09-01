@@ -382,7 +382,7 @@ export default class ItemModal extends React.Component {
 
   changeModalImg(pictureIndex) {
     this.setState({
-      modalPictureIndex: pictureIndex,
+      currentPictureIndex: pictureIndex,
     });
   }
 

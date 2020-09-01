@@ -67,6 +67,7 @@ export default class MobileChat extends Component {
             style={{
               color: this.props.top ? "#375995" : "white",
               fontWeight: 600,
+              fontSize: 18,
             }}
           >
             Ask Us a Question

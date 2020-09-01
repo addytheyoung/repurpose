@@ -61,24 +61,41 @@ export default class Buy extends React.Component {
       this.state.activeSales,
       this.state.activePage
     );
-    if (!page && !itemCategory) {
-      this.pullOtherItemsFromDatabase(
-        this.state.activeCategories,
-        this.state.activeSales,
-        "Just dropped in price"
-      );
-      this.pullOtherItemsFromDatabase(
-        this.state.activeCategories,
-        this.state.activeSales,
-        "Just added"
-      );
-      this.pullOtherItemsFromDatabase(
-        this.state.activeCategories,
-        this.state.activeSales,
-        "Cheapest of the cheap"
-      );
+    this.pullOtherItemsFromDatabase(
+      this.state.activeCategories,
+      this.state.activeSales,
+      "Just dropped in price"
+    );
+    this.pullOtherItemsFromDatabase(
+      this.state.activeCategories,
+      this.state.activeSales,
+      "Just added"
+    );
+    this.pullOtherItemsFromDatabase(
+      this.state.activeCategories,
+      this.state.activeSales,
+      "Cheapest of the cheap"
+    );
+  }
+
+  shouldReturnLoadingPage(page, item) {
+    const loaded = this.state.loaded;
+    const timesPulledFromOther = this.state.timesPulledFromOther;
+
+    console.log(loaded);
+    console.log(timesPulledFromOther);
+    // General case.
+    if (loaded && timesPulledFromOther == 3) {
+      return false;
+    }
+    // Page open, wait for it to load.
+    else if (page && loaded) {
+      return false;
+    } else {
+      return true;
     }
   }
+
   render() {
     // Get all our params from the window.
     // 1) Are we looking at an item?
@@ -92,10 +109,7 @@ export default class Buy extends React.Component {
     var itemCategory = urlParams.get("itemcategory");
 
     // Don't load the page till we have our data
-    if (
-      (!page && (!this.state.loaded || this.state.timesPulledFromOther < 3)) ||
-      (page && !this.state.loaded)
-    ) {
+    if (this.shouldReturnLoadingPage(page, item)) {
       return (
         <div>
           <LoadingPage />
@@ -1080,49 +1094,49 @@ export default class Buy extends React.Component {
   }
 
   // Scroll
-  scrollLeft(element, change, duration) {
-    var start = element.scrollLeft,
-      currentTime = 0,
-      increment = 20;
+  // scrollLeft(element, change, duration) {
+  //   var start = element.scrollLeft,
+  //     currentTime = 0,
+  //     increment = 20;
 
-    const t = this;
-    const st = this.state;
-    var animateScroll = function () {
-      currentTime += increment;
+  //   const t = this;
+  //   const st = this.state;
+  //   var animateScroll = function () {
+  //     currentTime += increment;
 
-      if (change > 0) {
-        if (st.width > 960) {
-          element.scrollLeft = element.scrollLeft + 960 / 5;
-        } else {
-          element.scrollLeft = element.scrollLeft + 720 / 5;
-        }
-      } else {
-        if (st.width > 960) {
-          element.scrollLeft = element.scrollLeft - 960 / 5;
-        } else {
-          element.scrollLeft = element.scrollLeft - 720 / 5;
-        }
-      }
-      if (currentTime < duration) {
-        setTimeout(animateScroll, increment);
-      }
-    };
-    animateScroll();
-  }
+  //     if (change > 0) {
+  //       if (st.width > 960) {
+  //         element.scrollLeft = element.scrollLeft + 960 / 5;
+  //       } else {
+  //         element.scrollLeft = element.scrollLeft + 720 / 5;
+  //       }
+  //     } else {
+  //       if (st.width > 960) {
+  //         element.scrollLeft = element.scrollLeft - 960 / 5;
+  //       } else {
+  //         element.scrollLeft = element.scrollLeft - 720 / 5;
+  //       }
+  //     }
+  //     if (currentTime < duration) {
+  //       setTimeout(animateScroll, increment);
+  //     }
+  //   };
+  //   animateScroll();
+  // }
 
-  componentDidMount() {
-    this.updateWindowDimensions();
-    window.addEventListener("resize", this.updateWindowDimensions);
-  }
+  // componentDidMount() {
+  //   this.updateWindowDimensions();
+  //   window.addEventListener("resize", this.updateWindowDimensions);
+  // }
 
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateWindowDimensions);
-  }
+  // componentWillUnmount() {
+  //   window.removeEventListener("resize", this.updateWindowDimensions);
+  // }
 
-  updateWindowDimensions() {
-    this.setState({
-      width: window.innerWidth - window.innerWidth * (15 / 100),
-      height: window.innerHeight,
-    });
-  }
+  // updateWindowDimensions() {
+  //   this.setState({
+  //     width: window.innerWidth - window.innerWidth * (15 / 100),
+  //     height: window.innerHeight,
+  //   });
+  // }
 }
