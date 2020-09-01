@@ -79,7 +79,7 @@ export default class ItemScroller extends Component {
             <div
               id="prev-item"
               onClick={() =>
-                this.scrollLeft(document.getElementById("scroll"), -300, 100)
+                this.scrollLeft(document.getElementById(title), -300, 100)
               }
             >
               Prev
@@ -87,7 +87,7 @@ export default class ItemScroller extends Component {
             <div
               id="next-item"
               onClick={() =>
-                this.scrollLeft(document.getElementById("scroll"), 300, 100)
+                this.scrollLeft(document.getElementById(title), 300, 100)
               }
             >
               Next
@@ -104,7 +104,7 @@ export default class ItemScroller extends Component {
           }}
         >
           <div
-            id="scroll"
+            id={title}
             style={{
               display: "flex",
               flexDirection: "row",

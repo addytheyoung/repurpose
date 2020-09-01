@@ -43,7 +43,7 @@ export default class Buy extends React.Component {
       width: 0,
       height: 0,
       emptyArray: false,
-      timer1: "",
+      timer1: this.getTimerValue(),
       timesPulledFromOther: 0,
       justAddedItems: [],
       justDroppedItems: [],
@@ -224,6 +224,7 @@ export default class Buy extends React.Component {
                           alignItems: "center",
                         }}
                       >
+                        <div>{this.state.timer1}</div>
                         <ItemScroller
                           heartedItem={
                             this.props.profileData &&
@@ -1103,50 +1104,47 @@ export default class Buy extends React.Component {
     }
   }
 
-  // Scroll
-  // scrollLeft(element, change, duration) {
-  //   var start = element.scrollLeft,
-  //     currentTime = 0,
-  //     increment = 20;
+  getTimerValue() {
+    const t = this;
 
-  //   const t = this;
-  //   const st = this.state;
-  //   var animateScroll = function () {
-  //     currentTime += increment;
+    setInterval(function () {
+      const currentDate = new Date();
+      const modNumber = currentDate.getHours() % 3;
+      var hoursLeft = modNumber;
+      var minutesLeft = 59 - currentDate.getMinutes();
+      var secondsLeft = 59 - currentDate.getSeconds();
+      if (secondsLeft.toString().length == 1) {
+        secondsLeft = "0" + secondsLeft;
+      }
 
-  //     if (change > 0) {
-  //       if (st.width > 960) {
-  //         element.scrollLeft = element.scrollLeft + 960 / 5;
-  //       } else {
-  //         element.scrollLeft = element.scrollLeft + 720 / 5;
-  //       }
-  //     } else {
-  //       if (st.width > 960) {
-  //         element.scrollLeft = element.scrollLeft - 960 / 5;
-  //       } else {
-  //         element.scrollLeft = element.scrollLeft - 720 / 5;
-  //       }
-  //     }
-  //     if (currentTime < duration) {
-  //       setTimeout(animateScroll, increment);
-  //     }
-  //   };
-  //   animateScroll();
-  // }
-
-  // componentDidMount() {
-  //   this.updateWindowDimensions();
-  //   window.addEventListener("resize", this.updateWindowDimensions);
-  // }
-
-  // componentWillUnmount() {
-  //   window.removeEventListener("resize", this.updateWindowDimensions);
-  // }
-
-  // updateWindowDimensions() {
-  //   this.setState({
-  //     width: window.innerWidth - window.innerWidth * (15 / 100),
-  //     height: window.innerHeight,
-  //   });
-  // }
+      if (modNumber == 0) {
+        hoursLeft = 2;
+      } else if (modNumber == 2) {
+        hoursLeft = 0;
+      }
+      // Check if we're wihtin the timeframe
+      if (currentDate.getHours() < 8) {
+        // 0 == 12:00 AM
+        hoursLeft = 7 - currentDate.getHours();
+      } else if (currentDate.getHours() == 23) {
+        // 23 == 11:00 PM
+        hoursLeft = 8;
+      }
+      if (hoursLeft == 0) {
+        t.setState({
+          timer1: "Next price drop: " + minutesLeft + ":" + secondsLeft,
+        });
+      } else {
+        t.setState({
+          timer1:
+            "Next price drop: " +
+            hoursLeft +
+            ":" +
+            minutesLeft +
+            ":" +
+            secondsLeft,
+        });
+      }
+    }, 950);
+  }
 }

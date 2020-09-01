@@ -31,6 +31,7 @@ export default class Cart extends React.Component {
       delivery: true,
       signInModal: false,
       modalPictureIndex: 0,
+      profilePage: false,
     };
 
     var myUid = null;
@@ -147,7 +148,7 @@ export default class Cart extends React.Component {
     return (
       <div>
         {!this.state.modal && <Chat />}
-        {this.state.profile && (
+        {this.state.profilePage && (
           <Profile
             redirectUrl="/checkout"
             cartPage={true}
@@ -486,7 +487,14 @@ export default class Cart extends React.Component {
   }
 
   goToCheckout() {
-    window.location.href = "/checkout";
+    if (firebase.auth().currentUser) {
+      window.location.href = "/checkout";
+    } else {
+      // Bring up sign up modal
+      this.setState({
+        profilePage: true,
+      });
+    }
   }
 
   setPickup(e) {

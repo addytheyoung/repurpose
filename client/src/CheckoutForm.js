@@ -162,7 +162,7 @@ export default class CheckoutForm extends React.Component {
                 borderWidth: 1.5,
                 borderColor: "rgb(118, 118, 118)",
                 borderRadius: 3,
-                height: "6vh",
+                height: 60,
                 fontSize: 18,
                 paddingLeft: 10,
               }}
@@ -186,7 +186,7 @@ export default class CheckoutForm extends React.Component {
                 borderWidth: 1.5,
                 borderColor: "rgb(118, 118, 118)",
                 borderRadius: 3,
-                height: "6vh",
+                height: 60,
                 fontSize: 18,
                 paddingLeft: 10,
               }}
@@ -581,6 +581,7 @@ export default class CheckoutForm extends React.Component {
 
     // 0) Get all the info
     const address1 = this.state.address1;
+
     const address2 = this.state.address2;
     const email = this.state.email.trim().toLowerCase();
     const myUid = firebase.auth().currentUser.uid;
@@ -592,12 +593,10 @@ export default class CheckoutForm extends React.Component {
       return;
     }
 
-    if (firebase.auth().currentUser) {
-      firebase.firestore().collection("Users").doc(myUid).update({
-        address1: address1,
-        address2: address2,
-      });
-    }
+    firebase.firestore().collection("Users").doc(myUid).update({
+      address1: address1,
+      address2: address2,
+    });
     console.log(myProfileData);
     if (!customerId) {
       alert("Not a customer");
@@ -801,6 +800,14 @@ export default class CheckoutForm extends React.Component {
     const address1 = this.state.address1;
     const address2 = this.state.address2;
     const email = this.state.email.trim().toLowerCase();
+    const myUid = firebase.auth().currentUser.uid;
+
+    if (address1 != "") {
+      await firebase.firestore().collection("Users").doc(myUid).update({
+        address1: address1,
+        address2: address2,
+      });
+    }
 
     // 2) Get the token from this card
 
@@ -1047,51 +1054,6 @@ export default class CheckoutForm extends React.Component {
       return false;
     }
     return true;
-  }
-
-  componentDidUpdate() {
-    // if (
-    //   this.state.processing ||
-    //   this.state.succeeded ||
-    //   this.state.clientSecret ||
-    //   this.state.timesCalledStripe > 3
-    // ) {
-    //   return null;
-    // }
-    // // Step 1: Fetch product details such as amount and currency from
-    // // API to make sure it can't be tampered with in the client.
-    // // const cart = api.getProductDetails(this.state.myData.cart);
-    // // this.state.subTotal = cart.subTotal;
-    // // this.state.description = cart.description;
-    // // this.state.pictures = cart.pictures;
-    // // this.state.tax = cart.tax;
-    // // this.state.shipping = cart.shipping;
-    // // this.state.total = cart.total;
-    // // this.state.amount = cart.amount;
-    // // this.state.currency = cart.currency;
-    // console.log("GOT PRODUCT DETAILS");
-    // // Step 2: Create PaymentIntent over Stripe API
-    // // Total is fucked up?
-    // console.log(this.props.total);
-    // api
-    //   .createPaymentIntent({ total: this.props.total, stripe_unique_id: "xb" })
-    //   .then((clientSecret) => {
-    //     console.log(clientSecret);
-    //     // this.state.clientSecret = clientSecret;
-    //     // this.state.loaded = true;
-    //     this.setState({
-    //       clientSecret: clientSecret,
-    //       loaded: true,
-    //       timesCalledStripe: this.state.timesCalledStripe + 1,
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.message);
-    //     this.setState({
-    //       error: err.message,
-    //       timesCalledStripe: this.state.timesCalledStripe + 1,
-    //     });
-    //   });
   }
 
   async checkItems() {

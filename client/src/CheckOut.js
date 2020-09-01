@@ -142,7 +142,15 @@ export default class CheckOut extends React.Component {
             </div>
             <img style={{ width: 50, height: 50 }} src={Treasure}></img>
           </a>
-          <div style={{ marginTop: 50, fontWeight: 500, fontSize: 22 }}>
+          <div
+            style={{
+              marginTop: 50,
+              fontWeight: 500,
+              fontSize: 22,
+              width: "100vw",
+              textAlign: "center",
+            }}
+          >
             Success! Your order is complete, and you've been sent an email! Your
             items will be delivered in the next 24 hours. <br />
             <br />

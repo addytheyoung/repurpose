@@ -101,6 +101,7 @@ export default class Profile extends React.Component {
                     flexDirection: "column",
                     justifyContent: "center",
                     alignItems: "center",
+                    marginTop: "10vh",
                   }}
                 >
                   <div
@@ -110,7 +111,8 @@ export default class Profile extends React.Component {
                       fontFamily: "Gill Sans",
                     }}
                   >
-                    {cartPage && "Sign up to checkout"}
+                    {cartPage &&
+                      "Sign up to checkout! \n Your cart will be saved."}
                     {!cartPage && "Sign up / sign in"}
                   </div>
 
@@ -148,40 +150,7 @@ export default class Profile extends React.Component {
                         flexDirection: "column",
                         alignItems: "center",
                       }}
-                    >
-                      <div
-                        style={{
-                          marginTop: 10,
-                          color: "grey",
-                        }}
-                      >
-                        OR
-                      </div>
-                      <div
-                        onClick={() => (window.location.href = "/checkout")}
-                        id="start-shopping"
-                        style={{
-                          padding: 10,
-                          borderRadius: 5,
-                          backgroundColor: "#d1d1d1",
-                          marginTop: 20,
-                          height: "5vh",
-                          width: 300,
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "#1f1f1f",
-                            fontWeight: 600,
-                          }}
-                        >
-                          CHECKOUT AS GUEST
-                        </div>
-                      </div>
-                    </div>
+                    ></div>
                   )}
                 </div>
               )}
@@ -192,6 +161,7 @@ export default class Profile extends React.Component {
                     flexDirection: "column",
                     justifyContent: "center",
                     alignItems: "center",
+                    marginTop: "10vh",
                   }}
                 >
                   <div
@@ -228,7 +198,8 @@ export default class Profile extends React.Component {
                       alignItems: "center",
                     }}
                   >
-                    START SHOPPING
+                    {window.location.pathname == "/cart" && "CHECKOUT"}
+                    {window.location.pathname != "/cart" && "START SHOPPING"}
                   </div>
                 </div>
               )}
@@ -240,6 +211,7 @@ export default class Profile extends React.Component {
                       flexDirection: "column",
                       justifyContent: "center",
                       alignItems: "center",
+                      marginTop: "10vh",
                     }}
                   >
                     <div
@@ -288,6 +260,7 @@ export default class Profile extends React.Component {
                     justifyContent: "center",
                     alignItems: "center",
                     flexDirection: "column",
+                    marginTop: "10vh",
                   }}
                 >
                   <div

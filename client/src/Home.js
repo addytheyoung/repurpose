@@ -192,6 +192,7 @@ export default class Home extends React.Component {
                   Enter your city or zip to check availability
                 </div>
                 <PlacesAutocomplete
+                  updateAddress={() => console.log("")}
                   loading={(loaded) => this.loading(loaded)}
                   activeButton={false}
                   modal={this.state.tempModal}
@@ -353,6 +354,7 @@ export default class Home extends React.Component {
             }}
           >
             <PlacesAutocomplete
+              updateAddress={() => console.log("")}
               loading={(loaded) => this.loading(loaded)}
               activeButton={true}
               modal={null}

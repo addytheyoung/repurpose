@@ -73,7 +73,7 @@ export default class ItemScroller extends Component {
             <div
               id="mobile-prev-item"
               onClick={() =>
-                this.scrollLeft(document.getElementById("scroll"), -300, 100)
+                this.scrollLeft(document.getElementById(title), -300, 100)
               }
             >
               Prev
@@ -81,25 +81,27 @@ export default class ItemScroller extends Component {
             <div
               id="mobile-next-item"
               onClick={() =>
-                this.scrollLeft(document.getElementById("scroll"), 300, 100)
+                this.scrollLeft(document.getElementById(title), 300, 100)
               }
             >
               Next
             </div>
             <div style={{ width: "100%" }}></div>
-            <div
-              onClick={() => this.takeMeToPage()}
-              style={{
-                marginTop: "3vh",
-                marginRight: 10,
-                color: "rgb(24, 118, 242)",
-                fontFamily: "Gill Sans",
-                fontSize: 18,
-                minWidth: 50,
-              }}
-            >
-              See all
-            </div>
+            {title != "Items Near Austin" && (
+              <div
+                onClick={() => this.takeMeToPage()}
+                style={{
+                  marginTop: "3vh",
+                  marginRight: 10,
+                  color: "rgb(24, 118, 242)",
+                  fontFamily: "Gill Sans",
+                  fontSize: 18,
+                  minWidth: 60,
+                }}
+              >
+                See all
+              </div>
+            )}
           </div>
         </div>
 
@@ -112,7 +114,7 @@ export default class ItemScroller extends Component {
           }}
         >
           <div
-            id="scroll"
+            id={title}
             style={{
               display: "flex",
               flexDirection: "row",

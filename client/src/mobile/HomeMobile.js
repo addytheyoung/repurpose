@@ -197,6 +197,7 @@ export default class HomeMobile extends React.Component {
                   Location
                 </div>
                 <PlacesAutocomplete
+                  addressModal={true}
                   updateAddress={(address) => console.log(address)}
                   openAddressModal={() => console.log("u")}
                   loading={(loaded) => this.loading(loaded)}
@@ -384,6 +385,7 @@ export default class HomeMobile extends React.Component {
               }}
             >
               <PlacesAutocomplete
+                addressModal={false}
                 updateAddress={(address) => console.log(address)}
                 openAddressModal={() => this.setState({ addressModal: true })}
                 loading={(loaded) => this.loading(loaded)}

@@ -610,12 +610,10 @@ export default class CheckoutFormMobile extends React.Component {
       return;
     }
 
-    if (firebase.auth().currentUser) {
-      firebase.firestore().collection("Users").doc(myUid).update({
-        address1: address1,
-        address2: address2,
-      });
-    }
+    firebase.firestore().collection("Users").doc(myUid).update({
+      address1: address1,
+      address2: address2,
+    });
     console.log(myProfileData);
     if (!customerId) {
       alert("Not a customer");
@@ -819,6 +817,14 @@ export default class CheckoutFormMobile extends React.Component {
     const address1 = this.state.address1;
     const address2 = this.state.address2;
     const email = this.state.email.trim().toLowerCase();
+    const myUid = firebase.auth().currentUser.uid;
+
+    if (address1 != "") {
+      await firebase.firestore().collection("Users").doc(myUid).update({
+        address1: address1,
+        address2: address2,
+      });
+    }
 
     // 2) Get the token from this card
 

@@ -26,6 +26,7 @@ export default class LocationSearchInput extends React.Component {
   };
 
   handleSelectCheckout = (address) => {
+    this.props.updateAddress(address);
     if (address == "") {
       alert("Please put in your city or zip!");
       this.props.loading(true);
@@ -176,6 +177,7 @@ export default class LocationSearchInput extends React.Component {
                   borderWidth: 1.5,
                   borderColor: "rgb(118, 118, 118)",
                   borderRadius: 3,
+                  backgroundColor: "#ffffff",
                 }}
               >
                 {!checkoutPage && (

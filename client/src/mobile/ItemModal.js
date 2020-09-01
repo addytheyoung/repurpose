@@ -234,7 +234,7 @@ export default class ItemModal extends Component {
                       marginTop: 20,
                       borderRadius: 5,
                       padding: 10,
-                      width: 30,
+                      width: 200,
 
                       height: "7vh",
                       display: "flex",

@@ -77,6 +77,7 @@ export default class ProfilePageMobile extends React.Component {
                   )}
                   <Input
                     id="email"
+                    type="email"
                     placeholder="Enter your email"
                     style={{ width: "60vw", marginTop: "3vh", fontSize: 16 }}
                   />
@@ -104,7 +105,15 @@ export default class ProfilePageMobile extends React.Component {
                 </div>
               )}
               {!singedin && this.state.newUser && (
-                <div style={{ marginTop: "20vh" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "20vh",
+                  }}
+                >
                   <div style={{ fontSize: 18, fontWeight: 700, marginTop: 20 }}>
                     What will your password be?
                   </div>
@@ -138,50 +147,50 @@ export default class ProfilePageMobile extends React.Component {
                 </div>
               )}
               {!singedin && this.state.retUser && (
-                <div style={{ marginTop: "20vh" }}>
-                  {" "}
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "20vh",
+                  }}
+                >
                   <div
                     style={{
+                      fontSize: 18,
+                      fontWeight: 700,
+                      textAlign: "center",
+                    }}
+                  >
+                    Welcome back! What's your password?
+                  </div>
+                  <Input
+                    id="pass"
+                    type="password"
+                    placeholder="Password"
+                    style={{ width: "60vw", marginTop: "3vh", fontSize: 16 }}
+                  />
+                  <div
+                    onClick={() => this.login()}
+                    id="start-shopping"
+                    style={{
+                      backgroundColor: "#426CB4",
+                      borderRadius: 5,
+                      padding: 10,
+                      height: 60,
+                      width: "60vw",
+                      fontSize: 16,
+                      color: "white",
+                      fontWeight: 600,
+                      marginTop: "2vh",
+                      marginBottom: 10,
                       display: "flex",
-                      flexDirection: "column",
+                      justifyContent: "center",
                       alignItems: "center",
                     }}
                   >
-                    <div
-                      style={{
-                        fontSize: 18,
-                        fontWeight: 700,
-                      }}
-                    >
-                      Welcome back! What's your password?
-                    </div>
-                    <Input
-                      id="pass"
-                      type="password"
-                      placeholder="Password"
-                      style={{ width: "60vw", marginTop: "3vh", fontSize: 16 }}
-                    />
-                    <div
-                      onClick={() => this.login()}
-                      id="start-shopping"
-                      style={{
-                        backgroundColor: "#426CB4",
-                        borderRadius: 5,
-                        padding: 10,
-                        height: 60,
-                        width: "60vw",
-                        fontSize: 16,
-                        color: "white",
-                        fontWeight: 600,
-                        marginTop: "2vh",
-                        marginBottom: 10,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      {redirectToCheckout ? "CHECKOUT" : " START SHOPPING"}
-                    </div>
+                    {redirectToCheckout ? "CHECKOUT" : " START SHOPPING"}
                   </div>
                 </div>
               )}
@@ -320,6 +329,33 @@ export default class ProfilePageMobile extends React.Component {
                       }}
                     >
                       YES
+                    </div>
+
+                    <div
+                      id="logout-yes"
+                      onClick={() =>
+                        this.setState({
+                          logout: false,
+                        })
+                      }
+                      style={{
+                        backgroundColor: "#426CB4",
+                        borderRadius: 5,
+                        padding: 10,
+                        height: 60,
+                        width: "20vw",
+                        fontSize: 16,
+                        color: "white",
+                        fontWeight: 600,
+                        marginTop: 10,
+                        marginBottom: 10,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginRight: 10,
+                      }}
+                    >
+                      NO
                     </div>
                   </div>
                 </div>
