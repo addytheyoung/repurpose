@@ -46,6 +46,8 @@ export default class HeaderBar extends React.Component {
     };
   }
   render() {
+    var { page } = this.props;
+
     return (
       <div style={{ zIndex: 219 }}>
         {this.state.filterPage && (
@@ -70,46 +72,41 @@ export default class HeaderBar extends React.Component {
           </div>
         )}
 
-        <div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              borderBottomWidth: 2,
-              height: "8vh",
-              alignItems: "center",
-              borderBottomColor: "#e8e8e8",
-              borderBottomStyle: "solid",
-              backgroundColor: "#ffffff",
-              width: "100vw",
-            }}
-          >
+        {!page && (
+          <div>
             <div
-              onClick={() => this.openFilterPage()}
               style={{
-                minHeight: "80%",
-                paddingLeft: 3,
-                marginLeft: "2vw",
-                paddingRight: 3,
-                minWidth: "20vw",
                 display: "flex",
-                justifyContent: "center",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                borderBottomWidth: 2,
+                height: "8vh",
                 alignItems: "center",
-                borderWidth: 0,
-                borderStyle: "solid",
-                borderRadius: 10,
-                backgroundColor: "#dae2f1",
+                borderBottomColor: "#e8e8e8",
+                borderBottomStyle: "solid",
+                backgroundColor: "#ffffff",
+                width: "100vw",
               }}
             >
               <div
-                id="search"
+                onClick={() => this.openFilterPage()}
                 style={{
-                  display: "flex",
-                  flexDirection: "row",
+                  padding: 5,
+                  height: "80%",
+                  borderStyle: "solid",
+                  backgroundColor: "white",
+                  borderColor: "rgb(55, 89, 149)",
+                  borderWidth: 0.5,
+                  borderRadius: 5,
                   justifyContent: "center",
                   alignItems: "center",
-                  fontSize: 14,
+                  flexDirection: "row",
+                  paddingLeft: 10,
+                  paddingRight: 10,
+                  marginLeft: 5,
+                  marginRight: 5,
+                  display: "flex",
+                  // width: windowWidth * 0.3,
                 }}
               >
                 <FilterListOutlinedIcon
@@ -122,49 +119,39 @@ export default class HeaderBar extends React.Component {
                 ></FilterListOutlinedIcon>
                 <div
                   style={{
-                    fontWeight: 600,
-                    fontSize: 15,
-                    color: "#375995",
-                    paddingRight: 5,
-                    paddingLeft: 5,
-                    paddingTop: 5,
-                    paddingBottom: 5,
+                    fontFamily: "Gill Sans",
+                    color: "black",
+                    fontWeight: "400",
+                    marginLeft: 5,
+                    fontSize: 17,
                   }}
                 >
                   Filters
                 </div>
               </div>
-            </div>
 
-            <div
-              onClick={() =>
-                this.setState({
-                  cityPage: true,
-                })
-              }
-              style={{
-                minHeight: "80%",
-                minWidth: "20vw",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                borderWidth: 0,
-                borderStyle: "solid",
-                borderRadius: 10,
-                marginLeft: 15,
-                paddingLeft: 3,
-                backgroundColor: "#dae2f1",
-                paddingRight: 10,
-              }}
-            >
               <div
-                id="search"
+                onClick={() =>
+                  this.setState({
+                    cityPage: true,
+                  })
+                }
                 style={{
-                  display: "flex",
-                  flexDirection: "row",
+                  padding: 5,
+                  height: "80%",
+                  borderStyle: "solid",
+                  backgroundColor: "white",
+                  borderColor: "rgb(55, 89, 149)",
+                  borderWidth: 0.5,
+                  borderRadius: 5,
                   justifyContent: "center",
                   alignItems: "center",
-                  fontSize: 14,
+                  flexDirection: "row",
+                  paddingLeft: 10,
+                  paddingRight: 10,
+                  marginLeft: 5,
+                  marginRight: 5,
+                  display: "flex",
                 }}
               >
                 <LocationCityOutlinedIcon
@@ -176,21 +163,86 @@ export default class HeaderBar extends React.Component {
                 ></LocationCityOutlinedIcon>
                 <div
                   style={{
-                    fontWeight: 600,
-                    fontSize: 15,
-                    color: "#375995",
-                    paddingRight: 5,
-                    paddingLeft: 5,
-                    paddingTop: 5,
-                    paddingBottom: 5,
+                    fontFamily: "Gill Sans",
+                    color: "black",
+                    fontWeight: "400",
+                    marginLeft: 5,
+                    fontSize: 17,
                   }}
                 >
-                  {"Central TX"}
+                  Longhorn
+                </div>
+              </div>
+
+              <div
+                onClick={() => (window.location.href = "/sell")}
+                style={{
+                  padding: 5,
+                  height: "80%",
+                  borderStyle: "solid",
+                  backgroundColor: "white",
+                  borderColor: "rgb(55, 89, 149)",
+                  borderWidth: 0.5,
+                  borderRadius: 5,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "row",
+                  paddingLeft: 10,
+                  paddingRight: 10,
+                  marginLeft: 5,
+                  marginRight: 5,
+                  display: "flex",
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: "Gill Sans",
+                    color: "black",
+                    fontWeight: "400",
+                    marginLeft: 5,
+                    fontSize: 17,
+                  }}
+                >
+                  Sell
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
+
+        {page && (
+          <div
+            onClick={() => this.props.closePage()}
+            style={{
+              width: "100vw",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "row",
+              marginTop: 20,
+            }}
+          >
+            <div
+              style={{
+                fontFamily: "Gill Sans",
+                fontSize: 16,
+                // color: 'rgb(24, 118, 242)',
+              }}
+            >
+              {page}
+            </div>
+            <div
+              style={{
+                fontFamily: "Gill Sans",
+                fontSize: 16,
+                color: "rgb(24, 118, 242)",
+                paddingLeft: 5,
+              }}
+            >
+              {"[X]"}
+            </div>
+          </div>
+        )}
       </div>
     );
   }

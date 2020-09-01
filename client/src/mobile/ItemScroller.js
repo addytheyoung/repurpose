@@ -36,8 +36,8 @@ export default class ItemScroller extends Component {
                 fontSize: 26,
                 fontWeight: 500,
                 textAlign: "center",
-                marginLeft: "20vw",
-                width: "60vw",
+                marginLeft: "10vw",
+                width: "80vw",
                 alignItems: "center",
                 justifyContent: "center",
                 fontFamily: "Gill Sans",
@@ -65,7 +65,8 @@ export default class ItemScroller extends Component {
             style={{
               display: "flex",
               flexDirection: "row",
-              justifyContent: "center",
+              justifyContent: "flex-start",
+              width: "100vw",
               alignItems: "center",
             }}
           >
@@ -84,6 +85,20 @@ export default class ItemScroller extends Component {
               }
             >
               Next
+            </div>
+            <div style={{ width: "100%" }}></div>
+            <div
+              onClick={() => this.takeMeToPage()}
+              style={{
+                marginTop: "3vh",
+                marginRight: 10,
+                color: "rgb(24, 118, 242)",
+                fontFamily: "Gill Sans",
+                fontSize: 18,
+                minWidth: 50,
+              }}
+            >
+              See all
             </div>
           </div>
         </div>
@@ -199,6 +214,11 @@ export default class ItemScroller extends Component {
         </div>
       </div>
     );
+  }
+
+  takeMeToPage() {
+    const { title, openScrollerPage } = this.props;
+    openScrollerPage(title);
   }
 
   easeInOutQuad(t, b, c, d) {

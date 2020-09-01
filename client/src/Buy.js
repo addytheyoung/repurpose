@@ -20,7 +20,6 @@ export default class Buy extends React.Component {
   innerWidth = window.innerWidth;
   constructor(props) {
     super(props);
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
 
     // What are we looking at?
     const q = window.location.search;
@@ -429,6 +428,17 @@ export default class Buy extends React.Component {
       const sales = [false, false, false, false, false, true];
       this.pullItemsFromDatabase(newCategories, true, sales, page, 0);
     }
+  }
+
+  // Close the scorller page
+  closeScrollerPage() {
+    const sales = [true, true, true, true, true, true];
+    this.setState({
+      activePage: null,
+      activeSales: sales,
+    });
+    window.history.replaceState(null, null, "/?page=" + null);
+    this.pullItemsFromDatabase(this.state.activeCategories, true, sales, 0);
   }
 
   // Do we have an active filter?

@@ -25,7 +25,6 @@ import Treasure from "../images/treasureGIMP.png";
 export default class BuyMobile extends React.Component {
   constructor(props) {
     super(props);
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
 
     // What are we looking at?
     const q = window.location.search;
@@ -169,6 +168,8 @@ export default class BuyMobile extends React.Component {
         {!this.state.aboutPage && (
           <div style={{ position: "fixed", top: 0, zIndex: 100 }}>
             <HeaderMobile
+              closePage={() => this.closeScrollerPage()}
+              page={page != null ? this.state.activePage : null}
               updateSalesFilter={(sales) => this.updateSalesFilter(sales)}
               updateCategoryFilter={(a, b) => this.updateCategoryFilter(a, b)}
               setPriceFilter={(a, b) => this.updateFilter(a, b)}
@@ -1011,6 +1012,45 @@ export default class BuyMobile extends React.Component {
       });
   }
 
+  openScrollerPage(page) {
+    const newCategories = [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+    ];
+    const newSales = [true, true, true, true, true, true];
+    if (page == "Just dropped in price") {
+      // Pull items that just dropped in price
+      this.pullItemsFromDatabase(newCategories, true, newSales, page, 0);
+    } else if (page == "Just added") {
+      // Pull items where current_price == 1.0
+      const sales = [true, false, false, false, false, false];
+
+      this.pullItemsFromDatabase(newCategories, true, sales, page, 0);
+    } else if (page == "Cheapest of the cheap") {
+      // Pull items where current_price is <= 0.4
+      const sales = [false, false, false, false, false, true];
+
+      this.pullItemsFromDatabase(newCategories, true, sales, page, 0);
+    }
+  }
+
+  closeScrollerPage() {
+    const sales = [true, true, true, true, true, true];
+    this.setState({
+      activePage: null,
+      activeSales: sales,
+    });
+    window.history.replaceState(null, null, "/");
+    this.pullItemsFromDatabase(this.state.activeCategories, true, sales, 0);
+  }
+
   // Secondary pull! Show items that show up in the <ItemScroller />
   async pullOtherItemsFromDatabase(categories, sales, page) {
     const categoryList = [
@@ -1193,42 +1233,5 @@ export default class BuyMobile extends React.Component {
         loaded: true,
       });
     }
-  }
-
-  scrollLeft(element, change, duration) {
-    var start = element.scrollLeft,
-      currentTime = 0,
-      increment = 20;
-
-    const t = this;
-    const st = this.state;
-    var animateScroll = function () {
-      currentTime += increment;
-      if (change > 0) {
-        element.scrollLeft = element.scrollLeft + window.innerWidth / 5;
-      } else {
-        element.scrollLeft = element.scrollLeft - window.innerWidth / 5;
-      }
-      if (currentTime < duration) {
-        setTimeout(animateScroll, increment);
-      }
-    };
-    animateScroll();
-  }
-
-  componentDidMount() {
-    this.updateWindowDimensions();
-    window.addEventListener("resize", this.updateWindowDimensions);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateWindowDimensions);
-  }
-
-  updateWindowDimensions() {
-    this.setState({
-      width: window.innerWidth - window.innerWidth * (15 / 100),
-      height: window.innerHeight,
-    });
   }
 }
