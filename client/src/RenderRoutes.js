@@ -44,13 +44,13 @@ import SearchPageMobileMain from "./mobile/SearchPageMobileMain";
 export default class RenderRoutes extends React.Component {
   render() {
     const citiesList = ["Austin, TX"];
-    // const stripePromise = loadStripe(
-    //   "pk_live_itqCm5p1Rz7TXk3yTbf4NmVk00z0tkZ7rP"
-    // );
-
     const stripePromise = loadStripe(
-      "pk_test_gLPSHkmFGwodXZBWMQabXaRr00jsYpn5GL"
+      "pk_live_itqCm5p1Rz7TXk3yTbf4NmVk00z0tkZ7rP"
     );
+
+    // const stripePromise = loadStripe(
+    //   "pk_test_gLPSHkmFGwodXZBWMQabXaRr00jsYpn5GL"
+    // );
     const q = window.location.search;
     const urlParams = new URLSearchParams(q);
     const category = urlParams.get("city");

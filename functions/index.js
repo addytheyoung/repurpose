@@ -2,8 +2,8 @@ const functions = require("firebase-functions");
 const env = require("dotenv").config({ path: "./.env" });
 const puppeteer = require("puppeteer");
 
-//const stripe = require("stripe")("sk_live_MUbbkQ150n00y57q1tjlwWQM00s213LRkP");
-const stripe = require("stripe")("sk_test_hkMGIPsjJ7Ag57pFz1eX0ASX00ijQ9oo1X");
+const stripe = require("stripe")("sk_live_MUbbkQ150n00y57q1tjlwWQM00s213LRkP");
+// const stripe = require("stripe")("sk_test_hkMGIPsjJ7Ag57pFz1eX0ASX00ijQ9oo1X");
 
 // const paypal = EExwl4bt3FO-Vl7714Qh71y0lUpwnkCNm-1_vk7kKTMD4WIH4hH61OwwxOhijkn2dTk6kd2pKB8cl1WT
 var admin = require("firebase-admin");
@@ -32,16 +32,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 paypal.configure({
-  // mode: "live",
-  // client_id:
-  //   "AVWKPfLbUrnVVHtF3EqllXbIqqAhJvRrlwa9vVi4k_uFGT4Jcd7TSsWxXKdGED5B66RNcrczgnnISVLk",
-  // client_secret:
-  //   "EEzWM8KQhmRtcG1cucS6vcMTvZqGFMx3yx6dJFMR5UM6W35wZ9YXqAr1TgYidgIoYGvx7bliibINumcz",
-  mode: "sandbox",
+  mode: "live",
   client_id:
-    "AebrbuffsMy8souGrrTS02XFMu0XN7MrbbtmXfII-fNIcVz9FE0ndArXMXrJzIw2EdVhGW-fXWbi_Kmn",
+    "AVWKPfLbUrnVVHtF3EqllXbIqqAhJvRrlwa9vVi4k_uFGT4Jcd7TSsWxXKdGED5B66RNcrczgnnISVLk",
   client_secret:
-    "EOEcKQIWhapQNGGrW6MQFrqSogkHlLM6pB49DNc4ImeK83TT2wI9o55o0UI9M6XYvpxZ3N1fEq-88cYs",
+    "EEzWM8KQhmRtcG1cucS6vcMTvZqGFMx3yx6dJFMR5UM6W35wZ9YXqAr1TgYidgIoYGvx7bliibINumcz",
+  // mode: "sandbox",
+  // client_id:
+  //   "AebrbuffsMy8souGrrTS02XFMu0XN7MrbbtmXfII-fNIcVz9FE0ndArXMXrJzIw2EdVhGW-fXWbi_Kmn",
+  // client_secret:
+  //   "EOEcKQIWhapQNGGrW6MQFrqSogkHlLM6pB49DNc4ImeK83TT2wI9o55o0UI9M6XYvpxZ3N1fEq-88cYs",
 });
 
 app.get("/test", (req, res) => {
@@ -444,7 +444,6 @@ exports.dropPrices = functions.pubsub
   .schedule("every 12 hours from 6:00 to 23:00")
   .timeZone("America/New_York")
   .onRun((context) => {
-    return;
     const categoryList = [
       "Art & Decoration",
       "Books",

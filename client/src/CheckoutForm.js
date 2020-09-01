@@ -514,7 +514,7 @@ export default class CheckoutForm extends React.Component {
     api.sendEmail("andrew@collection.deals", emailText);
 
     // 2) Remove the items purchased from the shop, and update users cart
-    //await this.deleteItemsAndRemoveFromCart(result);
+    await this.deleteItemsAndRemoveFromCart(result);
 
     // 3) Take user to confirmation screen.
 
@@ -656,7 +656,7 @@ export default class CheckoutForm extends React.Component {
     api.sendEmail("andrew@collection.deals", emailText);
 
     // 5) Remove the items purchased from the shop, and update users cart
-    //await this.deleteItemsAndRemoveFromCart(result);
+    await this.deleteItemsAndRemoveFromCart(result);
 
     // 6) Take user to confirmation screen.
     this.props.finished();

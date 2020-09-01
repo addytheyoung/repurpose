@@ -749,7 +749,10 @@ export default class Buy extends React.Component {
 
   // Main pull! Pull items to show in the main section.
   pullItemsFromDatabase(categories, reset, sales, page, currentCategoryI) {
-    const PULL_NUM = 8;
+    var PULL_NUM = 8;
+    if (page && page != "") {
+      PULL_NUM = 9999;
+    }
     if (reset) {
       this.state.items = [];
       this.state.finalDoc = 0;

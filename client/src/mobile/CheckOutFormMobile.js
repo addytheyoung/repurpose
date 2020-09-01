@@ -532,7 +532,7 @@ export default class CheckoutFormMobile extends React.Component {
     api.sendEmail("andrew@collection.deals", emailText);
 
     // 2) Remove the items purchased from the shop, and update users cart
-    //await this.deleteItemsAndRemoveFromCart(result);
+    await this.deleteItemsAndRemoveFromCart(result);
 
     // 3) Take user to confirmation screen.
 
@@ -673,7 +673,7 @@ export default class CheckoutFormMobile extends React.Component {
     api.sendEmail("andrew@collection.deals", emailText);
 
     // 5) Remove the items purchased from the shop, and update users cart
-    //await this.deleteItemsAndRemoveFromCart(result);
+    await this.deleteItemsAndRemoveFromCart(result);
 
     // 6) Take user to confirmation screen.
     this.props.finished();
@@ -1017,46 +1017,46 @@ export default class CheckoutFormMobile extends React.Component {
   async payWithPaypal() {
     // 0) Get all the information
     const form = document.getElementById("paypal-form");
-    // const address1 = this.state.address1;
-    // const address2 = this.state.address2;
-    // const email = this.state.email.trim().toLowerCase();
-    // const currentUser = !!firebase.auth().currentUser;
-    // var myUid = firebase.auth().currentUser.uid;
+    const address1 = this.state.address1;
+    const address2 = this.state.address2;
+    const email = this.state.email.trim().toLowerCase();
+    const currentUser = !!firebase.auth().currentUser;
+    var myUid = firebase.auth().currentUser.uid;
 
-    // if (!this.checkAddress(address1) || !checkEmail(email)) {
-    //   return;
-    // }
+    if (!this.checkAddress(address1) || !checkEmail(email)) {
+      return;
+    }
 
-    // // 1) Update the users address (If they are one)
-    // if (currentUser) {
-    //   await firebase
-    //     .firestore()
-    //     .collection("Users")
-    //     .doc(firebase.auth().currentUser.uid)
-    //     .update({
-    //       address1: address1,
-    //       address2: address2,
-    //     });
-    // }
+    // 1) Update the users address (If they are one)
+    if (currentUser) {
+      await firebase
+        .firestore()
+        .collection("Users")
+        .doc(firebase.auth().currentUser.uid)
+        .update({
+          address1: address1,
+          address2: address2,
+        });
+    }
 
-    // // 2) Check if the items are still valid
-    // const itemResult = await this.checkItems();
-    // if (itemResult.length != this.state.myData.cart.length) {
-    //   alert(
-    //     "Something in your cart has been purchased. you have not been charged."
-    //   );
-    //   await firebase
-    //     .firestore()
-    //     .collection("Users")
-    //     .doc(myUid)
-    //     .update({
-    //       cart: itemResult,
-    //     })
-    //     .then(() => {
-    //       window.location.reload();
-    //     });
-    //   return;
-    // }
+    // 2) Check if the items are still valid
+    const itemResult = await this.checkItems();
+    if (itemResult.length != this.state.myData.cart.length) {
+      alert(
+        "Something in your cart has been purchased. you have not been charged."
+      );
+      await firebase
+        .firestore()
+        .collection("Users")
+        .doc(myUid)
+        .update({
+          cart: itemResult,
+        })
+        .then(() => {
+          window.location.reload();
+        });
+      return;
+    }
 
     // 3) Submit the form
     form.submit();
@@ -1069,51 +1069,6 @@ export default class CheckoutFormMobile extends React.Component {
       return false;
     }
     return true;
-  }
-
-  componentDidUpdate() {
-    // if (
-    //   this.state.processing ||
-    //   this.state.succeeded ||
-    //   this.state.clientSecret ||
-    //   this.state.timesCalledStripe > 3
-    // ) {
-    //   return null;
-    // }
-    // // Step 1: Fetch product details such as amount and currency from
-    // // API to make sure it can't be tampered with in the client.
-    // // const cart = api.getProductDetails(this.state.myData.cart);
-    // // this.state.subTotal = cart.subTotal;
-    // // this.state.description = cart.description;
-    // // this.state.pictures = cart.pictures;
-    // // this.state.tax = cart.tax;
-    // // this.state.shipping = cart.shipping;
-    // // this.state.total = cart.total;
-    // // this.state.amount = cart.amount;
-    // // this.state.currency = cart.currency;
-    // console.log("GOT PRODUCT DETAILS");
-    // // Step 2: Create PaymentIntent over Stripe API
-    // // Total is fucked up?
-    // console.log(this.props.total);
-    // api
-    //   .createPaymentIntent({ total: this.props.total, stripe_unique_id: "xb" })
-    //   .then((clientSecret) => {
-    //     console.log(clientSecret);
-    //     // this.state.clientSecret = clientSecret;
-    //     // this.state.loaded = true;
-    //     this.setState({
-    //       clientSecret: clientSecret,
-    //       loaded: true,
-    //       timesCalledStripe: this.state.timesCalledStripe + 1,
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.message);
-    //     this.setState({
-    //       error: err.message,
-    //       timesCalledStripe: this.state.timesCalledStripe + 1,
-    //     });
-    //   });
   }
 
   async checkItems() {
