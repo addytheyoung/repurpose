@@ -73,16 +73,16 @@ app.post("/paypal", (req, res) => {
       payment_method: "paypal",
     },
     redirect_urls: {
-      // return_url: "http://localhost:4242/paypal-success",
+      // return_url: "https://tatescrate.com/paypal-success",
       return_url:
-        "http://localhost:4242/paypal-success/?type=" +
+        "https://tatescrate.com/paypal-success/?type=" +
         type +
         "&total=" +
         price,
       cancel_url:
         type === "desktop"
-          ? "http://localhost:3000/checkout"
-          : "http://localhost:4242/paypal-cancel",
+          ? "https://tatescrate.com/checkout"
+          : "https://tatescrate.com/paypal-cancel",
     },
     note_to_payer:
       "We do NOT use the shipping address here. We use the address you gave us in the previous form. Ignore the shipping address here.",
@@ -145,7 +145,7 @@ app.get("/paypal-success", async (req, res) => {
       console.log(JSON.stringify(payment));
 
       if (type == "desktop") {
-        res.redirect("http://localhost:3000/checkout/?success=true");
+        res.redirect("https://tatescrate.com/checkout/?success=true");
       } else {
         res.render("success");
       }

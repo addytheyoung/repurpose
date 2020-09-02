@@ -444,7 +444,7 @@ export default class CheckoutForm extends React.Component {
           <form
             id="paypal-form"
             on
-            action="http://localhost:4242/paypal"
+            action="https://tatescrate.com/paypal"
             method="POST"
           >
             <div

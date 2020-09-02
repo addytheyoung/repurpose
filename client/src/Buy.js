@@ -81,8 +81,6 @@ export default class Buy extends React.Component {
     const loaded = this.state.loaded;
     const timesPulledFromOther = this.state.timesPulledFromOther;
 
-    console.log(loaded);
-    console.log(timesPulledFromOther);
     // General case.
     if (loaded && timesPulledFromOther == 3) {
       return false;
@@ -400,7 +398,6 @@ export default class Buy extends React.Component {
 
   // Open the proper page, if we're looking at one.
   openScrollerPage(page) {
-    console.log(page);
     const newCategories = [
       true,
       true,
@@ -1100,10 +1097,7 @@ export default class Buy extends React.Component {
     if (window.location.href.includes("localhost")) {
       window.open("http://localhost:3000/shop/?category=" + cat.link, "_self");
     } else {
-      window.open(
-        "https://collection.deals/shop/?category=" + cat.link,
-        "_self"
-      );
+      window.open("https://tatescrate/com/shop/?category=" + cat.link, "_self");
     }
   }
 
