@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Link } from "react-router-dom";
 import "./css/HeaderBar.css";
 import Close from "./images/close.png";
 import checkEmail from "./global_methods/checkEmail";
+import api from "./api";
 
 export default class Profile extends React.Component {
   constructor(props) {
@@ -369,7 +370,7 @@ export default class Profile extends React.Component {
                     </div>
                     <div
                       id="logout-no"
-                      onClick={() => this.closeModal()}
+                      onClick={() => closeModal()}
                       style={{
                         marginLeft: 10,
                         backgroundColor: "#a1a1a1",
@@ -451,6 +452,11 @@ export default class Profile extends React.Component {
         this.state.retUser = false;
         this.state.profile = false;
         var myUid = localStorage.getItem("tempUid");
+
+        api.sendEmail(
+          "andrew@collection.deals",
+          "New User Account: " + email + "\n\nAccount ID: " + r.user.uid
+        );
         if (myUid) {
           // Transfer the data
           firebase

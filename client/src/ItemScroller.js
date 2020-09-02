@@ -53,19 +53,21 @@ export default class ItemScroller extends Component {
               {title}
             </div>
             <div style={{ width: 30 }}></div>
-            <div
-              onClick={() => this.takeMetoPage()}
-              id="see-all"
-              style={{
-                fontFamily: "Gill Sans",
-                fontSize: 18,
-                width: 50,
-                color: "rgb(24, 118, 242)",
-                fontFamily: "Gill Sans",
-              }}
-            >
-              See All
-            </div>
+            {title != "Items Near Austin" && (
+              <div
+                onClick={() => this.takeMetoPage()}
+                id="see-all"
+                style={{
+                  fontFamily: "Gill Sans",
+                  fontSize: 18,
+                  width: 50,
+                  color: "rgb(24, 118, 242)",
+                  fontFamily: "Gill Sans",
+                }}
+              >
+                See All
+              </div>
+            )}
           </div>
 
           <div

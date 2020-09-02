@@ -15,6 +15,7 @@ import Chat from "./Chat";
 import LoadingPage from "./LoadingPage";
 import Profile from "./Profile";
 import ItemModal from "./ItemModal";
+import api from "./api";
 
 export default class Cart extends React.Component {
   innerWidth = window.innerWidth;
@@ -632,86 +633,6 @@ export default class Cart extends React.Component {
     }
   }
 
-  setPassword() {
-    const email = this.state.email;
-    const pass = document.getElementById("pass").value;
-
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, pass)
-      .then((r) => {
-        this.state.logout = false;
-        this.state.email = false;
-        this.state.newUser = false;
-        this.state.retUser = false;
-        this.state.profile = false;
-        var myUid = localStorage.getItem("tempUid");
-        console.log(myUid);
-        if (myUid) {
-          console.log(myUid);
-          // Transfer the data
-          firebase
-            .firestore()
-            .collection("Users")
-            .doc(myUid)
-            .get()
-            .then((me) => {
-              console.log(me.data());
-              const cart = me.data().cart;
-              const orders = me.data().orders;
-              const sales = me.data().sales;
-              localStorage.setItem("cart", cart.length);
-              firebase
-                .firestore()
-                .collection("Users")
-                .doc(r.user.uid)
-                .set({
-                  cart: cart,
-                  orders: orders,
-                  sales: sales,
-                  email: email,
-                  uid: r.user.uid,
-                  temporary: false,
-                })
-                .then(() => {
-                  this.state.logout = false;
-                  this.state.email = false;
-                  this.state.newUser = false;
-                  this.state.retUser = false;
-                  this.state.profile = false;
-                  window.location.href = "/checkout";
-                });
-            });
-        } else {
-          console.log("no uid");
-          // Make a new profile
-          firebase
-            .firestore()
-            .collection("Users")
-            .doc(r.user.uid)
-            .set({
-              cart: [],
-              orders: [],
-              sales: [],
-              email: email,
-              uid: r.user.uid,
-              temporary: false,
-            })
-            .then(() => {
-              this.state.logout = false;
-              this.state.email = false;
-              this.state.newUser = false;
-              this.state.retUser = false;
-              this.state.profile = false;
-              window.location.href = "/checkout";
-            });
-        }
-      })
-      .catch((e) => {
-        alert(e.message);
-      });
-  }
-
   setCity() {
     this.setState({
       city: !this.state.city,
@@ -730,7 +651,7 @@ export default class Cart extends React.Component {
         this.state.email = false;
         this.state.newUser = false;
         this.state.retUser = false;
-        this.state.profile = false;
+        this.state.profilePage = false;
         window.location.href = "/checkout";
       })
       .catch((e) => {
@@ -740,7 +661,7 @@ export default class Cart extends React.Component {
 
   showProfileModal() {
     this.setState({
-      profile: true,
+      profilePage: true,
       searching: false,
       city: false,
       logout: false,
@@ -749,7 +670,7 @@ export default class Cart extends React.Component {
 
   closeModal(e) {
     this.setState({
-      profile: false,
+      profilePage: false,
       logout: false,
       email: false,
       newUser: false,
@@ -771,7 +692,7 @@ export default class Cart extends React.Component {
         this.state.email = false;
         this.state.newUser = false;
         this.state.retUser = false;
-        this.state.profile = false;
+        this.state.profilePage = false;
         window.location.href = "/";
       });
   }

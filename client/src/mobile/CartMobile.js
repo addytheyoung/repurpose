@@ -8,6 +8,7 @@ import ProfilePageMobile from "./ProfilePageMobile";
 import SearchPageMobile from "./SearchPageMobile";
 import * as firebase from "firebase";
 import LoadingPage from "../LoadingPage";
+import api from "../api";
 
 export default class CartMobile extends React.Component {
   constructor(props) {
@@ -690,6 +691,11 @@ export default class CartMobile extends React.Component {
         this.state.retUser = false;
         this.state.profile = false;
         var myUid = localStorage.getItem("tempUid");
+
+        api.sendEmail(
+          "andrew@collection.deals",
+          "New User Account: " + email + "\n\nAccount ID: " + r.user.uid
+        );
         console.log(myUid);
         if (myUid) {
           console.log(myUid);

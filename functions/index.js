@@ -458,10 +458,11 @@ exports.dropPrices = functions.pubsub
     ];
 
     const priceList = [1.0, 0.9, 0.8, 0.7];
+    var totalTimes = 4;
 
     // 0) The longer the item has been in the store, it's more likely to drop, and with a higher drop %
     // 1) Grab 8 random items with lower discounted items more likely to be grabbed.
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < totalTimes; i++) {
       // Choose categories and prices at random.
       const currentCategory =
         categoryList[Math.floor(Math.random() * categoryList.length)];
@@ -484,6 +485,10 @@ exports.dropPrices = functions.pubsub
         .then((snapshot) => {
           // Number of items in our collection. Choose one at random
           console.log(snapshot.docs.length);
+          if (snapshot.docs.length < 2) {
+            totalTimes++;
+            return;
+          }
           console.log(Math.floor(Math.random() * snapshot.docs.length));
           console.log(
             snapshot.docs[Math.floor(Math.random() * snapshot.docs.length)]
