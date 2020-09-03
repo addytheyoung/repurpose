@@ -54,12 +54,44 @@ export default class Buy extends React.Component {
 
     this.state.finishedPullingItems = false;
 
-    this.pullItemsFromDatabase(
-      this.state.activeCategories,
-      null,
-      this.state.activeSales,
-      this.state.activePage
-    );
+    if (!page) {
+      this.pullItemsFromDatabase(
+        this.state.activeCategories,
+        null,
+        this.state.activeSales,
+        this.state.activePage
+      );
+    } else {
+      const newCategories = [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+      ];
+      const newSales = [true, true, true, true, true, true];
+      if (page == "Just dropped in price") {
+        // Pull items that just dropped in price
+        window.history.replaceState(null, null, "/?page=" + page);
+
+        this.pullItemsFromDatabase(newCategories, true, newSales, page, 0);
+      } else if (page == "Just added") {
+        // Pull items where current_price == 1.0
+        window.history.replaceState(null, null, "/?page=" + page);
+        const sales = [true, false, false, false, false, false];
+        this.pullItemsFromDatabase(newCategories, true, sales, page, 0);
+      } else if (page == "Cheapest of the cheap") {
+        // Pull items where current_price is <= 0.4
+        window.history.replaceState(null, null, "/?page=" + page);
+        const sales = [false, false, false, true, true, true];
+        this.pullItemsFromDatabase(newCategories, true, sales, page, 0);
+      }
+    }
+
     this.pullOtherItemsFromDatabase(
       this.state.activeCategories,
       this.state.activeSales,
@@ -162,6 +194,11 @@ export default class Buy extends React.Component {
         {!item && <Chat />}
         <div>
           <FilterBar
+            closePage={() => {
+              window.history.replaceState(null, null, "/");
+              window.location.reload();
+            }}
+            activePage={this.state.activePage}
             updateCategoryFilter={(category) =>
               this.updateCategoryFilter(category)
             }
@@ -423,7 +460,7 @@ export default class Buy extends React.Component {
     } else if (page == "Cheapest of the cheap") {
       // Pull items where current_price is <= 0.4
       window.history.replaceState(null, null, "/?page=" + page);
-      const sales = [false, false, false, false, false, true];
+      const sales = [false, false, false, true, true, true];
       this.pullItemsFromDatabase(newCategories, true, sales, page, 0);
     }
   }
@@ -435,7 +472,7 @@ export default class Buy extends React.Component {
       activePage: null,
       activeSales: sales,
     });
-    window.history.replaceState(null, null, "/?page=" + null);
+    window.history.replaceState(null, null, "/");
     this.pullItemsFromDatabase(this.state.activeCategories, true, sales, 0);
   }
 
@@ -484,7 +521,7 @@ export default class Buy extends React.Component {
 
   // Close the item page
   closeModal(e) {
-    window.history.replaceState(null, null, "/?page=" + this.state.activePage);
+    window.history.replaceState(null, null, "/");
     this.setState({
       modal: null,
     });
@@ -532,11 +569,7 @@ export default class Buy extends React.Component {
         })
         .then(() => {
           localStorage.setItem("cart", 1);
-          window.history.replaceState(
-            null,
-            null,
-            "/?page=" + this.state.activePage
-          );
+          window.history.replaceState(null, null, "/");
 
           this.setState({
             modal: null,
@@ -573,11 +606,7 @@ export default class Buy extends React.Component {
                     for (var i = 0; i < myCart.length; i++) {
                       if (myCart[i].uid == item.uid) {
                         alert("Item already in your cart!");
-                        window.history.replaceState(
-                          null,
-                          null,
-                          "/?page=" + this.state.activePage
-                        );
+                        window.history.replaceState(null, null, "/");
 
                         this.setState({
                           modal: null,
@@ -599,11 +628,7 @@ export default class Buy extends React.Component {
                       })
                       .then(() => {
                         localStorage.setItem("cart", numCartItems);
-                        window.history.replaceState(
-                          null,
-                          null,
-                          "/?page=" + this.state.activePage
-                        );
+                        window.history.replaceState(null, null, "/");
                         this.setState({
                           modal: null,
                           addingToCart: false,
@@ -617,11 +642,7 @@ export default class Buy extends React.Component {
             for (var i = 0; i < myCart.length; i++) {
               if (myCart[i].uid == item.uid) {
                 alert("Item already in your cart!");
-                window.history.replaceState(
-                  null,
-                  null,
-                  "/?page=" + this.state.activePage
-                );
+                window.history.replaceState(null, null, "/");
                 this.setState({
                   modal: null,
                   addingToCart: false,
@@ -641,11 +662,7 @@ export default class Buy extends React.Component {
               })
               .then(() => {
                 localStorage.setItem("cart", numCartItems);
-                window.history.replaceState(
-                  null,
-                  null,
-                  "/?page=" + this.state.activePage
-                );
+                window.history.replaceState(null, null, "/");
                 this.setState({
                   modal: null,
                   addingToCart: false,
@@ -820,12 +837,20 @@ export default class Buy extends React.Component {
           saleArray.push(0.4);
           saleArray.push(0.3);
           saleArray.push(0.2);
+          break;
         }
       }
     }
 
-    // Get all the items that match our location and our current_price.
+    // Are we done?
+    if (!currentCategory) {
+      return;
+    }
 
+    console.log(saleArray);
+    console.log(currentCategory);
+
+    // Get all the items that match our location and our current_price.
     var pullVariable = firebase
       .firestore()
       .collection("Categories")
@@ -1012,24 +1037,21 @@ export default class Buy extends React.Component {
           .where("location", "==", "Austin, TX")
           .where("new_discount", "==", true)
           .orderBy("uid")
-          .limit(6)
-          .startAfter(this.state.finalDoc);
+          .limit(6);
       } else if (page == "Just added") {
         stateRef = "justAddedItems";
         pullingRef = firebaseRef
           .where("location", "==", "Austin, TX")
           .where("current_price", "==", 1)
           .orderBy("uid")
-          .limit(6)
-          .startAfter(this.state.finalDoc);
+          .limit(6);
       } else if (page == "Cheapest of the cheap") {
         stateRef = "cheapItems";
         pullingRef = firebaseRef
           .where("location", "==", "Austin, TX")
-          .where("current_price", "in", [0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1])
+          .where("current_price", "in", [0.7, 0.7, 0.5, 0.4, 0.3, 0.2, 0.1])
           .orderBy("uid")
-          .limit(6)
-          .startAfter(this.state.finalDoc);
+          .limit(6);
       }
 
       pullingRef.get().then((snapshot) => {

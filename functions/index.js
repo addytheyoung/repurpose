@@ -441,7 +441,7 @@ app.listen(4242, () => console.log(`Node server listening on port ${4242}!`));
 exports.app = functions.https.onRequest(app);
 
 exports.dropPrices = functions.pubsub
-  .schedule("every 12 hours from 6:00 to 23:00")
+  .schedule("every 3 hours from 6:00 to 23:00")
   .timeZone("America/New_York")
   .onRun((context) => {
     const categoryList = [
@@ -484,34 +484,25 @@ exports.dropPrices = functions.pubsub
         .get()
         .then((snapshot) => {
           // Number of items in our collection. Choose one at random
-          console.log(snapshot.docs.length);
           if (snapshot.docs.length < 2) {
             totalTimes++;
             return;
           }
-          console.log(Math.floor(Math.random() * snapshot.docs.length));
-          console.log(
-            snapshot.docs[Math.floor(Math.random() * snapshot.docs.length)]
-          );
-          console.log(
-            snapshot.docs[
-              Math.floor(Math.random() * snapshot.docs.length)
-            ].data()
-          );
+
           const numItems = snapshot.docs.length;
           const randomItem1 = snapshot.docs[
             Math.floor(Math.random() * numItems)
           ].data();
-          const randomItem2 = snapshot.docs[
-            Math.floor(Math.random() * numItems)
-          ].data();
+          // const randomItem2 = snapshot.docs[
+          //   Math.floor(Math.random() * numItems)
+          // ].data();
 
           // Get the current discount
           const itemDiscount1 = randomItem1.current_price;
-          const itemDiscount2 = randomItem2.current_price;
+          // const itemDiscount2 = randomItem2.current_price;
 
           var newDiscount1 = itemDiscount1 - 0.2;
-          var newDiscount2 = itemDiscount2 - 0.2;
+          // var newDiscount2 = itemDiscount2 - 0.2;
 
           if (newDiscount1 == 0.8) {
             newDiscount1 = 0.7;
@@ -519,22 +510,25 @@ exports.dropPrices = functions.pubsub
           if (newDiscount1 == 0.1) {
             newDiscount1 = 0.2;
           }
-          if (newDiscount2 == 0.8) {
-            newDiscount2 = 0.7;
-          }
-          if (newDiscount2 == 0.1) {
-            newDiscount2 = 0.2;
-          }
+          // if (newDiscount2 == 0.8) {
+          //   newDiscount2 = 0.7;
+          // }
+          // if (newDiscount2 == 0.1) {
+          //   newDiscount2 = 0.2;
+          // }
 
+          console.log("Updating...");
+          console.log("uid: " + randomItem1.uid);
+          console.log("title: " + randomItem1.title);
           collectionRef.doc(randomItem1.uid).update({
-            current_price: newDiscount1,
+            current_price: parseInt(newDiscount1 * 10 + 1) / 10,
             new_discount: true,
           });
 
-          collectionRef.doc(randomItem2.uid).update({
-            current_price: newDiscount2,
-            new_discount: true,
-          });
+          // collectionRef.doc(randomItem2.uid).update({
+          //   current_price: newDiscount2,
+          //   new_discount: true,
+          // });
         });
     }
 

@@ -849,7 +849,7 @@ export default class CheckoutFormMobile extends React.Component {
 
   // Delete items from my and other users carts, and remove it from our database
   async deleteItemsAndRemoveFromCart() {
-    const cart = this.state.myProfileData.cart;
+    const cart = this.state.myData.cart;
     var tempCart = JSON.parse(JSON.stringify(cart));
 
     for (var i = 0; i < tempCart.length; i++) {

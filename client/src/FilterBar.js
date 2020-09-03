@@ -7,6 +7,56 @@ import DialogPage from "./DialogPage";
 
 export default class FilterBar extends React.Component {
   render() {
+    const { activePage, closePage } = this.props;
+    if (activePage) {
+      return (
+        <div
+          style={{
+            position: "fixed",
+            height: "90vh",
+            top: "10vh",
+            backgroundColor: "#ffffff",
+            borderRightStyle: "solid",
+            borderRightWidth: 1,
+            borderRightColor: "lightgrey",
+            height: "100vh",
+            width: 200,
+          }}
+        >
+          <div
+            onClick={() => closePage()}
+            id="bar"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              marginLeft: 20,
+              marginRight: 20,
+              marginTop: 50,
+            }}
+          >
+            <div
+              style={{
+                fontFamily: "Gill Sans",
+                fontSize: 16,
+                // color: 'rgb(24, 118, 242)',
+              }}
+            >
+              {activePage}
+            </div>
+            <div
+              style={{
+                fontFamily: "Gill Sans",
+                fontSize: 16,
+                color: "rgb(24, 118, 242)",
+                paddingLeft: 5,
+              }}
+            >
+              {"[X]"}
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div
         style={{
