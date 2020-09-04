@@ -495,6 +495,7 @@ export default class ProfilePageMobile extends React.Component {
             .then((me) => {
               console.log(me.data());
               const cart = me.data().cart;
+              const cartUids = me.data().cart_uids;
               const orders = me.data().orders;
               const sales = me.data().sales;
               localStorage.setItem("cart", cart.length);
@@ -504,6 +505,7 @@ export default class ProfilePageMobile extends React.Component {
                 .doc(r.user.uid)
                 .set({
                   cart: cart,
+                  cart_uids: cartUids,
                   orders: orders,
                   sales: sales,
                   email: email,
@@ -530,6 +532,7 @@ export default class ProfilePageMobile extends React.Component {
             .doc(r.user.uid)
             .set({
               cart: [],
+              cart_uids: [],
               orders: [],
               sales: [],
               email: email,

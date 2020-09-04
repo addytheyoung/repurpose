@@ -841,6 +841,7 @@ export default class SearchPageMobileMain extends React.Component {
         .doc(uid)
         .set({
           cart: [item],
+          cart_uids: [item.uid],
           orders: [],
           sales: [],
           temporary: true,
@@ -868,6 +869,7 @@ export default class SearchPageMobileMain extends React.Component {
               .doc(myUid)
               .set({
                 cart: [],
+                cart_uids: [],
                 temporary: true,
                 orders: [],
                 sales: [],
@@ -880,6 +882,7 @@ export default class SearchPageMobileMain extends React.Component {
                   .get()
                   .then((me) => {
                     const myCart = me.data().cart;
+                    const myCartUids = me.data().cart_uids;
                     for (var i = 0; i < myCart.length; i++) {
                       if (myCart[i].uid == item.uid) {
                         alert("Item already in your cart!");
@@ -895,12 +898,14 @@ export default class SearchPageMobileMain extends React.Component {
                     }
 
                     myCart.push(item);
+                    myCartUids.push(item);
                     firebase
                       .firestore()
                       .collection("Users")
                       .doc(myUid)
                       .update({
                         cart: myCart,
+                        cart_uids: myCartUids,
                       })
                       .then(() => {
                         localStorage.setItem("cart", numCartItems);
@@ -916,6 +921,7 @@ export default class SearchPageMobileMain extends React.Component {
               });
           } else {
             const myCart = me.data().cart;
+            const myCartUids = me.data().cart_uids;
             for (var i = 0; i < myCart.length; i++) {
               if (myCart[i].uid == item.uid) {
                 alert("Item already in your cart!");
@@ -931,12 +937,14 @@ export default class SearchPageMobileMain extends React.Component {
             }
 
             myCart.push(item);
+            myCartUids.push(item);
             firebase
               .firestore()
               .collection("Users")
               .doc(myUid)
               .update({
                 cart: myCart,
+                cart_uids: myCartUids,
               })
               .then(() => {
                 localStorage.setItem("cart", numCartItems);

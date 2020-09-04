@@ -52,6 +52,7 @@ export default class CartMobile extends React.Component {
         .doc(uid)
         .set({
           cart: [],
+          cart_uids: [],
           orders: [],
           sales: [],
           temporary: temporary,
@@ -60,7 +61,7 @@ export default class CartMobile extends React.Component {
           localStorage.setItem("cart", 0);
           this.setState({
             loaded: true,
-            myData: { cart: [], orders: [], sales: [] },
+            myData: { cart: [], orders: [], sales: [], cart_uids: [] },
             numCartItems: 0,
           });
         });
@@ -78,6 +79,7 @@ export default class CartMobile extends React.Component {
               .doc(myUid)
               .set({
                 cart: [],
+                cart_uids: [],
                 orders: [],
                 sales: [],
                 temporary: temporary,
@@ -85,7 +87,7 @@ export default class CartMobile extends React.Component {
               .then(() => {
                 this.setState({
                   loaded: true,
-                  myData: { cart: [], orders: [], sales: [] },
+                  myData: { cart: [], orders: [], sales: [], cart_uids: [] },
                   numCartItems: 0,
                 });
               });
@@ -576,10 +578,13 @@ export default class CartMobile extends React.Component {
     }
 
     const newData = myData.cart;
+    const newCartUids = myData.cart_uids;
+
     for (var i = 0; i < myData.cart.length; i++) {
       if (item.uid == myData.cart[i].uid) {
         // Remove that item
         newData.splice(i, 1);
+        newCartUids.splice(i, 1);
         break;
       }
     }
@@ -602,6 +607,7 @@ export default class CartMobile extends React.Component {
       .doc(myUid)
       .update({
         cart: newData,
+        cart_uids: newCartUids,
       })
       .then(() => {
         localStorage.setItem("cart", numCartItems);
@@ -708,6 +714,7 @@ export default class CartMobile extends React.Component {
             .then((me) => {
               console.log(me.data());
               const cart = me.data().cart;
+              const cartUids = me.data().cart_uids;
               const orders = me.data().orders;
               const sales = me.data().sales;
               localStorage.setItem("cart", cart.length);
@@ -717,6 +724,7 @@ export default class CartMobile extends React.Component {
                 .doc(r.user.uid)
                 .set({
                   cart: cart,
+                  cart_uids: cartUids,
                   orders: orders,
                   sales: sales,
                   email: email,
@@ -741,6 +749,7 @@ export default class CartMobile extends React.Component {
             .doc(r.user.uid)
             .set({
               cart: [],
+              cart_uids: [],
               orders: [],
               sales: [],
               email: email,

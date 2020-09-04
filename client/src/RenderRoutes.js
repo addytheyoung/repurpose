@@ -19,7 +19,6 @@ import ItemUpload from "./ItemUpload";
 import Orders from "./Orders";
 import SearchPage from "./SearchPage";
 import AddDatesToFirebase from "./scripts/AddDatesToFirebase";
-import Charge from "./Charge";
 import Help from "./Help";
 import MoveItemCategory from "./scripts/MoveItemCategory";
 import Sell_2 from "./Sell_2";
@@ -40,6 +39,7 @@ import { isMobile } from "react-device-detect";
 import SearchPageMobile from "./mobile/SearchPageMobile";
 import CheckOutMobile from "./mobile/CheckOutMobile";
 import SearchPageMobileMain from "./mobile/SearchPageMobileMain";
+import TestingPage from "./TestingPage";
 
 export default class RenderRoutes extends React.Component {
   render() {
@@ -124,6 +124,8 @@ export default class RenderRoutes extends React.Component {
               exact={true}
               render={() => <HomeRedirect />}
             />
+
+            <Route path="/test" exact={true} render={() => <TestingPage />} />
             <Route
               path="/andrewtest"
               exact={true}
@@ -194,11 +196,6 @@ export default class RenderRoutes extends React.Component {
             <Route path="/item" exact={false} render={() => <Item />} />
             <Route path="/cart" exact={true} render={() => <Cart />} />
             <Route path="/checkout" exact={true} render={() => <CheckOut />} />
-            <Route
-              path="/andrewscripts4467"
-              exact={true}
-              render={() => <Charge />}
-            />
 
             <Route
               path="/andrewscripts4468"
@@ -280,11 +277,6 @@ export default class RenderRoutes extends React.Component {
 
             <Route path="/search" exact={false} render={() => <SearchPage />} />
 
-            <Route
-              path="/andrewscripts4467"
-              exact={true}
-              render={() => <Charge />}
-            />
             <Route
               path="/andrewscripts4469"
               exact={true}

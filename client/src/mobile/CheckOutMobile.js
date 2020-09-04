@@ -559,10 +559,12 @@ export default class CheckOutMobile extends Component {
     }
     localStorage.setItem("cart", numCartItems);
     const newData = myData.cart;
+    const newItemUids = myData.cart_uids;
     for (var i = 0; i < myData.cart.length; i++) {
       if (item.uid == myData.cart[i].uid) {
         // Remove that item
         newData.splice(i, 1);
+        newItemUids.splice(i, 1);
         break;
       }
     }
@@ -572,6 +574,7 @@ export default class CheckOutMobile extends Component {
       .doc(myUid)
       .update({
         cart: newData,
+        cart_uids: newItemUids,
       })
       .then(() => {
         window.location.reload();

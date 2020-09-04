@@ -54,7 +54,7 @@ export default class CheckoutForm extends React.Component {
 
   render() {
     if (!this.state.loaded) {
-      return <div>SDFSDF</div>;
+      return <div></div>;
     }
     // Get our parameters
     const q = window.location.search;
@@ -517,6 +517,10 @@ export default class CheckoutForm extends React.Component {
     await this.deleteItemsAndRemoveFromCart(result);
 
     // 3) Take user to confirmation screen.
+    this.props.finished();
+    this.setState({
+      loaded: false,
+    });
   }
 
   async selectPaymentToken(cardToken, index, paymentTokens) {
@@ -598,7 +602,7 @@ export default class CheckoutForm extends React.Component {
 
     // 2) Check if items are still valid. Remove if not.
     const itemResult = await this.checkItems();
-    if (itemResult.length != myProfileData.cart.length) {
+    if (itemResult[0].length != myProfileData.cart.length) {
       alert(
         "Something in your cart has been purchased. you have not been charged."
       );
@@ -607,7 +611,8 @@ export default class CheckoutForm extends React.Component {
         .collection("Users")
         .doc(myUid)
         .update({
-          cart: itemResult,
+          cart: itemResult[0],
+          cart_uids: itemResult[1],
         })
         .then(() => {
           window.location.reload();
@@ -650,6 +655,10 @@ export default class CheckoutForm extends React.Component {
 
     // 5) Remove the items purchased from the shop, and update users cart
     await this.deleteItemsAndRemoveFromCart(result);
+    this.props.finished();
+    this.setState({
+      loaded: false,
+    });
   }
 
   // Create or update a stripe customer
@@ -816,7 +825,7 @@ export default class CheckoutForm extends React.Component {
   }
 
   async updateMyOrders(myUid, newOrders) {
-    await firebase.firestore().collection("Users").doc(myUid).update({
+    return await firebase.firestore().collection("Users").doc(myUid).update({
       orders: newOrders,
     });
   }
@@ -849,13 +858,14 @@ export default class CheckoutForm extends React.Component {
       .get();
   }
 
-  async updateUsersCart(userData, newCart) {
+  async updateUsersCart(userData, newCart, cartUids) {
     return await firebase
       .firestore()
       .collection("Users")
       .doc(userData.id)
       .update({
         cart: newCart,
+        cart_uids: cartUids,
       });
   }
 
@@ -882,35 +892,21 @@ export default class CheckoutForm extends React.Component {
     const myData = this.state.myData;
     var tempCart = JSON.parse(JSON.stringify(cart));
 
-    // Add the address to our orders. This is used so I can see where to take the items.
+    // 1) Add the address to our orders. This is used so I can see where to take the items.
     for (var i = 0; i < tempCart.length; i++) {
       tempCart[i]["address"] = this.state.address1;
-      tempCart[i]["address2"] = this.state.address2;
+      tempCart[i]["address2"] = this.state.address2 ? this.state.address2 : "";
     }
 
-    // Update my own cart and remove everything
+    // 2) Get myuid
+    var myUid = firebase.auth().currentUser.uid;
+
+    // 3) Update my orders
     const orders = this.state.myData.orders;
     var newOrders = orders.concat(tempCart);
-
-    // Get myuid
-    var myUid = null;
-    if (firebase.auth().currentUser) {
-      myUid = firebase.auth().currentUser.uid;
-    } else if (localStorage.getItem("tempUid")) {
-      myUid = localStorage.getItem("tempUid");
-    } else {
-      myUid = null;
-    }
-
-    const itemUids = [];
-    for (var i = 0; i < cart.length; i++) {
-      itemUids.push(cart[i].uid);
-    }
-
-    // Deal with each item I purchased
     await this.updateMyOrders(myUid, newOrders);
 
-    // Loop through our cart
+    // 4) Loop thorugh our own cart and deal with the items
     for (var i = 0; i < cart.length; i++) {
       const item = cart[i];
       // Update this item in firebase
@@ -920,49 +916,51 @@ export default class CheckoutForm extends React.Component {
       await this.deleteItemFromDatabase(item);
     }
 
-    // Find any users with an item we have in our cart
-    const userDocs = (await this.findUsersWithSameItems(cartUids)).docs;
+    // 5) Find any users with an item we have in our cart
+    const snapshots = await this.findUsersWithSameItems(cartUids);
 
+    console.log(snapshots);
+    const userDocs = snapshots.docs;
+
+    const itemUids = [];
+    for (var i = 0; i < cart.length; i++) {
+      itemUids.push(cart[i].uid);
+    }
     // Loop through users with an item in their cart
     for (var k = 0; k < userDocs.length; k++) {
       const userData = userDocs[k];
       const newCart = userData.data().cart;
+      const cartUids = userData.data().cart_uids;
       // All the items in a users cart
       for (var p = 0; p < newCart.length; p++) {
-        const userItem = newCart[p];
         // All the items we are looking for
         var l = 0;
-
-        //
         while (l < itemUids.length) {
           const myItemUid = itemUids[l];
-          if (!userItem) {
+          if (!newCart[p]) {
             break;
           }
-          if (userItem.uid === myItemUid) {
+          if (newCart[p].uid === myItemUid) {
             l = 0;
             // Remove the item
             newCart.splice(p, 1);
+            cartUids.splice(p, 1);
           }
           l++;
         }
       }
 
-      // Update the users cart with the new cart
-      await this.updateUsersCart(userData, newCart);
+      // 6) Update the users cart with the new cart
+      await this.updateUsersCart(userData, newCart, cartUids);
 
-      // Add to our orders
+      // 7) Add to our orders collection
       await this.updateOrdersCollection(tempCart);
-      localStorage.setItem("cart", "0");
     }
 
     // Done!!!
     console.log("DONE!!!!!");
-    this.props.finished();
-    this.setState({
-      paymentComplete: true,
-      succeeded: true,
-    });
+    localStorage.setItem("cart", "0");
+    return;
   }
 
   // Pay with Paypal!
@@ -995,7 +993,7 @@ export default class CheckoutForm extends React.Component {
 
     // 2) Check if the items are still valid
     const itemResult = await this.checkItems();
-    if (itemResult.length != this.state.myData.cart.length) {
+    if (itemResult[0].length != this.state.myData.cart.length) {
       alert(
         "Something in your cart has been purchased. you have not been charged."
       );
@@ -1004,7 +1002,8 @@ export default class CheckoutForm extends React.Component {
         .collection("Users")
         .doc(myUid)
         .update({
-          cart: itemResult,
+          cart: itemResult[0],
+          cart_uids: itemResult[1],
         })
         .then(() => {
           window.location.reload();
@@ -1029,10 +1028,10 @@ export default class CheckoutForm extends React.Component {
     // Check that all items are still available
     var index = 0;
     const itemsInDb = [];
+    const itemUids = [];
     var cart = this.state.myData.cart;
     for (var i = 0; i < cart.length; i++) {
       const item = cart[i];
-      console.log(item);
       if (i === cart.length - 1) {
         return await firebase
           .firestore()
@@ -1045,15 +1044,16 @@ export default class CheckoutForm extends React.Component {
             index++;
             if (e.exists) {
               itemsInDb.push(e.data());
+              itemUids.push(e.data().uid);
             }
             console.log(itemsInDb);
 
             if (index === cart.length) {
-              return itemsInDb;
+              return [itemsInDb, itemUids];
             }
           })
           .catch((e) => {
-            return false;
+            return [itemsInDb, itemUids];
           });
       } else {
         await firebase
@@ -1067,10 +1067,11 @@ export default class CheckoutForm extends React.Component {
             index++;
             if (e.exists) {
               itemsInDb.push(e.data());
+              itemUids.push(e.data().uid);
             }
           })
           .catch((e) => {
-            return false;
+            return [itemsInDb, itemUids];
           });
       }
     }

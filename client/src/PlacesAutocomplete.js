@@ -65,6 +65,7 @@ export default class LocationSearchInput extends React.Component {
         .doc(uid)
         .set({
           cart: this.props.modal ? [this.props.modal] : [],
+          cart_uids: this.props.modal ? [this.props.modal.uid] : [],
           orders: [],
           sales: [],
           temporary: true,
@@ -101,6 +102,7 @@ export default class LocationSearchInput extends React.Component {
             .doc(uid)
             .set({
               cart: this.props.modal ? [this.props.modal] : [],
+              cart_uids: this.props.modal ? [this.props.modal.uid] : [],
               orders: [],
               sales: [],
               temporary: true,

@@ -622,7 +622,7 @@ export default class CheckoutFormMobile extends React.Component {
 
     // 2) Check if items are still valid. Remove if not.
     const itemResult = await this.checkItems();
-    if (itemResult.length != myProfileData.cart.length) {
+    if (itemResult[0].length != myProfileData.cart.length) {
       alert(
         "Something in your cart has been purchased. you have not been charged."
       );
@@ -631,7 +631,8 @@ export default class CheckoutFormMobile extends React.Component {
         .collection("Users")
         .doc(myUid)
         .update({
-          cart: itemResult,
+          cart: itemResult[0],
+          cart_uids: itemResult[1],
         })
         .then(() => {
           window.location.reload();
@@ -847,170 +848,144 @@ export default class CheckoutFormMobile extends React.Component {
     cardElement.clear();
   }
 
+  async updateMyOrders(myUid, newOrders) {
+    return await firebase.firestore().collection("Users").doc(myUid).update({
+      orders: newOrders,
+    });
+  }
+
+  async updatingProfile(item) {
+    return await firebase
+      .firestore()
+      .collection("Categories")
+      .doc(item.category)
+      .collection("All")
+      .doc(item.uid)
+      .update({ deleting_now: true });
+  }
+
+  async deleteItemFromDatabase(item) {
+    return await firebase
+      .firestore()
+      .collection("Categories")
+      .doc(item.category)
+      .collection("All")
+      .doc(item.uid)
+      .delete();
+  }
+
+  async findUsersWithSameItems(cartUids) {
+    return await firebase
+      .firestore()
+      .collection("Users")
+      .where("cart_uids", "array-contains-any", cartUids)
+      .get();
+  }
+
+  async updateUsersCart(userData, newCart, cartUids) {
+    return await firebase
+      .firestore()
+      .collection("Users")
+      .doc(userData.id)
+      .update({
+        cart: newCart,
+        cart_uids: cartUids,
+      });
+  }
+
+  async updateOrdersCollection(tempCart) {
+    // Go through and add all the unique ID's to seller_array
+    const sellerArray = [];
+    tempCart.forEach((uniqueItem) => {
+      const seller = uniqueItem.seller;
+      if (!sellerArray.includes(seller)) {
+        sellerArray.push(seller);
+      }
+    });
+
+    return await firebase.firestore().collection("Orders").doc().set({
+      items: tempCart,
+      seller_array: sellerArray,
+    });
+  }
+
   // Delete items from my and other users carts, and remove it from our database
   async deleteItemsAndRemoveFromCart() {
-    const cart = this.state.myData.cart;
+    const myData = this.state.myData;
+    const cart = myData.cart;
+    const cartUids = myData.cart_uids;
+
     var tempCart = JSON.parse(JSON.stringify(cart));
 
+    // 1) Add the address to our orders. This is used so I can see where to take the items.
     for (var i = 0; i < tempCart.length; i++) {
       tempCart[i]["address"] = this.state.address1;
-      tempCart[i]["address2"] = this.state.address2;
+      tempCart[i]["address2"] = this.state.address2 ? this.state.address2 : "";
     }
 
-    // Update my own cart and remove everything
-    const orders = this.state.myData.orders;
+    // 2) Get myuid
+    var myUid = firebase.auth().currentUser.uid;
+
+    // 3) Update my orders
+    const orders = myData.orders;
     var newOrders = orders.concat(tempCart);
+    await this.updateMyOrders(myUid, newOrders);
 
-    // Get myuid
-    var myUid = null;
-    if (firebase.auth().currentUser) {
-      // Signed in
-      myUid = firebase.auth().currentUser.uid;
-    } else if (localStorage.getItem("tempUid")) {
-      // temporarily signed in
-      myUid = localStorage.getItem("tempUid");
-    } else {
-      // Not signed in
-      myUid = null;
+    // 4) Loop thorugh our own cart and deal with the items
+    for (var i = 0; i < cart.length; i++) {
+      const item = cart[i];
+      // Update this item in firebase
+      await this.updatingProfile(item);
+
+      // Delete the item from firebase
+      await this.deleteItemFromDatabase(item);
     }
+
+    // 5) Find any users with an item we have in our cart
+    const snapshots = await this.findUsersWithSameItems(cartUids);
+
+    console.log(snapshots);
+    const userDocs = snapshots.docs;
 
     const itemUids = [];
     for (var i = 0; i < cart.length; i++) {
       itemUids.push(cart[i].uid);
     }
-
-    firebase
-      .firestore()
-      .collection("Users")
-      .doc(myUid)
-      .update({
-        customer_id: this.state.customer_id ? this.state.customer_id : "",
-        orders: newOrders,
-      })
-      .then(() => {
-        var a_index = 0;
-        for (var i = 0; i < cart.length; i++) {
-          const item = cart[i];
-
-          // Delete all items from database
-          firebase
-            .firestore()
-            .collection("Categories")
-            .doc(item.category)
-            .collection("All")
-            .doc(item.uid)
-            // .update({})
-            .update({ deleting_now: true })
-            .then((f) => {
-              firebase
-                .firestore()
-                .collection("Categories")
-                .doc(item.category)
-                .collection("All")
-                .doc(item.uid)
-                .delete()
-                .then(() => {
-                  a_index++;
-                  if (a_index === cart.length) {
-                    firebase
-                      .firestore()
-                      .collection("Users")
-                      .where("cart", "array-contains-any", cart)
-                      .get()
-                      .then((user) => {
-                        const userDocs = user.docs;
-                        if (userDocs.length === 0) {
-                          // Shouldn't be, i'm removing from my own cart
-                        }
-                        var b_index = 0;
-                        var k = 0;
-                        var looping = true;
-
-                        // All the users with an item in their cart
-                        for (var k = 0; k < userDocs.length; k++) {
-                          const userData = userDocs[k];
-                          const newCart = userData.data().cart;
-                          // All the items in a users cart
-                          for (var p = 0; p < newCart.length; p++) {
-                            // All the items we are looking for
-                            var l = 0;
-                            while (l < itemUids.length) {
-                              if (!newCart[p]) {
-                                break;
-                              }
-                              if (newCart[p].uid === itemUids[l]) {
-                                l = 0;
-                                // Remove the item
-                                newCart.splice(p, 1);
-                              }
-                              l++;
-                            }
-                          }
-                          firebase
-                            .firestore()
-                            .collection("Users")
-                            .doc(userData.id)
-                            .update({
-                              cart: newCart,
-                            })
-                            .then(() => {
-                              b_index++;
-                              if (b_index === userDocs.length) {
-                                localStorage.setItem("cart", "0");
-                                console.log("DONE");
-                                // Go through and add all the unique ID's to seller_array
-                                const sellerArray = [];
-                                tempCart.forEach((uniqueItem) => {
-                                  const seller = uniqueItem.seller;
-                                  if (!sellerArray.includes(seller)) {
-                                    sellerArray.push(seller);
-                                  }
-                                });
-                                // Add to our orders
-                                firebase
-                                  .firestore()
-                                  .collection("Orders")
-                                  .doc()
-                                  .set({
-                                    items: tempCart,
-                                    seller_array: sellerArray,
-                                  })
-                                  .then(() => {
-                                    console.log("DONE WITH REMOVAL!!!!*****");
-                                  })
-                                  .catch((e) => {
-                                    console.log(e);
-                                    alert(e.message);
-                                  });
-                              }
-                            })
-                            .catch((e) => {
-                              console.log(e);
-                              alert(e.message);
-                            });
-                        }
-                      })
-                      .catch((e) => {
-                        console.log(e);
-                        alert(e.message);
-                      });
-                  }
-                })
-                .catch((e) => {
-                  console.log(e);
-                  alert(e.message);
-                });
-            })
-            .catch((e) => {
-              console.log(e);
-              alert(e.message);
-            });
+    // Loop through users with an item in their cart
+    for (var k = 0; k < userDocs.length; k++) {
+      const userData = userDocs[k];
+      const newCart = userData.data().cart;
+      const cartUids = userData.data().cart_uids;
+      // All the items in a users cart
+      for (var p = 0; p < newCart.length; p++) {
+        // All the items we are looking for
+        var l = 0;
+        while (l < itemUids.length) {
+          const myItemUid = itemUids[l];
+          if (!newCart[p]) {
+            break;
+          }
+          if (newCart[p].uid === myItemUid) {
+            l = 0;
+            // Remove the item
+            newCart.splice(p, 1);
+            cartUids.splice(p, 1);
+          }
+          l++;
         }
-      })
-      .catch((e) => {
-        console.log(e);
-        alert(e.message);
-      });
+      }
+
+      // 6) Update the users cart with the new cart
+      await this.updateUsersCart(userData, newCart, cartUids);
+
+      // 7) Add to our orders collection
+      await this.updateOrdersCollection(tempCart);
+    }
+
+    // Done!!!
+    console.log("DONE!!!!!");
+    localStorage.setItem("cart", "0");
+    return;
   }
 
   // Pay with Paypal!
@@ -1041,7 +1016,7 @@ export default class CheckoutFormMobile extends React.Component {
 
     // 2) Check if the items are still valid
     const itemResult = await this.checkItems();
-    if (itemResult.length != this.state.myData.cart.length) {
+    if (itemResult[0].length != this.state.myData.cart.length) {
       alert(
         "Something in your cart has been purchased. you have not been charged."
       );
@@ -1050,7 +1025,8 @@ export default class CheckoutFormMobile extends React.Component {
         .collection("Users")
         .doc(myUid)
         .update({
-          cart: itemResult,
+          cart: itemResult[0],
+          cart_uids: itemResult[1],
         })
         .then(() => {
           window.location.reload();
@@ -1075,10 +1051,10 @@ export default class CheckoutFormMobile extends React.Component {
     // Check that all items are still available
     var index = 0;
     const itemsInDb = [];
+    const itemUids = [];
     var cart = this.state.myData.cart;
     for (var i = 0; i < cart.length; i++) {
       const item = cart[i];
-      console.log(item);
       if (i === cart.length - 1) {
         return await firebase
           .firestore()
@@ -1091,15 +1067,16 @@ export default class CheckoutFormMobile extends React.Component {
             index++;
             if (e.exists) {
               itemsInDb.push(e.data());
+              itemUids.push(e.data().uid);
             }
             console.log(itemsInDb);
 
             if (index === cart.length) {
-              return itemsInDb;
+              return [itemsInDb, itemUids];
             }
           })
           .catch((e) => {
-            return false;
+            return [itemsInDb, itemUids];
           });
       } else {
         await firebase
@@ -1113,10 +1090,11 @@ export default class CheckoutFormMobile extends React.Component {
             index++;
             if (e.exists) {
               itemsInDb.push(e.data());
+              itemUids.push(e.data().uid);
             }
           })
           .catch((e) => {
-            return false;
+            return [itemsInDb, itemUids];
           });
       }
     }

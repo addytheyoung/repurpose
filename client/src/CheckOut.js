@@ -781,10 +781,12 @@ export default class CheckOut extends React.Component {
     }
     localStorage.setItem("cart", numCartItems);
     const newData = myData.cart;
+    const newCartUids = myData.cart_uids;
     for (var i = 0; i < myData.cart.length; i++) {
       if (item.uid == myData.cart[i].uid) {
         // Remove that item
         newData.splice(i, 1);
+        newCartUids.splice(i, 1);
         break;
       }
     }
@@ -794,6 +796,7 @@ export default class CheckOut extends React.Component {
       .doc(myUid)
       .update({
         cart: newData,
+        cart_uids: newCartUids,
       })
       .then(() => {
         window.location.reload();
