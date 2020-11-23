@@ -19,7 +19,6 @@ import "../css/Dialog.css";
 import Close from "../images/close.png";
 import "../css/CategoryDialogMobile.css";
 
-const emails = ["username@gmail.com", "user02@gmail.com"];
 const useStyles = makeStyles({
   avatar: {
     backgroundColor: blue[100],

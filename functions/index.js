@@ -2,9 +2,6 @@ const functions = require("firebase-functions");
 const env = require("dotenv").config({ path: "./.env" });
 const puppeteer = require("puppeteer");
 
-//const stripe = require("stripe")("sk_live_MUbbkQ150n00y57q1tjlwWQM00s213LRkP");
-const stripe = require("stripe")("sk_test_hkMGIPsjJ7Ag57pFz1eX0ASX00ijQ9oo1X");
-
 // const paypal = EExwl4bt3FO-Vl7714Qh71y0lUpwnkCNm-1_vk7kKTMD4WIH4hH61OwwxOhijkn2dTk6kd2pKB8cl1WT
 var admin = require("firebase-admin");
 const express = require("express");
@@ -23,21 +20,8 @@ app.engine("ejs", engines.ejs);
 app.set("views", "../views");
 app.set("view engine", "ejs");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://repurpose-e523f.firebaseio.com",
-});
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-paypal.configure({
-  mode: "live",
-  client_id:
-    "AVWKPfLbUrnVVHtF3EqllXbIqqAhJvRrlwa9vVi4k_uFGT4Jcd7TSsWxXKdGED5B66RNcrczgnnISVLk",
-  client_secret:
-    "EEzWM8KQhmRtcG1cucS6vcMTvZqGFMx3yx6dJFMR5UM6W35wZ9YXqAr1TgYidgIoYGvx7bliibINumcz",
-});
 
 app.get("/paypal-page", (req, res) => {
   res.render("index");
@@ -152,37 +136,6 @@ app.post("/charge-card", async (req, res) => {
   } catch (err) {
     res.json(err);
   }
-});
-
-app.post("/send-email", (req, res) => {
-  const email = req.body.email;
-  const meeting = req.body.meeting;
-  console.log(email);
-  console.log(meeting);
-  var transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true, // use SSL
-    auth: {
-      user: "andrew@collection.deals",
-      pass: "Collection#0831",
-    },
-  });
-
-  var mailOptions = {
-    from: "andrew@collection.deals",
-    to: email,
-    subject: "Collection: See you soon!",
-    text: meeting,
-  };
-
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email sent: " + info.response);
-    }
-  });
 });
 
 app.post("/create-transfers", async (req, res) => {
@@ -366,11 +319,8 @@ async function postToFb(item) {
   await page.goto(firebase_url, { waitUntil: "networkidle0" });
   await page.waitFor(5000);
   await page.click("#identifierId");
-  await page.type("#identifierId", "andrewtateyoung@gmail.com");
   await page.waitFor(1000);
   await page.click("#identifierNext");
-  // const email = "andrewtateyoung@gmail.com";
-  // const password = "Smash#0831";
   // await page.waitFor("#email");
   // await page.waitFor("#pass");
   // await page.type("#email", email, { delay: 120 });
@@ -504,16 +454,6 @@ exports.dropPrices = functions.pubsub
         });
     }
 
-    var transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true, // use SSL
-      auth: {
-        user: "andrew@collection.deals",
-        pass: "Collection#0831",
-      },
-    });
-
     var mailOptions = {
       from: "andrew@collection.deals",
       to: "andrew@collection.deals",
@@ -574,16 +514,6 @@ exports.removePriceDropTag = functions.pubsub
           }
         });
     }
-
-    var transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true, // use SSL
-      auth: {
-        user: "andrew@collection.deals",
-        pass: "Collection#0831",
-      },
-    });
 
     var mailOptions = {
       from: "andrew@collection.deals",

@@ -1,8 +1,4 @@
 const getLatLng = (address, zip, city, state) => {
-  const front_url =
-    "https://maps.googleapis.com/maps/api/geocode/json?address=";
-  const end_url = "&key=AIzaSyBbpHHOjcFkGJeUaEIQZ-zNVaYBw0UVfzw";
-
   if (zip && city && state) {
     return window
       .fetch(

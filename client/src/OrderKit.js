@@ -140,8 +140,6 @@ export default class OrderKit extends React.Component {
   }
 
   sellingRules() {
-    const API_KEY = "AIzaSyBbpHHOjcFkGJeUaEIQZ-zNVaYBw0UVfzw";
-
     // const name = document.getElementById("name").value.trim();
     // const phone = document.getElementById("phone").value.trim();
     const address1 = document.getElementById("address1").value.trim();

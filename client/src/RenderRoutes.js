@@ -56,9 +56,6 @@ import ChatPage from "./ChatPage";
 export default class RenderRoutes extends React.Component {
   render() {
     const citiesList = ["Austin, TX"];
-    const stripePromise = loadStripe(
-      "pk_live_itqCm5p1Rz7TXk3yTbf4NmVk00z0tkZ7rP"
-    );
     const q = window.location.search;
     const urlParams = new URLSearchParams(q);
     const category = urlParams.get("city");
